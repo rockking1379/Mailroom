@@ -1,4 +1,4 @@
-package com.client.richardson;
+package com.client.common;
 
 public class Person 
 {

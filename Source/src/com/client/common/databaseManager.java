@@ -1,6 +1,7 @@
-package com.client.richardson;
+package com.client.common;
 
 import java.util.*;
+
 
 public class databaseManager
 {
@@ -14,5 +15,10 @@ public class databaseManager
 		this.fileLocation = fileLocation;
 		
 		asuPeople = new ArrayList<Person>();
-	}	
+	}
+	
+	public void addPackage(Package p)
+	{
+		
+	}
 }
