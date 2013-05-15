@@ -2,18 +2,17 @@ package com.client;
 
 import java.util.*;
 
-public class databaseManager implements Runnable
+public class databaseManager
 {
-	List<Person> asuPeople;
-	Thread managerThread;
-	boolean isRunning;
+	private List<Person> asuPeople;
+	private String dbLocation;
+	private String fileLocation;
 	
-	public void run()
+	public databaseManager(String dbLocation, String fileLocation)
 	{
-		while(isRunning)
-		{
-			//Do running code
-		}
-	}
-	
+		this.dbLocation = dbLocation;
+		this.fileLocation = fileLocation;
+		
+		asuPeople = new ArrayList<Person>();
+	}	
 }
