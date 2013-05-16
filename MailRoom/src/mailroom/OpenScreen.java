@@ -45,6 +45,7 @@ public class OpenScreen extends JFrame {
 	 * Create the frame.
 	 */
 	public OpenScreen() {
+		setVisible(true);
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
 		setIconImage(icon.getImage());
