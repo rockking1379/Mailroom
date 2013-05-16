@@ -123,6 +123,8 @@ public class AddAccount extends JFrame {
 			}
 			
 			Integer hash = username.getText().hashCode()+password.getText().hashCode();
+			System.out.println(hash);
+			
 			
 			try {
 				String file="User_Hash.txt";
@@ -139,10 +141,13 @@ public class AddAccount extends JFrame {
 				reader.close();
 				
 				for(String s: hashes){
-					if(s.equals(hash))
+					
+					if(s.equals(hash.toString())){
 						System.out.println("Account exists");
+						System.out.println(s);
 						p.showMessageDialog(null, "This account already exists");
 					return;
+					}
 				}
 				
 				
@@ -151,10 +156,11 @@ public class AddAccount extends JFrame {
 					writer.write(s);
 					writer.newLine();
 				}
+				System.out.println(hash);
 				writer.write(hash.toString());
 				writer.newLine();
 				writer.close();
-				System.out.println(hash);
+				
 				password.setText(null);
 				username.setText(null);
 				pre.setText(null);
@@ -168,11 +174,12 @@ public class AddAccount extends JFrame {
 					w.write("");
 					w= new BufferedWriter(new FileWriter(fi));
 					w.write("");
+					actionPerformed(e);
 				} catch (IOException e2) {
 					System.out.println("The hash files could not be created");
 					e2.printStackTrace();
 				}
-				actionPerformed(e);
+				
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
