@@ -70,5 +70,73 @@ public class DatabaseManager
 	public void createPerson(String person)
 	{
 		//Dilimanted by ',' or ';' not sure which yet
+		String firstName = "";
+		String lastName = "";
+		String email = "";
+		String idNumber = "";
+		String boxNumber = "";
+		String building = "";
+		
+		int index = 0;
+		//Main Loop
+		while(index < person.length())
+		{
+			//First Name
+			while(person.charAt(index) != ',')
+			{
+				firstName += person.charAt(index);
+				index++;
+			}
+			index++;
+			//Last Name
+			while(person.charAt(index) != ',')
+			{
+				lastName += person.charAt(index);
+				index++;
+			}
+			index++;
+			//Email
+			while(person.charAt(index) != ',')
+			{
+				email += person.charAt(index);
+				index++;
+			}
+			index++;
+			//idNumber
+			while(person.charAt(index) != ',')
+			{
+				idNumber += person.charAt(index);
+				index++;
+			}
+			index++;
+			//boxNumber
+			while(person.charAt(index) != ',')
+			{
+				boxNumber += person.charAt(index);
+				index++;
+			}
+			index++;
+			//Building
+			try
+			{
+				while(person.charAt(index) != ',')
+				{
+					building += person.charAt(index);
+				}
+			}
+			catch(Exception e)
+			{
+				//Just means no building was in file
+			}
+		}
+		
+		if(!building.equals(""))
+		{
+			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, building));
+		}
+		else
+		{
+			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
+		}
 	}
 }
