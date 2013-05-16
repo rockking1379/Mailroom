@@ -7,6 +7,7 @@ public class prog
 	//Start Database Manager
 	//Start Login Screen
 	//Run Client
+	//hi there
 	public static void main(String[] args)
 	{
 		try
