@@ -17,11 +17,6 @@ public class DatabaseManager
 		asuPeople = new ArrayList<Person>();
 	}
 	
-	public void addPackage(Package p)
-	{
-		
-	}
-	
 	public void setDatabase(String dbLocation)
 	{
 		this.dbLocation = dbLocation;
@@ -138,5 +133,14 @@ public class DatabaseManager
 		{
 			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
 		}
+	}
+	
+	public void addPackage(Package p)
+	{
+		//Create Insertion String
+		String insert = "insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id)" +
+		"values ('" + p.getTrackNum() +"','" + p.getDate() + "','" + p.getEmail() + "','" + p.getFName() + "','" + p.getLName() + "','" + p.getBoxNum() + "','false','false'," +
+				"select stop_id from Stop where Name = '"+ p.getStop() + "');";
+		
 	}
 }
