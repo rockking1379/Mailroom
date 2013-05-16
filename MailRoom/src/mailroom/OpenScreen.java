@@ -1,4 +1,4 @@
-package mailroom;
+package mailRoom;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -48,7 +48,7 @@ public class OpenScreen extends JFrame {
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
 		setIconImage(icon.getImage());
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\Untitled.jpg"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("src\\Untitled.jpg"));
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 735, 447);
@@ -60,9 +60,53 @@ public class OpenScreen extends JFrame {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmCreateNewAccount = new JMenuItem("Create New Account");
+		
+		mntmCreateNewAccount.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				AddAccount a = new AddAccount();
+				
+			}
+			
+		});
+		JMenuItem crtRt = new JMenuItem("Create Route");
+		
+		crtRt.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				 JFrame f = new JFrame("Dual List Box Tester");
+				    
+				    RouteMaker dual = new RouteMaker();
+				    dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
+				    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
+				    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
+				    		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
+				    		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound" });
+
+				   
+				    f.getContentPane().add(dual, BorderLayout.CENTER);
+				    f.setSize(493, 360);
+				    f.setVisible(true);
+				    f.setResizable(false);				
+			}
+		});
+		
 		mnFile.add(mntmCreateNewAccount);
+		mnFile.add(crtRt);
 		
 		JMenuItem mntmClose = new JMenuItem("Close");
+		mntmClose.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(1);
+				
+			}
+			
+		});
 		mnFile.add(mntmClose);
 		mnFile.addActionListener(new ActionListener() {
 	    	 
@@ -88,7 +132,7 @@ public class OpenScreen extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                Scan scan = new Scan();
+                ScanPackage scan = new ScanPackage();
                 scan.setVisible(true);
             }
         });

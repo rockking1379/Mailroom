@@ -1,4 +1,4 @@
-package mailroom;
+package mailRoom;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -48,6 +48,8 @@ public class SubRoom extends JFrame {
 		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("Images/Untitled.jpg"));
 		setTitle("Student Union Mail Room");
+		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
+		setIconImage(icon.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 719, 523);
 		contentPane = new JPanel();

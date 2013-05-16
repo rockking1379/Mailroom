@@ -1,4 +1,4 @@
-package mailroom;
+package mailRoom;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -6,7 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-import mailroom.TableDemo.MyTableModel;
+//import mailroom.TableDemo.MyTableModel;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -43,6 +43,8 @@ public class SUBTable extends JPanel {
     	  Date date =new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
 	String pickdate=ft.format(date);
+	String trackNum= "0214123574841245546";
+	String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
     
     	
         private String[] columnNames = {"First Name",
@@ -56,15 +58,15 @@ public class SUBTable extends JPanel {
         
         private Object[][] data = {
         		{"Kathy", "Smith",
-        	         "678", "5452548313",  ft.format(date), delivered, picked_up=true,pickdate},
+        	         "678", L4,  ft.format(date), delivered, picked_up=true,pickdate},
         	        {"John", "Doe", 
-        	         "1041", "5846421596", ft.format(date), delivered, picked_up=false,pickdate},
+        	         "1041", L4, ft.format(date), delivered, picked_up=false,pickdate},
         	        {"Sue", "Black",
-        	         "386", "2684359112",  ft.format(date), delivered,picked_up=true,pickdate= ft.format(date)},
+        	         "386", L4,  ft.format(date), delivered,picked_up=true,pickdate= ft.format(date)},
         	        {"Jane", "White",
-        	         "1437", "2059872641", ft.format(date), delivered, picked_up=true,pickdate},
+        	         "1437", L4, ft.format(date), delivered, picked_up=true,pickdate},
         	        {"Joe", "Brown",
-        	         "19", "1024861834",  ft.format(date), delivered,  picked_up=false,pickdate="", }
+        	         "19", L4,  ft.format(date), delivered,  picked_up=false,pickdate="", }
         	        };
         
  

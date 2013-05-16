@@ -31,7 +31,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-package mailroom;
+package mailRoom;
  
 /*
  * TableDemo.java requires no other files.
@@ -80,25 +80,23 @@ public class TableDemo extends JPanel {
     	
         private String[] columnNames = {"First Name",
                 "Last Name",
-                "Box #",
+                "Stop",
                 "Tracking #",
                 "Date",
-                "Delivered",
-                "Picked Up",
-                "Pick Up Date"};
+                "Delivered"};
         
         private Object[][] data = {
-        		{"Kathy", "Smith",
-        	         "678", "5452548313",  ft.format(date), delivered, picked_up=true,pickdate},
-        	        {"John", "Doe", 
-        	         "1041", "5846421596", ft.format(date), delivered, picked_up=false,pickdate},
-        	        {"Sue", "Black",
-        	         "386", "2684359112",  ft.format(date), delivered,picked_up=true,pickdate= ft.format(date)},
-        	        {"Jane", "White",
-        	         "1437", "2059872641", ft.format(date), delivered, picked_up=true,pickdate},
-        	        {"Joe", "Brown",
-        	         "19", "1024861834",  ft.format(date), delivered,  new Boolean(false),pickdate=""}
-        	        };
+                {"Kathy", "Smith","Rex",
+                    "5452548313",  ft.format(date), new Boolean(false)},
+                   {"John", "Doe","SUB", 
+                     "5846421596", ft.format(date), new Boolean(true)},
+                   {"Sue", "Black","Bookstore",
+                     "2684359112",  ft.format(date), new Boolean(false)},
+                   {"Jane", "White", "Plachy",
+                     "2059872641", ft.format(date), new Boolean(true)},
+                   {"Joe", "Brown","SUB",
+                     "1024861834",  ft.format(date), new Boolean(false)}
+                   };
  
         
         public int getColumnCount() {
