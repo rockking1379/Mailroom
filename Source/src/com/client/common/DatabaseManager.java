@@ -9,16 +9,22 @@ public class DatabaseManager
 	private String dbLocation;
 	private String fileLocation;
 	
-	public DatabaseManager(String dbLocation, String fileLocation)
+	public DatabaseManager()
 	{
-		this.dbLocation = dbLocation;
-		this.fileLocation = fileLocation;
-		
 		asuPeople = new ArrayList<Person>();
 	}
 	
 	public void addPackage(Package p)
 	{
 		
+	}
+	
+	public void setDatabase(String dbLocation)
+	{
+		this.dbLocation = dbLocation;
+	}
+	public void setFile(String fileLocation)
+	{
+		this.fileLocation = fileLocation;
 	}
 }

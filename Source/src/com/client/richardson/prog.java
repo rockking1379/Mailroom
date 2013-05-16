@@ -5,6 +5,8 @@ import java.io.*;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import com.client.common.DatabaseManager;
+
 public class prog 
 {
 	//Start Database Manager
@@ -14,6 +16,7 @@ public class prog
 	//how are you?
 	public static void main(String[] args)
 	{
+		DatabaseManager dbManager = new DatabaseManager();
 		File settings = new File("./properties.prop");
 		if(settings.exists())
 		{
@@ -37,15 +40,31 @@ public class prog
 					if(setting.toUpperCase().equals("DATABASE"))
 					{
 						//Read in Database configuration
+						String temp = "";
+						for(int i = index; i < settingLine.length(); i++)
+						{
+							temp += settingLine.charAt(i);
+						}
+						
+						dbManager.setDatabase(temp);
 					}
 					else
 					{
 						if(setting.toUpperCase().equals("PERSONS"))
 						{
-							//Read Persons File location
+							String temp = "";
+							
+							for(int i = index; i < settingLine.length(); i++)
+							{
+								temp += settingLine.charAt(i);
+							}
+							
+							dbManager.setFile(temp);
 						}
 					}
 				}
+				
+				br.close();
 			}
 			catch(Exception e)
 			{
@@ -79,8 +98,7 @@ public class prog
 			{
 				//Ignore the exceptions
 			}
-			
-			
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
 		}
 	}
 }
