@@ -32,7 +32,7 @@ public class Package
 		this.trackingNumber = trackingNumber;
 	}
 	
-	//Leave in Richardson
+	//Faculty?
 	public Package(String firstName, String lastName, String email, Date date, String stop, String trackingNumber)
 	{
 		this.firstName = firstName;
@@ -40,9 +40,11 @@ public class Package
 		this.email = email;
 		this.date = new String(date.getMonth() + "-" + date.getDayOfMonth() + "-" + date.getYear());
 		this.boxNumber = "0";
-		this.stop = "RICHARDSON";
+		this.stop = stop;
 		this.trackingNumber = trackingNumber;
 	}
+	
+	//Leave in Richardson
 	public Package(String firstName, String lastName, String email, Date date, String trackingNumber)
 	{
 		this.firstName = firstName;
