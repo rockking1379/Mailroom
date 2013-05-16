@@ -1,22 +1,29 @@
 package com.client.common;
 
 import java.io.*;
+import java.sql.*;
 import java.util.*;
-
 import javax.swing.JOptionPane;
 
 
 public class DatabaseManager
 {
+	///---Variables---///
 	private List<Person> asuPeople;
+	private List<Stop> stops;
+	private List<Route> routes;
 	private String dbLocation;
 	private String fileLocation;
 	
+	///---Constructor(s)---///
 	public DatabaseManager()
 	{
 		asuPeople = new ArrayList<Person>();
+		stops = new ArrayList<Stop>();
+		routes = new ArrayList<Route>();
 	}
 	
+	///---Set Methods---///
 	public void setDatabase(String dbLocation)
 	{
 		this.dbLocation = dbLocation;
@@ -26,6 +33,7 @@ public class DatabaseManager
 		this.fileLocation = fileLocation;
 	}
 	
+	///---Setup---///
 	public void setup()
 	{
 		if(dbLocation != null && fileLocation != null)
@@ -61,7 +69,6 @@ public class DatabaseManager
 			System.exit(0);
 		}
 	}
-	
 	public void createPerson(String person)
 	{
 		//Dilimanted by ',' or ';' not sure which yet
@@ -135,12 +142,120 @@ public class DatabaseManager
 		}
 	}
 	
+	///---Packages---///
 	public void addPackage(Package p)
 	{
-		//Create Insertion String
-		String insert = "insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id)" +
-		"values ('" + p.getTrackNum() +"','" + p.getDate() + "','" + p.getEmail() + "','" + p.getFName() + "','" + p.getLName() + "','" + p.getBoxNum() + "','false','false'," +
-				"select stop_id from Stop where Name = '"+ p.getStop() + "');";
-		
+		try
+		{
+			//Create Insertion String
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection(dbLocation);
+			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id)" + 
+			"values(?,?,?,?,?,?,?,?,?);");
+			
+			statement.setString(1, p.getTrackNum());
+			statement.setString(2, p.getDate());
+			statement.setString(3, p.getEmail());
+			statement.setString(4, p.getFName());
+			statement.setString(5, p.getLName());
+			statement.setString(6, p.getBoxNum());
+			statement.setBoolean(7, false);
+			statement.setBoolean(8, false);
+			for(int i = 0; i < stops.size(); i++)
+			{
+				if(stops.get(i).getName().equals(p.getStop()))
+				{
+					statement.setInt(9, stops.get(i).getID());
+					break;
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+	}
+	//Backup(more logic involved)
+	public void updatePackage(String tNumber, boolean value)
+	{
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection(dbLocation);
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+	}
+	//Optimal
+	public void updatePackage(String tNumber, boolean atStop, boolean pickedUp)
+	{
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection(dbLocation);
+			
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+	}
+	
+	///---Stops---///
+	public void addStop(String name, boolean isUsed, String route)
+	{
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection(dbLocation);
+			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used) values (?,?,?);");
+			statement.setString(1, name);
+			for(int i = 0; i < routes.size(); i++)
+			{
+				if(route.equals(routes.get(i).getName()))
+				{
+					statement.setInt(2, routes.get(i).getID());
+					break;
+				}
+			}
+			//Hopefully its true(but you never know)
+			statement.setBoolean(3, isUsed);
+			
+			statement.executeQuery();
+		}
+		catch(Exception e)
+		{
+			//Error with database Connection
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+	}
+	public void updateStop(String name, boolean isUsed, String route)
+	{
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection(dbLocation);
+			statement = conn.prepareStatement("update Stop set Name = ?, isUsed = ?, route_id = ? where stop_id = ?;");
+			statement.setString(1, name);
+			for(int i = 0; i < routes.size(); i++)
+			{
+				if(route.equals(routes.get(i).getName()))
+				{
+					statement.setInt(2, routes.get(i).getID());
+					break;
+				}
+			}
+			//Hopefully its true(but you never know)
+			statement.setBoolean(3, isUsed);
+			
+			statement.executeQuery();
+		}
+		catch(Exception e)
+		{
+			//Error with database Connection
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
 }
