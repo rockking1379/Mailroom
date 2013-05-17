@@ -31,8 +31,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
  
-package mailRoom;
-//hi
+package mailroom;
  
 /*
  * TableDemo.java requires no other files.
@@ -155,6 +154,19 @@ public class TableDemo extends JPanel {
             data[row][col] = value;
             fireTableCellUpdated(row, col);
  
+            if(picked_up==false){
+            	pickdate="";
+            	System.out.println("In Flase");
+            	 fireTableDataChanged();
+            }
+            if(picked_up==true){
+            	pickdate=ft.format(date);
+            	System.out.println("In True");
+            	 data[row][col] = value;
+                 fireTableDataChanged();
+            }
+            
+            
             if (DEBUG) {
                 System.out.println("New value of data:");
                 printDebugData();

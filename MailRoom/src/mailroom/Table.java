@@ -1,7 +1,7 @@
 
 
 
-package mailRoom;
+package mailroom;
  
 
 import javax.swing.JFrame;

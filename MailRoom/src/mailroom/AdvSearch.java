@@ -1,4 +1,4 @@
-package mailRoom;
+package mailroom;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -50,14 +50,14 @@ public class AdvSearch extends JFrame {
 	private JComboBox EndDay;
 	private JComboBox comboBox;
 	private JPanel SearchPanel;
-	private String sMonth="1";
-	private String eMonth="1";
-	private String sDay="1";
-	private String eDay="1";
-	private String sDate="1";
-	private String eDate="1";
-	private String sYear="1";
-    private String eYear="1";
+	private String sMonth="01";
+	private String eMonth="01";
+	private String sDay="01";
+	private String eDay="01";
+	private String sDate="";
+	private String eDate="";
+	private String sYear="2000";
+    private String eYear="4000";
     private boolean date = true;
 
 	
@@ -225,7 +225,7 @@ public class AdvSearch extends JFrame {
         		int ey = Integer.parseInt(eYear);
         		boolean i = s<=ey;
         		dateCheck();
-        		if(i==false){
+        		if(i==false||date==false){
         			Component frame = null;
 					JOptionPane.showMessageDialog(frame,
                 		    "You have entered a date start date after your entered end date!",
@@ -287,9 +287,10 @@ public class AdvSearch extends JFrame {
 		StartMonth.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {	
 				 Object month = StartMonth.getSelectedItem();
-			        sMonth = month.toString();
-			        int i = Integer.parseInt(sMonth);
-			        System.out.print(i);
+				 String tsMonth = month.toString();			       
+			        long i = Integer.parseInt(tsMonth);
+			        sMonth= tsMonth.format("%02d",i);
+			        System.out.println(i);
 				if(i==2)
 				StartDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",}));
 				else{
@@ -301,7 +302,10 @@ public class AdvSearch extends JFrame {
 		StartDay.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				 Object info = StartDay.getSelectedItem();
-			        sDay = info.toString();			       
+				  String tsDay = info.toString();			       
+			        long i = Integer.parseInt(tsDay);
+			        sDay= tsDay.format("%02d",i);
+			        System.out.println(i);		       
 				} });
 		
 		
@@ -320,8 +324,10 @@ public class AdvSearch extends JFrame {
 		EndMonth.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {				
 				 Object month = EndMonth.getSelectedItem();
-			        eMonth = month.toString();
-			        int i = Integer.parseInt(eMonth);
+			        String teMonth = month.toString();			       
+			        long i = Integer.parseInt(teMonth);
+			        eMonth= teMonth.format("%02d",i);
+			        System.out.println(i);
 				if(i==2)
 				EndDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",}));
 				else{
@@ -333,7 +339,10 @@ public class AdvSearch extends JFrame {
 		EndDay.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				 Object info = EndDay.getSelectedItem();
-			        eDay = info.toString();			       
+			        String teDay = info.toString();			       
+			        long i = Integer.parseInt(teDay);
+			        eDay= teDay.format("%02d",i);
+			        System.out.println(i);
 				} });
 		
 		
@@ -435,13 +444,7 @@ public class AdvSearch extends JFrame {
 		if(sdate>edate){
 			
 			date=false;
-			Component frame = null;
-			JOptionPane.showMessageDialog(frame,
-					 "You have entered a date start date after your entered end date! (e1)",
-        		    "Year error",
-        		    JOptionPane.ERROR_MESSAGE);
-			SearchPanel.setVisible(false);
-			setBounds(100, 100, 460, 167);
+			
 		}
 		
 	}
