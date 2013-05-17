@@ -1,4 +1,4 @@
-package mailRoom;
+package com.client.common;
 
 import java.io.*;
 import java.sql.*;
@@ -264,8 +264,28 @@ public class DatabaseManager
 		}
 	}
 
-	public void addRoute(Route r) {
-		// TODO Auto-generated method stub
+	///---Routes---///
+	public void addRoute(String name) 
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("insert into Route(Name) values(?);");
+			statement.setString(1, name);
+			if(statement.execute())
+			{
+				statement = conn.prepareStatement("select route_id from Route where Name = ?;");
+				statement.setString(1, name);
+				ResultSet rs = statement.executeQuery();
+				Route r = new Route(name, rs.getInt(0));
+				routes.add(r);
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 		
 	}
 }

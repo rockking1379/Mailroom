@@ -1,4 +1,4 @@
-package mailRoom;
+package com.client.common;
 
 public class Stop 
 {
