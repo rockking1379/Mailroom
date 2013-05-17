@@ -286,9 +286,9 @@ public class RouteMaker extends JPanel {
 			stops.add(new Stop(s));
 			
 		}
-		Route r = new Route(RouteField.getText(),-1,stops);
+		/*Route r = new Route(RouteField.getText());
 		DatabaseManager manager = new DatabaseManager();
-		manager.addRoute(r);
+		manager.addRoute(r);*/
 		
 	}
 	  

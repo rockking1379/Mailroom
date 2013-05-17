@@ -16,16 +16,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.JPasswordField;
 
-public class login extends JFrame {
+public class LoginFrame extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField userName;
+	private JTextField password;
 	public boolean admin;
 	public boolean accountExists;
 	JLabel lblLoginError;
-	private JPasswordField passwordField;
 	/**
 	 * Launch the application.
 	 */
@@ -33,7 +32,7 @@ public class login extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					login frame = new login();
+					LoginFrame frame = new LoginFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -45,7 +44,7 @@ public class login extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public login() {
+	public LoginFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 203);
 		contentPane = new JPanel();
@@ -61,6 +60,11 @@ public class login extends JFrame {
 		userName.setBounds(96, 50, 151, 20);
 		contentPane.add(userName);
 		userName.setColumns(10);
+		
+		password = new JTextField();
+		password.setBounds(96, 81, 151, 20);
+		contentPane.add(password);
+		password.setColumns(10);
 		
 		JButton btnOk = new JButton("OK");
 		btnOk.addActionListener(new OkListener(this));
@@ -94,10 +98,6 @@ public class login extends JFrame {
 		lblLoginError.setVisible(false);
 		lblLoginError.setBounds(135, 36, 93, 14);
 		contentPane.add(lblLoginError);
-		
-		passwordField = new JPasswordField();
-		passwordField.setBounds(96, 81, 151, 20);
-		contentPane.add(passwordField);
 	}
 	
 	public class OkListener implements ActionListener{
@@ -110,7 +110,7 @@ public class login extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<String> hashes = new ArrayList<String>();
-			Integer hash = userName.getText().hashCode()+passwordField.getPassword().hashCode();
+			Integer hash = userName.getText().hashCode()+password.getText().hashCode();
 			System.out.println(hash);
 			File a= new File("Admin_Hash.txt");
 			File u= new File("User_Hash.txt");

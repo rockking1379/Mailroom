@@ -1,4 +1,4 @@
-package com.client.common;
+package mailroom;
 
 import java.io.*;
 import java.sql.*;

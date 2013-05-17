@@ -44,12 +44,12 @@ public class OpenScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-<<<<<<< HEAD
-	public OpenScreen() {
-=======
+
+	
+
 	public OpenScreen(boolean admin) {
 		setVisible(true);
->>>>>>> origin/Tom
+
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
 		setIconImage(icon.getImage());
@@ -75,7 +75,7 @@ public class OpenScreen extends JFrame {
 		mntmCreateNewRoute.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e)
             {
-            	Route route = new Route();
+            	RouteMaker route = new RouteMaker();
                 route.setVisible(true);
             }
         });

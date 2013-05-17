@@ -1,4 +1,4 @@
-package mailRoom;
+package mailroom;
 
 import java.awt.EventQueue;
 

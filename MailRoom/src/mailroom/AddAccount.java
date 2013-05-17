@@ -1,4 +1,4 @@
-package mailRoom;
+package mailroom;
 
 import java.awt.BorderLayout;
 import java.io.*;
@@ -174,12 +174,11 @@ public class AddAccount extends JFrame {
 					w.write("");
 					w= new BufferedWriter(new FileWriter(fi));
 					w.write("");
-					actionPerformed(e);
 				} catch (IOException e2) {
 					System.out.println("The hash files could not be created");
 					e2.printStackTrace();
 				}
-				
+				actionPerformed(e);
 				
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
