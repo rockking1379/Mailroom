@@ -41,7 +41,7 @@ public class DatabaseManager
 			//Prepare setup
 			//Load people
 			//Create connection string
-			//Prepare for data flow
+			//Prepare for data flow			
 			File people = new File(fileLocation);
 			FileInputStream fStream;
 			try 
@@ -148,8 +148,9 @@ public class DatabaseManager
 		try
 		{
 			//Create Insertion String
+			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection(dbLocation);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id)" + 
 			"values(?,?,?,?,?,?,?,?,?);");
 			
@@ -180,8 +181,9 @@ public class DatabaseManager
 	{
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection(dbLocation);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 		}
 		catch(Exception e)
 		{
@@ -193,8 +195,9 @@ public class DatabaseManager
 	{
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection(dbLocation);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			
 		}
 		catch(Exception e)
@@ -208,8 +211,9 @@ public class DatabaseManager
 	{
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection(dbLocation);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used) values (?,?,?);");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
@@ -235,8 +239,9 @@ public class DatabaseManager
 	{
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection(dbLocation);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("update Stop set Name = ?, isUsed = ?, route_id = ? where stop_id = ?;");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
