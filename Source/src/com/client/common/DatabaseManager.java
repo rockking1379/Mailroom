@@ -1,4 +1,4 @@
-package com.client.common;
+package mailRoom;
 
 import java.io.*;
 import java.sql.*;
@@ -262,5 +262,10 @@ public class DatabaseManager
 			//Error with database Connection
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
+	}
+
+	public void addRoute(Route r) {
+		// TODO Auto-generated method stub
+		
 	}
 }

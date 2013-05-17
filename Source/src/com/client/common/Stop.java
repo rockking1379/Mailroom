@@ -1,4 +1,4 @@
-package com.client.common;
+package mailRoom;
 
 public class Stop 
 {
@@ -6,9 +6,9 @@ public class Stop
 	private int id;
 	private int route_id;
 	
-	public Stop()
+	public Stop(String name)
 	{
-		
+		this.name=name;
 	}
 	
 	public String getName()
