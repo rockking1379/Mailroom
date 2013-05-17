@@ -277,18 +277,17 @@ public class RouteMaker extends JPanel {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		DatabaseManager manager = new DatabaseManager();
 		
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		for(String s: inDest){
 			
-			System.out.println(s);
-			stops.add(new Stop(s));
+			manager.updateStop(s, true, RouteField.getText());
 			
 		}
-		/*Route r = new Route(RouteField.getText());
-		DatabaseManager manager = new DatabaseManager();
-		manager.addRoute(r);*/
+		
+		
+		manager.addRoute(RouteField.getText());
 		
 	}
 	  
