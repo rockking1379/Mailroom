@@ -141,6 +141,14 @@ public class DatabaseManager
 			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
 		}
 	}
+	public void createRoute(String route)
+	{
+		//create route in here
+	}
+	public void createStop(String stop)
+	{
+		//create stop in here
+	}
 	
 	///---Packages---///
 	public void addPackage(Package p)
@@ -227,7 +235,10 @@ public class DatabaseManager
 			//Hopefully its true(but you never know)
 			statement.setBoolean(3, isUsed);
 			
-			statement.executeQuery();
+			if(statement.execute())
+			{
+				JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
+			}
 		}
 		catch(Exception e)
 		{
@@ -255,7 +266,10 @@ public class DatabaseManager
 			//Hopefully its true(but you never know)
 			statement.setBoolean(3, isUsed);
 			
-			statement.executeQuery();
+			if(statement.execute())
+			{
+				JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
+			}
 		}
 		catch(Exception e)
 		{
@@ -287,5 +301,32 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 		
+	}
+	public void updateRoute(String previousName, String currentName)
+	{
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("alter TABLE Route(Name) set Name=? where Name=?;");
+			statement.setString(1, currentName);
+			statement.setString(2, previousName);
+			if(statement.execute())
+			{
+				JOptionPane.showMessageDialog(null, "Updated " + previousName + " to " + currentName);
+				for(int i = 0; i < routes.size(); i++)
+				{
+					if(routes.get(i).getName().equals(previousName))
+					{
+						routes.get(i).setName(currentName);
+						break;
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
 }
