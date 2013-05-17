@@ -1,13 +1,19 @@
-package com.client.common;
+package mailRoom;
+
+import java.util.ArrayList;
 
 public class Route 
 {
 	private String name;
 	private int id;
+	private ArrayList<Stop> stops = new ArrayList<Stop>();
 	
-	public Route()
+	
+	public Route(String name,int id, ArrayList<Stop> stops)
 	{
-		//Empty for now
+		this.stops=stops;
+		this.name=name;
+		this.id=id;
 	}
 	
 	public int getID()

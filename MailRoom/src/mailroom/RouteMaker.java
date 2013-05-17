@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -41,6 +42,8 @@ public class RouteMaker extends JPanel {
   private JButton addButton;
   private JButton removeButton;
   private JTextField RouteField;
+  DatabaseManager manager;
+  ArrayList<String> inDest = new ArrayList<String>();
 
   public RouteMaker() {
   	setBackground(new Color(0, 102, 0));
@@ -223,6 +226,7 @@ public class RouteMaker extends JPanel {
     add(NewStop);
     
     JButton btnCreateRoute = new JButton("Create Route");
+    btnCreateRoute.addActionListener(new CreateRouteListener());
     btnCreateRoute.setBounds(356, 27, 110, 23);
     add(btnCreateRoute);
     
@@ -250,6 +254,9 @@ public class RouteMaker extends JPanel {
   private class AddListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       Object selected[] = sourceList.getSelectedValues();
+      for(Object o: selected){
+    	  inDest.add((String)o);
+      }
       addDestinationElements(selected);
       clearSourceSelected();
     }
@@ -258,9 +265,33 @@ public class RouteMaker extends JPanel {
   private class RemoveListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
       Object selected[] = destList.getSelectedValues();
+      for(Object o: selected){
+    	inDest.remove(inDest.indexOf((String)o));
+    	  
+      }
       addSourceElements(selected);
       clearDestinationSelected();
     }
+  }
+  private class CreateRouteListener implements ActionListener{
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		
+		ArrayList<Stop> stops = new ArrayList<Stop>();
+		for(String s: inDest){
+			
+			System.out.println(s);
+			stops.add(new Stop(s));
+			
+		}
+		Route r = new Route(RouteField.getText(),-1,stops);
+		DatabaseManager manager = new DatabaseManager();
+		manager.addRoute(r);
+		
+	}
+	  
   }
 }
 

@@ -32,7 +32,7 @@ public class OpenScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OpenScreen frame = new OpenScreen();
+					OpenScreen frame = new OpenScreen(true);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,12 @@ public class OpenScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+<<<<<<< HEAD
 	public OpenScreen() {
+=======
+	public OpenScreen(boolean admin) {
+		setVisible(true);
+>>>>>>> origin/Tom
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
 		setIconImage(icon.getImage());
@@ -54,7 +59,9 @@ public class OpenScreen extends JFrame {
 		setBounds(100, 100, 735, 447);
 		
 		JMenuBar menuBar = new JMenuBar();
+		if(admin){
 		setJMenuBar(menuBar);
+		}
 		
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
