@@ -1,4 +1,4 @@
-package mailRoom;
+package mailroom;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -15,6 +15,7 @@ import java.util.TreeSet;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -179,6 +180,7 @@ public class RouteMaker extends JPanel {
 
   private void initScreen() {
     setBorder(BorderFactory.createEtchedBorder());
+    
     sourceLabel = new JLabel("Available Stops");
     sourceLabel.setForeground(new Color(255, 255, 255));
     sourceLabel.setBounds(45, 72, 116, 14);
@@ -227,10 +229,13 @@ public class RouteMaker extends JPanel {
     btnCreateRoute.addActionListener(new CreateRouteListener());
     btnCreateRoute.setBounds(356, 27, 110, 23);
     add(btnCreateRoute);
+    
+   
   }
 
   public static void main(String args[]) {
-    JFrame f = new JFrame("Dual List Box Tester");
+    JFrame f = new JFrame("Create A Route");
+    
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     RouteMaker dual = new RouteMaker();
     dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",

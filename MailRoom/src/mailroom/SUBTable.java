@@ -1,4 +1,4 @@
-package mailRoom;
+package mailroom;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -6,7 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
-//import mailroom.TableDemo.MyTableModel;
+import mailroom.TableDemo.MyTableModel;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 public class SUBTable extends JPanel {
     private boolean DEBUG = false;
     private boolean delivered= true;
-    private boolean picked_up;
+    private boolean picked_up=false;;
     private String pickdate;
     
     public SUBTable() {
@@ -42,7 +42,7 @@ public class SUBTable extends JPanel {
     class MyTableModel extends AbstractTableModel {
     	  Date date =new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
-	String pickdate=ft.format(date);
+	String pickdate="";
 	String trackNum= "0214123574841245546";
 	String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
     
@@ -58,16 +58,17 @@ public class SUBTable extends JPanel {
         
         private Object[][] data = {
         		{"Kathy", "Smith",
-        	         "678", L4,  ft.format(date), delivered, picked_up=true,pickdate},
+        	         "678", L4,  ft.format(date), delivered, picked_up,pickdate},
         	        {"John", "Doe", 
-        	         "1041", L4, ft.format(date), delivered, picked_up=false,pickdate},
+        	         "1041", L4, ft.format(date), delivered, picked_up,pickdate},
         	        {"Sue", "Black",
-        	         "386", L4,  ft.format(date), delivered,picked_up=true,pickdate= ft.format(date)},
+        	         "386", L4,  ft.format(date), delivered,picked_up,pickdate},
         	        {"Jane", "White",
-        	         "1437", L4, ft.format(date), delivered, picked_up=true,pickdate},
+        	         "1437", L4, ft.format(date), delivered, picked_up,pickdate},
         	        {"Joe", "Brown",
-        	         "19", L4,  ft.format(date), delivered,  picked_up=false,pickdate="", }
+        	         "19", L4,  ft.format(date), delivered,  picked_up,pickdate}
         	        };
+       
         
  
         public int getColumnCount() {
@@ -128,7 +129,30 @@ public class SUBTable extends JPanel {
             }
  
             data[row][col] = value;
+            System.out.println(value);
+           
+            picked_up=(boolean) value;
+            System.out.println(picked_up);
             fireTableCellUpdated(row, col);
+            
+            if(picked_up==false){
+            	pickdate="";
+            	System.out.println("In Flase");
+            	Object value1 = null;
+            	value1="";
+				data[row][col+1] = value1;
+           	 	
+            	 fireTableDataChanged();
+            }
+            if(picked_up==true){
+            	pickdate=ft.format(date);
+            	System.out.println("In True");
+            	Object value1 = null;
+            	value1=ft.format(date);
+				data[row][col+1] = value1;
+           	 
+                 fireTableDataChanged();
+            }
  
             if (DEBUG) {
                 System.out.println("New value of data:");

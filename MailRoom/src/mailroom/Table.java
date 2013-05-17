@@ -1,9 +1,9 @@
 
 
 
-package mailRoom;
+package mailroom;
  
-
+//hi
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
