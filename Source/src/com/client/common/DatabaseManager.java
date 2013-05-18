@@ -393,4 +393,18 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
+
+	///---Searching---///
+	public List<Package> findPackage(String[] criteria)
+	{
+		List<Package> results = new ArrayList<Package>();
+		//Logic
+		return results;
+	}
+	public List<Package> findPackage(String beginDate, String endDate)
+	{
+		List<Package> results = new ArrayList<Package>();
+		//More logic
+		return results;
+	}
 }
