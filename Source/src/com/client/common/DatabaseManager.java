@@ -141,13 +141,48 @@ public class DatabaseManager
 			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
 		}
 	}
-	public void createRoute(String route)
+	public void loadRoutes()
 	{
 		//create route in here
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Route;");
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+				String name = rs.getString("Name");
+				int id = rs.getInt("route_id");
+				routes.add(new Route(name, id));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
-	public void createStop(String stop)
+	public void loadStops()
 	{
 		//create stop in here
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Stop;");
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+				String name = rs.getString("Name");
+				int id = rs.getInt("stop_id");
+				int route = rs.getInt("route_id");
+				stops.add(new Stop(name, route, id));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
 	
 	///---Packages---///

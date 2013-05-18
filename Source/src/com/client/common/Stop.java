@@ -10,6 +10,17 @@ public class Stop
 	{
 		this.name=name;
 	}
+	public Stop(String name, int route_id, int id)
+	{
+		this.name = name;
+		this.id = id;
+		this.route_id = route_id;
+	}
+	public Stop(String name, int route_id)
+	{
+		this.name = name;
+		this.route_id = route_id;
+	}
 	
 	public String getName()
 	{
