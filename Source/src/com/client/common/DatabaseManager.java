@@ -2,7 +2,9 @@ package com.client.common;
 
 import java.io.*;
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.*;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 
@@ -220,6 +222,7 @@ public class DatabaseManager
 		}
 	}
 	//Backup(more logic involved)
+	@SuppressWarnings("resource")
 	public void updatePackage(String tNumber, boolean value)
 	{
 		try
@@ -227,6 +230,25 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
+			ResultSet rs = statement.executeQuery();
+			if(rs.getBoolean("At_Stop"))
+			{
+				statement = conn.prepareStatement("alter table Package set Picked_Up=?, Pick_Up_Date=? where Tracking_Number=?;");
+				statement.setBoolean(1, value);
+				Date d = new Date();
+				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+				statement.setString(2, date);
+				statement.setString(3, tNumber);
+				statement.execute();
+			}
+			else
+			{
+				statement = conn.prepareStatement("alter table Package set At_Stop=? where Tracking_Number=?;");
+				statement.setBoolean(1, value);
+				statement.setString(2, tNumber);
+				statement.execute();
+			}
 		}
 		catch(Exception e)
 		{
@@ -241,7 +263,14 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			
+			statement = conn.prepareStatement("alter table Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
+			Date d = new Date();
+			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+			statement.setBoolean(1, atStop);
+			statement.setBoolean(2, pickedUp);
+			statement.setString(3, date);
+			statement.setString(4, tNumber);
+			statement.execute();
 		}
 		catch(Exception e)
 		{
