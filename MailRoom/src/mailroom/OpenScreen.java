@@ -50,11 +50,10 @@ public class OpenScreen extends JFrame {
 
 	public OpenScreen(boolean admin) {
 		setVisible(true);
-<<<<<<< HEAD
 
-=======
+
 		manager = new DatabaseManager();
->>>>>>> origin/Tom
+
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
 		setIconImage(icon.getImage());
@@ -89,27 +88,29 @@ public class OpenScreen extends JFrame {
 		mntmCreateNewRoute.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e)
             {
-<<<<<<< HEAD
-            	RouteMaker route = new RouteMaker();
+
+            	RouteMaker route = new RouteMaker(manager);
                 route.setVisible(true);
-=======
+
             	JFrame f = new JFrame("Create A Route");
                 
                 
                 RouteMaker dual = new RouteMaker(manager);
-                //we need a method for that datamangaer that will return an array of stops for this part
-                dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
-                		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
-                		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
-                		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
-                		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound" });
+                
+                String[] stopNames= new String[manager.getStops().size()-1];
+                
+                for(Stop s: manager.getStops()){
+                	stopNames[manager.getStops().indexOf(s)] = s.getName();
+                }
+                
+                dual.addSourceElements(stopNames);
 
                
                 f.getContentPane().add(dual, BorderLayout.CENTER);
                 f.setSize(493, 360);
                 f.setVisible(true);
                 f.setResizable(false);
->>>>>>> origin/Tom
+
             }
         });
 		

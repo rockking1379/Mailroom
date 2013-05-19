@@ -1,19 +1,19 @@
-<<<<<<< HEAD
-package com.client.common;
+
+package mailroom;
 
 import java.io.*;
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
-=======
-package mailroom;
+
+
 
 import java.io.*;
 import java.sql.*;
 import java.util.*;
 
->>>>>>> origin/Tom
+
 import javax.swing.JOptionPane;
 
 
@@ -66,12 +66,13 @@ public class DatabaseManager
 					createPerson(person);
 				}
 				br.close();
-<<<<<<< HEAD
+
+
+
 				
 				loadRoutes();
 				loadStops();
-=======
->>>>>>> origin/Tom
+
 			} 
 			catch (Exception e) 
 			{
@@ -158,7 +159,7 @@ public class DatabaseManager
 			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
 		}
 	}
-<<<<<<< HEAD
+
 	public void loadRoutes()
 	{
 		//create route in here
@@ -197,19 +198,62 @@ public class DatabaseManager
 				stops.add(new Stop(name, route, id));
 			}
 		}
-		catch(Exception e)
+		catch (Exception ex)
 		{
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
-=======
+		}
+		
+		
+
+	public List<Person> getAsuPeople() {
+		return asuPeople;
+	}
+
+	public void setAsuPeople(List<Person> asuPeople) {
+		this.asuPeople = asuPeople;
+	}
+
+	public List<Stop> getStops() {
+		return stops;
+	}
+
+	public void setStops(List<Stop> stops) {
+		this.stops = stops;
+	}
+
+	public List<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(List<Route> routes) {
+		this.routes = routes;
+	}
+
+	public String getDbLocation() {
+		return dbLocation;
+	}
+
+	public void setDbLocation(String dbLocation) {
+		this.dbLocation = dbLocation;
+	}
+
+	public String getFileLocation() {
+		return fileLocation;
+	}
+
+	public void setFileLocation(String fileLocation) {
+		this.fileLocation = fileLocation;
+	}
+
 	public void createRoute(String route)
 	{
-		//create route in here
+		//crate route in here
 	}
 	public void createStop(String stop)
 	{
 		//create stop in here
->>>>>>> origin/Tom
+
 	}
 	
 	///---Packages---///
@@ -247,10 +291,9 @@ public class DatabaseManager
 		}
 	}
 	//Backup(more logic involved)
-<<<<<<< HEAD
+
 	@SuppressWarnings("resource")
-=======
->>>>>>> origin/Tom
+
 	public void updatePackage(String tNumber, boolean value)
 	{
 		try
@@ -258,7 +301,7 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-<<<<<<< HEAD
+
 			statement = conn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
 			ResultSet rs = statement.executeQuery();
 			if(rs.getBoolean("At_Stop"))
@@ -278,8 +321,7 @@ public class DatabaseManager
 				statement.setString(2, tNumber);
 				statement.execute();
 			}
-=======
->>>>>>> origin/Tom
+
 		}
 		catch(Exception e)
 		{
@@ -294,7 +336,7 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-<<<<<<< HEAD
+
 			statement = conn.prepareStatement("alter table Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
 			Date d = new Date();
 			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
@@ -303,9 +345,7 @@ public class DatabaseManager
 			statement.setString(3, date);
 			statement.setString(4, tNumber);
 			statement.execute();
-=======
-			
->>>>>>> origin/Tom
+
 		}
 		catch(Exception e)
 		{
@@ -429,7 +469,6 @@ public class DatabaseManager
 		}
 	}
 
-<<<<<<< HEAD
 	///---Package Searching---///
 	public List<Package> findPackage(String[] criteria)
 	{
@@ -552,38 +591,16 @@ public class DatabaseManager
 		return results;
 	}
 
-	///---Get Methods---///
-	public List<Stop> getStops()
-	{
-		return stops;
-	}
-	public List<Route> getRoutes()
-	{
+	public List<Stop> getStopsFromRoute(String text) {
+		
+		List<Stop> routes = new ArrayList<Stop>();
 		return routes;
-=======
-	public ArrayList<Route> getRoutes() {
-		// TODO Auto-generated method stub
-		return new ArrayList<Route>();
-	}
-
-	public ArrayList<Stop> getStopsFromRoute(String routeName) {
-		// TODO Auto-generated method stub
-		return new ArrayList<Stop>();
 	}
 
 	public ArrayList<Package> getPackagesFromStop(int id) {
 		// TODO Auto-generated method stub
-		return new ArrayList<Package>();
+		return null;
 	}
 
-	public ArrayList<Stop> getStops() {
-		// TODO Auto-generated method stub
-		return new ArrayList<Stop>();
-	}
-
-	public Person getPerson(String firstName, String lastName) {
-		// TODO Auto-generated method stub
-		return new Person("Thomas","Nehring", "fdsaf", "asdfsa", "252");
->>>>>>> origin/Tom
-	}
+//	
 }

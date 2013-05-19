@@ -11,6 +11,10 @@ public class Stop
 		this.name=name;
 	}
 	
+	public Stop(String name2, int route, int id2) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getName()
 	{
 		return name;
