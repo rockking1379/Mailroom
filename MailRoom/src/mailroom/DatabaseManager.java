@@ -1,8 +1,10 @@
-package mailroom;
+package com.client.common;
 
 import java.io.*;
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.*;
+import java.util.Date;
 import javax.swing.JOptionPane;
 
 
@@ -141,13 +143,48 @@ public class DatabaseManager
 			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
 		}
 	}
-	public void createRoute(String route)
+	public void loadRoutes()
 	{
 		//create route in here
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Route;");
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+				String name = rs.getString("Name");
+				int id = rs.getInt("route_id");
+				routes.add(new Route(name, id));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
-	public void createStop(String stop)
+	public void loadStops()
 	{
 		//create stop in here
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Stop;");
+			ResultSet rs = statement.executeQuery();
+			while(rs.next())
+			{
+				String name = rs.getString("Name");
+				int id = rs.getInt("stop_id");
+				int route = rs.getInt("route_id");
+				stops.add(new Stop(name, route, id));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
 	
 	///---Packages---///
@@ -185,6 +222,7 @@ public class DatabaseManager
 		}
 	}
 	//Backup(more logic involved)
+	@SuppressWarnings("resource")
 	public void updatePackage(String tNumber, boolean value)
 	{
 		try
@@ -192,6 +230,25 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
+			ResultSet rs = statement.executeQuery();
+			if(rs.getBoolean("At_Stop"))
+			{
+				statement = conn.prepareStatement("alter table Package set Picked_Up=?, Pick_Up_Date=? where Tracking_Number=?;");
+				statement.setBoolean(1, value);
+				Date d = new Date();
+				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+				statement.setString(2, date);
+				statement.setString(3, tNumber);
+				statement.execute();
+			}
+			else
+			{
+				statement = conn.prepareStatement("alter table Package set At_Stop=? where Tracking_Number=?;");
+				statement.setBoolean(1, value);
+				statement.setString(2, tNumber);
+				statement.execute();
+			}
 		}
 		catch(Exception e)
 		{
@@ -206,7 +263,14 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			
+			statement = conn.prepareStatement("alter table Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
+			Date d = new Date();
+			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+			statement.setBoolean(1, atStop);
+			statement.setBoolean(2, pickedUp);
+			statement.setString(3, date);
+			statement.setString(4, tNumber);
+			statement.execute();
 		}
 		catch(Exception e)
 		{
@@ -328,5 +392,126 @@ public class DatabaseManager
 		{
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
+	}
+
+	///---Searching---///
+	public List<Package> findPackage(String[] criteria)
+	{
+		List<Package> results = new ArrayList<Package>();
+		//Logic
+		return results;
+	}
+	public List<Package> findPackage(String beginDate, String endDate)
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
+			statement.setString(1, beginDate);
+			statement.setString(2, endDate);
+			
+			ResultSet rs = statement.executeQuery();
+			
+			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+			statement.setInt(1, rs.getInt("stop_id"));
+			
+			ResultSet rs2 = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				results.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("Email"),
+						rs.getDate("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number")
+						));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		
+		return results;
+	}
+	public List<Package> findPackage(String tNumber)
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
+			statement.setString(1, tNumber);
+			
+			ResultSet rs = statement.executeQuery();
+			
+			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+			statement.setInt(1, rs.getInt("stop_id"));
+			
+			ResultSet rs2 = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				results.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("Email"),
+						rs.getDate("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number")
+						));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		
+		return results;		
+	}
+	///---People Searching---///
+	public List<Person> findPerson(String firstName, String lastName)
+	{
+		List<Person> results = new ArrayList<Person>();
+		
+		for(int i = 0; i < asuPeople.size(); i++)
+		{
+			if(asuPeople.get(i).getFirstName().equals(firstName))
+			{
+				if(asuPeople.get(i).getLastName().equals(lastName))
+				{
+					results.add(asuPeople.get(i));
+				}
+			}
+		}
+		
+		return results;
+	}
+	public List<Person> findPerson(String firstName, String lastName, String boxNumber)
+	{
+		List<Person> results = new ArrayList<Person>();
+		
+		for(int i = 0; i < asuPeople.size(); i++)
+		{
+			if(asuPeople.get(i).getFirstName().equals(firstName))
+			{
+				if(asuPeople.get(i).getLastName().equals(lastName))
+				{
+					if(asuPeople.get(i).getBox().equals(boxNumber))
+					{
+						results.add(asuPeople.get(i));
+					}
+				}
+			}
+		}
+		
+		return results;
 	}
 }

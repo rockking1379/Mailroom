@@ -404,7 +404,114 @@ public class DatabaseManager
 	public List<Package> findPackage(String beginDate, String endDate)
 	{
 		List<Package> results = new ArrayList<Package>();
-		//More logic
+		
+		PreparedStatement statement = null;
+		try
+		{
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
+			statement.setString(1, beginDate);
+			statement.setString(2, endDate);
+			
+			ResultSet rs = statement.executeQuery();
+			
+			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+			statement.setInt(1, rs.getInt("stop_id"));
+			
+			ResultSet rs2 = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				results.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("Email"),
+						rs.getDate("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number")
+						));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		
+		return results;
+	}
+	public List<Package> findPackage(String tNumber)
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
+			statement.setString(1, tNumber);
+			
+			ResultSet rs = statement.executeQuery();
+			
+			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+			statement.setInt(1, rs.getInt("stop_id"));
+			
+			ResultSet rs2 = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				results.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("Email"),
+						rs.getDate("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number")
+						));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		
+		return results;		
+	}
+	///---People Searching---///
+	public List<Person> findPerson(String firstName, String lastName)
+	{
+		List<Person> results = new ArrayList<Person>();
+		
+		for(int i = 0; i < asuPeople.size(); i++)
+		{
+			if(asuPeople.get(i).getFirstName().equals(firstName))
+			{
+				if(asuPeople.get(i).getLastName().equals(lastName))
+				{
+					results.add(asuPeople.get(i));
+				}
+			}
+		}
+		
+		return results;
+	}
+	public List<Person> findPerson(String firstName, String lastName, String boxNumber)
+	{
+		List<Person> results = new ArrayList<Person>();
+		
+		for(int i = 0; i < asuPeople.size(); i++)
+		{
+			if(asuPeople.get(i).getFirstName().equals(firstName))
+			{
+				if(asuPeople.get(i).getLastName().equals(lastName))
+				{
+					if(asuPeople.get(i).getBox().equals(boxNumber))
+					{
+						results.add(asuPeople.get(i));
+					}
+				}
+			}
+		}
+		
 		return results;
 	}
 }

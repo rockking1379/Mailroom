@@ -2,23 +2,18 @@ package com.client.common;
 
 import javax.swing.JOptionPane;
 
-import sun.util.calendar.BaseCalendar.Date;
+import java.text.DateFormat;
+import java.util.Date;
 
 public class Package 
 {
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String date;
+	private Date date;
 	private String boxNumber;
 	private String stop;
 	private String trackingNumber;
-	
-	public Package()
-	{
-		//Wrong Constructor
-		JOptionPane.showMessageDialog(null, "Cannot create an empty Package");
-	}
 	
 	//Optimal
 	public Package(String firstName, String lastName, String email, Date date, String boxNumber, String stop, String trackingNumber)
@@ -26,7 +21,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date = new String(date.getMonth() + "-" + date.getDayOfMonth() + "-" + date.getYear());
+		this.date = date;
 		this.boxNumber = boxNumber;
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -38,7 +33,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date = new String(date.getMonth() + "-" + date.getDayOfMonth() + "-" + date.getYear());
+		this.date = date;
 		this.boxNumber = "0";
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -50,7 +45,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date = new String(date.getMonth() + "-" + date.getDayOfMonth() + "-" + date.getYear());
+		this.date = date;
 		this.boxNumber = "0";
 		this.stop = "RICHARDSON";
 		this.trackingNumber = trackingNumber;
@@ -70,7 +65,7 @@ public class Package
 	}
 	public String getDate()
 	{
-		return date;
+		return DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
 	}
 	public String getBoxNum()
 	{
