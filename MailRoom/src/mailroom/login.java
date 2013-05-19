@@ -7,6 +7,7 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -34,7 +35,13 @@ public class login extends JFrame {
 			public void run() {
 				try {
 					login frame = new login();
-					frame.setVisible(true);
+					
+					frame.setTitle("Login");
+					
+					ImageIcon icon= new ImageIcon(getClass().getResource("/image/Key.jpg"));
+					frame.setIconImage(icon.getImage());
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -98,6 +105,20 @@ public class login extends JFrame {
 		passwordField = new JPasswordField();
 		passwordField.setBounds(96, 81, 151, 20);
 		contentPane.add(passwordField);
+		File f = new File("Admin_Hash.txt");
+		File fi = new File("User_Hash.txt");
+		
+		try{
+			BufferedReader reader = new BufferedReader(new FileReader(f));
+			reader.readLine();
+			reader = new BufferedReader(new FileReader(fi));
+			reader.readLine();
+			setVisible(true);
+		}
+		catch(IOException ex){
+			JOptionPane.showMessageDialog(this,"There are no records of accounts. You will now be redirected to the Account Creation Page");
+			new AddAccount(this);
+		}
 	}
 	
 	public class OkListener implements ActionListener{
@@ -110,7 +131,11 @@ public class login extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<String> hashes = new ArrayList<String>();
+<<<<<<< HEAD
 			Integer hash = userName.getText().hashCode()+passwordField.getPassword().hashCode();
+=======
+			Integer hash = userName.getText().hashCode()+passwordField.getText().hashCode();
+>>>>>>> origin/Tom
 			System.out.println(hash);
 			File a= new File("Admin_Hash.txt");
 			File u= new File("User_Hash.txt");
@@ -151,9 +176,10 @@ public class login extends JFrame {
 					
 				}
 				else{
-					f.setVisible(false);
+					
 					OpenScreen o = new OpenScreen(admin);
 					o.setVisible(true);
+					f.dispose();
 				}
 					
 				

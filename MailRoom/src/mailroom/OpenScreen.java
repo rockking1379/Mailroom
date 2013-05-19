@@ -1,5 +1,6 @@
 package mailroom;
-
+// 5-17-2013
+//Testing new Project
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -22,7 +23,7 @@ import javax.swing.JMenuItem;
 import java.awt.Dialog.ModalExclusionType;
 
 public class OpenScreen extends JFrame {
-
+	DatabaseManager manager;
 	private JPanel contentPane;
 
 	/**
@@ -49,7 +50,11 @@ public class OpenScreen extends JFrame {
 
 	public OpenScreen(boolean admin) {
 		setVisible(true);
+<<<<<<< HEAD
 
+=======
+		manager = new DatabaseManager();
+>>>>>>> origin/Tom
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
 		setIconImage(icon.getImage());
@@ -67,6 +72,15 @@ public class OpenScreen extends JFrame {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmCreateNewAccount = new JMenuItem("Create New Account");
+		mntmCreateNewAccount.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new AddAccount();
+				
+			}
+			
+		});
 		mnFile.add(mntmCreateNewAccount);
 		
 		JMenuItem mntmCreateNewRoute = new JMenuItem("Create New Route");
@@ -75,8 +89,27 @@ public class OpenScreen extends JFrame {
 		mntmCreateNewRoute.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e)
             {
+<<<<<<< HEAD
             	RouteMaker route = new RouteMaker();
                 route.setVisible(true);
+=======
+            	JFrame f = new JFrame("Create A Route");
+                
+                
+                RouteMaker dual = new RouteMaker(manager);
+                //we need a method for that datamangaer that will return an array of stops for this part
+                dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
+                		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
+                		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
+                		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
+                		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound" });
+
+               
+                f.getContentPane().add(dual, BorderLayout.CENTER);
+                f.setSize(493, 360);
+                f.setVisible(true);
+                f.setResizable(false);
+>>>>>>> origin/Tom
             }
         });
 		
@@ -106,7 +139,7 @@ public class OpenScreen extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                ScanPackage scan = new ScanPackage();
+                ScanPackage scan = new ScanPackage(manager);
                 scan.setVisible(true);
             }
         });
@@ -121,7 +154,7 @@ public class OpenScreen extends JFrame {
 	    	 
 	            public void actionPerformed(ActionEvent e)
 	            {
-	                RoutePrint route = new RoutePrint();
+	                RoutePrint route = new RoutePrint(manager);
 	                route.setVisible(true);
 	            }
 	        });
@@ -138,6 +171,16 @@ public class OpenScreen extends JFrame {
 	         contentPane.add(btnSearch);
 	         
 	         JButton btnRefesh = new JButton("Refesh");
+	         
+	         btnRefesh.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					//we need search parameters for the class table
+					
+				}
+	        	 
+	         });
 	         btnRefesh.setFont(new Font("Tahoma", Font.BOLD, 11));
 	         btnRefesh.setBounds(20, 354, 121, 23);
 	         contentPane.add(btnRefesh);

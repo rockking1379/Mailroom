@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.client.common;
 
 import java.io.*;
@@ -5,6 +6,14 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
+=======
+package mailroom;
+
+import java.io.*;
+import java.sql.*;
+import java.util.*;
+
+>>>>>>> origin/Tom
 import javax.swing.JOptionPane;
 
 
@@ -57,9 +66,12 @@ public class DatabaseManager
 					createPerson(person);
 				}
 				br.close();
+<<<<<<< HEAD
 				
 				loadRoutes();
 				loadStops();
+=======
+>>>>>>> origin/Tom
 			} 
 			catch (Exception e) 
 			{
@@ -146,6 +158,7 @@ public class DatabaseManager
 			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
 		}
 	}
+<<<<<<< HEAD
 	public void loadRoutes()
 	{
 		//create route in here
@@ -188,6 +201,15 @@ public class DatabaseManager
 		{
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
+=======
+	public void createRoute(String route)
+	{
+		//create route in here
+	}
+	public void createStop(String stop)
+	{
+		//create stop in here
+>>>>>>> origin/Tom
 	}
 	
 	///---Packages---///
@@ -225,7 +247,10 @@ public class DatabaseManager
 		}
 	}
 	//Backup(more logic involved)
+<<<<<<< HEAD
 	@SuppressWarnings("resource")
+=======
+>>>>>>> origin/Tom
 	public void updatePackage(String tNumber, boolean value)
 	{
 		try
@@ -233,6 +258,7 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+<<<<<<< HEAD
 			statement = conn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
 			ResultSet rs = statement.executeQuery();
 			if(rs.getBoolean("At_Stop"))
@@ -252,6 +278,8 @@ public class DatabaseManager
 				statement.setString(2, tNumber);
 				statement.execute();
 			}
+=======
+>>>>>>> origin/Tom
 		}
 		catch(Exception e)
 		{
@@ -266,6 +294,7 @@ public class DatabaseManager
 			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+<<<<<<< HEAD
 			statement = conn.prepareStatement("alter table Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
 			Date d = new Date();
 			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
@@ -274,6 +303,9 @@ public class DatabaseManager
 			statement.setString(3, date);
 			statement.setString(4, tNumber);
 			statement.execute();
+=======
+			
+>>>>>>> origin/Tom
 		}
 		catch(Exception e)
 		{
@@ -397,6 +429,7 @@ public class DatabaseManager
 		}
 	}
 
+<<<<<<< HEAD
 	///---Package Searching---///
 	public List<Package> findPackage(String[] criteria)
 	{
@@ -527,5 +560,30 @@ public class DatabaseManager
 	public List<Route> getRoutes()
 	{
 		return routes;
+=======
+	public ArrayList<Route> getRoutes() {
+		// TODO Auto-generated method stub
+		return new ArrayList<Route>();
+	}
+
+	public ArrayList<Stop> getStopsFromRoute(String routeName) {
+		// TODO Auto-generated method stub
+		return new ArrayList<Stop>();
+	}
+
+	public ArrayList<Package> getPackagesFromStop(int id) {
+		// TODO Auto-generated method stub
+		return new ArrayList<Package>();
+	}
+
+	public ArrayList<Stop> getStops() {
+		// TODO Auto-generated method stub
+		return new ArrayList<Stop>();
+	}
+
+	public Person getPerson(String firstName, String lastName) {
+		// TODO Auto-generated method stub
+		return new Person("Thomas","Nehring", "fdsaf", "asdfsa", "252");
+>>>>>>> origin/Tom
 	}
 }

@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -18,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JComboBox;
@@ -34,7 +36,10 @@ public class ScanPackage extends JFrame {
 	private JTextField BoxText;
 	private JTextField LastNameText;
 	private JLabel lblDate_1;
-	
+	JComboBox comboBox;
+	String newDate;
+	Date date =new Date();
+	boolean noStops =false;
 
 	/**
 	 * Launch the application.
@@ -43,8 +48,8 @@ public class ScanPackage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ScanPackage frame = new ScanPackage();
-					frame.setVisible(true);
+					ScanPackage frame = new ScanPackage(new DatabaseManager());
+					
 					frame.addWindowListener(new WindowAdapter(){ 
 						  public void windowOpened( WindowEvent e){ 
 						    TrackText.requestFocus();
@@ -62,7 +67,7 @@ public class ScanPackage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ScanPackage() {
+	public ScanPackage(final DatabaseManager manager) {
 		setResizable(false);
 		setTitle("Scan My Package");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/images.jpg"));
@@ -108,6 +113,20 @@ public class ScanPackage extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(229, 161, 89, 23);
 		contentPane.add(btnSave);
+		btnSave.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				String stop=(String)comboBox.getSelectedItem();
+				if(!StopText.getText().equals(null)){
+					stop=StopText.getText();
+				}
+				Person p= manager.getPerson(NameText.getText(),LastNameText.getText());
+				manager.addPackage(new Package(NameText.getText(),LastNameText.getText(),date,BoxText.getText(),stop,TrackText.getText()));
+				
+			}
+			
+		});
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBounds(35, 161, 89, 23);
@@ -159,6 +178,20 @@ public class ScanPackage extends JFrame {
 		btnAutoFill.setBounds(437, 23, 89, 20);
 		contentPane.add(btnAutoFill);
 		
+		btnAutoFill.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			Person p=manager.getPerson(NameText.getText(),LastNameText.getText());
+			
+			BoxText.setText(p.getBox());
+			comboBox.setSelectedItem(p.getStop().getName());
+				
+				
+			}
+			
+		});
+		
 		BoxText = new JTextField();
 		BoxText.setBounds(375, 105, 151, 20);
 		contentPane.add(BoxText);
@@ -169,7 +202,33 @@ public class ScanPackage extends JFrame {
 		lblBox.setBounds(299, 108, 34, 14);
 		contentPane.add(lblBox);
 		
-		JComboBox comboBox = new JComboBox();
+	    comboBox = new JComboBox();
+		DefaultComboBoxModel stopNames=null;
+		
+		try{
+		ArrayList<Stop> stops = manager.getStops();
+		String[] sa= new String[stops.size()-1];
+		int i=0;
+		for(Stop s: stops){
+			sa[i]= s.getName();
+			i++;
+		}
+		 stopNames = new DefaultComboBoxModel(sa);
+		}
+		catch(NegativeArraySizeException ex){
+			JOptionPane.showMessageDialog(this, "Please create Stops before scanning in packages");
+			dispose();
+			noStops=true;
+		}
+		
+		
+		try{
+			comboBox.setModel(stopNames);
+			}
+			catch(NullPointerException ex){
+				dispose();
+			}
+
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", 
 				"Community Partnership", "Computing Services", "Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", 
 				"Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music",
@@ -200,10 +259,26 @@ public class ScanPackage extends JFrame {
 		contentPane.add(lblDate_1);
 		Date date =new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
-        String newDate = ft.format(date);
+        newDate = ft.format(date);
 		lblDate_1.setText(newDate);
+		setVisible(true);
+		packageExistCheck();
+		Thread t = new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				packageExistCheck();
+				
+			}
+			
+		});
+		t.start();
 		
-		
-		
+	}
+	public void packageExistCheck(){
+		if(noStops){
+			//setVisible(false);
+			dispose();
+		}
 	}
 }

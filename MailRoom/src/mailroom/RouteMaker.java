@@ -44,8 +44,10 @@ public class RouteMaker extends JPanel {
   private JTextField RouteField;
   DatabaseManager manager;
   ArrayList<String> inDest = new ArrayList<String>();
+ 
 
-  public RouteMaker() {
+  public RouteMaker(DatabaseManager manager) {
+	  this.manager=manager;
   	setBackground(new Color(0, 102, 0));
     initScreen();
   }
@@ -237,7 +239,7 @@ public class RouteMaker extends JPanel {
     JFrame f = new JFrame("Create A Route");
     
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    RouteMaker dual = new RouteMaker();
+    RouteMaker dual = new RouteMaker(new DatabaseManager());
     dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
     		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
     		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
