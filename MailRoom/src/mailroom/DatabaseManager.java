@@ -57,6 +57,9 @@ public class DatabaseManager
 					createPerson(person);
 				}
 				br.close();
+				
+				loadRoutes();
+				loadStops();
 			} 
 			catch (Exception e) 
 			{
