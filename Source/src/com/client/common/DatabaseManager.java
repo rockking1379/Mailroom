@@ -397,7 +397,7 @@ public class DatabaseManager
 		}
 	}
 
-	///---Searching---///
+	///---Package Searching---///
 	public List<Package> findPackage(String[] criteria)
 	{
 		List<Package> results = new ArrayList<Package>();
@@ -479,6 +479,7 @@ public class DatabaseManager
 		
 		return results;		
 	}
+	
 	///---People Searching---///
 	public List<Person> findPerson(String firstName, String lastName)
 	{
@@ -516,5 +517,15 @@ public class DatabaseManager
 		}
 		
 		return results;
+	}
+
+	///---Get Methods---///
+	public List<Stop> getStops()
+	{
+		return stops;
+	}
+	public List<Route> getRoutes()
+	{
+		return routes;
 	}
 }
