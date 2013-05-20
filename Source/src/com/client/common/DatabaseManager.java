@@ -204,7 +204,7 @@ public class DatabaseManager
 				Class.forName("org.sqlite.JDBC"); 
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-				statement = conn.prepareStatement("select * from Package where Date=?;");
+				statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='false';");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 				statement.setString(1, date);
