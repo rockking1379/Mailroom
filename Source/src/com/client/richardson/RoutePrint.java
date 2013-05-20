@@ -229,8 +229,8 @@ public class RoutePrint extends JFrame {
             		addSpacing(j);
             		
             		toPrint.setText(toPrint.getText()+newHead+"\n"+equ+"\n"+fieldHeader+"\n");            		
-            		packages = manager.getPackagesFromStop(s.getID());
-            		
+            		//packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
+            		packages = new ArrayList();
             		if(packages==null){
             			JOptionPane.showMessageDialog(null,"No packages were fount. Please be sure you have scanned in packages");
             			return;

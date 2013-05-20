@@ -12,8 +12,7 @@ public class prog
 	//Start Database Manager
 	//Start Login Screen
 	//Run Client
-	//hi there
-	//how are you?
+	
 	public static void main(String[] args)
 	{
 		DatabaseManager dbManager = new DatabaseManager();
