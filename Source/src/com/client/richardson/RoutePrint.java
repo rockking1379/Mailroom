@@ -139,6 +139,7 @@ public class RoutePrint extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
+            	boolean packagesFound=false;
             	if(ready){
             		try {
 						toPrint.print();
@@ -171,13 +172,16 @@ public class RoutePrint extends JFrame {
             		if(c.isSelected()){
             			 			
             			stops = manager.getStopsFromRoute(c.getText());
-            			for(Stop st: stops){
-            			stops.add(st);
-            			}
+            			
             			
             		}
             	}
+            stops.add(new Stop("SUB"));	
             	
+            	if(stops.size()==0){
+            		JOptionPane.showMessageDialog(null,"No stops were found. Please add stops before Printing");
+            		return;
+            	}
             	
             	
             	
@@ -203,8 +207,8 @@ public class RoutePrint extends JFrame {
             	sp.setBounds(10,300,500,250);
             	contentPane.add(sp);
             	
-            	setBounds(100,100,535,600);
-            	stops.add(new Stop("SUwerrrrrrrrrrrrrrrrrrrrwerrrrrrrrrrB"));
+            	
+            	
             	
             	
             	
@@ -217,6 +221,9 @@ public class RoutePrint extends JFrame {
             	String sign = "________________________\n";
             	
             	String fieldHeader= "Last"+tab+"First"+tab+"Addr."+tab+"Track#"+tab+"Sign Here";
+            	
+            	
+            	
             	for(Stop s: stops){
             		String stn=s.getName();
             		if(stn.length()>16){
@@ -229,13 +236,7 @@ public class RoutePrint extends JFrame {
             		addSpacing(j);
             		
             		toPrint.setText(toPrint.getText()+newHead+"\n"+equ+"\n"+fieldHeader+"\n");            		
-            		//packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
-            		packages = new ArrayList();
-            		if(packages==null){
-            			JOptionPane.showMessageDialog(null,"No packages were fount. Please be sure you have scanned in packages");
-            			return;
-            		}
-            		
+            		packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
             		
             		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", date,"93","234234235346541111532"));
             		packages.add(new Package("sdf","Yehriwerng", "nehringtb@sfdd.ede", date, "93", "23423423534654111112308"));
@@ -251,6 +252,20 @@ public class RoutePrint extends JFrame {
             		packages.add(new Package("sdfsdf","Ldfsdfsdfdf", "nehringtb@sfdd.ede", date,"098", "234234235346541111456456"));
             		packages.add(new Package("sdfsdf","Mdfsdfg", "nehringtb@sfdd.ede", date,"34", "234234235346541111789763"));
             		packages.add(new Package("sdfsdfs","dfsdsdf", "nehringtb@sfdd.ede", date,"234", "234234235346541111797807"));
+            		
+            		if(packages.size()==0){
+            			JOptionPane.showMessageDialog(null,"No packages were found for route "+s.getName()+". Please be sure you have scanned in packages");
+            			packagesFound = false;
+            			
+            		}
+            		else{
+            			packagesFound=true;
+            		
+            		
+            		
+            		
+
+            		
             		
             		String[] packageArray = new String[packages.size()-1];
             		for(int i=0; i<packages.size()-1;i++){
@@ -306,18 +321,14 @@ public class RoutePrint extends JFrame {
             			
             			toPrint.setText(toPrint.getText()+sign);
             		}
-            		
-            		
-            		
+          
             	}
             	
-            	
-            	
-            	
-            	
-            	
-            	
+             	if(packagesFound){
+           		setBounds(100,100,535,600);
             	ready=true;
+             	}
+            	}
             	
             }
            private void addSpacing(int j){
