@@ -15,6 +15,7 @@ public class DatabaseManager
 	private List<Person> asuPeople;
 	private List<Stop> stops;
 	private List<Route> routes;
+	private List<Package> packages;
 	private String dbLocation;
 	private String fileLocation;
 	
@@ -24,6 +25,7 @@ public class DatabaseManager
 		asuPeople = new ArrayList<Person>();
 		stops = new ArrayList<Stop>();
 		routes = new ArrayList<Route>();
+		packages = new ArrayList<Package>();
 	}
 	
 	///---Set Methods---///
@@ -190,6 +192,11 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
+	public void loadPackages()
+	{
+		//Load packages from today(if available)
+		//Also can be used after updating a package(good logic)
+	}
 	
 	///---Packages---///
 	public void addPackage(Package p)
@@ -219,6 +226,7 @@ public class DatabaseManager
 					break;
 				}
 			}
+			packages.add(p);
 		}
 		catch(Exception e)
 		{
@@ -530,13 +538,70 @@ public class DatabaseManager
 		return routes;
 	}
 
-	public ArrayList<Package> getPackagesFromStop(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	///---Printing---///
+	public List<Package> getPackagesFromStop(int stop_id) 
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		try
+		{
+			PreparedStatement statement = null;
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='false' and stop_id=?;");
+			Date d = new Date();
+			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+			statement.setString(1, date);
+			statement.setInt(2, stop_id);
+			
+			ResultSet rs = statement.executeQuery();
+			
+			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+			statement.setInt(1, rs.getInt("stop_id"));
+			
+			ResultSet rs2 = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				results.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("Email"),
+						rs.getDate("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number")
+						));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		
+		return results;
 	}
-
-	public List<Stop> getStopsFromRoute(String text) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Stop> getStopsFromRoute(String route) 
+	{
+		List<Stop> results = new ArrayList<Stop>();
+		
+		int route_id = 0;
+		
+		for(int i = 0; i < routes.size(); i++)
+		{
+			if(routes.get(i).getName().equals(route))
+			{
+				route_id = routes.get(i).getID();
+				break;
+			}
+		}
+		
+		for(int i = 0; i < stops.size(); i++)
+		{
+			if(stops.get(i).getRouteID() == route_id)
+			{
+				results.add(stops.get(i));
+			}
+		}
+		
+		return results;
 	}
 }
