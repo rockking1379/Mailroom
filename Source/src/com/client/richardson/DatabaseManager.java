@@ -88,8 +88,7 @@ public class DatabaseManager
 		
 		int index = 0;
 		//Main Loop
-		while(index < person.length())
-		{
+		
 			//First Name
 			while(person.charAt(index) != ',')
 			{
@@ -131,13 +130,14 @@ public class DatabaseManager
 				while(person.charAt(index) != ',')
 				{
 					building += person.charAt(index);
+					index++;
 				}
 			}
 			catch(Exception e)
 			{
 				//Just means no building was in file
 			}
-		}
+		
 		
 		if(!building.equals(""))
 		{
@@ -154,6 +154,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Route;");
 			ResultSet rs = statement.executeQuery();

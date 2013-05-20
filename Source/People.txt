@@ -1,2 +1,2 @@
-first name, last name, email, id number, box number, building
-Thomas, Nehring, nehringt@live.com, 900555555, 93, Moffatt
+first name, last name, email, id number, box number, building,
+Thomas,Nehring,nehringt@live.com,900555555,93,Moffatt,
