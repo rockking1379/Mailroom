@@ -2,15 +2,18 @@ package com.client.richardson;
 // 5-17-2013
 //Testing new Project
 import java.awt.BorderLayout;
+import com.client.common.*;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import java.awt.Color;
@@ -20,7 +23,17 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
+
+import com.client.common.*;
+
 import java.awt.Dialog.ModalExclusionType;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
 
 public class OpenScreen extends JFrame {
 	DatabaseManager manager;
@@ -47,12 +60,15 @@ public class OpenScreen extends JFrame {
 	 */
 
 	
-
 	public OpenScreen(boolean admin) {
+		
 				manager = new DatabaseManager();
-				manager.setFile("properties.prop");
-				manager.setDatabase("Mailroom_db");
-				manager.setup();
+				
+				//manager.setDatabase("Mailroom_db");
+				//manager.setFile("People.txt");
+				//loadSettings();
+				//manager.setup();
+				//manager.loadPackages(true,null);
 				
 
 
@@ -202,5 +218,96 @@ public class OpenScreen extends JFrame {
 	          
 	         setVisible(true); 
 	}
+	public void loadSettings(){
+		DatabaseManager dbManager = new DatabaseManager();
+		File settings = new File("./properties.prop");
+		if(settings.exists())
+		{
+			try
+			{
+				FileInputStream fStream = new FileInputStream(settings);
+				DataInputStream dis = new DataInputStream(fStream);
+				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+		
+				String settingLine;
+				while((settingLine = br.readLine()) != null)
+				{
+					//Read Settings
+					String setting = "";				
+					int index = 0;
+					while(settingLine.charAt(index) != ':')
+					{
+						setting += settingLine.charAt(index);
+						index++;
+					}
+					if(setting.toUpperCase().equals("DATABASE"))
+					{
+						//Read in Database configuration
+						String temp = "";
+						for(int i = index; i < settingLine.length(); i++)
+						{
+							temp += settingLine.charAt(i);
+						}
+						
+						dbManager.setDatabase(temp);
+					}
+					else
+					{
+						if(setting.toUpperCase().equals("PERSONS"))
+						{
+							String temp = "";
+							
+							for(int i = index; i < settingLine.length(); i++)
+							{
+								temp += settingLine.charAt(i);
+							}
+							
+							dbManager.setFile(temp);
+						}
+					}
+				}
+				
+				br.close();
+				
+			}
+			catch(Exception e)
+			{
+				//Do nothing
+			}
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
+			
+			JFileChooser fc = new JFileChooser();
+			fc.showDialog(null, "SELECT");
+			fc.setFileFilter(null);
+			File database = fc.getSelectedFile();
+			fc.showDialog(null, "SELECT");
+			File persons = fc.getSelectedFile();
+			
+			try 
+			{
+				if(settings.createNewFile())
+				{
+					FileWriter fOutput = new FileWriter(settings);
+					BufferedWriter bw = new BufferedWriter(fOutput);
+					bw.write("DATABASE:" + database.getAbsolutePath() + "\n");
+					bw.write("PERSONS:" + persons.getAbsolutePath() + "\n");
+					bw.close();
+					fOutput.close();
+				}
+			} 
+			catch (Exception e) 
+			{
+				//Ignore the exceptions
+			}
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
+		}
+	}	
+					
+	
+	
+
 	
 }
