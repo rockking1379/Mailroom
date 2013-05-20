@@ -32,11 +32,12 @@ public class prog
 					//Read Settings
 					String setting = "";				
 					int index = 0;
-					while(settingLine.charAt(index) != ':')
+					while(settingLine.charAt(index) != ';')
 					{
 						setting += settingLine.charAt(index);
 						index++;
 					}
+					index++;
 					if(setting.toUpperCase().equals("DATABASE"))
 					{
 						//Read in Database configuration
@@ -71,6 +72,8 @@ public class prog
 			{
 				//Do nothing
 			}
+			
+			dbManager.setup();
 		}
 		else
 		{

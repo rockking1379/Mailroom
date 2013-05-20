@@ -50,6 +50,10 @@ public class DatabaseManager
 			FileInputStream fStream;
 			try 
 			{
+				if(!people.exists())
+				{
+					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
+				}
 				fStream = new FileInputStream(people);
 				DataInputStream dis = new DataInputStream(fStream);
 				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
@@ -135,7 +139,7 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				//Just means no building was in file
+				break;
 			}
 		}
 		
