@@ -97,7 +97,7 @@ public class OpenScreen extends JFrame {
                 
                 RouteMaker dual = new RouteMaker(manager);
                 
-                String[] stopNames= new String[manager.getStops().size()-1];
+                String[] stopNames= new String[manager.getStops().size()];
                 
                 for(Stop s: manager.getStops()){
                 	stopNames[manager.getStops().indexOf(s)] = s.getName();

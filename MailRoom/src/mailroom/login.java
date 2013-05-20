@@ -132,7 +132,7 @@ public class login extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<String> hashes = new ArrayList<String>();
 
-			Integer hash = userName.getText().hashCode()+passwordField.getPassword().hashCode();
+			Integer hash = userName.getText().hashCode()+passwordField.getText().hashCode();
 
 			
 

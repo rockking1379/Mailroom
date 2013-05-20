@@ -165,12 +165,13 @@ public class RoutePrint extends JFrame {
             		
             	}
             	
-            	ArrayList<Stop> stops = new ArrayList<Stop>();
+            	List<Stop> stops = new ArrayList<Stop>();
             	ArrayList<Package> packages = new ArrayList<Package>();
             	for(JCheckBox c: checkBoxes){
             		if(c.isSelected()){
             			 			
-            			for(Stop st: manager.getStopsFromRoute(c.getText())){
+            			stops = manager.getStopsFromRoute(c.getText());
+            			for(Stop st: stops){
             			stops.add(st);
             			}
             			
