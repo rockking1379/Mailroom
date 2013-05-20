@@ -64,11 +64,11 @@ public class OpenScreen extends JFrame {
 		
 				manager = new DatabaseManager();
 				
-				//manager.setDatabase("Mailroom_db");
-				//manager.setFile("People.txt");
-				//loadSettings();
-				//manager.setup();
-				//manager.loadPackages(true,null);
+				manager.setDatabase("Mailroom_db");
+				manager.setFile("People.txt");
+				loadSettings();
+				manager.setup();
+				manager.loadPackages(true,null);
 				
 
 
