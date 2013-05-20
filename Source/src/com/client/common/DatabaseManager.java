@@ -25,7 +25,6 @@ public class DatabaseManager
 		asuPeople = new ArrayList<Person>();
 		stops = new ArrayList<Stop>();
 		routes = new ArrayList<Route>();
-		packages = new ArrayList<Package>();
 	}
 	
 	///---Set Methods---///
@@ -192,10 +191,92 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
-	public void loadPackages()
+	public void loadPackages(boolean allStops, String stop)
 	{
 		//Load packages from today(if available)
 		//Also can be used after updating a package(good logic)
+		packages = new ArrayList<Package>();
+		
+		if(allStops)
+		{
+			try
+			{
+				PreparedStatement statement = null;
+				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				statement = conn.prepareStatement("select * from Package where Date=?;");
+				Date d = new Date();
+				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+				statement.setString(1, date);
+			
+				ResultSet rs = statement.executeQuery();
+				
+				while(rs.next())
+				{
+					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+					statement.setInt(1, rs.getInt("stop_id"));
+			
+					ResultSet rs2 = statement.executeQuery();
+					
+					packages.add(new Package(rs.getString("First_Name"),
+							rs.getString("Last_Name"),
+							rs.getString("Email"),
+							rs.getDate("Date"),
+							rs.getString("Box_Number"),
+							rs2.getString("Name"),
+							rs.getString("Tracking_Number")
+							));
+				}
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
+		}
+		if(!allStops)
+		{
+			try
+			{
+				PreparedStatement statement = null;
+				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=?;");
+				Date d = new Date();
+				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+				statement.setString(1, date);
+			
+				for(int i = 0; i < stops.size(); i++)
+				{
+					if(stops.get(i).getName().equals(stop))
+					{
+						statement.setInt(2, stops.get(i).getID());
+						break;
+					}
+				}
+				
+				ResultSet rs = statement.executeQuery();
+				
+				while(rs.next())
+				{
+					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+					statement.setInt(1, rs.getInt("stop_id"));
+			
+					ResultSet rs2 = statement.executeQuery();
+					
+					packages.add(new Package(rs.getString("First_Name"),
+							rs.getString("Last_Name"),
+							rs.getString("Email"),
+							rs.getDate("Date"),
+							rs.getString("Box_Number"),
+							rs2.getString("Name"),
+							rs.getString("Tracking_Number")
+							));
+				}
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
+		}
+		
 	}
 	
 	///---Packages---///
@@ -536,6 +617,10 @@ public class DatabaseManager
 	public List<Route> getRoutes()
 	{
 		return routes;
+	}
+	public List<Package> getPackages()
+	{
+		return packages;
 	}
 
 	///---Printing---///
