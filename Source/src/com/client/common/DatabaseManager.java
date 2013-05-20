@@ -50,6 +50,10 @@ public class DatabaseManager
 			FileInputStream fStream;
 			try 
 			{
+				if(!people.exists())
+				{
+					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
+				}
 				fStream = new FileInputStream(people);
 				DataInputStream dis = new DataInputStream(fStream);
 				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
@@ -135,7 +139,7 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				//Just means no building was in file
+				break;
 			}
 		}
 		
@@ -154,6 +158,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Route;");
 			ResultSet rs = statement.executeQuery();
@@ -175,6 +180,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Stop;");
 			ResultSet rs = statement.executeQuery();
@@ -201,6 +207,7 @@ public class DatabaseManager
 		{
 			try
 			{
+				Class.forName("org.sqlite.JDBC"); 
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				statement = conn.prepareStatement("select * from Package where Date=?;");
@@ -236,6 +243,7 @@ public class DatabaseManager
 		{
 			try
 			{
+				Class.forName("org.sqlite.JDBC"); 
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=?;");
@@ -441,6 +449,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Route(Name) values(?);");
 			statement.setString(1, route);
@@ -464,6 +473,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("alter TABLE Route(Name) set Name=? where Name=?;");
 			statement.setString(1, currentName);
@@ -501,6 +511,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
 			statement.setString(1, beginDate);
@@ -538,6 +549,7 @@ public class DatabaseManager
 		
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
