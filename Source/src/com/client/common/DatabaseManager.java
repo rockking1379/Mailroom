@@ -624,42 +624,16 @@ public class DatabaseManager
 	}
 
 	///---Printing---///
-	public List<Package> getPackagesFromStop(int stop_id) 
+	public List<Package> getPackagesFromStop(String stop) 
 	{
 		List<Package> results = new ArrayList<Package>();
 		
-		try
+		for(int i = 0; i < packages.size(); i++)
 		{
-			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='false' and stop_id=?;");
-			Date d = new Date();
-			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
-			statement.setString(1, date);
-			statement.setInt(2, stop_id);
-			
-			ResultSet rs = statement.executeQuery();
-			
-			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
-			statement.setInt(1, rs.getInt("stop_id"));
-			
-			ResultSet rs2 = statement.executeQuery();
-			
-			while(rs.next())
+			if(packages.get(i).getStop().equals(stop))
 			{
-				results.add(new Package(rs.getString("First_Name"),
-						rs.getString("Last_Name"),
-						rs.getString("Email"),
-						rs.getDate("Date"),
-						rs.getString("Box_Number"),
-						rs2.getString("Name"),
-						rs.getString("Tracking_Number")
-						));
+				results.add(packages.get(i));
 			}
-		}
-		catch(Exception e)
-		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 		
 		return results;
