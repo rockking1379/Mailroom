@@ -130,17 +130,11 @@ public class DatabaseManager
 			}
 			index++;
 			//Building
-			try
+			while(person.charAt(index) != ',')
 			{
-				while(person.charAt(index) != ',')
-				{
-					building += person.charAt(index);
-				}
+				building += person.charAt(index);
 			}
-			catch(Exception e)
-			{
-				break;
-			}
+
 		}
 		
 		if(!building.equals(""))
