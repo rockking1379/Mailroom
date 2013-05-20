@@ -52,6 +52,8 @@ public class OpenScreen extends JFrame {
 				manager = new DatabaseManager();
 				manager.setFile("properties.prop");
 				manager.setDatabase("Mailroom_db");
+				manager.setup();
+				
 
 
 
