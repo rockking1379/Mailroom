@@ -90,8 +90,13 @@ public class MultipleResultDisplay extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				JCheckBox c = (JCheckBox) group.getSelection();
-				int i = checkBoxes.indexOf(c);
+				JCheckBox ch=null;
+				for(JCheckBox c: checkBoxes){
+					if(c.isSelected()){
+						ch= c;
+					}
+				}
+				int i = checkBoxes.indexOf(ch);
 				Person selected = results.get(i);
 				frame.getBoxText().setText(selected.getBox());
 				frame.getComboBox().setSelectedItem(selected.getStop());
@@ -103,5 +108,7 @@ public class MultipleResultDisplay extends JFrame {
 			
 			
 		});
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setVisible(true);
 	}
 }

@@ -9,17 +9,17 @@ public class Person
 	private String email;
 	private String idNumber;
 	private String boxNumber;
-	private String building;
+	private String stop;
 	
 	//Faculty or Staff Constructor
-	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber, String building)
+	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber, String stop)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.idNumber = idNumber;
 		this.boxNumber = boxNumber;
-		this.building = building;
+		this.stop = stop;
 	}
 	//Student Constructor
 	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber)
@@ -29,7 +29,7 @@ public class Person
 		this.email = email;
 		this.idNumber = idNumber;
 		this.boxNumber = boxNumber;
-		this.building = "SUB";
+		this.stop = "SUB";
 	}
 	
 	//Get Methods
@@ -53,12 +53,9 @@ public class Person
 	{
 		return boxNumber;
 	}
-	public String getBuilding()
+	public String getStop()
 	{
-		return building;
+		return stop;
 	}
-	public Component getStop() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }
