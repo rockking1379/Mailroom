@@ -49,10 +49,13 @@ public class OpenScreen extends JFrame {
 	
 
 	public OpenScreen(boolean admin) {
-		setVisible(true);
+				manager = new DatabaseManager();
+				manager.setFile("properties.prop");
+				manager.setDatabase("Mailroom_db");
 
 
-		manager = new DatabaseManager();
+
+		
 
 		setTitle("My Mail Room");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
@@ -195,7 +198,7 @@ public class OpenScreen extends JFrame {
 	             }
 	         });
 	          
-	        
+	         setVisible(true); 
 	}
 	
 }
