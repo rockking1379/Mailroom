@@ -289,7 +289,7 @@ public class RouteMaker extends JPanel {
 		}
 		
 		
-		manager.addRoute(new Route(RouteField.getText()));
+		manager.addRoute(RouteField.getText());
 		
 	}
 	  

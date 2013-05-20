@@ -5,6 +5,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
+
 import javax.swing.JOptionPane;
 
 
@@ -346,20 +347,20 @@ public class DatabaseManager
 	}
 
 	///---Routes---///
-	public void addRoute(String name) 
+	public void addRoute(String route) 
 	{
 		PreparedStatement statement = null;
 		try
 		{
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Route(Name) values(?);");
-			statement.setString(1, name);
+			statement.setString(1, route);
 			if(statement.execute())
 			{
 				statement = conn.prepareStatement("select route_id from Route where Name = ?;");
-				statement.setString(1, name);
+				statement.setString(1, route);
 				ResultSet rs = statement.executeQuery();
-				Route r = new Route(name, rs.getInt(0));
+				Route r = new Route(route, rs.getInt(0));
 				routes.add(r);
 			}
 		}
@@ -527,5 +528,15 @@ public class DatabaseManager
 	public List<Route> getRoutes()
 	{
 		return routes;
+	}
+
+	public ArrayList<Package> getPackagesFromStop(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<Stop> getStopsFromRoute(String text) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

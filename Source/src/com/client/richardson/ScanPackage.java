@@ -181,7 +181,7 @@ public class ScanPackage extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-			ArrayList<Person> p=manager.findPerson(NameText.getText(),LastNameText.getText());
+			ArrayList<Person> p=(ArrayList<Person>) manager.findPerson(NameText.getText(),LastNameText.getText());
 			if(p==null){
 				JOptionPane.showMessageDialog(null,"no one was found by that name.");
 				return;
