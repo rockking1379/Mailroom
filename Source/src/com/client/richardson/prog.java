@@ -12,10 +12,11 @@ public class prog
 	//Start Database Manager
 	//Start Login Screen
 	//Run Client
+	static DatabaseManager dbManager;
 	
 	public static void main(String[] args)
 	{
-		DatabaseManager dbManager = new DatabaseManager();
+		dbManager = new DatabaseManager();
 		File settings = new File("./properties.prop");
 		if(settings.exists())
 		{
@@ -103,5 +104,9 @@ public class prog
 			}
 			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
 		}
+	}
+
+	public static DatabaseManager getDbManager() {
+		return dbManager;
 	}
 }

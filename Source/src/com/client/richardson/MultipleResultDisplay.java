@@ -2,6 +2,7 @@ package com.client.richardson;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Font;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
+import java.awt.FlowLayout;
+import javax.swing.JScrollPane;
 
 public class MultipleResultDisplay extends JFrame {
 
@@ -48,7 +51,7 @@ public class MultipleResultDisplay extends JFrame {
 		setTitle("Multiple Results");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 489, 323);
+		setBounds(100, 100, 412, 232);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(255, 255, 255));
 		contentPane.setBackground(new Color(0, 128, 0));
@@ -58,22 +61,27 @@ public class MultipleResultDisplay extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("There were multiple results to your search.");
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setBounds(10, 11, 434, 37);
+		lblNewLabel.setBounds(73, 11, 434, 37);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblrnPleaseSelect = new JLabel("Please select the person you would like to use.");
 		lblrnPleaseSelect.setForeground(new Color(255, 255, 255));
-		lblrnPleaseSelect.setBounds(43, 82, 361, 14);
+		lblrnPleaseSelect.setBounds(73, 59, 361, 14);
 		contentPane.add(lblrnPleaseSelect);
 		
-		JPanel resultPanel = new JPanel();
-		resultPanel.setBounds(53, 107, 361, 139);
-		contentPane.add(resultPanel);
-		resultPanel.setLayout(new GridLayout(1, 0, 0, 0));
-		
 		JButton btnSelect = new JButton("OK");
-		btnSelect.setBounds(315, 257, 89, 23);
+		btnSelect.setBounds(307, 175, 89, 23);
 		contentPane.add(btnSelect);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(21, 84, 361, 80);
+		contentPane.add(scrollPane);
+		
+		JPanel resultPanel = new JPanel();
+		scrollPane.setViewportView(resultPanel);
+		resultPanel.setForeground(Color.WHITE);
+		resultPanel.setBackground(new Color(0, 128, 0));
+		resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		
 		final ButtonGroup group = new ButtonGroup();
@@ -81,6 +89,8 @@ public class MultipleResultDisplay extends JFrame {
 		for(Person p: results){
 			String s = p.getLastName()+" "+p.getFirstName()+" "+p.getBox();
 			JCheckBox c = new JCheckBox(s);
+			c.setBackground(new Color(0,128,0));
+			c.setForeground(Color.WHITE);
 			checkBoxes.add(c);
 			group.add(c);
 			resultPanel.add(c);

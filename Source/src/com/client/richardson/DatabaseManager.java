@@ -29,7 +29,7 @@ public class DatabaseManager
 		
 		setDatabase("Mailroom_db");
 		setFile("People.txt");
-		loadSettings();
+		
 		setup();
 		loadPackages(true,null);
 	}
