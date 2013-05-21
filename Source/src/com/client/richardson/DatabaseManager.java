@@ -27,11 +27,7 @@ public class DatabaseManager
 		stops = new ArrayList<Stop>();
 		routes = new ArrayList<Route>();
 		
-		setDatabase("Mailroom_db");
-		setFile("People.txt");
 		
-		setup();
-		loadPackages(true,null);
 	}
 	
 	///---Set Methods---///
