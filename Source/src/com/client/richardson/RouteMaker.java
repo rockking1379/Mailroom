@@ -15,10 +15,9 @@ import java.util.TreeSet;
 
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
-<<<<<<< HEAD
+
 import javax.swing.ImageIcon;
-=======
->>>>>>> origin/Nick
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -47,15 +46,14 @@ public class RouteMaker extends JPanel {
   private JTextField RouteField;
   DatabaseManager manager;
   ArrayList<String> inDest = new ArrayList<String>();
-<<<<<<< HEAD
+
  
 
   public RouteMaker(DatabaseManager manager) {
 	  this.manager=manager;
-=======
 
   public RouteMaker() {
->>>>>>> origin/Nick
+
   	setBackground(new Color(0, 102, 0));
     initScreen();
   }
@@ -189,11 +187,7 @@ public class RouteMaker extends JPanel {
   }
 
   private void initScreen() {
-    setBorder(BorderFactory.createEtchedBorder());
-<<<<<<< HEAD
-    
-=======
->>>>>>> origin/Nick
+
     sourceLabel = new JLabel("Available Stops");
     sourceLabel.setForeground(new Color(255, 255, 255));
     sourceLabel.setBounds(45, 72, 116, 14);
@@ -242,7 +236,7 @@ public class RouteMaker extends JPanel {
     btnCreateRoute.addActionListener(new CreateRouteListener());
     btnCreateRoute.setBounds(356, 27, 110, 23);
     add(btnCreateRoute);
-<<<<<<< HEAD
+
     
    
   }
@@ -252,14 +246,14 @@ public class RouteMaker extends JPanel {
     
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     RouteMaker dual = new RouteMaker(new DatabaseManager());
-=======
+
   }
 
   public static void main(String args[]) {
     JFrame f = new JFrame("Dual List Box Tester");
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     RouteMaker dual = new RouteMaker();
->>>>>>> origin/Nick
+
     dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
     		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
     		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
@@ -299,23 +293,21 @@ public class RouteMaker extends JPanel {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-<<<<<<< HEAD
+
 		DatabaseManager manager = new DatabaseManager();
-=======
-		
->>>>>>> origin/Nick
+
 		
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		for(String s: inDest){
 			
-<<<<<<< HEAD
+
 			manager.updateStop(s, true, RouteField.getText());
 			
 		}
 		
 		
 		manager.addRoute(RouteField.getText());
-=======
+
 			System.out.println(s);
 			stops.add(new Stop(s));
 			
@@ -323,7 +315,7 @@ public class RouteMaker extends JPanel {
 		RouteManager r = new RouteManager(RouteField.getText(),-1,stops);
 		DatabaseManager manager = new DatabaseManager();
 		manager.addRoute(r);
->>>>>>> origin/Nick
+
 		
 	}
 	  

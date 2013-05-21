@@ -1,7 +1,7 @@
 package com.client.richardson;
 
 import java.awt.BorderLayout;
-<<<<<<< HEAD
+
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -11,10 +11,10 @@ import java.awt.EventQueue;
 import java.awt.GridLayout;
 
 import javax.lang.model.element.Element;
-=======
+
 import java.awt.EventQueue;
 
->>>>>>> origin/Nick
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,55 +24,43 @@ import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
-<<<<<<< HEAD
+
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-=======
->>>>>>> origin/Nick
+
 import javax.swing.SwingConstants;
 import javax.swing.JButton;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-<<<<<<< HEAD
+
 import java.awt.print.PrinterException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-=======
->>>>>>> origin/Nick
 
 public class RoutePrint extends JFrame {
 
 	private JPanel contentPane;
-<<<<<<< HEAD
+
 	JPanel rtHolder;
 	boolean ready = false;
 	JTextArea toPrint;
-=======
->>>>>>> origin/Nick
 
-	/**
-	 * Launch the application.
-	 */
-<<<<<<< HEAD
 	ArrayList<JCheckBox> checkBoxes;
 	List<Route> routes;
-=======
->>>>>>> origin/Nick
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-<<<<<<< HEAD
+
 					RoutePrint frame = new RoutePrint(new DatabaseManager());
-=======
-					RoutePrint frame = new RoutePrint();
->>>>>>> origin/Nick
+
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -84,7 +72,7 @@ public class RoutePrint extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-<<<<<<< HEAD
+
 	public RoutePrint(final DatabaseManager manager) {
 		checkBoxes = new ArrayList<JCheckBox>();
 		
@@ -101,23 +89,23 @@ public class RoutePrint extends JFrame {
 			rtHolder.add(c);
 		}
 		
-=======
-	public RoutePrint() {
->>>>>>> origin/Nick
+
+
+
 		setTitle("Print a Route");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/compass.jpg"));
 		setIconImage(icon.getImage());
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\compass.jpg"));
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-<<<<<<< HEAD
+
 		setBounds(100, 100, 535, 300);
 		contentPane = new JPanel();
 		setResizable(false);
-=======
+
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
->>>>>>> origin/Nick
+
 		contentPane.setBackground(new Color(0, 102, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -160,7 +148,7 @@ public class RoutePrint extends JFrame {
 		btnPrint.setBounds(335, 228, 89, 23);
 		contentPane.add(btnPrint);
 		
-<<<<<<< HEAD
+
 		
 		
 		btnPrint.addActionListener(new ActionListener() {
@@ -369,15 +357,8 @@ public class RoutePrint extends JFrame {
             }
         });
 
-=======
-		btnPrint.addActionListener(new ActionListener() {
-	    	 
-            public void actionPerformed(ActionEvent e)
-            {
-            	Print printScreen = new Print();
-            	printScreen.setVisible(true);
-            }
-        });
->>>>>>> origin/Nick
+
+		
+
 	}
 }
