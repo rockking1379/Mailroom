@@ -52,8 +52,6 @@ public class RouteMaker extends JPanel {
   public RouteMaker(DatabaseManager manager) {
 	  this.manager=manager;
 
-  public RouteMaker() {
-
   	setBackground(new Color(0, 102, 0));
     initScreen();
   }
@@ -247,12 +245,7 @@ public class RouteMaker extends JPanel {
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     RouteMaker dual = new RouteMaker(new DatabaseManager());
 
-  }
-
-  public static void main(String args[]) {
-    JFrame f = new JFrame("Dual List Box Tester");
-    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    RouteMaker dual = new RouteMaker();
+;
 
     dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
     		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
@@ -295,32 +288,23 @@ public class RouteMaker extends JPanel {
 	public void actionPerformed(ActionEvent e) {
 
 		DatabaseManager manager = new DatabaseManager();
-
-		
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		for(String s: inDest){
-			
-
 			manager.updateStop(s, true, RouteField.getText());
-			
 		}
-		
-		
 		manager.addRoute(RouteField.getText());
 
 			System.out.println(s);
 			stops.add(new Stop(s));
-			
-		}
-		RouteManager r = new RouteManager(RouteField.getText(),-1,stops);
-		DatabaseManager manager = new DatabaseManager();
-		manager.addRoute(r);
-
+	
 		
-	}
-	  
+		//RouteManager r = new RouteManager(RouteField.getText(),-1,stops);
+		//DatabaseManager manager = new DatabaseManager();
+		//manager.addRoute(r);
   }
-}
+} 
+  
+
 
 class SortedListModel extends AbstractListModel {
 
@@ -378,4 +362,4 @@ class SortedListModel extends AbstractListModel {
     }
     return removed;
   }
-}
+}}
