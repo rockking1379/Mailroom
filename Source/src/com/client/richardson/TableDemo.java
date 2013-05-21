@@ -32,6 +32,10 @@
  */
  
 package com.client.richardson;
+<<<<<<< HEAD
+=======
+//hi
+>>>>>>> origin/Nick
  
 /*
  * TableDemo.java requires no other files.
@@ -154,6 +158,7 @@ public class TableDemo extends JPanel {
             data[row][col] = value;
             fireTableCellUpdated(row, col);
  
+<<<<<<< HEAD
             if(picked_up==false){
             	pickdate="";
             	System.out.println("In Flase");
@@ -167,6 +172,8 @@ public class TableDemo extends JPanel {
             }
             
             
+=======
+>>>>>>> origin/Nick
             if (DEBUG) {
                 System.out.println("New value of data:");
                 printDebugData();

@@ -3,7 +3,11 @@
 
 package com.client.richardson;
  
+<<<<<<< HEAD
 //hi
+=======
+
+>>>>>>> origin/Nick
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,7 +24,12 @@ import java.util.Date;
  */
 public class Table extends JPanel {
     private boolean DEBUG = false;
+<<<<<<< HEAD
     private boolean delivered= true;
+=======
+    private boolean delivered=false;
+    private boolean print=false;
+>>>>>>> origin/Nick
     private boolean picked_up;
     private String pickdate;
     
@@ -32,12 +41,31 @@ public class Table extends JPanel {
         JTable table = new JTable(new MyTableModel());
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
+<<<<<<< HEAD
  
+=======
+        table.getColumnModel().getColumn(0).setPreferredWidth(20);
+        table.getColumnModel().getColumn(0).setResizable(false);
+        table.getColumnModel().getColumn(6).setPreferredWidth(40);
+        table.getColumnModel().getColumn(5).setPreferredWidth(30);
+        table.getColumnModel().getColumn(4).setPreferredWidth(100);
+        table.getColumnModel().getColumn(1).setResizable(false);
+        table.getColumnModel().getColumn(2).setResizable(false);
+        table.getColumnModel().getColumn(3).setResizable(false);
+        table.getColumnModel().getColumn(4).setResizable(false);
+        table.getColumnModel().getColumn(5).setResizable(false);
+        table.getColumnModel().getColumn(6).setResizable(false);
+        
+>>>>>>> origin/Nick
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
  
         //Add the scroll pane to this panel.
         add(scrollPane);
+<<<<<<< HEAD
+=======
+        
+>>>>>>> origin/Nick
        
     }
  
@@ -47,7 +75,12 @@ public class Table extends JPanel {
 	String pickdate=ft.format(date);
 	
 	
+<<<<<<< HEAD
         private String[] columnNames = {"First Name",
+=======
+        private String[] columnNames = {"Print" ,
+        		"First Name",
+>>>>>>> origin/Nick
                 "Last Name",
                 "Stop",
                 "Tracking #",
@@ -55,6 +88,7 @@ public class Table extends JPanel {
                 "Delivered"};
         
         private Object[][] data = {
+<<<<<<< HEAD
                 {"Kathy", "Smith","Rex",
                     "5452548313",  ft.format(date), new Boolean(false)},
                    {"John", "Doe","SUB", 
@@ -65,6 +99,18 @@ public class Table extends JPanel {
                      "2059872641", ft.format(date), new Boolean(true)},
                    {"Joe", "Brown","SUB",
                      "1024861834",  ft.format(date), new Boolean(false)}
+=======
+                {print,"Kathy", "Smith","Rex",
+                    "5452548313",  ft.format(date), delivered},
+                   {print, "John", "Doe","SUB", 
+                     "5846421596", ft.format(date), delivered},
+                   {print, "Sue", "Black","Bookstore",
+                     "2684359112",  ft.format(date), delivered},
+                   {print, "Jane", "White", "Plachy",
+                     "2059872641", ft.format(date), delivered},
+                   {print, "Joe", "Brown","SUB",
+                     "1024861834",  ft.format(date), delivered}
+>>>>>>> origin/Nick
                    };
  
         
@@ -101,10 +147,20 @@ public class Table extends JPanel {
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
+<<<<<<< HEAD
             if (col < 2) {
                 return false;
             } else {
                 return true;
+=======
+            if (col == 0) {
+            	
+                return true;
+            } if(col<6) {
+                return false;
+            } else{
+            	return true;
+>>>>>>> origin/Nick
             }
         }
  
@@ -158,6 +214,10 @@ public class Table extends JPanel {
         Table newContentPane = new Table();
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Nick
  
         //Display the window.
         frame.pack();

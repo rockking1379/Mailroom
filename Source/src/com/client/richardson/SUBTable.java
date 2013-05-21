@@ -6,6 +6,11 @@ import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+<<<<<<< HEAD
+=======
+//import mailroom.TableDemo.MyTableModel;
+
+>>>>>>> origin/Nick
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
@@ -40,7 +45,11 @@ public class SUBTable extends JPanel {
     class MyTableModel extends AbstractTableModel {
     	  Date date =new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
+<<<<<<< HEAD
 	String pickdate="";
+=======
+    String pickdate="";
+>>>>>>> origin/Nick
 	String trackNum= "0214123574841245546";
 	String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
     
@@ -64,9 +73,14 @@ public class SUBTable extends JPanel {
         	        {"Jane", "White",
         	         "1437", L4, ft.format(date), delivered, picked_up,pickdate},
         	        {"Joe", "Brown",
+<<<<<<< HEAD
         	         "19", L4,  ft.format(date), delivered,  picked_up,pickdate}
         	        };
        
+=======
+        	         "19", L4,  ft.format(date), delivered,  picked_up,pickdate }
+        	        };
+>>>>>>> origin/Nick
         
  
         public int getColumnCount() {
@@ -127,6 +141,7 @@ public class SUBTable extends JPanel {
             }
  
             data[row][col] = value;
+<<<<<<< HEAD
             System.out.println(value);
            
             picked_up=(boolean) value;
@@ -151,6 +166,33 @@ public class SUBTable extends JPanel {
            	 
                  fireTableDataChanged();
             }
+=======
+                       System.out.println(value);
+                       
+                        picked_up=(boolean) value;
+                        System.out.println(picked_up);
+                         fireTableCellUpdated(row, col);
+                        
+                        if(picked_up==false){
+                        	pickdate="";
+                        	System.out.println("In Flase");
+                        	Object value1 = null;
+                        	value1="";
+            				data[row][col+1] = value1;
+                       	 	
+                        	 fireTableDataChanged();
+                        }
+                        if(picked_up==true){
+                        	pickdate=ft.format(date);
+                        	System.out.println("In True");
+                        	Object value1 = null;
+                        	value1=ft.format(date);
+            				data[row][col+1] = value1;
+                       	 
+                             fireTableDataChanged();
+                        }
+
+>>>>>>> origin/Nick
  
             if (DEBUG) {
                 System.out.println("New value of data:");
@@ -218,4 +260,8 @@ public class SUBTable extends JPanel {
 	public void setPickdate(String pickdate) {
 		this.pickdate = pickdate;
 	}
+<<<<<<< HEAD
+=======
+   
+>>>>>>> origin/Nick
 }

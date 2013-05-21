@@ -5,8 +5,11 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+<<<<<<< HEAD
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+=======
+>>>>>>> origin/Nick
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -16,15 +19,24 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+=======
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.text.SimpleDateFormat;
+>>>>>>> origin/Nick
 import java.util.Date;
 
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+<<<<<<< HEAD
 import javax.swing.JTextArea;
+=======
+>>>>>>> origin/Nick
 
 
 public class ScanPackage extends JFrame {
@@ -32,6 +44,7 @@ public class ScanPackage extends JFrame {
 	private JPanel contentPane;
 	private JTextField NameText;
 	private JTextField StopText;
+<<<<<<< HEAD
 	private static JTextField TrackText;
 	private JTextField BoxText;
 	private JTextField LastNameText;
@@ -39,6 +52,13 @@ public class ScanPackage extends JFrame {
 	JComboBox comboBox;
 	String newDate;
 	Date date =new Date();
+=======
+	private JTextField TrackText;
+	private JTextField BoxText;
+	private JTextField LastNameText;
+	private JLabel lblDate_1;
+	
+>>>>>>> origin/Nick
 
 	/**
 	 * Launch the application.
@@ -47,6 +67,7 @@ public class ScanPackage extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+<<<<<<< HEAD
 					ScanPackage frame = new ScanPackage(new DatabaseManager());
 					
 					frame.addWindowListener(new WindowAdapter(){ 
@@ -56,6 +77,10 @@ public class ScanPackage extends JFrame {
 						});
 
 					
+=======
+					ScanPackage frame = new ScanPackage();
+					frame.setVisible(true);
+>>>>>>> origin/Nick
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -66,6 +91,7 @@ public class ScanPackage extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+<<<<<<< HEAD
 	public ScanPackage(final DatabaseManager manager) {
 		setResizable(false);
 		setTitle("Scan My Package");
@@ -74,6 +100,14 @@ public class ScanPackage extends JFrame {
 		
 		setBackground(new Color(0, 102, 0));
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("G:\\MailRoom\\images.jpg"));
+=======
+	public ScanPackage() {
+		
+		setResizable(false);
+		setTitle("Scan My Package");
+		setBackground(new Color(0, 102, 0));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("G:\\MailRoom\\images.jpg"));
+>>>>>>> origin/Nick
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 545, 272);
 		contentPane = new JPanel();
@@ -89,10 +123,16 @@ public class ScanPackage extends JFrame {
 		NameText.setColumns(10);
 		
 		StopText = new JTextField();
+<<<<<<< HEAD
 		StopText.setBounds(375, 130, 151, 20);
 		contentPane.add(StopText);
 		StopText.setColumns(10);
 	
+=======
+		StopText.setBounds(375, 105, 151, 20);
+		contentPane.add(StopText);
+		StopText.setColumns(10);
+>>>>>>> origin/Nick
 		
 		JLabel lblFirstName = new JLabel("First Name: ");
 		lblFirstName.setForeground(new Color(255, 255, 255));
@@ -101,17 +141,26 @@ public class ScanPackage extends JFrame {
 		
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setForeground(new Color(255, 255, 255));
+<<<<<<< HEAD
 		lblDate.setBounds(35, 110, 46, 14);
+=======
+		lblDate.setBounds(35, 132, 46, 14);
+>>>>>>> origin/Nick
 		contentPane.add(lblDate);
 		
 		JLabel lblOtherStop = new JLabel("Other Stop:");
 		lblOtherStop.setForeground(new Color(255, 255, 255));
+<<<<<<< HEAD
 		lblOtherStop.setBounds(299, 133, 66, 14);
+=======
+		lblOtherStop.setBounds(299, 108, 66, 14);
+>>>>>>> origin/Nick
 		contentPane.add(lblOtherStop);
 		
 		JButton btnSave = new JButton("Save");
 		btnSave.setBounds(229, 161, 89, 23);
 		contentPane.add(btnSave);
+<<<<<<< HEAD
 		btnSave.addActionListener(new ActionListener(){
 
 			@Override
@@ -126,6 +175,8 @@ public class ScanPackage extends JFrame {
 			}
 			
 		});
+=======
+>>>>>>> origin/Nick
 		
 		JButton btnClear = new JButton("Clear");
 		btnClear.setBounds(35, 161, 89, 23);
@@ -158,6 +209,7 @@ public class ScanPackage extends JFrame {
 		TrackText = new JTextField();
 		TrackText.setBounds(110, 55, 416, 20);
 		contentPane.add(TrackText);
+<<<<<<< HEAD
 		addWindowListener(new WindowAdapter(){ 
 			  public void windowOpened( WindowEvent e){ 
 			    TrackText.requestFocus();
@@ -168,6 +220,10 @@ public class ScanPackage extends JFrame {
 		
 		
 		
+=======
+		TrackText.setColumns(10);
+		
+>>>>>>> origin/Nick
 		JLabel lblTracking = new JLabel("Tracking #");
 		lblTracking.setForeground(new Color(255, 255, 255));
 		lblTracking.setBounds(35, 60, 66, 14);
@@ -176,6 +232,7 @@ public class ScanPackage extends JFrame {
 		JButton btnAutoFill = new JButton("Auto Fill");
 		btnAutoFill.setBounds(437, 23, 89, 20);
 		contentPane.add(btnAutoFill);
+<<<<<<< HEAD
 		final ScanPackage frame = this;
 		btnAutoFill.addActionListener(new ActionListener(){
 
@@ -253,6 +310,54 @@ public class ScanPackage extends JFrame {
 		JLabel lblStop = new JLabel("Stop:");
 		lblStop.setForeground(Color.WHITE);
 		lblStop.setBounds(35, 133, 46, 14);
+=======
+		
+		BoxText = new JTextField();
+		BoxText.setBounds(375, 130, 151, 20);
+		contentPane.add(BoxText);
+		BoxText.setColumns(10);
+		BoxText.setVisible(false);
+		final JLabel lblBox = new JLabel("Box #");
+		lblBox.setForeground(new Color(255, 255, 255));
+		lblBox.setBounds(299, 132, 34, 14);
+		contentPane.add(lblBox);
+		lblBox.setVisible(false);
+	
+		
+		final JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art",
+				"AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services", "Counseling & Career", 
+				"Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", 
+				"Facilities Warehouse", "Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL",
+				"Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing",
+				"One Stop", "Payroll", "Plachy", "Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records",
+				"REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
+				"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound"}));
+		comboBox.setBounds(110, 105, 179, 20);
+		contentPane.add(comboBox);
+		comboBox.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {	
+				 Object tsub = comboBox.getSelectedItem();
+				 String sub = tsub.toString();			       
+			       
+				if(sub=="SUB Mailroom"){
+				lblBox.setVisible(true);
+				BoxText.setVisible(true);
+				}else{
+					BoxText.setVisible(false);
+					lblBox.setVisible(false);
+				}
+					
+				}
+        });
+	
+		
+		
+		
+		JLabel lblStop = new JLabel("Stop:");
+		lblStop.setForeground(Color.WHITE);
+		lblStop.setBounds(35, 108, 46, 14);
+>>>>>>> origin/Nick
 		contentPane.add(lblStop);
 		
 		JLabel lblLastName = new JLabel("Last Name:");
@@ -268,6 +373,7 @@ public class ScanPackage extends JFrame {
 		JLabel lblDate_1 = new JLabel("Date");
 		lblDate_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblDate_1.setForeground(Color.WHITE);
+<<<<<<< HEAD
 		lblDate_1.setBounds(110, 105, 96, 20);
 		contentPane.add(lblDate_1);
 		Date date =new Date();
@@ -321,5 +427,14 @@ public class ScanPackage extends JFrame {
 
 	public Date getDate() {
 		return date;
+=======
+		lblDate_1.setBounds(110, 130, 96, 20);
+		contentPane.add(lblDate_1);
+		Date date =new Date();
+        SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
+        String newDate = ft.format(date);
+		lblDate_1.setText(newDate);
+		
+>>>>>>> origin/Nick
 	}
 }

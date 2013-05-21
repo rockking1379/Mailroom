@@ -35,7 +35,10 @@ public class AdvSearch extends JFrame {
 	private JPanel contentPane;
 	private JTextField FirstNameField;
 	private JTextField LastNameField;
+<<<<<<< HEAD
 	private JTextField StopField;
+=======
+>>>>>>> origin/Nick
 	private JTextField BoxNum;
 	private JButton btnSearch;
 	private JTextField StartYear;
@@ -57,7 +60,11 @@ public class AdvSearch extends JFrame {
 	private String sDate="";
 	private String eDate="";
 	private String sYear="2000";
+<<<<<<< HEAD
     private String eYear="4000";
+=======
+	private String eYear="4000";
+>>>>>>> origin/Nick
     private boolean date = true;
 
 	
@@ -192,11 +199,14 @@ public class AdvSearch extends JFrame {
 		lblStop.setBounds(10, 61, 46, 14);
 		contentPane.add(lblStop);
 		
+<<<<<<< HEAD
 		StopField = new JTextField();
 		StopField.setBounds(74, 58, 101, 20);
 		contentPane.add(StopField);
 		StopField.setColumns(10);
 		
+=======
+>>>>>>> origin/Nick
 		JLabel lblBox = new JLabel("Box #:");
 		lblBox.setForeground(new Color(255, 255, 255));
 		lblBox.setBounds(196, 61, 46, 14);
@@ -238,6 +248,28 @@ public class AdvSearch extends JFrame {
                 SearchPanel.setVisible(true);
         		}
                 }catch(Exception ex){
+<<<<<<< HEAD
+=======
+                	Exception NumberFormatException = null;
+                	ex=NumberFormatException;
+					if(ex==NumberFormatException){
+                		int s = Integer.parseInt(sYear);
+                		int ey = Integer.parseInt(eYear);
+                		boolean i = s<=ey;
+                		dateCheck();
+                		if(i==false||date==false){
+                			Component frame = null;
+        					JOptionPane.showMessageDialog(frame,
+                        		    "You have entered a date start date after your entered end date!",
+                        		    "Year error",
+                        		    JOptionPane.ERROR_MESSAGE);
+        					setBounds(100, 100, 460, 167);
+        					SearchPanel.setVisible(false);
+                		}else{
+                		setBounds(100, 100, 460, 225);
+                        SearchPanel.setVisible(true);}
+                	}else{
+>>>>>>> origin/Nick
                 	Component frame = null;
 					JOptionPane.showMessageDialog(frame,
                 		    "You have entered an incorrect year!",
@@ -245,7 +277,11 @@ public class AdvSearch extends JFrame {
                 		    JOptionPane.ERROR_MESSAGE);
 					SearchPanel.setVisible(false);
 					setBounds(100, 100, 460, 167);
+<<<<<<< HEAD
                 }
+=======
+                }}
+>>>>>>> origin/Nick
                 
             }
         });
@@ -273,6 +309,19 @@ public class AdvSearch extends JFrame {
 		chckbxPickedUp.setBounds(361, 58, 83, 23);
 		contentPane.add(chckbxPickedUp);
 		
+<<<<<<< HEAD
+=======
+		JComboBox StopBox = new JComboBox();
+		StopBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
+	    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
+	    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
+	    		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
+	    		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound"}));
+		
+		StopBox.setBounds(47, 58, 142, 20);
+		contentPane.add(StopBox);
+		
+>>>>>>> origin/Nick
 		StartMonth = new JComboBox();
 		StartMonth.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12"}));
 		StartMonth.setBounds(47, 82, 40, 20);
@@ -431,6 +480,11 @@ public class AdvSearch extends JFrame {
 		lblDeliveryStatus.setBounds(79, 60, 96, 14);
 		SearchPanel.add(lblDeliveryStatus);
 		lblDeliveryStatus.setForeground(Color.WHITE);
+<<<<<<< HEAD
+=======
+		
+	
+>>>>>>> origin/Nick
 	}
 	
 	public void dateCheck(){
@@ -448,5 +502,8 @@ public class AdvSearch extends JFrame {
 		}
 		
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> origin/Nick
 }

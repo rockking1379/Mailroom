@@ -11,26 +11,45 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+<<<<<<< HEAD
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
+=======
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+>>>>>>> origin/Nick
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+<<<<<<< HEAD
+=======
+import javax.swing.JPasswordField;
+>>>>>>> origin/Nick
 
 public class AddAccount extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField username;
+<<<<<<< HEAD
 	private JPasswordField password;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JPasswordField pre;
 	JRadioButton rdbtnAdministrator;
 	final JFrame login;
+=======
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	JRadioButton rdbtnAdministrator;
+	private JPasswordField password;
+	private JPasswordField pre;
+>>>>>>> origin/Nick
 
 	/**
 	 * Launch the application.
@@ -52,7 +71,10 @@ public class AddAccount extends JFrame {
 	 * Create the frame.
 	 */
 	public AddAccount() {
+<<<<<<< HEAD
 		login=null;
+=======
+>>>>>>> origin/Nick
 		setTitle("Create Account");
 		setResizable(false);
 		
@@ -60,15 +82,24 @@ public class AddAccount extends JFrame {
 		
 		setBounds(100, 100, 450, 192);
 		contentPane = new JPanel();
+<<<<<<< HEAD
+=======
+		contentPane.setBackground(new Color(0, 102, 0));
+>>>>>>> origin/Nick
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblPleaseInputA = new JLabel("Please input a username and password");
+<<<<<<< HEAD
+=======
+		lblPleaseInputA.setForeground(new Color(255, 255, 255));
+>>>>>>> origin/Nick
 		lblPleaseInputA.setBounds(71, 11, 293, 14);
 		contentPane.add(lblPleaseInputA);
 		
 		username = new JTextField();
+<<<<<<< HEAD
 		username.setBounds(150, 36, 168, 20);
 		contentPane.add(username);
 		username.setColumns(10);
@@ -93,16 +124,47 @@ public class AddAccount extends JFrame {
 		contentPane.add(btnOk);
 		
 		 rdbtnAdministrator = new JRadioButton("Administrator");
+=======
+		username.setBounds(125, 36, 195, 20);
+		contentPane.add(username);
+		username.setColumns(10);
+		
+		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setForeground(new Color(255, 255, 255));
+		lblUsername.setBounds(10, 39, 103, 14);
+		contentPane.add(lblUsername);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setForeground(new Color(255, 255, 255));
+		lblPassword.setBounds(10, 70, 80, 14);
+		contentPane.add(lblPassword);
+		
+		
+		JButton btnCreate = new JButton("Create Account");
+		btnCreate.addActionListener(new ButtonListener());
+		btnCreate.setBounds(313, 130, 121, 23);
+		contentPane.add(btnCreate);
+		
+		 rdbtnAdministrator = new JRadioButton("Administrator");
+		 rdbtnAdministrator.setBackground(new Color(0, 102, 0));
+		 rdbtnAdministrator.setForeground(new Color(255, 255, 255));
+>>>>>>> origin/Nick
 		buttonGroup.add(rdbtnAdministrator);
 		rdbtnAdministrator.setBounds(71, 130, 109, 23);
 		contentPane.add(rdbtnAdministrator);
 		
 		JRadioButton rdbtnUser = new JRadioButton("User");
+<<<<<<< HEAD
+=======
+		rdbtnUser.setForeground(new Color(255, 255, 255));
+		rdbtnUser.setBackground(new Color(0, 102, 0));
+>>>>>>> origin/Nick
 		rdbtnUser.setSelected(true);
 		buttonGroup.add(rdbtnUser);
 		rdbtnUser.setBounds(182, 130, 109, 23);
 		contentPane.add(rdbtnUser);
 		
+<<<<<<< HEAD
 		JLabel lblReenterPassword = new JLabel("Re-enter Password");
 		lblReenterPassword.setBounds(37, 109, 103, 14);
 		contentPane.add(lblReenterPassword);
@@ -177,6 +239,34 @@ public class AddAccount extends JFrame {
 		pre.setBounds(150, 103, 168, 20);
 		contentPane.add(pre);
 		pre.setColumns(10);
+=======
+		JLabel lblReenterPassword = new JLabel("Re-enter Password:");
+		lblReenterPassword.setForeground(new Color(255, 255, 255));
+		lblReenterPassword.setBounds(10, 109, 130, 14);
+		contentPane.add(lblReenterPassword);
+		
+		password = new JPasswordField();
+		password.setBounds(125, 67, 195, 20);
+		contentPane.add(password);
+		
+		pre = new JPasswordField();
+		pre.setBounds(125, 103, 195, 20);
+		contentPane.add(pre);
+		
+		JButton btnDeleteAccount = new JButton("Delete Account");
+		btnDeleteAccount.setBounds(313, 7, 121, 23);
+		contentPane.add(btnDeleteAccount);
+		
+		btnDeleteAccount.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {	
+				
+			DelAccount delete = new DelAccount();
+			//delete.setVisible(true);
+					
+				}
+        });
+		
+>>>>>>> origin/Nick
 		
 		setVisible(true);
 	}
@@ -230,17 +320,23 @@ public class AddAccount extends JFrame {
 				writer.newLine();
 				writer.close();
 				
+<<<<<<< HEAD
 				if(login!=null){
 					login.setVisible(true);
 					
 				}
 				
+=======
+>>>>>>> origin/Nick
 				password.setText(null);
 				username.setText(null);
 				pre.setText(null);
 				
+<<<<<<< HEAD
 				
 				
+=======
+>>>>>>> origin/Nick
 			} catch (FileNotFoundException e1) {
 				
 				File f = new File("User_Hash.txt");
@@ -262,12 +358,19 @@ public class AddAccount extends JFrame {
 			}
 			
 			
+<<<<<<< HEAD
 			dispose();
+=======
+			
+>>>>>>> origin/Nick
 			
 		}
 			
 		}
+<<<<<<< HEAD
 		JFrame f = this;
+=======
+>>>>>>> origin/Nick
 	}
 	
 
