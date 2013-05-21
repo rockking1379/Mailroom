@@ -194,6 +194,7 @@ public class ScanPackage extends JFrame {
 				new MultipleResultDisplay(frame,p);
 			}
 			else{
+			
 			BoxText.setText(p.get(0).getBox());
 			comboBox.setSelectedItem(p.get(0).getStop());
 			}

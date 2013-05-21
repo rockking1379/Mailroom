@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
 
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 
@@ -25,6 +26,12 @@ public class DatabaseManager
 		asuPeople = new ArrayList<Person>();
 		stops = new ArrayList<Stop>();
 		routes = new ArrayList<Route>();
+		
+		setDatabase("Mailroom_db");
+		setFile("People.txt");
+		loadSettings();
+		setup();
+		loadPackages(true,null);
 	}
 	
 	///---Set Methods---///
@@ -664,4 +671,93 @@ public class DatabaseManager
 		
 		return results;
 	}
+	public void loadSettings(){
+		DatabaseManager dbManager = new DatabaseManager();
+		File settings = new File("./properties.prop");
+		if(settings.exists())
+		{
+			try
+			{
+				FileInputStream fStream = new FileInputStream(settings);
+				DataInputStream dis = new DataInputStream(fStream);
+				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+		
+				String settingLine;
+				while((settingLine = br.readLine()) != null)
+				{
+					//Read Settings
+					String setting = "";				
+					int index = 0;
+					while(settingLine.charAt(index) != ':')
+					{
+						setting += settingLine.charAt(index);
+						index++;
+					}
+					if(setting.toUpperCase().equals("DATABASE"))
+					{
+						//Read in Database configuration
+						String temp = "";
+						for(int i = index; i < settingLine.length(); i++)
+						{
+							temp += settingLine.charAt(i);
+						}
+						
+						dbManager.setDatabase(temp);
+					}
+					else
+					{
+						if(setting.toUpperCase().equals("PERSONS"))
+						{
+							String temp = "";
+							
+							for(int i = index; i < settingLine.length(); i++)
+							{
+								temp += settingLine.charAt(i);
+							}
+							
+							dbManager.setFile(temp);
+						}
+					}
+				}
+				
+				br.close();
+				
+			}
+			catch(Exception e)
+			{
+				//Do nothing
+			}
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
+			
+			JFileChooser fc = new JFileChooser();
+			fc.showDialog(null, "SELECT");
+			fc.setFileFilter(null);
+			File database = fc.getSelectedFile();
+			fc.showDialog(null, "SELECT");
+			File persons = fc.getSelectedFile();
+			
+			try 
+			{
+				if(settings.createNewFile())
+				{
+					FileWriter fOutput = new FileWriter(settings);
+					BufferedWriter bw = new BufferedWriter(fOutput);
+					bw.write("DATABASE:" + database.getAbsolutePath() + "\n");
+					bw.write("PERSONS:" + persons.getAbsolutePath() + "\n");
+					bw.close();
+					fOutput.close();
+				}
+			} 
+			catch (Exception e) 
+			{
+				//Ignore the exceptions
+			}
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
+		}
+	}	
+					
+	
 }

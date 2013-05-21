@@ -230,7 +230,7 @@ public class AddAccount extends JFrame {
 				writer.newLine();
 				writer.close();
 				
-				if(!login.equals(null)){
+				if(login!=null){
 					login.setVisible(true);
 					
 				}
