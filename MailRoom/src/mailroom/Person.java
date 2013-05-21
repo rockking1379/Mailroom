@@ -55,11 +55,26 @@ public class Person
 	{
 		return building;
 	}
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/master
+>>>>>>> origin/Tom
 	public Stop getStop() {
 		// TODO Auto-generated method stub
 		Stop s=  new Stop("SMT");
 		return s;
 	}
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> origin/Tom
+>>>>>>> origin/master
+>>>>>>> origin/Tom
 }

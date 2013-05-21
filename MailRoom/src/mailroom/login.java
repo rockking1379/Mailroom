@@ -132,10 +132,21 @@ public class login extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<String> hashes = new ArrayList<String>();
 
+<<<<<<< HEAD
 			Integer hash = userName.getText().hashCode()+passwordField.getText().hashCode();
 
 			
 
+=======
+			
+
+
+			
+
+			Integer hash = userName.getText().hashCode()+passwordField.getText().hashCode();
+
+
+>>>>>>> origin/Tom
 			System.out.println(hash);
 			File a= new File("Admin_Hash.txt");
 			File u= new File("User_Hash.txt");

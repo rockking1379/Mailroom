@@ -39,6 +39,10 @@ public class ScanPackage extends JFrame {
 	JComboBox comboBox;
 	String newDate;
 	Date date =new Date();
+<<<<<<< HEAD
+=======
+	boolean noStops =false;
+>>>>>>> origin/Tom
 
 	/**
 	 * Launch the application.
@@ -120,7 +124,11 @@ public class ScanPackage extends JFrame {
 				if(!StopText.getText().equals(null)){
 					stop=StopText.getText();
 				}
+<<<<<<< HEAD
 				
+=======
+				Person p= manager.getPerson(NameText.getText(),LastNameText.getText());
+>>>>>>> origin/Tom
 				manager.addPackage(new Package(NameText.getText(),LastNameText.getText(),date,BoxText.getText(),stop,TrackText.getText()));
 				
 			}
@@ -202,6 +210,20 @@ public class ScanPackage extends JFrame {
 			
 		});
 		
+		btnAutoFill.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			Person p=manager.getPerson(NameText.getText(),LastNameText.getText());
+			
+			BoxText.setText(p.getBox());
+			comboBox.setSelectedItem(p.getStop().getName());
+				
+				
+			}
+			
+		});
+		
 		BoxText = new JTextField();
 		BoxText.setBounds(375, 105, 151, 20);
 		contentPane.add(BoxText);
@@ -214,9 +236,15 @@ public class ScanPackage extends JFrame {
 		
 	    comboBox = new JComboBox();
 		DefaultComboBoxModel stopNames=null;
+<<<<<<< HEAD
 		boolean noStops =false;
 		try{
 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
+=======
+		
+		try{
+		ArrayList<Stop> stops = manager.getStops();
+>>>>>>> origin/Tom
 		String[] sa= new String[stops.size()-1];
 		int i=0;
 		for(Stop s: stops){
@@ -231,6 +259,7 @@ public class ScanPackage extends JFrame {
 			noStops=true;
 		}
 		
+<<<<<<< HEAD
 		if(noStops){
 			dispose();
 		}
@@ -241,6 +270,16 @@ public class ScanPackage extends JFrame {
 			
 			dispose();
 		}
+=======
+		
+		try{
+			comboBox.setModel(stopNames);
+			}
+			catch(NullPointerException ex){
+				dispose();
+			}
+
+>>>>>>> origin/Tom
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", 
 				"Community Partnership", "Computing Services", "Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", 
 				"Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music",
@@ -274,6 +313,7 @@ public class ScanPackage extends JFrame {
         newDate = ft.format(date);
 		lblDate_1.setText(newDate);
 		setVisible(true);
+<<<<<<< HEAD
 		
 		
 	}
@@ -320,5 +360,25 @@ public class ScanPackage extends JFrame {
 
 	public Date getDate() {
 		return date;
+=======
+		packageExistCheck();
+		Thread t = new Thread(new Runnable(){
+
+			@Override
+			public void run() {
+				packageExistCheck();
+				
+			}
+			
+		});
+		t.start();
+		
+	}
+	public void packageExistCheck(){
+		if(noStops){
+			//setVisible(false);
+			dispose();
+		}
+>>>>>>> origin/Tom
 	}
 }

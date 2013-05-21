@@ -5,7 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+<<<<<<< HEAD
 import java.util.List;
+=======
+>>>>>>> origin/Tom
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -46,7 +49,11 @@ public class RoutePrint extends JFrame {
 	 * Launch the application.
 	 */
 	ArrayList<JCheckBox> checkBoxes;
+<<<<<<< HEAD
 	List<Route> routes;
+=======
+	ArrayList<Route> routes;
+>>>>>>> origin/Tom
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -165,13 +172,21 @@ public class RoutePrint extends JFrame {
             		
             	}
             	
+<<<<<<< HEAD
             	List<Stop> stops = new ArrayList<Stop>();
+=======
+            	ArrayList<Stop> stops = new ArrayList<Stop>();
+>>>>>>> origin/Tom
             	ArrayList<Package> packages = new ArrayList<Package>();
             	for(JCheckBox c: checkBoxes){
             		if(c.isSelected()){
             			 			
+<<<<<<< HEAD
             			stops = manager.getStopsFromRoute(c.getText());
             			for(Stop st: stops){
+=======
+            			for(Stop st: manager.getStopsFromRoute(c.getText())){
+>>>>>>> origin/Tom
             			stops.add(st);
             			}
             			
