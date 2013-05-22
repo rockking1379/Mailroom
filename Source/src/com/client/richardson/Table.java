@@ -27,13 +27,13 @@ public class Table extends JPanel {
 
     private boolean picked_up;
     private String pickdate;
-    
+    MyTableModel model = new MyTableModel();
    
     
     public Table() {
         super(new GridLayout(1,0));
- 
-        JTable table = new JTable(new MyTableModel());
+       
+        JTable table = new JTable(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
         table.getColumnModel().getColumn(0).setPreferredWidth(20);
@@ -47,6 +47,7 @@ public class Table extends JPanel {
         table.getColumnModel().getColumn(4).setResizable(false);
         table.getColumnModel().getColumn(5).setResizable(false);
         table.getColumnModel().getColumn(6).setResizable(false);
+       
         
 
         //Create the scroll pane and add the table to it.
@@ -148,6 +149,7 @@ public class Table extends JPanel {
             }
  
             data[row][col] = value;
+           
             fireTableCellUpdated(row, col);
  
             if (DEBUG) {
@@ -169,6 +171,10 @@ public class Table extends JPanel {
             }
             System.out.println("--------------------------");
         }
+        
+        public void add(){
+       	//what goes here?
+       }
     }
  
     /**
@@ -176,6 +182,8 @@ public class Table extends JPanel {
      * this method should be invoked from the
      * event-dispatching thread.
      */
+    
+
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("TableDemo");
