@@ -229,9 +229,10 @@ public class RoutePrint extends JFrame {
             	String tab ="       ";
             	String sign = "________________________\n";
             	
-            	String fieldHeader= "Last"+tab+"First"+tab+"Addr."+tab+"Track#"+tab+"Sign Here";
+            	String fieldHeader= "Last"+tab+"First"+tab+"Box#."+tab+"Track#"+tab+"Sign Here";
             	
-            	
+            	addSpacing(33-c.getText().length());
+            	toPrint.setText(toPrint.getText()+"Route: "+c.getText()+"\n");
             	
             	for(Stop s: stops){
             		String stn=s.getName();
