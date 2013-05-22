@@ -186,7 +186,7 @@ public class RouteManager extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RouteManager frame = new RouteManager();
+					RouteManager frame = new RouteManager(new DatabaseManager());
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					
 					    frame.setSize(493, 360);
@@ -203,7 +203,9 @@ public class RouteManager extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RouteManager() {
+	final DatabaseManager manager;
+	public RouteManager(final DatabaseManager manager) {
+		this.manager=manager;
 		setTitle("Manage Routes");
 		setSize(493, 360);
 		setSize(493, 360);
@@ -264,7 +266,7 @@ public class RouteManager extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				    new CreateStop();
+				    new CreateStop(manager);
 				 
 			}
 		});

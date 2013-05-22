@@ -162,7 +162,7 @@ public class OpenScreen extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				    new RouteManager();
+				    new RouteManager(manager);
 				 
 			}
 		});

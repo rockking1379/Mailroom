@@ -204,7 +204,7 @@ public class ScanPackage extends JFrame {
 			}
 			else{
 			selectedPerson=p.get(0);
-			selectedPerson.setStop("SUB");
+			selectedPerson.setStop("AAO");
 			BoxText.setText(selectedPerson.getBox());
 			comboBox.setSelectedItem(selectedPerson.getStop());
 			}
@@ -239,13 +239,10 @@ public class ScanPackage extends JFrame {
 		}
 		catch(NegativeArraySizeException ex){
 			JOptionPane.showMessageDialog(this, "Please create Stops before scanning in packages");
-			dispose();
-			noStops=true;
+			
 		}
 		
-		if(noStops){
-			dispose();
-		}
+		
 		try{
 		comboBox.setModel(stopNames);
 		}
@@ -322,7 +319,7 @@ public class ScanPackage extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                CreateStop newStop = new CreateStop();
+                CreateStop newStop = new CreateStop(manager);
                 newStop.setVisible(true);
             }
         });

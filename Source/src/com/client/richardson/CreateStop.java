@@ -6,6 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -16,7 +19,7 @@ public class CreateStop extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+	ArrayList<Route> routes;
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +27,7 @@ public class CreateStop extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateStop frame = new CreateStop();
+					CreateStop frame = new CreateStop(new DatabaseManager());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +39,8 @@ public class CreateStop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateStop() {
+	public CreateStop(DatabaseManager manager) {
+		ArrayList<Route> routes;
 		setResizable(false);
 		setVisible(true);
 		setTitle("Create Stop");
@@ -63,8 +67,18 @@ public class CreateStop extends JFrame {
 		lblSelectRouteTo.setBounds(71, 88, 163, 14);
 		contentPane.add(lblSelectRouteTo);
 		
+		routes=(ArrayList<Route>)manager.getRoutes();
+		String[] rtNames = new String[routes.size()-1];
+		for(Route r: routes){
+			rtNames[routes.indexOf(r)] =r.getName();
+			
+		}
+		
+		
 		JComboBox comboBox = new JComboBox();
+		DefaultComboBoxModel model = new DefaultComboBoxModel(rtNames);
 		comboBox.setBounds(94, 113, 116, 20);
+		
 		contentPane.add(comboBox);
 		
 		JButton btnCreate = new JButton("Create");
