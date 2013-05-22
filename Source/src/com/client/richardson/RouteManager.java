@@ -30,7 +30,6 @@ import javax.swing.JComboBox;
 import com.client.richardson.RouteMaker.SortedListModel;
 
 
-
 public class RouteManager extends JFrame {
 
 

@@ -170,9 +170,7 @@ public class login extends JFrame {
 
 			
 
-//=======
-			Integer hash = userName.getText().hashCode()+passwordField.getPassword().hashCode();
-//>>>>>>> origin/Nick
+
 			System.out.println(hash);
 			File a= new File("Admin_Hash.txt");
 			File u= new File("User_Hash.txt");
@@ -219,9 +217,7 @@ public class login extends JFrame {
 					o.setVisible(true);
 					f.dispose();
 //=======
-					f.setVisible(false);
-					OpenScreen o = new OpenScreen(admin);
-					o.setVisible(true);
+					
 //>>>>>>> origin/Nick
 				}
 					

@@ -65,11 +65,7 @@ public class SubRoom extends JFrame {
          newContentPane.setOpaque(true);
          getContentPane().repaint();
          
-<<<<<<< HEAD
-       
-         
-=======
->>>>>>> origin/Nick
+
          SearchField = new JTextField();
          SearchField.setBounds(20, 456, 297, 20);
          contentPane.add(SearchField);
@@ -80,17 +76,14 @@ public class SubRoom extends JFrame {
          contentPane.add(btnSearch);
          
          JButton btnAdvancedSearch = new JButton("Advanced Search");
-<<<<<<< HEAD
-         btnAdvancedSearch.setBounds(444, 455, 144, 23);
-         contentPane.add(btnAdvancedSearch);
-         
+
          JButton btnRefresh = new JButton("Refresh");
-         btnRefresh.setBounds(609, 456, 89, 23);
+         btnRefresh.setBounds(609, 455, 89, 23);
          contentPane.add(btnRefresh);
-=======
-         btnAdvancedSearch.setBounds(554, 456, 144, 23);
+
+         btnAdvancedSearch.setBounds(455, 455, 144, 23);
          contentPane.add(btnAdvancedSearch);
->>>>>>> origin/Nick
+
        
          
          btnAdvancedSearch.addActionListener(new ActionListener() {

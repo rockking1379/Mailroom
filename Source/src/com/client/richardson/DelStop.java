@@ -10,6 +10,8 @@ import java.util.TreeSet;
 
 import javax.swing.*;
 
+import com.client.richardson.RouteMaker.SortedListModel;
+
 public class DelStop extends JFrame {
 	  private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
 	  private static final String ADD_BUTTON_LABEL = "Add >>";
