@@ -236,8 +236,6 @@ public class DatabaseManager
 							rs.getString("Tracking_Number")
 							));
 				}
-				
-				JOptionPane.showMessageDialog(null, "Loaded " + packages.size() + " packages");
 			}
 			catch(Exception e)
 			{
