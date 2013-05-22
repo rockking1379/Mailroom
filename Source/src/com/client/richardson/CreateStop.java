@@ -38,6 +38,7 @@ public class CreateStop extends JFrame {
 	 */
 	public CreateStop() {
 		setResizable(false);
+		setVisible(true);
 		setTitle("Create Stop");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 316, 221);

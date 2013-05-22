@@ -206,6 +206,10 @@ public class RouteManager extends JFrame {
 	public RouteManager() {
 		setTitle("Manage Routes");
 		setSize(493, 360);
+		setSize(493, 360);
+		 setVisible(true);
+		  
+		
 		setResizable(false);
 		getContentPane().setBackground(new Color(0, 102, 0));
 		sourceLabel = new JLabel("Available Stops");
@@ -254,6 +258,16 @@ public class RouteManager extends JFrame {
 	    JButton NewStop = new JButton("New Stop");
 	    NewStop.setBounds(193, 277, 110, 23);
 	    getContentPane().add(NewStop);
+	    
+	    NewStop.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				    new CreateStop();
+				 
+			}
+		});
 	    
 	    JButton btnSave = new JButton("Save");
 	    btnSave.setBounds(356, 27, 110, 23);

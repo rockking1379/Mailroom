@@ -300,7 +300,7 @@ public class ScanPackage extends JFrame {
 
 		lblDate_1.setBounds(430, 130, 96, 20);
 		contentPane.add(lblDate_1);
-		Date date =new Date();
+		
         SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
         newDate = ft.format(date);
 		lblDate_1.setText(newDate);

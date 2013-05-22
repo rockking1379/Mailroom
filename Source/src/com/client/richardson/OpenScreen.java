@@ -155,27 +155,15 @@ public class OpenScreen extends JFrame {
 		
 		
 
-		JMenuItem crtRt = new JMenuItem("Create Route");
+		JMenuItem crtRt = new JMenuItem("Manage Routes");
 		
 		crtRt.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				 JFrame f = new JFrame("Dual List Box Tester");
-				    
-				    RouteMaker dual = new RouteMaker(manager);
-				    dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
-				    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
-				    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
-				    		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
-				    		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound" });
-
-				   
-				    f.getContentPane().add(dual, BorderLayout.CENTER);
-				    f.setSize(493, 360);
-				    f.setVisible(true);
-				    f.setResizable(false);				
+				    new RouteManager();
+				 
 			}
 		});
 		
