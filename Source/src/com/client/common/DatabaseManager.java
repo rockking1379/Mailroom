@@ -318,6 +318,9 @@ public class DatabaseManager
 					break;
 				}
 			}
+			
+			statement.execute();
+			
 			packages.add(p);
 		}
 		catch(Exception e)
@@ -325,7 +328,6 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
-	//Backup(more logic involved)
 	@SuppressWarnings("resource")
 	public void updatePackage(String tNumber, boolean value)
 	{
@@ -359,7 +361,6 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
-	//Optimal
 	public void updatePackage(String tNumber, boolean atStop, boolean pickedUp)
 	{
 		try
