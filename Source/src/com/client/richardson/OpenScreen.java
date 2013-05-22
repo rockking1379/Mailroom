@@ -4,8 +4,9 @@ package com.client.richardson;
 //Testing new Project
 import java.awt.BorderLayout;
 import com.client.common.*;
+import com.client.common.DatabaseManager;
 //=======
-
+import com.client.common.*;
 import java.awt.BorderLayout;
 //>>>>>>> origin/Nick
 import java.awt.EventQueue;
@@ -80,12 +81,10 @@ public class OpenScreen extends JFrame {
 
 	
 	public OpenScreen(boolean admin) {
-		
-				manager = new DatabaseManager();
+		prog p = new prog();
+				manager =new DatabaseManager();
+
 				
-				manager.setDatabase("Mailroom_db");
-				manager.setFile("People.txt");
-				loadSettings();
 				manager.setup();
 				manager.loadPackages(true,null);
 				
@@ -304,6 +303,7 @@ public class OpenScreen extends JFrame {
 						setting += settingLine.charAt(index);
 						index++;
 					}
+					index++;
 					if(setting.toUpperCase().equals("DATABASE"))
 					{
 						//Read in Database configuration
@@ -312,7 +312,6 @@ public class OpenScreen extends JFrame {
 						{
 							temp += settingLine.charAt(i);
 						}
-						
 						dbManager.setDatabase(temp);
 					}
 					else
@@ -325,19 +324,18 @@ public class OpenScreen extends JFrame {
 							{
 								temp += settingLine.charAt(i);
 							}
-							
 							dbManager.setFile(temp);
 						}
 					}
 				}
-				
 				br.close();
-				
 			}
 			catch(Exception e)
 			{
 				//Do nothing
 			}
+			dbManager.setup();
+			dbManager.loadPackages(true, null);
 		}
 		else
 		{
@@ -356,7 +354,8 @@ public class OpenScreen extends JFrame {
 				{
 					FileWriter fOutput = new FileWriter(settings);
 					BufferedWriter bw = new BufferedWriter(fOutput);
-					bw.write("DATABASE;" + database.getAbsolutePath() + "\n\n");
+					bw.write("DATABASE;" + database.getAbsolutePath());
+					bw.newLine();
 					bw.write("PERSONS;" + persons.getAbsolutePath() + "\n");
 					bw.close();
 					fOutput.close();
@@ -368,8 +367,8 @@ public class OpenScreen extends JFrame {
 			}
 			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
 		}
-	}	
-					
+	}
+
 	
 	
 
