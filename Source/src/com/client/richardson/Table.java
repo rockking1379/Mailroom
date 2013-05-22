@@ -124,10 +124,10 @@ public class Table extends JPanel {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
 
-            if (col == 0) {
+            if (col == 0 ) {
             	
                 return true;
-            } if(col<6) {
+            } if(col<6 && col >3) {
                 return false;
             } else{
             	return true;

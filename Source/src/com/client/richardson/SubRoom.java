@@ -64,6 +64,7 @@ public class SubRoom extends JFrame {
          contentPane.add(newContentPane);
          newContentPane.setOpaque(true);
          getContentPane().repaint();
+        
          
 
          SearchField = new JTextField();

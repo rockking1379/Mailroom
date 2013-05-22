@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 //import mailroom.TableDemo.MyTableModel;
@@ -16,6 +17,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
  
@@ -28,24 +30,30 @@ public class SUBTable extends JPanel {
     public SUBTable() {
         super(new GridLayout(1,0));
  
-        JTable table = new JTable(new MyTableModel());
+        MyTableModel model =new MyTableModel();
+        JTable table = new JTable();
+        table.setModel(model);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
  
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
- 
+       // model.addRow(rowData[0]);
+    
+        	
+        
         //Add the scroll pane to this panel.
         add(scrollPane);
     }
  
     class MyTableModel extends AbstractTableModel {
+    	private Vector data1 = new Vector();
     	  Date date =new Date();
     SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
     String pickdate="";
 	String trackNum= "0214123574841245546";
 	String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
-    
+   
     	
         private String[] columnNames = {"First Name",
                 "Last Name",
@@ -122,40 +130,11 @@ public class SUBTable extends JPanel {
                                    + " (an instance of "
                                    + value.getClass() + ")");
             }
- 
             data[row][col] = value;
-                       System.out.println(value);
-                       
-                     try{   
-                    	 Object value2 = null;
-						data[row][6]=value2;
-                    	 picked_up=(boolean) value2;
-                        System.out.println(picked_up);
-                         fireTableCellUpdated(row, col);
-                        
-                        if(picked_up==false){
-                        	pickdate="";
-                        	System.out.println("In Flase");
-                        	Object value1 = null;
-                        	value1="";
-            				data[row][7] = value1;
-                       	 	
-                        	 fireTableDataChanged();
-                        }
-                        if(picked_up==true){
-                        	pickdate=ft.format(date);
-                        	System.out.println("In True");
-                        	Object value1 = null;
-                        	value1=ft.format(date);
-                        	
-            				data[row][7] = value1;
-                        
-                             fireTableDataChanged();
-                        }
-                     }catch(Exception ex){
-                    	 
-                     }
-
+            if(col==6){
+            pickDate(value, row, col);
+            }
+            fireTableDataChanged();
  
             if (DEBUG) {
                 System.out.println("New value of data:");
@@ -176,6 +155,57 @@ public class SUBTable extends JPanel {
             }
             System.out.println("--------------------------");
         }
+        
+        
+        public void pickDate(Object value, int row, int col){
+        	 try{	
+        		 data[row][6] = value;
+        		 System.out.println(value);
+            
+        		 picked_up=(boolean) value;
+            	 System.out.println(picked_up);
+             	 fireTableCellUpdated(row, col);
+             
+             	 if(picked_up==false){
+             		pickdate="";
+             		System.out.println("In Flase");
+             		Object value1 = null;
+             		value1="";
+   					data[row][col+1] = value1;
+            	 	
+             		 fireTableDataChanged();
+             	 }
+           	  if(picked_up==true){
+           		  pickdate=ft.format(date);
+           		  System.out.println("In True");
+           		  Object value1 = null;
+           		  value1=ft.format(date);
+             	
+           		  data[row][col+1] = value1;
+             
+                  fireTableDataChanged();
+             }
+          }catch(Exception ex){
+         	 System.out.println("ERROR!");
+          }
+
+       }
+        
+        public void delivered(){
+        	
+        	// Get value to send to database with if statement
+        }
+        
+        public void insertData(Object[] input){
+        	 data1.add(new Vector());
+        	 for(int i =0; i<input.length; i++){
+        	 ((Vector) data1.get(data1.size()-1)).add(input[i]);
+        	 }
+
+        	 fireTableDataChanged();
+
+        }
+ 
     }
     
  
@@ -207,6 +237,9 @@ public class SUBTable extends JPanel {
         });
     }
 
+  
+    
+    
 	public boolean isPicked_up() {
 		return picked_up;
 	}
