@@ -52,6 +52,8 @@ public class RouteMaker extends JPanel {
 
   public RouteMaker(DatabaseManager manager) {
 	  this.manager=manager;
+	  
+	 
 
   	setBackground(new Color(0, 102, 0));
     initScreen();
@@ -288,9 +290,10 @@ public class RouteMaker extends JPanel {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		DatabaseManager manager = new DatabaseManager();
+		String rtName=RouteField.getText();
+		
 		ArrayList<Stop> stops = new ArrayList<Stop>();
-		manager.addRoute(RouteField.getText());
+		manager.addRoute(rtName);
 		for(String s: inDest){
 			manager.updateStop(s, true, RouteField.getText());
 			stops.add(new Stop(s));

@@ -126,7 +126,7 @@ public class OpenScreen extends JFrame {
 		mntmCreateNewRoute.addActionListener(new ActionListener() { 
             public void actionPerformed(ActionEvent e)
             {
-
+            	
             	RouteMaker route = new RouteMaker(manager);
                 route.setVisible(true);
 
@@ -137,17 +137,26 @@ public class OpenScreen extends JFrame {
                 
                 String[] stopNames= new String[manager.getStops().size()];
                 
+                
+                
                 for(Stop s: manager.getStops()){
                 	stopNames[manager.getStops().indexOf(s)] = s.getName();
                 }
-                
+                try{
                 dual.addSourceElements(stopNames);
-
+            	}
+                catch(NullPointerException ex){
+            		
+            		
+            		
+            	}
                
                 f.getContentPane().add(dual, BorderLayout.CENTER);
                 f.setSize(493, 360);
                 f.setVisible(true);
                 f.setResizable(false);
+            	
+            	
 
             }
         });

@@ -6,6 +6,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -39,7 +41,7 @@ public class CreateStop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateStop(DatabaseManager manager) {
+	public CreateStop(final DatabaseManager manager) {
 		ArrayList<Route> routes;
 		setResizable(false);
 		setVisible(true);
@@ -68,14 +70,14 @@ public class CreateStop extends JFrame {
 		contentPane.add(lblSelectRouteTo);
 		
 		routes=(ArrayList<Route>)manager.getRoutes();
-		String[] rtNames = new String[routes.size()-1];
+		String[] rtNames = new String[routes.size()];
 		for(Route r: routes){
 			rtNames[routes.indexOf(r)] =r.getName();
 			
 		}
 		
 		
-		JComboBox comboBox = new JComboBox();
+		final JComboBox comboBox = new JComboBox();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(rtNames);
 		comboBox.setBounds(94, 113, 116, 20);
 		
@@ -84,5 +86,21 @@ public class CreateStop extends JFrame {
 		JButton btnCreate = new JButton("Create");
 		btnCreate.setBounds(104, 144, 89, 23);
 		contentPane.add(btnCreate);
+		
+		btnCreate.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if(comboBox.getSelectedIndex()==-1){
+					manager.addStop(textField.getText(), false, null);
+				}
+				else{
+					String route = (String)comboBox.getSelectedItem();
+					manager.addStop(textField.getText(), true, route);
+				}
+				
+			}
+			
+		});
 	}
 }

@@ -460,6 +460,7 @@ public class DatabaseManager
 			if(statement.execute())
 			{
 				loadRoutes();
+				JOptionPane.showMessageDialog(null,"Route Created");
 			}
 		}
 		catch(Exception e)
