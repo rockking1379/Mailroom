@@ -33,7 +33,7 @@ public class DatabaseManager
 	///---Set Methods---///
 	public void setDatabase(String dbLocation)
 	{
-		this.dbLocation = dbLocation;
+		this.dbLocation = "E:\\Users\\Thomas\\Documents\\GitHub\\Mailroom\\Source\\mailroom.db";
 	}
 	public void setFile(String fileLocation)
 	{
@@ -68,7 +68,8 @@ public class DatabaseManager
 			} 
 			catch (Exception e) 
 			{
-				JOptionPane.showMessageDialog(null, "Error Creating List of People");
+				
+				JOptionPane.showMessageDialog(null, "Error Creating List of People:"+e.getMessage());
 			}
 			
 			JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
@@ -82,6 +83,7 @@ public class DatabaseManager
 	public void createPerson(String person)
 	{
 		//Dilimanted by ',' or ';' not sure which yet
+
 		String firstName = "";
 		String lastName = "";
 		String email = "";
@@ -95,6 +97,7 @@ public class DatabaseManager
 			//First Name
 			while(person.charAt(index) != ',')
 			{
+
 				firstName += person.charAt(index);
 				index++;
 			}
@@ -158,7 +161,7 @@ public class DatabaseManager
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:Mydb.db");
 			statement = conn.prepareStatement("select * from Route;");
 			ResultSet rs = statement.executeQuery();
 			while(rs.next())
@@ -179,6 +182,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("com.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Stop;");
 			ResultSet rs = statement.executeQuery();
@@ -192,7 +196,7 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database" + e.getMessage());
 		}
 	}
 	public void loadPackages(boolean allStops, String stop)
@@ -205,6 +209,7 @@ public class DatabaseManager
 		{
 			try
 			{
+				Class.forName("com.sqlite.JDBC");
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				statement = conn.prepareStatement("select * from Package where Date=?;");
@@ -233,13 +238,14 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database:"+e.getMessage());
 			}
 		}
 		if(!allStops)
 		{
 			try
 			{
+				Class.forName("com.sqlite.JDBC");
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=?;");
