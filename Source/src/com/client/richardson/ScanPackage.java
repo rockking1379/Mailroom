@@ -91,7 +91,7 @@ public class ScanPackage extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage("G:\\MailRoom\\images.jpg"));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 545, 231);
+		setBounds(100, 100, 545, 246);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(255, 255, 255));
 		contentPane.setBackground(new Color(0, 102, 0));
@@ -112,12 +112,12 @@ public class ScanPackage extends JFrame {
 		
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setForeground(new Color(255, 255, 255));
-		lblDate.setBounds(299, 134, 46, 14);
+		lblDate.setBounds(35, 163, 46, 14);
 
 		contentPane.add(lblDate);
 		
 		JButton btnSave = new JButton("Save");
-		btnSave.setBounds(229, 171, 89, 23);
+		btnSave.setBounds(227, 188, 89, 23);
 		contentPane.add(btnSave);
 
 		btnSave.addActionListener(new ActionListener(){
@@ -140,7 +140,7 @@ public class ScanPackage extends JFrame {
 
 		
 		JButton btnClear = new JButton("Clear");
-		btnClear.setBounds(35, 171, 89, 23);
+		btnClear.setBounds(35, 188, 89, 23);
 		contentPane.add(btnClear);
 		
 	    btnClear.addActionListener(new ActionListener() {
@@ -153,7 +153,7 @@ public class ScanPackage extends JFrame {
         });
 		
 		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(406, 171, 89, 23);
+		btnClose.setBounds(406, 188, 89, 23);
 		contentPane.add(btnClose);
 		
 	    btnClose.addActionListener(new ActionListener() {
@@ -299,7 +299,7 @@ public class ScanPackage extends JFrame {
 		lblDate_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblDate_1.setForeground(Color.WHITE);
 
-		lblDate_1.setBounds(430, 130, 96, 20);
+		lblDate_1.setBounds(166, 159, 96, 20);
 		contentPane.add(lblDate_1);
 		
         SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
@@ -314,7 +314,37 @@ public class ScanPackage extends JFrame {
 		JButton btnNewStop = new JButton("Create New Stop");
 		btnNewStop.setBounds(110, 130, 179, 23);
 		contentPane.add(btnNewStop);
+		
+		JLabel lblCarrier = new JLabel("Carrier: ");
+		lblCarrier.setForeground(new Color(255, 255, 255));
+		lblCarrier.setBounds(299, 134, 66, 14);
+		contentPane.add(lblCarrier);
+		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(375, 131, 151, 20);
+		contentPane.add(comboBox_1);
+		
+		JLabel lblOtherCarrier = new JLabel("Other Carrier:");
+		lblOtherCarrier.setForeground(Color.WHITE);
+		lblOtherCarrier.setBounds(292, 163, 79, 14);
+		contentPane.add(lblOtherCarrier);
+		
+		JButton btnCreateNewCarrier = new JButton("Create New Carrier");
+		btnCreateNewCarrier.setBounds(375, 159, 151, 23);
+		contentPane.add(btnCreateNewCarrier);
 		setVisible(true);
+		
+		btnCreateNewCarrier.addActionListener(new ActionListener() {
+	    	 
+            public void actionPerformed(ActionEvent e)
+            {
+                CreateCarrier newCarrier = new CreateCarrier();
+                
+                newCarrier.setVisible(true);
+            }
+        });
+		
+		
 		btnNewStop.addActionListener(new ActionListener() {
 	    	 
             public void actionPerformed(ActionEvent e)
