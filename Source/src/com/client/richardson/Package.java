@@ -15,6 +15,44 @@ import java.util.*;
 public class Package 
 {
 	private String firstName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public void setReturnToSender(boolean returnToSender) {
+		this.returnToSender = returnToSender;
+	}
+
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+
+	public void setBoxNumber(String boxNumber) {
+		this.boxNumber = boxNumber;
+	}
+
+
+	public void setStop(String stop) {
+		this.stop = stop;
+	}
+
+
+	public void setTrackingNumber(String trackingNumber) {
+		this.trackingNumber = trackingNumber;
+	}
 	private String lastName;
 	private String email;
 	private boolean returnToSender;
