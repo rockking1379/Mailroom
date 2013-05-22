@@ -299,7 +299,7 @@ public class OpenScreen extends JFrame {
 					//Read Settings
 					String setting = "";				
 					int index = 0;
-					while(settingLine.charAt(index) != ':')
+					while(settingLine.charAt(index) != ';')
 					{
 						setting += settingLine.charAt(index);
 						index++;
@@ -356,8 +356,8 @@ public class OpenScreen extends JFrame {
 				{
 					FileWriter fOutput = new FileWriter(settings);
 					BufferedWriter bw = new BufferedWriter(fOutput);
-					bw.write("DATABASE:" + database.getAbsolutePath() + "\n");
-					bw.write("PERSONS:" + persons.getAbsolutePath() + "\n");
+					bw.write("DATABASE;" + database.getAbsolutePath() + "\n\n");
+					bw.write("PERSONS;" + persons.getAbsolutePath() + "\n");
 					bw.close();
 					fOutput.close();
 				}

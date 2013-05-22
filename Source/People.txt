@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 first name, last name, email, id number, box number, building,
 Thomas,Nehring,nehringt@live.com,900555555,93,Moffatt,
 Thomas,Nehring,nehringt@live.com,900555555,94,Moffatt,
 James,Sitz,sitzbj@grizzlies.adams.edu,234322343,3A,Faculty Drive,
-=======
-first name, last name, email, id number, box number, building
-Thomas, Nehring, nehringt@live.com, 900555555, 93, Moffatt
->>>>>>> origin/Tom
+
