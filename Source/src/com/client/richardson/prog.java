@@ -46,7 +46,6 @@ public class prog
 						{
 							temp += settingLine.charAt(i);
 						}
-						
 						dbManager.setDatabase(temp);
 					}
 					else
@@ -59,20 +58,16 @@ public class prog
 							{
 								temp += settingLine.charAt(i);
 							}
-							
 							dbManager.setFile(temp);
 						}
 					}
 				}
-				
 				br.close();
-				
 			}
 			catch(Exception e)
 			{
 				//Do nothing
 			}
-			
 			dbManager.setup();
 		}
 		else
@@ -92,8 +87,9 @@ public class prog
 				{
 					FileWriter fOutput = new FileWriter(settings);
 					BufferedWriter bw = new BufferedWriter(fOutput);
-					bw.write("DATABASE:" + database.getAbsolutePath() + "\n");
-					bw.write("PERSONS:" + persons.getAbsolutePath() + "\n");
+					bw.write("DATABASE;" + database.getAbsolutePath());
+					bw.newLine();
+					bw.write("PERSONS;" + persons.getAbsolutePath() + "\n");
 					bw.close();
 					fOutput.close();
 				}

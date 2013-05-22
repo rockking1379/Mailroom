@@ -38,7 +38,7 @@ public class DatabaseManager
 	///---Setup---///
 	public void setup()
 	{
-		if(dbLocation != null && fileLocation != null)
+		if((dbLocation != null) && (fileLocation != null))
 		{
 			//Prepare setup
 			//Load people
@@ -51,23 +51,36 @@ public class DatabaseManager
 				if(!people.exists())
 				{
 					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
+					File settings = new File("./properties.prop");
+					settings.delete();
+					System.exit(0);
 				}
-				fStream = new FileInputStream(people);
-				DataInputStream dis = new DataInputStream(fStream);
-				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
-				String person;
-				while((person = br.readLine()) != null)
+				else
 				{
-					createPerson(person);
-				}
-				br.close();
+					fStream = new FileInputStream(people);
+					DataInputStream dis = new DataInputStream(fStream);
+					BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+					String person;
+					while((person = br.readLine()) != null)
+					{
+						createPerson(person);
+					}
+					br.close();
 				
-				loadRoutes();
-				loadStops();
+					loadRoutes();
+					loadStops();
+				}
 			} 
 			catch (Exception e) 
 			{
-				JOptionPane.showMessageDialog(null, "Error Creating List of People");
+				if(asuPeople.size() > 0)
+				{
+					JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Error Creating List of People");
+				}
 			}
 			
 			JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
@@ -128,11 +141,11 @@ public class DatabaseManager
 			}
 			index++;
 			//Building
-			while(person.charAt(index) != ',')
+			while(index < person.length())
 			{
 				building += person.charAt(index);
+				index++;
 			}
-
 		}
 		
 		if(!building.equals(""))
@@ -147,12 +160,12 @@ public class DatabaseManager
 	public void loadRoutes()
 	{
 		//create route in here
-		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("select * from Route;");
-			ResultSet rs = statement.executeQuery();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Route");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -168,12 +181,12 @@ public class DatabaseManager
 	public void loadStops()
 	{
 		//create stop in here
-		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("select * from Stop;");
-			ResultSet rs = statement.executeQuery();
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Stop;");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -446,10 +459,7 @@ public class DatabaseManager
 			statement.setString(1, route);
 			if(statement.execute())
 			{
-				statement = conn.prepareStatement("select route_id from Route where Name = ?;");
-				statement.setString(1, route);
-				ResultSet rs = statement.executeQuery();
-				Route r = new Route(route, rs.getInt(0));
+				loadRoutes();
 			}
 		}
 		catch(Exception e)
