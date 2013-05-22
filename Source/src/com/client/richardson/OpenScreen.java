@@ -1,30 +1,30 @@
 package com.client.richardson;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 // 5-17-2013
 //Testing new Project
 import java.awt.BorderLayout;
 import com.client.common.*;
-=======
+//=======
 
 import java.awt.BorderLayout;
->>>>>>> origin/Nick
+//>>>>>>> origin/Nick
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.ImageIcon;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import javax.swing.JFileChooser;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-=======
+//=======
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JButton;
->>>>>>> origin/Nick
+//>>>>>>> origin/Nick
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import java.awt.Color;
@@ -34,7 +34,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenuItem;
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 import com.client.common.*;
 
@@ -49,12 +49,12 @@ import java.io.InputStreamReader;
 
 public class OpenScreen extends JFrame {
 	DatabaseManager manager;
-=======
-import java.awt.Dialog.ModalExclusionType;
+//=======
 
-public class OpenScreen extends JFrame {
 
->>>>>>> origin/Nick
+
+
+//>>>>>>> origin/Nick
 	private JPanel contentPane;
 
 	/**
@@ -76,7 +76,7 @@ public class OpenScreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 	
 	public OpenScreen(boolean admin) {
