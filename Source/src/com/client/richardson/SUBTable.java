@@ -64,18 +64,11 @@ public class SUBTable extends JPanel {
                 "Picked Up",
                 "Pick Up Date"};
         
-        private Object[][] data = {
-        		{"Kathy", "Smith",
-        	         "678", L4,  ft.format(date), delivered, picked_up,pickdate},
-        	        {"John", "Doe", 
-        	         "1041", L4, ft.format(date), delivered, picked_up,pickdate},
-        	        {"Sue", "Black",
-        	         "386", L4,  ft.format(date), delivered,picked_up,pickdate},
-        	        {"Jane", "White",
-        	         "1437", L4, ft.format(date), delivered, picked_up,pickdate},
-        	        {"Joe", "Brown",
-        	         "19", L4,  ft.format(date), delivered,  picked_up,pickdate }
-        	        };
+        private Object[][] data = { {"Kathy", "Smith", "678", L4,  ft.format(date), delivered, picked_up,pickdate},
+        	        {"John", "Doe", "1041", L4, ft.format(date), delivered, picked_up,pickdate},
+        	        {"Sue", "Black", "386", L4,  ft.format(date), delivered,picked_up,pickdate},
+        	        {"Jane", "White", "1437", L4, ft.format(date), delivered, picked_up,pickdate},
+        	        {"Joe", "Brown",  "19", L4,  ft.format(date), delivered,  picked_up,pickdate } };
         
  
         public int getColumnCount() {
