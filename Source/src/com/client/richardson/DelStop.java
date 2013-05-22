@@ -10,7 +10,7 @@ import java.util.TreeSet;
 
 import javax.swing.*;
 
-import com.client.richardson.RouteMaker.SortedListModel;
+
 
 public class DelStop extends JFrame {
 	  private static final Insets EMPTY_INSETS = new Insets(0, 0, 0, 0);
@@ -19,12 +19,12 @@ public class DelStop extends JFrame {
 	  private static final String DEFAULT_SOURCE_CHOICE_LABEL = "Available Choices";
 	  private static final String DEFAULT_DEST_CHOICE_LABEL = "Your Choices";
 	  private JList sourceList;
-	  private SortedListModel sourceListModel;
+	  private SortedListModel1 sourceListModel;
 	  private JList destList;
-	  private SortedListModel destListModel;
+	  private SortedListModel1 destListModel;
 	  private JButton addButton;
 	  private JButton removeButton;
-	 // DatabaseManager manager;
+	  DatabaseManager manager;
 	  ArrayList<String> inDest = new ArrayList<String>();
 	  private JLabel lblAvailableStops;
 	  private JLabel lblStopsToBe;
@@ -54,7 +54,7 @@ public class DelStop extends JFrame {
 	    fillListModel(destListModel, newValue);
 	  }
 
-	  private void fillListModel(SortedListModel model, ListModel newValues) {
+	  private void fillListModel(SortedListModel1 model, ListModel newValues) {
 	    int size = newValues.getSize();
 	    for (int i = 0; i < size; i++) {
 	      model.add(newValues.getElementAt(i));
@@ -74,7 +74,7 @@ public class DelStop extends JFrame {
 	    fillListModel(destListModel, newValue);
 	  }
 
-	  private void fillListModel(SortedListModel model, Object newValues[]) {
+	  private void fillListModel(SortedListModel1 model, Object newValues[]) {
 	    model.addAll(newValues);
 	  }
 
@@ -176,7 +176,7 @@ public class DelStop extends JFrame {
 		
 		setResizable(false);
 		getContentPane().setBackground(new Color(0, 102, 0));
-	    sourceListModel = new SortedListModel();
+	    sourceListModel = new SortedListModel1();
 	    sourceList = new JList(sourceListModel);
 	    getContentPane().setLayout(null);
 	    JScrollPane scrollPane = new JScrollPane(sourceList);
@@ -199,7 +199,7 @@ public class DelStop extends JFrame {
 	    removeButton.setBounds(193, 131, 110, 23);
 	    getContentPane().add(removeButton);
 	    removeButton.addActionListener(new RemoveListener());
-	    destListModel = new SortedListModel();
+	    destListModel = new SortedListModel1();
 	    destList = new JList(destListModel);
 	    JScrollPane scrollPane_1 = new JScrollPane(destList);
 	    scrollPane_1.setBounds(310, 64, 162, 214);
@@ -269,11 +269,15 @@ public class DelStop extends JFrame {
 		}
 
 	
-	class SortedListModel2 extends AbstractListModel {
+class SortedListModel extends AbstractListModel {
 
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	SortedSet model;
 
-	  public SortedListModel2() {
+	  public SortedListModel() {
 	    model = new TreeSet();
 	  }
 

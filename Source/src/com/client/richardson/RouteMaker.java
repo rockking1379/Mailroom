@@ -307,7 +307,11 @@ public class RouteMaker extends JPanel {
 
 class SortedListModel extends AbstractListModel {
 
-  SortedSet model;
+  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+SortedSet model;
 
   public SortedListModel() {
     model = new TreeSet();
@@ -361,4 +365,5 @@ class SortedListModel extends AbstractListModel {
     }
     return removed;
   }
-}}
+}
+}

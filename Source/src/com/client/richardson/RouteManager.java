@@ -27,7 +27,6 @@ import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JComboBox;
 
-import com.client.richardson.RouteMaker.SortedListModel;
 
 
 public class RouteManager extends JFrame {
@@ -312,8 +311,12 @@ public class RouteManager extends JFrame {
 		}
 
 	
-	class SortedListModel1 extends AbstractListModel {
+class SortedListModel1 extends AbstractListModel<Object> {
 
+	  /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	SortedSet model;
 
 	  public SortedListModel1() {
