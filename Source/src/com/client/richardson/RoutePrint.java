@@ -9,8 +9,6 @@ import java.util.Date;
 import java.util.List;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
-import java.awt.ScrollPane;
-import java.awt.Scrollbar;
 
 import javax.lang.model.element.Element;
 
@@ -44,14 +42,15 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
 
 public class RoutePrint extends JFrame {
 
-	
+	private JPanel contentPane;
 	private JPanel contentPane_1;
 
-	JPanel rtHolder;
+	
+	private JPanel rtHolder_1;
 	boolean ready = false;
 	JTextArea toPrint;
 
@@ -78,20 +77,22 @@ public class RoutePrint extends JFrame {
 	 */
 
 	public RoutePrint(final DatabaseManager manager) {
-		setResizable(false);
 		checkBoxes = new ArrayList<JCheckBox>();
-		
+		rtHolder_1=new JPanel();
 		routes=manager.getRoutes();
+		routes=new ArrayList<Route>();
+		routes.add(new Route("SUB"));
 		
 		for(Route r: routes){
-			checkBoxes.add(new JCheckBox(r.getName()));
+			JCheckBox ch=new JCheckBox(r.getName());
+			ch.setBackground(new Color(0,255,0));
+			checkBoxes.add(ch);
 		}
 		
-		rtHolder = new JPanel();
-		rtHolder.setLayout(new GridLayout());
+		
 		
 		for(JCheckBox c: checkBoxes){
-			rtHolder.add(c);
+			rtHolder_1.add(c);
 		}
 		
 
@@ -104,9 +105,11 @@ public class RoutePrint extends JFrame {
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		
+		setBounds(100, 100, 450, 248);
+		contentPane = new JPanel();
+		setResizable(false);
 
-		setBounds(100, 100, 450, 220);
+		setBounds(100, 100, 450, 300);
 		contentPane_1 = new JPanel();
 
 		contentPane_1.setBackground(new Color(0, 102, 0));
@@ -123,21 +126,17 @@ public class RoutePrint extends JFrame {
 		
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnPrint.setBounds(331, 154, 89, 23);
+		btnPrint.setBounds(277, 185, 89, 23);
 		contentPane_1.add(btnPrint);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(36, 51, 388, 92);
+		scrollPane.setBounds(46, 56, 320, 118);
 		contentPane_1.add(scrollPane);
 		
-		JPanel panel = new JPanel();
-		panel.setForeground(new Color(0, 0, 0));
-		panel.setBorder(null);
-		panel.setBackground(new Color(0, 255, 0));
-		scrollPane.setViewportView(panel);
-		panel.setLayout(new GridLayout(0, 2, 0, 0));
+		scrollPane.setViewportView(rtHolder_1);
 		
-
+		rtHolder_1.setBackground(new Color(0,255,0));
+		rtHolder_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		
 		btnPrint.addActionListener(new ActionListener() {
@@ -176,14 +175,16 @@ public class RoutePrint extends JFrame {
             	
             	List<Stop> stops = new ArrayList<Stop>();
             	ArrayList<Package> packages = new ArrayList<Package>();
+            	System.out.println("Running");
             	for(JCheckBox c: checkBoxes){
             		if(c.isSelected()){
             			 			
             			stops = manager.getStopsFromRoute(c.getText());
             			
             			
-            		}
-            	}
+            		
+            		
+            	
             stops.add(new Stop("SUB"));	
             	
             	if(stops.size()==0){
@@ -337,8 +338,15 @@ public class RoutePrint extends JFrame {
              	if(packagesFound){
            		setBounds(100,100,535,600);
             	ready=true;
-             	}
-            	}
+            
+             	
+            	
+             	}  	
+          }
+         
+        }
+            	
+        }
             	
             }
            private void addSpacing(int j){
