@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  
 public class SUBTable extends JPanel {
     private boolean DEBUG = false;
-    private boolean delivered= true;
+    private boolean delivered=false;
     private boolean picked_up=false;;
     private String pickdate;
     
@@ -104,13 +104,9 @@ public class SUBTable extends JPanel {
         public boolean isCellEditable(int row, int col) {
             //Note that the data/cell address is constant,
             //no matter where the cell appears onscreen.
-            if (col < 6) {
+            if (col < 5&& col>=3) {
                 return false;
-            } 
-            if (col >6){
-            	return false;
-            }
-            else {
+            } else {
                 return true;
             }
         }
@@ -130,7 +126,10 @@ public class SUBTable extends JPanel {
             data[row][col] = value;
                        System.out.println(value);
                        
-                        picked_up=(boolean) value;
+                     try{   
+                    	 Object value2 = null;
+						data[row][6]=value2;
+                    	 picked_up=(boolean) value2;
                         System.out.println(picked_up);
                          fireTableCellUpdated(row, col);
                         
@@ -139,7 +138,7 @@ public class SUBTable extends JPanel {
                         	System.out.println("In Flase");
                         	Object value1 = null;
                         	value1="";
-            				data[row][col+1] = value1;
+            				data[row][7] = value1;
                        	 	
                         	 fireTableDataChanged();
                         }
@@ -148,10 +147,14 @@ public class SUBTable extends JPanel {
                         	System.out.println("In True");
                         	Object value1 = null;
                         	value1=ft.format(date);
-            				data[row][col+1] = value1;
-                       	 
+                        	
+            				data[row][7] = value1;
+                        
                              fireTableDataChanged();
                         }
+                     }catch(Exception ex){
+                    	 
+                     }
 
  
             if (DEBUG) {

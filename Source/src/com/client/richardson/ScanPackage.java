@@ -41,7 +41,6 @@ public class ScanPackage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField NameText;
-	private JTextField StopText;
 
 	private static JTextField TrackText;
 	private JTextField BoxText;
@@ -91,7 +90,7 @@ public class ScanPackage extends JFrame {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("G:\\MailRoom\\images.jpg"));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 545, 272);
+		setBounds(100, 100, 545, 231);
 		contentPane = new JPanel();
 		contentPane.setForeground(new Color(255, 255, 255));
 		contentPane.setBackground(new Color(0, 102, 0));
@@ -103,12 +102,6 @@ public class ScanPackage extends JFrame {
 		NameText.setBounds(110, 80, 179, 20);
 		contentPane.add(NameText);
 		NameText.setColumns(10);
-		
-		StopText = new JTextField();
-
-		StopText.setBounds(375, 107, 151, 20);
-		contentPane.add(StopText);
-		StopText.setColumns(10);
 
 		
 		JLabel lblFirstName = new JLabel("First Name: ");
@@ -118,19 +111,12 @@ public class ScanPackage extends JFrame {
 		
 		JLabel lblDate = new JLabel("Date:");
 		lblDate.setForeground(new Color(255, 255, 255));
-		lblDate.setBounds(35, 110, 46, 14);
+		lblDate.setBounds(299, 134, 46, 14);
 
 		contentPane.add(lblDate);
 		
-		JLabel lblOtherStop = new JLabel("Other Stop:");
-		lblOtherStop.setForeground(new Color(255, 255, 255));
-
-		lblOtherStop.setBounds(299, 110, 66, 14);
-
-		contentPane.add(lblOtherStop);
-		
 		JButton btnSave = new JButton("Save");
-		btnSave.setBounds(229, 161, 89, 23);
+		btnSave.setBounds(229, 171, 89, 23);
 		contentPane.add(btnSave);
 
 		btnSave.addActionListener(new ActionListener(){
@@ -138,9 +124,7 @@ public class ScanPackage extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String stop=(String)comboBox.getSelectedItem();
-				if(!StopText.getText().equals(null)){
-					stop=StopText.getText();
-				}
+				
 				
 				manager.addPackage(new Package(NameText.getText(),LastNameText.getText(),date,BoxText.getText(),stop,TrackText.getText()));
 				
@@ -150,14 +134,14 @@ public class ScanPackage extends JFrame {
 
 		
 		JButton btnClear = new JButton("Clear");
-		btnClear.setBounds(35, 161, 89, 23);
+		btnClear.setBounds(35, 171, 89, 23);
 		contentPane.add(btnClear);
 		
 	    btnClear.addActionListener(new ActionListener() {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-               StopText.setText("");
+              
                TrackText.setText("");
                NameText.setText("");
                LastNameText.setText("");
@@ -166,7 +150,7 @@ public class ScanPackage extends JFrame {
         });
 		
 		JButton btnClose = new JButton("Close");
-		btnClose.setBounds(405, 161, 89, 23);
+		btnClose.setBounds(406, 171, 89, 23);
 		contentPane.add(btnClose);
 		
 	    btnClose.addActionListener(new ActionListener() {
@@ -227,13 +211,13 @@ public class ScanPackage extends JFrame {
 	
 		
 		BoxText = new JTextField();
-		BoxText.setBounds(375, 130, 151, 20);
+		BoxText.setBounds(375, 106, 151, 20);
 		contentPane.add(BoxText);
 		BoxText.setColumns(10);
 		
 		final JLabel lblBox = new JLabel("Box #");
 		lblBox.setForeground(new Color(255, 255, 255));
-		lblBox.setBounds(299, 132, 34, 14);
+		lblBox.setBounds(299, 109, 34, 14);
 		contentPane.add(lblBox);
 		
 	    comboBox = new JComboBox();
@@ -270,7 +254,7 @@ public class ScanPackage extends JFrame {
 				"Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music",
 				"Nursing", "One Stop", "Payroll", "Plachy", "Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", 
 				"Student Life", "SUB Office", "SUB Mailroom", "SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound"}));
-		comboBox.setBounds(110, 130, 179, 20);
+		comboBox.setBounds(110, 105, 179, 20);
 		
 		contentPane.add(comboBox);
 		comboBox.addItemListener(new ItemListener() {
@@ -296,7 +280,7 @@ public class ScanPackage extends JFrame {
 		
 		JLabel lblStop = new JLabel("Stop:");
 		lblStop.setForeground(Color.WHITE);
-		lblStop.setBounds(35, 133, 46, 14);
+		lblStop.setBounds(32, 110, 46, 14);
 
 		contentPane.add(lblStop);
 		
@@ -314,13 +298,30 @@ public class ScanPackage extends JFrame {
 		lblDate_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		lblDate_1.setForeground(Color.WHITE);
 
-		lblDate_1.setBounds(110, 105, 96, 20);
+		lblDate_1.setBounds(430, 130, 96, 20);
 		contentPane.add(lblDate_1);
 		Date date =new Date();
         SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
         newDate = ft.format(date);
 		lblDate_1.setText(newDate);
+		
+		JLabel lblOtherStop = new JLabel("Other Stop:");
+		lblOtherStop.setForeground(new Color(255, 255, 255));
+		lblOtherStop.setBounds(32, 134, 79, 14);
+		contentPane.add(lblOtherStop);
+		
+		JButton btnNewStop = new JButton("Create New Stop");
+		btnNewStop.setBounds(110, 130, 179, 23);
+		contentPane.add(btnNewStop);
 		setVisible(true);
+		btnNewStop.addActionListener(new ActionListener() {
+	    	 
+            public void actionPerformed(ActionEvent e)
+            {
+                CreateStop newStop = new CreateStop();
+                newStop.setVisible(true);
+            }
+        });
 		
 		
 	}
@@ -341,9 +342,7 @@ public class ScanPackage extends JFrame {
 		return NameText;
 	}
 
-	public JTextField getStopText() {
-		return StopText;
-	}
+	
 
 	public JTextField getBoxText() {
 		return BoxText;
