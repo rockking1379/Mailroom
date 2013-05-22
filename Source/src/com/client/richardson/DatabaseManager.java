@@ -69,6 +69,7 @@ public class DatabaseManager
 			catch (Exception e) 
 			{
 				
+
 				JOptionPane.showMessageDialog(null, "Error Creating List of People:"+e.getMessage());
 			}
 			
@@ -221,14 +222,11 @@ public class DatabaseManager
 				//state.executeUpdate("drop table if exists Packager");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
-				//state.setString(1, date);
+				statement.setString(1, date);
 				
 				
 				
-				 state.executeUpdate("create table Package(id integer,"
-						    + "Last_Name varchar(30)," + "Email varchar(30)," + "Date Date,"
-						    + "Box_Number varchar(30)," + "Name varchar(30),"+"Tracking_Number,"
-						    + "primary key (id));");
+				
 				
 				
 				

@@ -255,7 +255,9 @@ public class RoutePrint extends JFrame {
             		addSpacing(j);
             		
             		toPrint.setText(toPrint.getText()+newHead+"\n"+equ+"\n"+fieldHeader+"\n");            		
-            		packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
+            		packages = new ArrayList<Package>();
+            		//packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
+            		
             		
             		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", date,"93","234234235346541111532"));
             		packages.add(new Package("sdf","Yehriwerng", "nehringtb@sfdd.ede", date, "93", "23423423534654111112308"));
