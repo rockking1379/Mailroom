@@ -41,7 +41,8 @@ public class ScanPackage extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField NameText;
-
+	ArrayList<Person> personsFound;
+	Person selectedPerson;
 	private static JTextField TrackText;
 	private JTextField BoxText;
 	private JTextField LastNameText;
@@ -87,7 +88,7 @@ public class ScanPackage extends JFrame {
 		setIconImage(icon.getImage());
 		
 		setBackground(new Color(0, 102, 0));
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("G:\\MailRoom\\images.jpg"));
+		setIconImage(Toolkit.getDefaultToolkit().getImage("G:\\MailRoom\\images.jpg"));
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 545, 231);
@@ -126,7 +127,12 @@ public class ScanPackage extends JFrame {
 				String stop=(String)comboBox.getSelectedItem();
 				
 				
-				manager.addPackage(new Package(NameText.getText(),LastNameText.getText(),date,BoxText.getText(),stop,TrackText.getText()));
+				
+				
+				Package p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText());
+			
+				manager.addPackage(p);
+				clear();
 				
 			}
 			
@@ -141,11 +147,8 @@ public class ScanPackage extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
+              clear();
               
-               TrackText.setText("");
-               NameText.setText("");
-               LastNameText.setText("");
-               BoxText.setText("");
             }
         });
 		
@@ -200,9 +203,10 @@ public class ScanPackage extends JFrame {
 				new MultipleResultDisplay(frame,p);
 			}
 			else{
-			
-			BoxText.setText(p.get(0).getBox());
-			comboBox.setSelectedItem(p.get(0).getStop());
+			selectedPerson=p.get(0);
+			selectedPerson.setStop("SUB");
+			BoxText.setText(selectedPerson.getBox());
+			comboBox.setSelectedItem(selectedPerson.getStop());
 			}
 				
 			}
@@ -375,5 +379,11 @@ public class ScanPackage extends JFrame {
 		lblDate_1.setText(newDate);
 		return date;
 
+	}
+	public void clear(){
+		 TrackText.setText("");
+         NameText.setText("");
+         LastNameText.setText("");
+         BoxText.setText("");
 	}
 }

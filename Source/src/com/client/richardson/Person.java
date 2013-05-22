@@ -41,6 +41,7 @@ public class Person
 	{
 		return lastName;
 	}
+	
 	public String getEmail()
 	{
 		return email;
@@ -56,6 +57,9 @@ public class Person
 	public String getStop()
 	{
 		return stop;
+	}
+	public void setStop(String s){
+		stop = s;
 	}
 	
 }

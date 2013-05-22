@@ -110,6 +110,7 @@ public class MultipleResultDisplay extends JFrame {
 				Person selected = results.get(i);
 				frame.getBoxText().setText(selected.getBox());
 				frame.getComboBox().setSelectedItem(selected.getStop());
+				frame.selectedPerson=selected;
 				dispose();
 				
 					

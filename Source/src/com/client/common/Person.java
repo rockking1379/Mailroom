@@ -9,7 +9,7 @@ public class Person
 	private String email;
 	private String idNumber;
 	private String boxNumber;
-	private String building;
+	private String stop;
 	
 	//Faculty or Staff Constructor
 	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber, String building)
@@ -19,7 +19,7 @@ public class Person
 		this.email = email;
 		this.idNumber = idNumber;
 		this.boxNumber = boxNumber;
-		this.building = building;
+		this.stop = building;
 	}
 	//Student Constructor
 	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber)
@@ -29,7 +29,7 @@ public class Person
 		this.email = email;
 		this.idNumber = idNumber;
 		this.boxNumber = boxNumber;
-		this.building = "SUB";
+		this.stop = "SUB";
 	}
 	
 	//Get Methods
@@ -55,10 +55,34 @@ public class Person
 	}
 	public String getBuilding()
 	{
-		return building;
+		return stop;
 	}
 	public Component getStop() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public String getIdNumber() {
+		return idNumber;
+	}
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
+	}
+	public String getBoxNumber() {
+		return boxNumber;
+	}
+	public void setBoxNumber(String boxNumber) {
+		this.boxNumber = boxNumber;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public void setStop(String stop) {
+		this.stop = stop;
 	}
 }

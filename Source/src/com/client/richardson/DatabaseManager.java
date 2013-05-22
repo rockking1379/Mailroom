@@ -322,7 +322,7 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database: "+e.getMessage());
 		}
 	}
 	//Backup(more logic involved)
