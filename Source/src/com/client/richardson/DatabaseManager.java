@@ -33,7 +33,7 @@ public class DatabaseManager
 	///---Set Methods---///
 	public void setDatabase(String dbLocation)
 	{
-		this.dbLocation = "E:\\Users\\Thomas\\Documents\\GitHub\\Mailroom\\Source\\mailroom.db";
+		this.dbLocation = "E:/Users/Thomas/Documents/GitHub/Mailroom/mailroom.db";
 	}
 	public void setFile(String fileLocation)
 	{
@@ -161,9 +161,10 @@ public class DatabaseManager
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:Mydb.db");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Route;");
-			ResultSet rs = statement.executeQuery();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select * from Route;");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -185,7 +186,8 @@ public class DatabaseManager
 			Class.forName("com.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Stop;");
-			ResultSet rs = statement.executeQuery();
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery("select * from Stops;");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -209,19 +211,34 @@ public class DatabaseManager
 		{
 			try
 			{
-				Class.forName("com.sqlite.JDBC");
+				
+				
+				
+				 Class.forName("org.sqlite.JDBC");
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-				statement = conn.prepareStatement("select * from Package where Date=?;");
+				Statement state = conn.createStatement();
+				//state.executeUpdate("drop table if exists Packager");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
-				statement.setString(1, date);
+				//state.setString(1, date);
+				
+				
+				
+				 state.executeUpdate("create table Package(id integer,"
+						    + "Last_Name varchar(30)," + "Email varchar(30)," + "Date Date,"
+						    + "Box_Number varchar(30)," + "Name varchar(30),"+"Tracking_Number,"
+						    + "primary key (id));");
+				
+				
+				
+				
 			
 				ResultSet rs = statement.executeQuery();
 				
 				while(rs.next())
 				{
-					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+					state = conn.prepareStatement("select Name from Stop where stop_id=?;");
 					statement.setInt(1, rs.getInt("stop_id"));
 			
 					ResultSet rs2 = statement.executeQuery();

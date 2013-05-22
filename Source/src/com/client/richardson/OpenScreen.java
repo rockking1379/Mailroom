@@ -87,7 +87,7 @@ public class OpenScreen extends JFrame {
 				manager.setFile("People.txt");
 				loadSettings();
 				manager.setup();
-				manager.loadPackages(true,null);
+				//manager.loadPackages(true,null);
 				
 		setVisible(true);
 		setTitle("Adams State Mail Room System");

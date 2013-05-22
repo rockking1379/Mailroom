@@ -3,7 +3,7 @@ package com.client.richardson;
 import java.awt.BorderLayout;
 import java.io.*;
 import java.awt.EventQueue;
-
+import java.sql.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -34,8 +34,10 @@ public class login extends JFrame {
 	private JPasswordField passwordField;
 	/**
 	 * Launch the application.
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException {
+		Class.forName("org.sqlite.JDBC");
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
