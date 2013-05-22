@@ -46,6 +46,7 @@ public class RouteMaker extends JPanel {
   private JTextField RouteField;
   DatabaseManager manager;
   ArrayList<String> inDest = new ArrayList<String>();
+  ArrayList<Stop> stops;
 
  
 
