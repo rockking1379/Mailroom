@@ -289,11 +289,12 @@ public class RouteMaker extends JPanel {
 
 		DatabaseManager manager = new DatabaseManager();
 		ArrayList<Stop> stops = new ArrayList<Stop>();
+		manager.addRoute(RouteField.getText());
 		for(String s: inDest){
 			manager.updateStop(s, true, RouteField.getText());
 			stops.add(new Stop(s));
 		}
-		manager.addRoute(RouteField.getText());
+		
 
 			
 			

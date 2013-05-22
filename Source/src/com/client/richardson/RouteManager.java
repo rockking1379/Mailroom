@@ -14,6 +14,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import javax.swing.AbstractListModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -203,6 +204,7 @@ public class RouteManager extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	ArrayList<Route> routes = new ArrayList<Route>();
 	final DatabaseManager manager;
 	public RouteManager(final DatabaseManager manager) {
 		this.manager=manager;
@@ -278,6 +280,16 @@ public class RouteManager extends JFrame {
 	    JComboBox RouteBox = new JComboBox();
 	    RouteBox.setBounds(156, 28, 116, 20);
 	    getContentPane().add(RouteBox);
+	    
+	    
+	    DefaultComboBoxModel model;
+	    routes=(ArrayList<Route>)manager.getRoutes();
+	    String[] rtNames = new String[routes.size()-1];
+	    for(Route r: routes){
+	    	rtNames[routes.indexOf(r)] =r.getName();
+	    }
+	    model = new DefaultComboBoxModel(rtNames);
+	    RouteBox.setModel(model);
 	    
 	    ImageIcon icon= new ImageIcon(getClass().getResource("/image/compass.jpg"));
 		setIconImage(icon.getImage());
