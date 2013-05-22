@@ -69,6 +69,7 @@ public class prog
 				//Do nothing
 			}
 			dbManager.setup();
+			dbManager.loadPackages(true, null);
 		}
 		else
 		{

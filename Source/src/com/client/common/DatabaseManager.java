@@ -200,7 +200,6 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
-
 	public void loadPackages(boolean allStops, String stop)
 	{
 		//Load packages from today(if available)
@@ -237,10 +236,12 @@ public class DatabaseManager
 							rs.getString("Tracking_Number")
 							));
 				}
+				
+				JOptionPane.showMessageDialog(null, "Loaded " + packages.size() + " packages");
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database\n" + e.getMessage());
 			}
 		}
 		if(!allStops)
