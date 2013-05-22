@@ -87,7 +87,7 @@ public class DatabaseManager
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(null, "Error with Database Manager");
+			JOptionPane.showMessageDialog(null, "Error with Database Manager ");
 			System.exit(0);
 		}
 	}

@@ -81,11 +81,11 @@ public class OpenScreen extends JFrame {
 
 	
 	public OpenScreen(boolean admin) {
-		prog p = new prog();
+	
 				manager =new DatabaseManager();
 
+				loadSettings();
 				
-				manager.setup();
 				manager.loadPackages(true,null);
 				
 		setVisible(true);
@@ -282,7 +282,6 @@ public class OpenScreen extends JFrame {
 	         setVisible(true); 
 	}
 	public void loadSettings(){
-		DatabaseManager dbManager = new DatabaseManager();
 		File settings = new File("./properties.prop");
 		if(settings.exists())
 		{
@@ -312,7 +311,7 @@ public class OpenScreen extends JFrame {
 						{
 							temp += settingLine.charAt(i);
 						}
-						dbManager.setDatabase(temp);
+						manager.setDatabase(temp);
 					}
 					else
 					{
@@ -324,7 +323,7 @@ public class OpenScreen extends JFrame {
 							{
 								temp += settingLine.charAt(i);
 							}
-							dbManager.setFile(temp);
+							manager.setFile(temp);
 						}
 					}
 				}
@@ -334,8 +333,8 @@ public class OpenScreen extends JFrame {
 			{
 				//Do nothing
 			}
-			dbManager.setup();
-			dbManager.loadPackages(true, null);
+			manager.setup();
+			
 		}
 		else
 		{
