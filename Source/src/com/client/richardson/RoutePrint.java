@@ -9,6 +9,8 @@ import java.util.Date;
 import java.util.List;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.ScrollPane;
+import java.awt.Scrollbar;
 
 import javax.lang.model.element.Element;
 
@@ -42,10 +44,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.awt.FlowLayout;
 
 public class RoutePrint extends JFrame {
 
-	private JPanel contentPane;
+	
+	private JPanel contentPane_1;
 
 	JPanel rtHolder;
 	boolean ready = false;
@@ -74,6 +78,7 @@ public class RoutePrint extends JFrame {
 	 */
 
 	public RoutePrint(final DatabaseManager manager) {
+		setResizable(false);
 		checkBoxes = new ArrayList<JCheckBox>();
 		
 		routes=manager.getRoutes();
@@ -99,54 +104,38 @@ public class RoutePrint extends JFrame {
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		setBounds(100, 100, 535, 300);
-		contentPane = new JPanel();
-		setResizable(false);
+		
 
-		setBounds(100, 100, 450, 300);
-		contentPane = new JPanel();
+		setBounds(100, 100, 450, 220);
+		contentPane_1 = new JPanel();
 
-		contentPane.setBackground(new Color(0, 102, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane_1.setBackground(new Color(0, 102, 0));
+		contentPane_1.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane_1);
+		contentPane_1.setLayout(null);
 		
 		JLabel lblPleaseSelectA = new JLabel("Please Select a Route To Print: ");
 		lblPleaseSelectA.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblPleaseSelectA.setForeground(new Color(255, 255, 255));
 		lblPleaseSelectA.setBackground(new Color(255, 255, 255));
 		lblPleaseSelectA.setBounds(36, 31, 204, 14);
-		contentPane.add(lblPleaseSelectA);
-		
-		JCheckBox chckbxRoute = new JCheckBox("Route 1");
-		chckbxRoute.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckbxRoute.setBounds(36, 52, 97, 23);
-		contentPane.add(chckbxRoute);
-		
-		JCheckBox chckbxRoute_1 = new JCheckBox("Route 2");
-		chckbxRoute_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckbxRoute_1.setBounds(36, 78, 97, 23);
-		contentPane.add(chckbxRoute_1);
-		
-		JCheckBox chckbxRoute_2 = new JCheckBox("Route 3");
-		chckbxRoute_2.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckbxRoute_2.setBounds(36, 104, 97, 23);
-		contentPane.add(chckbxRoute_2);
-		
-		JCheckBox chckbxRoute_3 = new JCheckBox("Route 4");
-		chckbxRoute_3.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckbxRoute_3.setBounds(36, 130, 97, 23);
-		contentPane.add(chckbxRoute_3);
-		
-		JCheckBox chckbxRoute_4 = new JCheckBox("Route 5");
-		chckbxRoute_4.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckbxRoute_4.setBounds(36, 156, 97, 23);
-		contentPane.add(chckbxRoute_4);
+		contentPane_1.add(lblPleaseSelectA);
 		
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnPrint.setBounds(335, 228, 89, 23);
-		contentPane.add(btnPrint);
+		btnPrint.setBounds(331, 154, 89, 23);
+		contentPane_1.add(btnPrint);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(36, 51, 388, 92);
+		contentPane_1.add(scrollPane);
+		
+		JPanel panel = new JPanel();
+		panel.setForeground(new Color(0, 0, 0));
+		panel.setBorder(null);
+		panel.setBackground(new Color(0, 255, 0));
+		scrollPane.setViewportView(panel);
+		panel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 
 		
@@ -212,7 +201,7 @@ public class RoutePrint extends JFrame {
             	JLabel message = new JLabel("Please review the routes and select print again.");
             	message.setForeground(Color.WHITE);
             	message.setBounds(50,250,800,20);
-            	contentPane.add(message);
+            	contentPane_1.add(message);
             	
             	
             	
@@ -224,7 +213,7 @@ public class RoutePrint extends JFrame {
             	JScrollPane sp = new JScrollPane();
             	sp.setViewportView(toPrint);
             	sp.setBounds(10,300,500,250);
-            	contentPane.add(sp);
+            	contentPane_1.add(sp);
             	
             	
             	
