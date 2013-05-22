@@ -580,6 +580,24 @@ public class DatabaseManager
 		
 		return results;		
 	}
+	public List<Package> searchPackages(String search)
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		try
+		{
+			Class.forName("org.sqlite.JDBC");
+			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement statement = conn.createStatement();
+			
+			
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		return results;
+	}
 	
 	///---People Searching---///
 	public List<Person> findPerson(String firstName, String lastName)
