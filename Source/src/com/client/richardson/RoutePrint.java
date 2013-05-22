@@ -78,10 +78,10 @@ public class RoutePrint extends JFrame {
 
 	public RoutePrint(final DatabaseManager manager) {
 		checkBoxes = new ArrayList<JCheckBox>();
-		rtHolder_1=new JPanel();
 		routes=manager.getRoutes();
 		routes=new ArrayList<Route>();
 		routes.add(new Route("SUB"));
+		rtHolder_1=new JPanel();
 		
 		for(Route r: routes){
 			JCheckBox ch=new JCheckBox(r.getName());
@@ -105,11 +105,11 @@ public class RoutePrint extends JFrame {
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-		setBounds(100, 100, 450, 248);
+		setBounds(100, 100, 535, 245);
 		contentPane = new JPanel();
 		setResizable(false);
 
-		setBounds(100, 100, 450, 300);
+		
 		contentPane_1 = new JPanel();
 
 		contentPane_1.setBackground(new Color(0, 102, 0));
@@ -126,11 +126,11 @@ public class RoutePrint extends JFrame {
 		
 		JButton btnPrint = new JButton("Print");
 		btnPrint.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnPrint.setBounds(277, 185, 89, 23);
+		btnPrint.setBounds(401, 185, 89, 23);
 		contentPane_1.add(btnPrint);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(46, 56, 320, 118);
+		scrollPane.setBounds(46, 56, 444, 118);
 		contentPane_1.add(scrollPane);
 		
 		scrollPane.setViewportView(rtHolder_1);
@@ -185,7 +185,7 @@ public class RoutePrint extends JFrame {
             		
             		
             	
-            stops.add(new Stop("SUB"));	
+            stops.add(new Stop("SUB_Mailroom"));	
             	
             	if(stops.size()==0){
             		JOptionPane.showMessageDialog(null,"No stops were found. Please add stops before Printing");
@@ -227,7 +227,7 @@ public class RoutePrint extends JFrame {
         				"===========================\n";
             	String newHead;
             	String tab ="       ";
-            	String sign = "________________________\n";
+            	String sign = "________________________\n\n";
             	
             	String fieldHeader= "Last"+tab+"First"+tab+"Box#."+tab+"Track#"+tab+"Sign Here";
             	
@@ -332,6 +332,11 @@ public class RoutePrint extends JFrame {
             			
             			
             			toPrint.setText(toPrint.getText()+sign);
+            			
+            			
+            			String printName = "Print Name "+sign+"\n";
+            			addSpacing(68-printName.length());
+            			toPrint.setText(toPrint.getText()+printName);
             		}
           
             	}

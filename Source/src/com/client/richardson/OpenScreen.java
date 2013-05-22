@@ -3,10 +3,10 @@ package com.client.richardson;
 // 5-17-2013
 //Testing new Project
 import java.awt.BorderLayout;
-import com.client.common.*;
-import com.client.common.DatabaseManager;
+
+
 //=======
-import com.client.common.*;
+
 import java.awt.BorderLayout;
 //>>>>>>> origin/Nick
 import java.awt.EventQueue;
