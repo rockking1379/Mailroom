@@ -89,20 +89,6 @@ public class OpenScreen extends JFrame {
 				manager.setup();
 				manager.loadPackages(true,null);
 				
-
-
-
-		
-
-		setTitle("My Mail Room");
-		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
-		setIconImage(icon.getImage());
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\Untitled.jpg"));
-		setBackground(new Color(0, 102, 0));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 735, 447);
-=======
-	public OpenScreen(boolean admin) {
 		setVisible(true);
 		setTitle("Adams State Mail Room System");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
@@ -110,7 +96,7 @@ public class OpenScreen extends JFrame {
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 863, 447);
->>>>>>> origin/Nick
+
 		
 		JMenuBar menuBar = new JMenuBar();
 		if(admin){
@@ -121,25 +107,18 @@ public class OpenScreen extends JFrame {
 		menuBar.add(mnFile);
 		
 		JMenuItem mntmCreateNewAccount = new JMenuItem("Create New Account");
-<<<<<<< HEAD
+
 		mntmCreateNewAccount.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new AddAccount();
-=======
-		
-		mntmCreateNewAccount.addActionListener(new ActionListener(){
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				AddAccount a = new AddAccount();
->>>>>>> origin/Nick
 				
 			}
 			
 		});
-<<<<<<< HEAD
+
 		mnFile.add(mntmCreateNewAccount);
 		
 		JMenuItem mntmCreateNewRoute = new JMenuItem("Create New Route");
@@ -175,15 +154,8 @@ public class OpenScreen extends JFrame {
         });
 		
 		
-		JMenuItem mntmClose = new JMenuItem("Close");
-		mnFile.add(mntmClose);
-		mntmClose.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e)
-            {
-            	dispose();
-            }
-        });
-=======
+		
+
 		JMenuItem crtRt = new JMenuItem("Create Route");
 		
 		crtRt.addActionListener(new ActionListener(){
@@ -193,7 +165,7 @@ public class OpenScreen extends JFrame {
 				
 				 JFrame f = new JFrame("Dual List Box Tester");
 				    
-				    RouteMaker dual = new RouteMaker();
+				    RouteMaker dual = new RouteMaker(manager);
 				    dual.addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
 				    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
 				    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
@@ -223,7 +195,7 @@ public class OpenScreen extends JFrame {
 		});
 		mnFile.add(mntmClose);
 	
->>>>>>> origin/Nick
+
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 0));
@@ -241,11 +213,8 @@ public class OpenScreen extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-<<<<<<< HEAD
+
                 ScanPackage scan = new ScanPackage(manager);
-=======
-                ScanPackage scan = new ScanPackage();
->>>>>>> origin/Nick
                 scan.setVisible(true);
             }
         });
@@ -260,21 +229,17 @@ public class OpenScreen extends JFrame {
 	    	 
 	            public void actionPerformed(ActionEvent e)
 	            {
-<<<<<<< HEAD
+
 	                RoutePrint route = new RoutePrint(manager);
-=======
-	                RoutePrint route = new RoutePrint();
->>>>>>> origin/Nick
 	                route.setVisible(true);
 	            }
 	        });
 		
 	         Table newContentPane = new Table();
-<<<<<<< HEAD
-	         newContentPane.setBounds(151, 11, 560, 366);
-=======
+
 	         newContentPane.setBounds(151, 11, 686, 366);
->>>>>>> origin/Nick
+
+
 	         contentPane.add(newContentPane);
 	         newContentPane.setOpaque(true);
 	         
@@ -284,10 +249,10 @@ public class OpenScreen extends JFrame {
 	         btnSearch.setBounds(20, 204, 121, 80);
 	         contentPane.add(btnSearch);
 	         
-<<<<<<< HEAD
-	         JButton btnRefesh = new JButton("Refesh");
-	         
-	         btnRefesh.addActionListener(new ActionListener(){
+
+	         JButton btnRefresh = new JButton("Refesh");
+
+	         btnRefresh.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -296,18 +261,15 @@ public class OpenScreen extends JFrame {
 				}
 	        	 
 	         });
-	         btnRefesh.setFont(new Font("Tahoma", Font.BOLD, 11));
-	         btnRefesh.setBounds(20, 354, 121, 23);
-	         contentPane.add(btnRefesh);
-=======
-	         JButton btnRefresh = new JButton("Refresh");
-	         btnRefresh.setBounds(20, 351, 121, 23);
+	         btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 11));
+	         btnRefresh.setBounds(20, 354, 121, 23);
 	         contentPane.add(btnRefresh);
+
 	         
 	         JButton btnPrint = new JButton("Print");
 	         btnPrint.setBounds(20, 317, 121, 23);
 	         contentPane.add(btnPrint);
->>>>>>> origin/Nick
+
 	         
 	         btnSearch.addActionListener(new ActionListener() {
 		    	 
@@ -317,7 +279,6 @@ public class OpenScreen extends JFrame {
 	                 search.setVisible(true);
 	             }
 	         });
-<<<<<<< HEAD
 	          
 	         setVisible(true); 
 	}
@@ -412,8 +373,4 @@ public class OpenScreen extends JFrame {
 	
 	
 
-	
-=======
-	}
->>>>>>> origin/Nick
 }
