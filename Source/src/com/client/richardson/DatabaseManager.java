@@ -5,10 +5,7 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.util.*;
 import java.util.Date;
-
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-
 
 public class DatabaseManager
 {
@@ -26,14 +23,12 @@ public class DatabaseManager
 		asuPeople = new ArrayList<Person>();
 		stops = new ArrayList<Stop>();
 		routes = new ArrayList<Route>();
-		
-		
 	}
 	
 	///---Set Methods---///
 	public void setDatabase(String dbLocation)
 	{
-		this.dbLocation = "E:/Users/Thomas/Documents/GitHub/Mailroom/mailroom.db";
+		this.dbLocation = dbLocation;
 	}
 	public void setFile(String fileLocation)
 	{
@@ -43,7 +38,7 @@ public class DatabaseManager
 	///---Setup---///
 	public void setup()
 	{
-		if(dbLocation != null && fileLocation != null)
+		if((dbLocation != null) && (fileLocation != null))
 		{
 			//Prepare setup
 			//Load people
@@ -53,24 +48,39 @@ public class DatabaseManager
 			FileInputStream fStream;
 			try 
 			{
-				fStream = new FileInputStream(people);
-				DataInputStream dis = new DataInputStream(fStream);
-				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
-				String person;
-				while((person = br.readLine()) != null)
+				if(!people.exists())
 				{
-					createPerson(person);
+					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
+					File settings = new File("./properties.prop");
+					settings.delete();
+					System.exit(0);
 				}
-				br.close();
+				else
+				{
+					fStream = new FileInputStream(people);
+					DataInputStream dis = new DataInputStream(fStream);
+					BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+					String person;
+					while((person = br.readLine()) != null)
+					{
+						createPerson(person);
+					}
+					br.close();
 				
-				loadRoutes();
-				loadStops();
+					loadRoutes();
+					loadStops();
+				}
 			} 
 			catch (Exception e) 
 			{
-				
-
-				JOptionPane.showMessageDialog(null, "Error Creating List of People:"+e.getMessage());
+				if(asuPeople.size() > 0)
+				{
+					JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Error Creating List of People");
+				}
 			}
 			
 			JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
@@ -84,7 +94,6 @@ public class DatabaseManager
 	public void createPerson(String person)
 	{
 		//Dilimanted by ',' or ';' not sure which yet
-
 		String firstName = "";
 		String lastName = "";
 		String email = "";
@@ -94,11 +103,11 @@ public class DatabaseManager
 		
 		int index = 0;
 		//Main Loop
-		
+		while(index < person.length())
+		{
 			//First Name
 			while(person.charAt(index) != ',')
 			{
-
 				firstName += person.charAt(index);
 				index++;
 			}
@@ -132,19 +141,12 @@ public class DatabaseManager
 			}
 			index++;
 			//Building
-			try
+			while(index < person.length())
 			{
-				while(person.charAt(index) != ',')
-				{
-					building += person.charAt(index);
-					index++;
-				}
+				building += person.charAt(index);
+				index++;
 			}
-			catch(Exception e)
-			{
-				//Just means no building was in file
-			}
-		
+		}
 		
 		if(!building.equals(""))
 		{
@@ -158,14 +160,12 @@ public class DatabaseManager
 	public void loadRoutes()
 	{
 		//create route in here
-		PreparedStatement statement = null;
 		try
 		{
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("select * from Route;");
-			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Route;");
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Route");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -181,14 +181,12 @@ public class DatabaseManager
 	public void loadStops()
 	{
 		//create stop in here
-		PreparedStatement statement = null;
 		try
 		{
-			Class.forName("com.sqlite.JDBC");
+			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("select * from Stop;");
-			Statement stat = conn.createStatement();
-			ResultSet rs = stat.executeQuery("select * from Stops;");
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Stop;");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -199,7 +197,7 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database" + e.getMessage());
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
 	public void loadPackages(boolean allStops, String stop)
@@ -212,31 +210,19 @@ public class DatabaseManager
 		{
 			try
 			{
-				
-				
-				
-				 Class.forName("org.sqlite.JDBC");
+				Class.forName("org.sqlite.JDBC"); 
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-				Statement state = conn.createStatement();
-				//state.executeUpdate("drop table if exists Packager");
+				statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='false';");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 				statement.setString(1, date);
-				
-				
-				
-				
-				
-				
-				
-				
 			
 				ResultSet rs = statement.executeQuery();
 				
 				while(rs.next())
 				{
-					state = conn.prepareStatement("select Name from Stop where stop_id=?;");
+					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
 					statement.setInt(1, rs.getInt("stop_id"));
 			
 					ResultSet rs2 = statement.executeQuery();
@@ -253,14 +239,14 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Error Connecting to Database:"+e.getMessage());
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database\n" + e.getMessage());
 			}
 		}
 		if(!allStops)
 		{
 			try
 			{
-				Class.forName("com.sqlite.JDBC");
+				Class.forName("org.sqlite.JDBC"); 
 				PreparedStatement statement = null;
 				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=?;");
@@ -466,29 +452,26 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Route(Name) values(?);");
 			statement.setString(1, route);
 			if(statement.execute())
 			{
-				statement = conn.prepareStatement("select route_id from Route where Name = ?;");
-				statement.setString(1, route);
-				ResultSet rs = statement.executeQuery();
-				Route r = new Route(route, rs.getInt(0));
-				routes.add(r);
+				loadRoutes();
 			}
 		}
 		catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
-		}
-		
+		}		
 	}
 	public void updateRoute(String previousName, String currentName)
 	{
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("alter TABLE Route(Name) set Name=? where Name=?;");
 			statement.setString(1, currentName);
@@ -526,6 +509,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
 			statement.setString(1, beginDate);
@@ -563,6 +547,7 @@ public class DatabaseManager
 		
 		try
 		{
+			Class.forName("org.sqlite.JDBC"); 
 			PreparedStatement statement = null;
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
@@ -684,97 +669,7 @@ public class DatabaseManager
 			{
 				results.add(stops.get(i));
 			}
-		}
-		
+		}		
 		return results;
 	}
-	public void loadSettings(){
-		DatabaseManager dbManager = new DatabaseManager();
-		File settings = new File("./properties.prop");
-		if(settings.exists())
-		{
-			try
-			{
-				FileInputStream fStream = new FileInputStream(settings);
-				DataInputStream dis = new DataInputStream(fStream);
-				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
-		
-				String settingLine;
-				while((settingLine = br.readLine()) != null)
-				{
-					//Read Settings
-					String setting = "";				
-					int index = 0;
-					while(settingLine.charAt(index) != ':')
-					{
-						setting += settingLine.charAt(index);
-						index++;
-					}
-					if(setting.toUpperCase().equals("DATABASE"))
-					{
-						//Read in Database configuration
-						String temp = "";
-						for(int i = index; i < settingLine.length(); i++)
-						{
-							temp += settingLine.charAt(i);
-						}
-						
-						dbManager.setDatabase(temp);
-					}
-					else
-					{
-						if(setting.toUpperCase().equals("PERSONS"))
-						{
-							String temp = "";
-							
-							for(int i = index; i < settingLine.length(); i++)
-							{
-								temp += settingLine.charAt(i);
-							}
-							
-							dbManager.setFile(temp);
-						}
-					}
-				}
-				
-				br.close();
-				
-			}
-			catch(Exception e)
-			{
-				//Do nothing
-			}
-		}
-		else
-		{
-			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
-			
-			JFileChooser fc = new JFileChooser();
-			fc.showDialog(null, "SELECT");
-			fc.setFileFilter(null);
-			File database = fc.getSelectedFile();
-			fc.showDialog(null, "SELECT");
-			File persons = fc.getSelectedFile();
-			
-			try 
-			{
-				if(settings.createNewFile())
-				{
-					FileWriter fOutput = new FileWriter(settings);
-					BufferedWriter bw = new BufferedWriter(fOutput);
-					bw.write("DATABASE:" + database.getAbsolutePath() + "\n");
-					bw.write("PERSONS:" + persons.getAbsolutePath() + "\n");
-					bw.close();
-					fOutput.close();
-				}
-			} 
-			catch (Exception e) 
-			{
-				//Ignore the exceptions
-			}
-			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
-		}
-	}	
-					
-	
 }
