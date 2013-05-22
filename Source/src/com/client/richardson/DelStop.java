@@ -173,6 +173,7 @@ public class DelStop extends JFrame {
 	public DelStop() {
 		setTitle("Delete Stop");
 		setSize(493, 313);
+		
 		setResizable(false);
 		getContentPane().setBackground(new Color(0, 102, 0));
 	    sourceListModel = new SortedListModel();

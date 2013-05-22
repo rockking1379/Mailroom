@@ -291,11 +291,12 @@ public class RouteMaker extends JPanel {
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		for(String s: inDest){
 			manager.updateStop(s, true, RouteField.getText());
+			stops.add(new Stop(s));
 		}
 		manager.addRoute(RouteField.getText());
 
-			System.out.println(s);
-			stops.add(new Stop(s));
+			
+			
 	
 		
 		//RouteManager r = new RouteManager(RouteField.getText(),-1,stops);
