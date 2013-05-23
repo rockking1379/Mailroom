@@ -30,4 +30,7 @@ FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
 );
 
 insert into Route(Name) values('unassigned');
-insert into Stop(Name, Is_Used, route_id) values('unassigned', 'true', 1);
+insert into Stop(Name, Is_Used, route_id) values('unassigned', 1, 1);
+
+select * from Stop;
+select * from Route;
