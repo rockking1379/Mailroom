@@ -421,10 +421,8 @@ public class DatabaseManager
 			//Hopefully its true(but you never know)
 			statement.setBoolean(3, isUsed);
 			
-			if(statement.execute())
-			{
-				JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
-			}
+			statement.execute();
+			JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
 		}
 		catch(Exception e)
 		{
@@ -441,11 +439,9 @@ public class DatabaseManager
 		{
 			statement = conn.prepareStatement("insert into Route(Name) values(?);");
 			statement.setString(1, route);
-			if(statement.execute())
-			{
-				loadRoutes();
-				JOptionPane.showMessageDialog(null,"Route Created");
-			}
+			statement.execute();
+			loadRoutes();
+			JOptionPane.showMessageDialog(null,"Route Created");
 		}
 		catch(Exception e)
 		{
@@ -460,16 +456,14 @@ public class DatabaseManager
 			statement = conn.prepareStatement("update Routes Route(Name) set Name=? where Name=?;");
 			statement.setString(1, currentName);
 			statement.setString(2, previousName);
-			if(statement.execute())
+			statement.execute();
+			JOptionPane.showMessageDialog(null, "Updated " + previousName + " to " + currentName);
+			for(int i = 0; i < routes.size(); i++)
 			{
-				JOptionPane.showMessageDialog(null, "Updated " + previousName + " to " + currentName);
-				for(int i = 0; i < routes.size(); i++)
+				if(routes.get(i).getName().equals(previousName))
 				{
-					if(routes.get(i).getName().equals(previousName))
-					{
-						routes.get(i).setName(currentName);
-						break;
-					}
+					routes.get(i).setName(currentName);
+					break;
 				}
 			}
 		}
