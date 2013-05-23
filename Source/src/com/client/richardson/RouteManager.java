@@ -231,7 +231,6 @@ public class RouteManager extends JFrame {
 	    
 	    List<Stop> stops = manager.getStops();
 	    String[] sNames = new String[stops.size()];
-	    
 	    for(Stop s: stops){
 	    	sNames[stops.indexOf(s)]= s.getName();
 	    }

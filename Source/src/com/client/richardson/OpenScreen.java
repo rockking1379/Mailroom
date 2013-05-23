@@ -333,6 +333,7 @@ public class OpenScreen extends JFrame {
 			}
 			manager.setup();
 			manager.loadPackages(true, null);
+			
 		}
 		else
 		{
