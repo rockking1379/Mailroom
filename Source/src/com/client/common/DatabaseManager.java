@@ -273,7 +273,7 @@ public class DatabaseManager
 					
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
-							rs.getString("Email"),
+							rs.getString("ASU_Email"),
 							rs.getDate("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
@@ -510,7 +510,7 @@ public class DatabaseManager
 			{
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
-						rs.getString("Email"),
+						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
@@ -546,7 +546,7 @@ public class DatabaseManager
 			{
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
-						rs.getString("Email"),
+						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
@@ -667,5 +667,18 @@ public class DatabaseManager
 			}
 		}		
 		return results;
+	}
+	
+	public void closeUp()
+	{
+		try
+		{
+			conn.close();
+		}
+		catch(Exception e)
+		{
+			//Ignore it
+			//We are shutting down
+		}
 	}
 }
