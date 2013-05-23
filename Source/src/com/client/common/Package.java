@@ -10,7 +10,8 @@ public class Package
 	private String firstName;
 	private String lastName;
 	private String email;
-	private Date date;
+	//private Date date;
+	String date;
 	private String boxNumber;
 	private String stop;
 	private String trackingNumber;
@@ -21,7 +22,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date = date;
+		this.date = this.date =  DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
 		this.boxNumber = boxNumber;
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -33,7 +34,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date = date;
+		this.date =  DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
 		this.boxNumber = "0";
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -45,7 +46,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date = date;
+		this.date = this.date =  DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
 		this.boxNumber = "0";
 		this.stop = "RICHARDSON";
 		this.trackingNumber = trackingNumber;
@@ -65,7 +66,8 @@ public class Package
 	}
 	public String getDate()
 	{
-		return DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
+		// return DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
+		return date;
 	}
 	public String getBoxNum()
 	{

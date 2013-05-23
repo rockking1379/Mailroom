@@ -251,7 +251,7 @@ public class RoutePrint extends JFrame {
             		addSpacing(j);
             		
             		toPrint.setText(toPrint.getText()+newHead+"\n"+equ+"\n"+fieldHeader+"\n");            		
-            		packages = new ArrayList<Package>();
+            		
             		packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
             		
             		
@@ -284,9 +284,9 @@ public class RoutePrint extends JFrame {
 
             		
             		
-            		String[] packageArray = new String[packages.size()-1];
-            		for(int i=0; i<packages.size()-1;i++){
-            			packageArray[i]=packages.get(i).getLName();
+            		String[] packageArray = new String[packages.size()];
+            		for(Package p: packages){
+            			packageArray[packages.indexOf(p)]=p.getLName();
             		}
             		
             		Arrays.sort(packageArray);
@@ -308,10 +308,10 @@ public class RoutePrint extends JFrame {
             		
             		for (Package p: packages){
             			
-            			String tDate = DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
             			
             			
-            			if(tDate.equals(p.getDate())){
+            			
+            			
             			
             			String var =p.getLName();
             			if(var.length()>=11){
@@ -347,7 +347,7 @@ public class RoutePrint extends JFrame {
             			String printName = "Print Name "+sign+"\n";
             			addSpacing(68-printName.length());
             			toPrint.setText(toPrint.getText()+printName);
-            		}
+            		
           
             		}
             	}
