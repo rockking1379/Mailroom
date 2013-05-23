@@ -28,3 +28,6 @@ Pick_Up_Date DATE,
 stop_id int,
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
 );
+
+insert into Route(Name) values('unassigned');
+insert into Stop(Name, Is_Used, route_id) values('unassigned', 'true', 1);
