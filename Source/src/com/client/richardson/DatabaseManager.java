@@ -172,6 +172,10 @@ public class DatabaseManager
 				int id = rs.getInt("route_id");
 				routes.add(new Route(name, id));
 			}
+			if(routes.size()==0){
+				addRoute("Unassigned");
+				loadRoutes();
+			}
 		}
 		catch(Exception e)
 		{
@@ -183,6 +187,7 @@ public class DatabaseManager
 		//create stop in here
 		try
 		{
+
 			Class.forName("org.sqlite.JDBC");
 			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			Statement statement = conn.createStatement();
@@ -192,6 +197,7 @@ public class DatabaseManager
 				String name = rs.getString("Name");
 				int id = rs.getInt("stop_id");
 				int route = rs.getInt("route_id");
+				System.out.println(name+id+route);
 				stops.add(new Stop(name, route, id));
 			}
 		}
@@ -461,11 +467,15 @@ public class DatabaseManager
 				loadRoutes();
 				JOptionPane.showMessageDialog(null,"Route Created");
 			}
+			else{
+				JOptionPane.showMessageDialog(null, "The route was not created.");
+			}
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
-		}		
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database: "+e.getMessage());
+		}
+		
 	}
 	public void updateRoute(String previousName, String currentName)
 	{

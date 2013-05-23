@@ -78,8 +78,7 @@ public class RoutePrint extends JFrame {
 
 	public RoutePrint(final DatabaseManager manager) {
 		checkBoxes = new ArrayList<JCheckBox>();
-		routes=manager.getRoutes();
-		routes=new ArrayList<Route>();
+		routes=(ArrayList<Route>)manager.getRoutes();
 		routes.add(new Route("SUB"));
 		rtHolder_1=new JPanel();
 		

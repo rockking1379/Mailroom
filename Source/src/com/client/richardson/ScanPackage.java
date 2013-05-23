@@ -230,10 +230,10 @@ public class ScanPackage extends JFrame {
 		try{
 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
 		String[] sa= new String[stops.size()];
-		int i=0;
+		
 		for(Stop s: stops){
-			sa[i]= s.getName();
-			i++;
+			sa[stops.indexOf(s)]= s.getName();
+			
 		}
 		 stopNames = new DefaultComboBoxModel(sa);
 		}

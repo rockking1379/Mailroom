@@ -206,6 +206,7 @@ public class RouteManager extends JFrame {
 	 */
 	ArrayList<Route> routes = new ArrayList<Route>();
 	final DatabaseManager manager;
+	
 	public RouteManager(final DatabaseManager manager) {
 		this.manager=manager;
 		setTitle("Manage Routes");
@@ -284,7 +285,7 @@ public class RouteManager extends JFrame {
 	    
 	    DefaultComboBoxModel model;
 	    routes=(ArrayList<Route>)manager.getRoutes();
-	    String[] rtNames = new String[routes.size()-1];
+	    String[] rtNames = new String[routes.size()];
 	    for(Route r: routes){
 	    	rtNames[routes.indexOf(r)] =r.getName();
 	    }

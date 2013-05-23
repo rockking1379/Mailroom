@@ -70,6 +70,7 @@ public class CreateStop extends JFrame {
 		contentPane.add(lblSelectRouteTo);
 		
 		routes=(ArrayList<Route>)manager.getRoutes();
+		
 		String[] rtNames = new String[routes.size()];
 		for(Route r: routes){
 			rtNames[routes.indexOf(r)] =r.getName();
@@ -80,6 +81,7 @@ public class CreateStop extends JFrame {
 		final JComboBox comboBox = new JComboBox();
 		DefaultComboBoxModel model = new DefaultComboBoxModel(rtNames);
 		comboBox.setBounds(94, 113, 116, 20);
+		comboBox.setModel(model);
 		
 		contentPane.add(comboBox);
 		
@@ -98,8 +100,9 @@ public class CreateStop extends JFrame {
 					String route = (String)comboBox.getSelectedItem();
 					manager.addStop(textField.getText(), true, route);
 				}
-				
+				dispose();
 			}
+			
 			
 		});
 	}
