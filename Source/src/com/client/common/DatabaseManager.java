@@ -397,6 +397,7 @@ public class DatabaseManager
 			if(statement.execute())
 			{
 				JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
+				loadStops();
 			}
 		}
 		catch(Exception e)
