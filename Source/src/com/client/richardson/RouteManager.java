@@ -227,6 +227,8 @@ public class RouteManager extends JFrame {
 	    getContentPane().setLayout(null);
 	    getContentPane().add(sourceLabel);
 	    JScrollPane scrollPane = new JScrollPane(sourceList);
+	    
+	    
 	    List<Stop> stops = manager.getStops();
 	    String[] sNames = new String[stops.size()];
 	    
