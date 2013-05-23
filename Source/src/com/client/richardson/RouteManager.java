@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import com.client.common.*;
@@ -46,6 +47,7 @@ public class RouteManager extends JFrame {
 	  private JLabel destLabel;
 	  private JButton addButton;
 	  private JButton removeButton;
+	  JComboBox RouteBox;
 	 // DatabaseManager manager;
 	  ArrayList<String> inDest = new ArrayList<String>();
 
@@ -225,11 +227,14 @@ public class RouteManager extends JFrame {
 	    getContentPane().setLayout(null);
 	    getContentPane().add(sourceLabel);
 	    JScrollPane scrollPane = new JScrollPane(sourceList);
-	    addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
-	    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
-	    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
-	    		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
-	    		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound" });
+	    List<Stop> stops = manager.getStops();
+	    String[] sNames = new String[stops.size()];
+	    
+	    for(Stop s: stops){
+	    	sNames[stops.indexOf(s)]= s.getName();
+	    }
+	    
+	    addSourceElements(sNames);
 
 	   
 	   
@@ -277,8 +282,21 @@ public class RouteManager extends JFrame {
 	    JButton btnSave = new JButton("Save");
 	    btnSave.setBounds(356, 27, 110, 23);
 	    getContentPane().add(btnSave);
+	    btnSave.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Object[] selected =destList.getSelectedValues();
+				
+				for(Object o: selected){
+					manager.updateStop((String)o, true,(String)RouteBox.getSelectedItem());
+				}
+				
+			}
+	    	
+	    });
 	    
-	    JComboBox RouteBox = new JComboBox();
+	    RouteBox = new JComboBox();
 	    RouteBox.setBounds(156, 28, 116, 20);
 	    getContentPane().add(RouteBox);
 	    

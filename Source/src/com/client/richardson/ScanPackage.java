@@ -260,7 +260,7 @@ public class ScanPackage extends JFrame {
 		comboBox.setBounds(110, 105, 179, 20);
 		
 		contentPane.add(comboBox);
-		comboBox.addItemListener(new ItemListener() {
+		/*comboBox.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {	
 				 Object tsub = comboBox.getSelectedItem();
 				 String sub = tsub.toString();			       
@@ -274,7 +274,7 @@ public class ScanPackage extends JFrame {
 				}
 					
 				}
-        });
+        });*/
 		contentPane.add(comboBox);
 		
 	
