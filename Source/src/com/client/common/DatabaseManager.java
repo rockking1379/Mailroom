@@ -394,11 +394,9 @@ public class DatabaseManager
 			//Hopefully its true(but you never know)
 			statement.setBoolean(3, isUsed);
 			
-			if(statement.execute())
-			{
-				JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
-				loadStops();
-			}
+			statement.executeQuery();
+			JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
+			loadStops();
 		}
 		catch(Exception e)
 		{
