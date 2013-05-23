@@ -150,7 +150,7 @@ public class login extends JFrame {
 		}
 		catch(IOException ex){
 			JOptionPane.showMessageDialog(this,"There are no records of accounts. You will now be redirected to the Account Creation Page");
-			new AddAccount(this);
+			new AddAccount();
 		}
 //=======
 //>>>>>>> origin/Nick
