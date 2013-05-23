@@ -16,6 +16,7 @@ public class DatabaseManager
 	private List<Package> packages;
 	private String dbLocation;
 	private String fileLocation;
+	private Connection conn;
 	
 	///---Constructor(s)---///
 	public DatabaseManager()
@@ -43,11 +44,13 @@ public class DatabaseManager
 			//Prepare setup
 			//Load people
 			//Create connection string
-			//Prepare for data flow			
+			//Prepare for data flow				
 			File people = new File(fileLocation);
 			FileInputStream fStream;
 			try 
 			{
+				Class.forName("org.sqlite.JDBC");
+				conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				if(!people.exists())
 				{
 					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
@@ -70,20 +73,20 @@ public class DatabaseManager
 					loadRoutes();
 					loadStops();
 				}
+				
+				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
 			} 
 			catch (Exception e) 
 			{
 				if(asuPeople.size() > 0)
 				{
-					JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
+					
 				}
 				else
 				{
 					JOptionPane.showMessageDialog(null, "Error Creating List of People");
 				}
 			}
-			
-			JOptionPane.showMessageDialog(null, "Successfully Loaded: " + asuPeople.size() + " People");
 		}
 		else
 		{
@@ -162,8 +165,6 @@ public class DatabaseManager
 		//create route in here
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from Route");
 			while(rs.next())
@@ -183,8 +184,6 @@ public class DatabaseManager
 		//create stop in here
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			Statement statement = conn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from Stop;");
 			while(rs.next())
@@ -210,10 +209,8 @@ public class DatabaseManager
 		{
 			try
 			{
-				Class.forName("org.sqlite.JDBC"); 
-				PreparedStatement statement = null;
-				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-				statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='false';");
+				 
+				PreparedStatement statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='false';");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 				statement.setString(1, date);
@@ -229,13 +226,15 @@ public class DatabaseManager
 					
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
-							rs.getString("Email"),
+							rs.getString("ASU_Email"),
 							rs.getDate("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number")
 							));
 				}
+				
+				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
 			}
 			catch(Exception e)
 			{
@@ -246,9 +245,9 @@ public class DatabaseManager
 		{
 			try
 			{
-				Class.forName("org.sqlite.JDBC"); 
+				 
 				PreparedStatement statement = null;
-				Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				
 				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=?;");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
@@ -296,12 +295,9 @@ public class DatabaseManager
 		try
 		{
 			//Create Insertion String
-			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id)" + 
-			"values(?,?,?,?,?,?,?,?,?);");
-			
+			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id) values(?,?,?,?,?,?,?,?,?);");
+		
 			statement.setString(1, p.getTrackNum());
 			statement.setString(2, p.getDate());
 			statement.setString(3, p.getEmail());
@@ -333,14 +329,12 @@ public class DatabaseManager
 	{
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
 			ResultSet rs = statement.executeQuery();
 			if(rs.getBoolean("At_Stop"))
 			{
-				statement = conn.prepareStatement("alter table Package set Picked_Up=?, Pick_Up_Date=? where Tracking_Number=?;");
+				statement = conn.prepareStatement("update Package set Picked_Up=?, Pick_Up_Date=? where Tracking_Number=?;");
 				statement.setBoolean(1, value);
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
@@ -350,7 +344,7 @@ public class DatabaseManager
 			}
 			else
 			{
-				statement = conn.prepareStatement("alter table Package set At_Stop=? where Tracking_Number=?;");
+				statement = conn.prepareStatement("update Package set At_Stop=? where Tracking_Number=?;");
 				statement.setBoolean(1, value);
 				statement.setString(2, tNumber);
 				statement.execute();
@@ -365,10 +359,8 @@ public class DatabaseManager
 	{
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("alter table Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
+			statement = conn.prepareStatement("update Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
 			Date d = new Date();
 			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 			statement.setBoolean(1, atStop);
@@ -388,9 +380,7 @@ public class DatabaseManager
 	{
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used) values (?,?,?);");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
@@ -419,9 +409,7 @@ public class DatabaseManager
 	{
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("update Stop set Name = ?, isUsed = ?, route_id = ? where stop_id = ?;");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
@@ -453,8 +441,6 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			Class.forName("org.sqlite.JDBC"); 
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("insert into Route(Name) values(?);");
 			statement.setString(1, route);
 			if(statement.execute())
@@ -473,9 +459,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			Class.forName("org.sqlite.JDBC"); 
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = conn.prepareStatement("alter TABLE Route(Name) set Name=? where Name=?;");
+			statement = conn.prepareStatement("update Routes Route(Name) set Name=? where Name=?;");
 			statement.setString(1, currentName);
 			statement.setString(2, previousName);
 			if(statement.execute())
@@ -511,8 +495,6 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			Class.forName("org.sqlite.JDBC"); 
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
 			statement.setString(1, beginDate);
 			statement.setString(2, endDate);
@@ -549,9 +531,7 @@ public class DatabaseManager
 		
 		try
 		{
-			Class.forName("org.sqlite.JDBC"); 
 			PreparedStatement statement = null;
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
 			statement.setString(1, tNumber);
 			
@@ -587,11 +567,7 @@ public class DatabaseManager
 		
 		try
 		{
-			Class.forName("org.sqlite.JDBC");
-			Connection conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			Statement statement = conn.createStatement();
-			
-			
 		}
 		catch(Exception e)
 		{
