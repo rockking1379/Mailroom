@@ -146,6 +146,17 @@ public class RoutePrint extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
             	boolean packagesFound=false;
+            	
+            	
+            	toPrint = new JTextArea();
+            	
+            	toPrint.setFont(new Font("Monospaced",Font.PLAIN,12));
+ 
+            	toPrint.setLineWrap(true);
+            	JScrollPane sp = new JScrollPane();
+            	sp.setViewportView(toPrint);
+            	sp.setBounds(10,300,500,250);
+            	contentPane_1.add(sp);
             	if(ready){
             		try {
 						toPrint.print();
@@ -171,7 +182,7 @@ public class RoutePrint extends JFrame {
             		
             		
             	}
-            	toPrint = new JTextArea();
+            	
             	List<Stop> stops = new ArrayList<Stop>();
             	ArrayList<Package> packages = new ArrayList<Package>();
             	System.out.println("Running");
@@ -206,14 +217,6 @@ public class RoutePrint extends JFrame {
             	
             	
             	
-            	
-            	toPrint.setFont(new Font("Monospaced",Font.PLAIN,12));
- 
-            	toPrint.setLineWrap(true);
-            	JScrollPane sp = new JScrollPane();
-            	sp.setViewportView(toPrint);
-            	sp.setBounds(10,300,500,250);
-            	contentPane_1.add(sp);
             	
             	
             	
