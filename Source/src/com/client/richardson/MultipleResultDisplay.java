@@ -3,6 +3,8 @@ package com.client.richardson;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Font;
+import com.client.common.*;
+import com.client.common.Package;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
@@ -29,18 +31,18 @@ public class MultipleResultDisplay extends JFrame {
 	 * Launch the application.
 	 */
 	ArrayList<Person> results;
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MultipleResultDisplay frame = new MultipleResultDisplay(new ScanPackage(new DatabaseManager()),new ArrayList());
+					MultipleResultDisplay frame = new MultipleResultDisplay(new ScanPackage(), new List<Package>());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the frame.

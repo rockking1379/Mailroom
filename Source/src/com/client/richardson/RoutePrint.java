@@ -43,6 +43,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.awt.GridBagLayout;
+import com.client.common.*;
+import com.client.common.Package;
 
 public class RoutePrint extends JFrame {
 
@@ -140,7 +142,7 @@ public class RoutePrint extends JFrame {
 		
 		btnPrint.addActionListener(new ActionListener() {
 			Date date =new Date();
-            SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
+            SimpleDateFormat ft = new SimpleDateFormat ("MM/dd/yy");
             String newDate = ft.format(date);
 	    	 
             public void actionPerformed(ActionEvent e)
@@ -305,6 +307,10 @@ public class RoutePrint extends JFrame {
             		
             		for (Package p: packages){
             			
+            			String pDate = p.getDate();
+            			
+            			if(pDate.equals(newDate)){
+            			
             			String var =p.getLName();
             			if(var.length()>=11){
             				var= var.substring(0, 8);
@@ -341,6 +347,7 @@ public class RoutePrint extends JFrame {
             			toPrint.setText(toPrint.getText()+printName);
             		}
           
+            		}
             	}
             	
              	if(packagesFound){
@@ -351,6 +358,7 @@ public class RoutePrint extends JFrame {
             	
              	}  	
           }
+           toPrint.setText(toPrint.getText()+"\n\n\n\n");
          
         }
             	
