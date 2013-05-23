@@ -86,7 +86,7 @@ public class OpenScreen extends JFrame {
 
 				loadSettings();
 				
-				manager.loadPackages(true,null);
+				//manager.loadPackages(true,null);
 				
 		setVisible(true);
 		setTitle("Adams State Mail Room System");
@@ -279,6 +279,7 @@ public class OpenScreen extends JFrame {
 	         setVisible(true); 
 	}
 	public void loadSettings(){
+		manager = new DatabaseManager();
 		File settings = new File("./properties.prop");
 		if(settings.exists())
 		{
@@ -331,7 +332,7 @@ public class OpenScreen extends JFrame {
 				//Do nothing
 			}
 			manager.setup();
-			
+			manager.loadPackages(true, null);
 		}
 		else
 		{
@@ -361,10 +362,12 @@ public class OpenScreen extends JFrame {
 			{
 				//Ignore the exceptions
 			}
-			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");	
+			System.exit(0);
 		}
 	}
 
+	
 	
 	
 

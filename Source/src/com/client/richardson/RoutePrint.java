@@ -2,6 +2,7 @@ package com.client.richardson;
 
 import java.awt.BorderLayout;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -307,9 +308,10 @@ public class RoutePrint extends JFrame {
             		
             		for (Package p: packages){
             			
-            			String pDate = p.getDate();
+            			String tDate = DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
             			
-            			if(pDate.equals(newDate)){
+            			
+            			if(tDate.equals(p.getDate())){
             			
             			String var =p.getLName();
             			if(var.length()>=11){
