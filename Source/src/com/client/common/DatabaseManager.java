@@ -22,8 +22,6 @@ public class DatabaseManager
 	public DatabaseManager()
 	{
 		asuPeople = new ArrayList<Person>();
-		stops = new ArrayList<Stop>();
-		routes = new ArrayList<Route>();
 	}
 	
 	///---Set Methods---///
@@ -163,6 +161,7 @@ public class DatabaseManager
 	public void loadRoutes()
 	{
 		//create route in here
+		routes = new ArrayList<Route>();
 		try
 		{
 			Statement statement = conn.createStatement();
@@ -182,6 +181,7 @@ public class DatabaseManager
 	public void loadStops()
 	{
 		//create stop in here
+		stops = new ArrayList<Stop>();
 		try
 		{
 			Statement statement = conn.createStatement();
@@ -409,8 +409,7 @@ public class DatabaseManager
 	{
 		try
 		{
-			PreparedStatement statement = null;
-			statement = conn.prepareStatement("update Stop set Name = ?, isUsed = ?, route_id = ? where stop_id = ?;");
+			PreparedStatement statement = conn.prepareStatement("update Stop set Name = ?, Is_Used = ?, route_id = ? where stop_id = ?;");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
 			{
@@ -669,6 +668,7 @@ public class DatabaseManager
 		return results;
 	}
 	
+	///---Closing Up---///
 	public void closeUp()
 	{
 		try
@@ -680,5 +680,21 @@ public class DatabaseManager
 			//Ignore it
 			//We are shutting down
 		}
+	}
+	
+	///---Get Unassigned Items---///
+	public List<Stop> getUnassignedStops()
+	{
+		List<Stop> results = new ArrayList<Stop>();
+		
+		for(int i = 0; i < stops.size(); i++)
+		{
+			if(stops.get(i).getRouteID() == 1)
+			{
+				results.add(stops.get(i));
+			}
+		}
+		
+		return results;
 	}
 }
