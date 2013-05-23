@@ -94,12 +94,14 @@ public class CreateStop extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				if(comboBox.getSelectedIndex()==-1){
-					manager.addStop(textField.getText(), false, null);
+					manager.addStop(textField.getText(), false, "unassigned");
+					
 				}
 				else{
 					String route = (String)comboBox.getSelectedItem();
 					manager.addStop(textField.getText(), true, route);
 				}
+				new ScanPackage(manager);
 				dispose();
 			}
 			

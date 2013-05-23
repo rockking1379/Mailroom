@@ -301,8 +301,7 @@ public class RouteMaker extends JPanel {
 			stops.add(new Stop(s));
 		}
 		
-	//	manager.loadRoutes();
-	//	manager.loadStops();
+	
 		
 			
 			

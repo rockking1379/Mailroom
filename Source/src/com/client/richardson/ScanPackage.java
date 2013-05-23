@@ -353,6 +353,7 @@ public class ScanPackage extends JFrame {
             {
                 CreateStop newStop = new CreateStop(manager);
                 newStop.setVisible(true);
+                dispose();
             }
         });
 		
