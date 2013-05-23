@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import com.client.common.*;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -22,6 +23,7 @@ public class CreateStop extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	ArrayList<Route> routes;
+	JFrame frame;
 	/**
 	 * Launch the application.
 	 */
@@ -29,7 +31,7 @@ public class CreateStop extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateStop frame = new CreateStop(new DatabaseManager());
+					CreateStop frame = new CreateStop(new DatabaseManager(),new JFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -41,7 +43,8 @@ public class CreateStop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateStop(final DatabaseManager manager) {
+	public CreateStop(final DatabaseManager manager,final JFrame frame) {
+		this.frame=frame;
 		ArrayList<Route> routes;
 		setResizable(false);
 		setVisible(true);
@@ -101,7 +104,39 @@ public class CreateStop extends JFrame {
 					String route = (String)comboBox.getSelectedItem();
 					manager.addStop(textField.getText(), true, route);
 				}
-				new ScanPackage(manager);
+				
+				if(frame.getTitle().equals("Scan My Package")){
+					new ScanPackage(manager);
+				}
+				else{
+					JFrame f = new JFrame("Create A Route");
+	                
+	                
+	                RouteMaker dual = new RouteMaker(manager,f);
+	                
+	                String[] stopNames= new String[manager.getStops().size()];
+	                
+	                
+	                
+	                for(Stop s: manager.getStops()){
+	                	stopNames[manager.getStops().indexOf(s)] = s.getName();
+	                }
+	                try{
+	                dual.addSourceElements(stopNames);
+	            	}
+	                catch(NullPointerException ex){
+	            		
+	            		
+	            		
+	            	}
+	               
+	                f.getContentPane().add(dual, BorderLayout.CENTER);
+	                f.setSize(493, 360);
+	                f.setVisible(true);
+	                f.setResizable(false);
+				}
+					
+				manager.loadStops();
 				dispose();
 			}
 			

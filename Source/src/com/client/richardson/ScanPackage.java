@@ -351,7 +351,7 @@ public class ScanPackage extends JFrame {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                CreateStop newStop = new CreateStop(manager);
+                CreateStop newStop = new CreateStop(manager,frame);
                 newStop.setVisible(true);
                 dispose();
             }

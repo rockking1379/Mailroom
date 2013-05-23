@@ -270,12 +270,13 @@ public class RouteManager extends JFrame {
 	    NewStop.setBounds(193, 277, 110, 23);
 	    getContentPane().add(NewStop);
 	    
+	    final JFrame frame = this;
 	    NewStop.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				    new CreateStop(manager);
+				    new CreateStop(manager,frame);
 				 
 			}
 		});

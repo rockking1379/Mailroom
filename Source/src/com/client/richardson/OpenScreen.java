@@ -127,13 +127,13 @@ public class OpenScreen extends JFrame {
             public void actionPerformed(ActionEvent e)
             {
             	
-            	RouteMaker route = new RouteMaker(manager);
-                route.setVisible(true);
+            	
+               
 
             	JFrame f = new JFrame("Create A Route");
                 
                 
-                RouteMaker dual = new RouteMaker(manager);
+                RouteMaker dual = new RouteMaker(manager,f);
                 
                 String[] stopNames= new String[manager.getStops().size()];
                 

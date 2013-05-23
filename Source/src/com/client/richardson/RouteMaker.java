@@ -49,12 +49,12 @@ public class RouteMaker extends JPanel {
   DatabaseManager manager;
   ArrayList<String> inDest = new ArrayList<String>();
   ArrayList<Stop> stops;
-
+  JFrame frame;
  
 
-  public RouteMaker(DatabaseManager manager) {
+  public RouteMaker(DatabaseManager manager,JFrame frame) {
 	  this.manager=manager;
-	  
+	  this.frame=frame;
 	 
 
   	setBackground(new Color(0, 102, 0));
@@ -234,6 +234,16 @@ public class RouteMaker extends JPanel {
     JButton NewStop = new JButton("New Stop");
     NewStop.setBounds(193, 277, 110, 23);
     add(NewStop);
+    NewStop.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			new CreateStop(manager,frame);
+			frame.dispose();
+			
+		}
+    	
+    });
     
     JButton btnCreateRoute = new JButton("Create Route");
     btnCreateRoute.addActionListener(new CreateRouteListener());
@@ -248,7 +258,7 @@ public class RouteMaker extends JPanel {
     JFrame f = new JFrame("Create A Route");
     
     f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    RouteMaker dual = new RouteMaker(new DatabaseManager());
+    RouteMaker dual = new RouteMaker(new DatabaseManager(), new JFrame());
 
 ;
 
