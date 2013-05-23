@@ -171,7 +171,7 @@ public class RoutePrint extends JFrame {
             		
             		
             	}
-            	
+            	toPrint = new JTextArea();
             	List<Stop> stops = new ArrayList<Stop>();
             	ArrayList<Package> packages = new ArrayList<Package>();
             	System.out.println("Running");
@@ -205,7 +205,7 @@ public class RoutePrint extends JFrame {
             	
             	
             	
-            	toPrint = new JTextArea();
+            	
             	
             	toPrint.setFont(new Font("Monospaced",Font.PLAIN,12));
  

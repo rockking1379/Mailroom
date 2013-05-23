@@ -42,7 +42,8 @@ public class AddAccount extends JFrame {
 	private JPasswordField pre;
 	JRadioButton rdbtnAdministrator;
 	final JFrame login;
-	
+	JButton btnDelete;
+	JButton btnCreate;
 
 
 	/**
@@ -120,7 +121,7 @@ public class AddAccount extends JFrame {
 		contentPane.add(lblPassword);
 		
 		
-		JButton btnCreate = new JButton("Create Account");
+		 btnCreate = new JButton("Create Account");
 		btnCreate.addActionListener(new ButtonListener());
 		btnCreate.setBounds(313, 130, 128, 23);
 		contentPane.add(btnCreate);
@@ -155,8 +156,9 @@ public class AddAccount extends JFrame {
 		contentPane.add(pre);
 		pre.setColumns(10);
 		
-		JButton btnDelete = new JButton("Delete Account");
+		btnDelete = new JButton("Delete Account");
 		btnDelete.setBounds(313, 7, 128, 23);
+		btnDelete.addActionListener(new ButtonListener());
 		contentPane.add(btnDelete);
 		
 		setVisible(true);
@@ -240,16 +242,11 @@ public class AddAccount extends JFrame {
 		
 		JButton btnDeleteAccount = new JButton("Delete Account");
 		btnDeleteAccount.setBounds(313, 7, 121, 23);
+		
 		contentPane.add(btnDeleteAccount);
 		
-		btnDeleteAccount.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {	
-				
-			DelAccount delete = new DelAccount();
-			//delete.setVisible(true);
-					
-				}
-        });
+		
+       
 		
 //>>>>>>> origin/Nick
 		
@@ -259,6 +256,14 @@ public class AddAccount extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			System.out.println("In Delete Button");
+			boolean create=true;
+			
+			if(e.getSource().equals(btnDelete)){
+				create=false;
+				}
+			
+			
 			JOptionPane p = new JOptionPane();
 			if(!password.getText().equals(pre.getText())){
 				
@@ -287,10 +292,16 @@ public class AddAccount extends JFrame {
 				for(String s: hashes){
 					
 					if(s.equals(hash.toString())){
+						if(create){
 						System.out.println("Account exists");
 						System.out.println(s);
 						p.showMessageDialog(null, "This account already exists");
 					return;
+						}
+						else{
+							hashes.remove(s);
+						}
+						
 					}
 				}
 				
@@ -300,10 +311,11 @@ public class AddAccount extends JFrame {
 					writer.write(s);
 					writer.newLine();
 				}
-				System.out.println(hash);
+				if(create){
 				writer.write(hash.toString());
 				writer.newLine();
 				writer.close();
+				}
 				
 //<<<<<<< HEAD
 				if(login!=null){
