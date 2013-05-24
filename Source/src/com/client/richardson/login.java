@@ -32,6 +32,9 @@ public class login extends JFrame {
 	public boolean accountExists;
 	JLabel lblLoginError;
 	private JPasswordField passwordField;
+	
+	File adminHash = new File("Admin_Hash.txt");
+	File userHash = new File("User_Hash.txt");
 	/**
 	 * Launch the application.
 	 * @throws ClassNotFoundException 
@@ -138,13 +141,12 @@ public class login extends JFrame {
 		passwordField.setBounds(96, 81, 151, 20);
 		contentPane.add(passwordField);
 //<<<<<<< HEAD
-		File f = new File("Admin_Hash.txt");
-		File fi = new File("User_Hash.txt");
+		
 		
 		try{
-			BufferedReader reader = new BufferedReader(new FileReader(f));
+			BufferedReader reader = new BufferedReader(new FileReader(adminHash));
 			reader.readLine();
-			reader = new BufferedReader(new FileReader(fi));
+			reader = new BufferedReader(new FileReader(userHash));
 			reader.readLine();
 			setVisible(true);
 		}
@@ -217,6 +219,8 @@ public class login extends JFrame {
 					
 					OpenScreen o = new OpenScreen(admin);
 					o.setVisible(true);
+					adminHash=null;
+					userHash=null;
 					f.dispose();
 //=======
 					
