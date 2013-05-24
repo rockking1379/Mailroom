@@ -228,10 +228,12 @@ public class DatabaseManager
 	public void loadFacStaff()
 	{
 		//Load Faculty and Staff
+		facStaff = new ArrayList<Person>();
 	}
 	public void loadStudent()
 	{
 		//Load Students
+		students = new ArrayList<Person>();
 	}
 	public void loadPackages(boolean allStops, String stop)
 	{
