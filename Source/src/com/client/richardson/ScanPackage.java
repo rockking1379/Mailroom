@@ -128,11 +128,26 @@ public class ScanPackage extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				String stop=(String)comboBox.getSelectedItem();
 				
+				Package p = null;
+				if(selectedPerson==null){
+					int stopId=0;
+					String stopName=null;
+					for(Stop s: manager.getStops()){
+						if(s.getName().equals((String)comboBox.getSelectedItem()));
+						stopId=s.getID();
+						stopName=s.getName();
+						break;
+					}
+					selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown", "Unknown", BoxText.getText(),stopId);
+					String sps =selectedPerson.getFirstName()+","+selectedPerson.getLastName()+","+selectedPerson.getEmail()+","+selectedPerson.getID()
+							+selectedPerson.getBox()+","+stopName;
+					//manager.createPerson(sps);
+					p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText());
+				}
+				else{
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText());
+				}
 				
-				
-				
-				Package p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText());
-			
 				manager.addPackage(p);
 				clear();
 				
