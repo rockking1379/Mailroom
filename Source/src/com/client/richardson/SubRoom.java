@@ -60,7 +60,7 @@ public class SubRoom extends JFrame {
 		setContentPane(contentPane);
 		 contentPane.setLayout(null);
 		
-		 AbstractTableDemo newContentPane = new AbstractTableDemo();
+		 SUBTable newContentPane = new SUBTable();
          newContentPane.setBounds(10, 11, 688, 434);
          contentPane.add(newContentPane);
          newContentPane.setOpaque(true);

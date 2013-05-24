@@ -13,7 +13,10 @@ import javax.swing.table.AbstractTableModel;
 public class AbstractTableDemo extends JPanel{
     private boolean DEBUG = false;
     private boolean delivered=false;
-    private boolean picked_up=false;;
+    private boolean print=false;
+
+    private boolean picked_up;
+    private String pickdate;
 
     
 	public AbstractTableDemo() {
@@ -21,6 +24,22 @@ public class AbstractTableDemo extends JPanel{
  final JTable table = new JTable(new MyTableModel());
  table.setPreferredScrollableViewportSize(new Dimension(500, 70));
  table.setFillsViewportHeight(true);
+ 
+ 
+ table.getColumnModel().getColumn(0).setPreferredWidth(20);
+ table.getColumnModel().getColumn(0).setResizable(false);
+ table.getColumnModel().getColumn(6).setPreferredWidth(40);
+ table.getColumnModel().getColumn(5).setPreferredWidth(30);
+ table.getColumnModel().getColumn(4).setPreferredWidth(100);
+ table.getColumnModel().getColumn(1).setResizable(false);
+ table.getColumnModel().getColumn(2).setResizable(false);
+ table.getColumnModel().getColumn(3).setResizable(false);
+ table.getColumnModel().getColumn(4).setResizable(false);
+ table.getColumnModel().getColumn(5).setResizable(false);
+ table.getColumnModel().getColumn(6).setResizable(false);
+
+ 
+ 
  //Object[] values = {"String", 10, 20.0, 30.2, new Boolean(false)};
  MyTableModel a = (MyTableModel) table.getModel();
  //a.insertData(values);
@@ -46,21 +65,19 @@ table.setAutoCreateRowSorter(true);
 
 
 class MyTableModel extends AbstractTableModel {
-	  Date date =new Date();
-	  Object[][] data1 = null;
+	 Date date =new Date();
 	    SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
-	    String pickdate="";
-		String trackNum= "0214123574841245546";
-		String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
+		String pickdate=ft.format(date);
 		
- private String[] columnNames = {"First Name", "Last Name", "Box #", 
- 		"Tracking #", "Date", "Delivered", "Picked Up"};
+ private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #", "Date","Delivered"};
+ 
  private Vector data = new Vector();
- public final Object[] row1 ={"Kathy", "Smith", 678, L4,  ft.format(date), delivered, picked_up };
- public final Object[] row2 =  {"John", "Doe", 1041, L4, ft.format(date), delivered, picked_up };
- public final Object[] row3 ={"Sue", "Black", 386, L4,  ft.format(date), delivered,picked_up };
- public final Object[] row4 ={"Jane", "White", 1437, L4, ft.format(date), delivered, picked_up };
- public final Object[] row5 ={"Joe", "Brown",  19, L4,  ft.format(date), delivered,  picked_up };
+ public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313",  ft.format(date), delivered};
+ public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date), delivered};
+ public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date), delivered};
+ public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date), delivered};
+ public final Object[] row5 = {print, "Joe", "Brown","SUB","1024861834",  ft.format(date), delivered};
+
  @Override
 
  public int getColumnCount() {
