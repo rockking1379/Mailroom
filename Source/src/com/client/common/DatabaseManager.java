@@ -332,6 +332,7 @@ public class DatabaseManager
 		{
 			//Create Insertion String
 			PreparedStatement statement = null;
+			System.out.println(p.getStop());
 			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id) values(?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
@@ -357,7 +358,7 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database: "+e.getMessage());
 		}
 	}
 	@SuppressWarnings("resource")

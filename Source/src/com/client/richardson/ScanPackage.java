@@ -140,12 +140,12 @@ public class ScanPackage extends JFrame {
 					}
 					selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown", "Unknown", BoxText.getText(),stopId);
 					String sps =selectedPerson.getFirstName()+","+selectedPerson.getLastName()+","+selectedPerson.getEmail()+","+selectedPerson.getID()
-							+selectedPerson.getBox()+","+stopName;
+							+selectedPerson.getBox()+","+stop;
 					//manager.createPerson(sps);
-					p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText());
+					p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
 				}
 				else{
-				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText());
+					p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
 				}
 				
 				manager.addPackage(p);
