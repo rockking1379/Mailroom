@@ -33,9 +33,11 @@ Pick_Up_Date DATE,
 Processed_By varchar(50) NOT NULL,
 stop_id int,
 courier_id int,
+processor int,
 Returned BOOLEAN NOT NULL,
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
 FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
+FOREIGN KEY(processor) REFERENCES User(user_id)
 );
 CREATE TABLE FacStaff
 (
@@ -57,14 +59,16 @@ First_Name varchar(50) NOT NULL,
 Last_Name varchar(50) NOT NULL,
 Box_Number varchar(50),
 stop_id int,
-FOREIGN KEY stop_id REFERENCE Stop(stop_id)
+FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
+);
 CREATE TABLE User
 (
 user_id INTEGER PRIMARY KEY AUTOINCREMENT,
 User_Name varchar(50) NOT NULL,
 First_Name varchar(50) NOT NULL,
 Last_Name varchar(50) NOT NULL,
-Password INTEGER NOT NULL
+Password INTEGER NOT NULL,
+Admin BOOLEAN NOT NULL
 );
 
 insert into Route(Name) values('unassigned');
