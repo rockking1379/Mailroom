@@ -48,8 +48,8 @@ public class SubRoom extends JFrame {
 		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("Images/Untitled.jpg"));
 		setTitle("Student Union Mail Room");
-		ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
-		setIconImage(icon.getImage());
+		//ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
+		//setIconImage(icon.getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 719, 523);
 		contentPane = new JPanel();
@@ -59,7 +59,7 @@ public class SubRoom extends JFrame {
 		setContentPane(contentPane);
 		 contentPane.setLayout(null);
 		
-		 SUBTable newContentPane = new SUBTable();
+		 AbstractTableDemo newContentPane = new AbstractTableDemo();
          newContentPane.setBounds(10, 11, 688, 434);
          contentPane.add(newContentPane);
          newContentPane.setOpaque(true);
