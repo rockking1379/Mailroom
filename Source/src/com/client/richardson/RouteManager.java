@@ -118,6 +118,7 @@ public class RouteManager extends JFrame {
 
 	  public Iterator sourceIterator() {
 	    return sourceListModel.iterator();
+	   
 	  }
 
 	  public Iterator destinationIterator() {
@@ -179,6 +180,7 @@ public class RouteManager extends JFrame {
 	    Object selected[] = destList.getSelectedValues();
 	    for (int i = selected.length - 1; i >= 0; --i) {
 	      destListModel.removeElement(selected[i]);
+	      
 	    }
 	    destList.getSelectionModel().clearSelection();
 	  }
@@ -286,12 +288,23 @@ public class RouteManager extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Object[] selected =destList.getSelectedValues();
+				ArrayList selected=new ArrayList();
 				
-				for(Object o: selected){
-					manager.updateStop((String)o, true,(String)RouteBox.getSelectedItem());
+				for(int i=0; i<destListModel.getSize();i++){
+					selected.add(i, destListModel.getElementAt(i));
+					
 				}
-				selected= sourceList.getSelectedValues();
+				for(Object o: selected){
+					manager.updateStop((String)o, true, (String)RouteBox.getSelectedItem());
+					System.out.println((String)o);
+				}
+				 
+				selected=new ArrayList();
+				for(int i=0;i<sourceListModel.getSize();i++){
+					selected.add(i,sourceListModel.getElementAt(i));
+					
+					
+				}
 				
 				for(Object o: selected){
 					manager.updateStop((String)o, false, "unassigned");
@@ -360,7 +373,7 @@ public class RouteManager extends JFrame {
 		    public void actionPerformed(ActionEvent e) {
 		      Object selected[] = destList.getSelectedValues();
 		      for(Object o: selected){
-		    	inDest.remove(inDest.indexOf((String)o));
+		    	inDest.remove((String)o);
 		    	  
 		      }
 		      addSourceElements(selected);

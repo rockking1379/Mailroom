@@ -3,7 +3,7 @@ package com.client.richardson;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
-
+import com.client.common.*;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,6 +22,7 @@ public class SubRoom extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField SearchField;
+	private DatabaseManager manager;
 	
 	/**
 	 * Launch the application.
@@ -44,7 +45,7 @@ public class SubRoom extends JFrame {
 	 * @throws IOException 
 	 */
 	public SubRoom() throws IOException {
-		
+		manager=new DatabaseManager();
 		
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("Images/Untitled.jpg"));
 		setTitle("Student Union Mail Room");
