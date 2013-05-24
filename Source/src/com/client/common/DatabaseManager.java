@@ -77,7 +77,7 @@ public class DatabaseManager
 					loadStudent();
 				}
 				
-				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
+				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
 			} 
 			catch (Exception e) 
 			{
@@ -212,7 +212,7 @@ public class DatabaseManager
 		try
 		{
 			Statement statement = conn.createStatement();
-			ResultSet rs = statement.executeQuery("select * from Courier where Is_Used=0;");
+			ResultSet rs = statement.executeQuery("select * from Courier where Is_Used=1;");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
