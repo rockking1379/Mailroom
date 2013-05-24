@@ -7,6 +7,7 @@ public class Stop
 	private int route_id;
 	private int route_order;
 	
+	///---Constructors
 	public Stop(String name)
 	{
 		this.name=name;
@@ -25,6 +26,7 @@ public class Stop
 		this.route_order = route_order;
 	}
 	
+	///---Get Methods---///
 	public String getName()
 	{
 		return name;

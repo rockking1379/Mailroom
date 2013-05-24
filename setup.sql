@@ -33,9 +33,31 @@ Pick_Up_Date DATE,
 Processed_By varchar(50) NOT NULL,
 stop_id int,
 courier_id int,
+Returned BOOLEAN NOT NULL,
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
 FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
 );
+CREATE TABLE FacStaff
+(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+ID_Number varchar(50),
+ASU_Email varchar(50),
+First_Name varchar(50) NOT NULL,
+Last_Name varchar(50) NOT NULL,
+Suite_Number varchar(50),
+stop_id int,
+FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
+);
+CREATE TABLE Student
+(
+id INTEGER PRIMARY KEY AUTOINCREMENT,
+ID_Number varchar(50),
+ASU_Email varchar(50),
+First_Name varchar(50) NOT NULL,
+Last_Name varchar(50) NOT NULL,
+Box_Number varchar(50),
+stop_id int,
+FOREIGN KEY stop_id REFERENCE Stop(stop_id)
 CREATE TABLE User
 (
 user_id INTEGER PRIMARY KEY AUTOINCREMENT,

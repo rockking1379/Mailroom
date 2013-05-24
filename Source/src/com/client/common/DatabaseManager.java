@@ -157,7 +157,7 @@ public class DatabaseManager
 		}
 		else
 		{
-			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber));
+			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, 2));
 		}
 	}
 	public void loadRoutes()
@@ -737,19 +737,42 @@ public class DatabaseManager
 	{
 		User u = null;
 		
+		try
+		{
+			PreparedStatement statement = conn.prepareStatement("select * from User where Username=? and Password=?;");
+			statement.setString(1, username);
+			statement.setInt(2, password);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				String uname = rs.getString("User_Name");
+				String firstName = rs.getString("First_Name");
+				String lastName = rs.getString("Last_Name");
+				boolean admin = rs.getBoolean("Admin");
+				u = new User(uname, firstName, lastName, admin);
+				break;
+			}
+			
+			return u;
+		}
+		catch(Exception e)
+		{
+			//Assume invalid login
+			return null;
+		}
 		
-		
-		return u;
 	}
 	public void createUser(User u, int password)
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("insert into User(Username, First_Name,Last_Name,Password) values(?,?,?,?);");
+			PreparedStatement statement = conn.prepareStatement("insert into User(Username, First_Name,Last_Name,Password, Admin) values(?,?,?,?,?);");
 			statement.setString(1, u.getUser());
 			statement.setString(2, u.getFName());
 			statement.setString(3, u.getLName());
 			statement.setInt(4, password);
+			statement.setBoolean(5, u.getAdmin());
 		}
 		catch(Exception e)
 		{

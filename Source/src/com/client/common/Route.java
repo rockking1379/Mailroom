@@ -5,6 +5,7 @@ public class Route
 	private String name;
 	private int id;
 	
+	///---Constructors---///
 	public Route(String name,int id)
 	{
 		this.name = name;
@@ -15,6 +16,7 @@ public class Route
 		this.name = name;
 	}
 	
+	///---Get Methods---///
 	public int getID()
 	{
 		return id;

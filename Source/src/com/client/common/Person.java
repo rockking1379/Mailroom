@@ -20,14 +20,14 @@ public class Person
 		this.stop = building;
 	}
 	//Student Constructor
-	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber)
+	public Person(String firstName, String lastName, String email, String idNumber, String boxNumber, int stop)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.idNumber = idNumber;
 		this.boxNumber = boxNumber;
-		this.stop = "SUB";
+		this.stop = Integer.toString(stop);
 	}
 	
 	//Get Methods

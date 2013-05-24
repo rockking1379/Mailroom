@@ -8,8 +8,7 @@ public class Package
 	private String firstName;
 	private String lastName;
 	private String email;
-	//private Date date;
-	String date;
+	private String date;
 	private String boxNumber;
 	private String stop;
 	private String trackingNumber;
@@ -58,6 +57,7 @@ public class Package
 		this.courier = courier;
 	}
 	
+	///---Get Methods---///
 	public String getFName()
 	{
 		return firstName;
@@ -72,7 +72,6 @@ public class Package
 	}
 	public String getDate()
 	{
-		// return DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
 		return date;
 	}
 	public String getBoxNum()
