@@ -621,15 +621,59 @@ public class DatabaseManager
 	{
 		List<Person> results = new ArrayList<Person>();
 		
-		for(int i = 0; i < asuPeople.size(); i++)
+		try
 		{
-			if(asuPeople.get(i).getFirstName().equals(firstName))
+			PreparedStatement statement = conn.prepareStatement("select * from FacStaff where First_Name like %?% and Last_Name like %?%;");
+			statement.setString(1, firstName);
+			statement.setString(2, lastName);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next())
 			{
-				if(asuPeople.get(i).getLastName().equals(lastName))
+				String idNumber = rs.getString("ID_Number");
+				String email = rs.getString("ASU_Email");
+				String fName = rs.getString("First_Name");
+				String lName = rs.getString("Last_Name");
+				String suite = rs.getString("Suite_Number");
+				String stop = "";
+				for(int i = 0; i < stops.size(); i++)
 				{
-					results.add(asuPeople.get(i));
+					if(stops.get(i).getID() == rs.getInt("stop_id"))
+					{
+						stop = stops.get(i).getName();
+					}
 				}
+				
+				results.add(new Person(fName, lName, email, idNumber, suite, stop));
 			}
+			
+			statement = conn.prepareStatement("select * from Student where First_Name like %?% and Last_Name like %?%;");
+			statement.setString(1, firstName);
+			statement.setString(2, lastName);
+			rs = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				String idNumber = rs.getString("ID_Number");
+				String email = rs.getString("ASU_Email");
+				String fName = rs.getString("First_Name");
+				String lName = rs.getString("Last_Name");
+				String box = rs.getString("Box_Number");
+				String stop = "";
+				for(int i = 0; i < stops.size(); i++)
+				{
+					if(stops.get(i).getID() == rs.getInt("stop_id"))
+					{
+						stop = stops.get(i).getName();
+					}
+				}
+				
+				results.add(new Person(fName, lName, email, idNumber, box, stop));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 		
 		return results;
@@ -637,20 +681,6 @@ public class DatabaseManager
 	public List<Person> findPerson(String firstName, String lastName, String boxNumber)
 	{
 		List<Person> results = new ArrayList<Person>();
-		
-		for(int i = 0; i < asuPeople.size(); i++)
-		{
-			if(asuPeople.get(i).getFirstName().equals(firstName))
-			{
-				if(asuPeople.get(i).getLastName().equals(lastName))
-				{
-					if(asuPeople.get(i).getBox().equals(boxNumber))
-					{
-						results.add(asuPeople.get(i));
-					}
-				}
-			}
-		}
 		
 		return results;
 	}
