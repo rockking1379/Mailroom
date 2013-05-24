@@ -110,10 +110,12 @@ public class RouteManager extends JFrame {
 
 	  public void addDestinationElements(Object newValue[]) {
 	    fillListModel(destListModel, newValue);
+	    
 	  }
 
 	  private void fillListModel(SortedListModel model, Object newValues[]) {
 	    model.addAll(newValues);
+	    
 	  }
 
 	  public Iterator sourceIterator() {
@@ -180,6 +182,7 @@ public class RouteManager extends JFrame {
 	    Object selected[] = destList.getSelectedValues();
 	    for (int i = selected.length - 1; i >= 0; --i) {
 	      destListModel.removeElement(selected[i]);
+	      
 	      
 	    }
 	    destList.getSelectionModel().clearSelection();
@@ -332,13 +335,15 @@ public class RouteManager extends JFrame {
 
 			@Override
 			public void itemStateChanged(ItemEvent arg0) {
-				String Selected= (String)RouteBox.getSelectedItem();
-				List<Stop> stUsed = manager.getStopsFromRoute(Selected);
+				String selectedRoute= (String)RouteBox.getSelectedItem();
+				System.out.println(selectedRoute);
+				ArrayList<Stop> stUsed = (ArrayList<Stop>)manager.getStopsFromRoute(selectedRoute);
 				String[] stopNames= new String[stUsed.size()];
 				
 				for(Stop s: stUsed){
 					stopNames[stUsed.indexOf(s)]=s.getName();
 				}
+				destListModel.clear();
 				addDestinationElements(stopNames);
 				
 			}
@@ -374,6 +379,7 @@ public class RouteManager extends JFrame {
 		      Object selected[] = destList.getSelectedValues();
 		      for(Object o: selected){
 		    	inDest.remove((String)o);
+		    	
 		    	  
 		      }
 		      addSourceElements(selected);

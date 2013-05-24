@@ -450,12 +450,12 @@ public class DatabaseManager
 			{
 				if(route.equals(routes.get(i).getName()))
 				{
-					statement.setInt(2, routes.get(i).getID());
+					statement.setInt(3, routes.get(i).getID());
 					break;
 				}
 			}
 			//Hopefully its true(but you never know)
-			statement.setBoolean(3, isUsed);
+			statement.setBoolean(2, isUsed);
 			
 			statement.execute();
 			JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
