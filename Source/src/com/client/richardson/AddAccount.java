@@ -158,7 +158,7 @@ public class AddAccount extends JFrame {
 		
 		btnDelete = new JButton("Delete Account");
 		btnDelete.setBounds(313, 7, 128, 23);
-		btnDelete.addActionListener(new ButtonListener());
+		btnDelete.addActionListener(new DeleteListener());
 		contentPane.add(btnDelete);
 		
 		setVisible(true);
@@ -257,11 +257,9 @@ public class AddAccount extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			System.out.println("In Delete Button");
-			boolean create=true;
+		
 			
-			if(e.getSource().equals(btnDelete)){
-				create=false;
-				}
+			
 			
 			
 			JOptionPane p = new JOptionPane();
@@ -292,17 +290,15 @@ public class AddAccount extends JFrame {
 				for(String s: hashes){
 					
 					if(s.equals(hash.toString())){
-						if(create){
+						
 						System.out.println("Account exists");
 						System.out.println(s);
 						p.showMessageDialog(null, "This account already exists");
 					return;
 						}
-						else{
-							hashes.remove(s);
-						}
 						
-					}
+						
+					
 				}
 				
 				
@@ -311,11 +307,11 @@ public class AddAccount extends JFrame {
 					writer.write(s);
 					writer.newLine();
 				}
-				if(create){
+				
 				writer.write(hash.toString());
 				writer.newLine();
 				writer.close();
-				}
+				
 				
 //<<<<<<< HEAD
 				if(login!=null){
@@ -360,8 +356,118 @@ public class AddAccount extends JFrame {
 		}
 			
 		}
+	
 //<<<<<<< HEAD
 		JFrame f = this;
-	}
+		
+	
+		public class DeleteListener implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane p = new JOptionPane();
+				if(!password.getText().equals(pre.getText())){
+					
+					p.showMessageDialog(null, "The two passwords did not match");
+					return;
+				}
+				
+				Integer hash = username.getText().hashCode()+password.getText().hashCode();
+				System.out.println(hash);
+				
+				
+				try {
+					String file="User_Hash.txt";
+					if(rdbtnAdministrator.isSelected()){
+						file="Admin_Hash.txt";
+					}
+					File f = new File(file);
+					BufferedReader reader = new BufferedReader(new FileReader(f));
+					ArrayList<String> hashes= new ArrayList<String>();
+					String input;
+					while((input=reader.readLine())!=null){
+						hashes.add(input);
+					}
+					reader.close();
+					
+					
+					boolean found=false; 
+					String hashToRemove=null;
+					for(String s: hashes){
+						
+						if(s.equals(hash.toString())){
+						
+							hashToRemove=s;
+							found=true;
+							break;
+							}
+							
+							
+						
+					}
+					if(!found){
+						JOptionPane.showMessageDialog(null,"The account you wish to delete does not exist.");
+						return;
+					}
+					hashes.remove(hashToRemove);
+					
+					BufferedWriter writer = new BufferedWriter(new FileWriter(f));
+					for(String s: hashes){
+						writer.write(s);
+						writer.newLine();
+					}
+					
+					
+					JOptionPane.showMessageDialog(null,"The account has been deleted");
+					
+	//<<<<<<< HEAD
+					if(login!=null){
+						login.setVisible(true);
+						
+					}
+					
+	//=======
+	//>>>>>>> origin/Nick
+					password.setText(null);
+					username.setText(null);
+					pre.setText(null);
+
+	//>>>>>>> origin/Nick
+				} catch (FileNotFoundException e1) {
+					
+					File f = new File("User_Hash.txt");
+					File fi = new File("Admin_Hash.txt");
+					try {
+						BufferedWriter w = new BufferedWriter(new FileWriter(f));
+						w.write("");
+						w= new BufferedWriter(new FileWriter(fi));
+						w.write("");
+						actionPerformed(e);
+					} catch (IOException e2) {
+						System.out.println("The hash files could not be created");
+						e2.printStackTrace();
+					}
+					
+					
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+	//<<<<<<< HEAD
+				dispose();
+	//=======
+				
+	//>>>>>>> origin/Nick
+				
+			}
+				
+				
+			}
+			
+		}
+
+	
 	
 
