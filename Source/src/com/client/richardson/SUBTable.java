@@ -55,14 +55,8 @@ public class SUBTable extends JPanel {
 	String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
    
     	
-        private String[] columnNames = {"First Name",
-                "Last Name",
-                "Box #",
-                "Tracking #",
-                "Date",
-                "Delivered",
-                "Picked Up",
-                "Pick Up Date"};
+        private String[] columnNames = {"First Name", "Last Name", "Box #", 
+        		"Tracking #", "Date", "Delivered", "Picked Up","Pick Up Date"};
         
         private Object[][] data = { {"Kathy", "Smith", "678", L4,  ft.format(date), delivered, picked_up,pickdate},
         	        {"John", "Doe", "1041", L4, ft.format(date), delivered, picked_up,pickdate},

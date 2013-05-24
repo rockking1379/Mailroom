@@ -6,6 +6,8 @@ import java.awt.EventQueue;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -229,13 +231,9 @@ public class RouteManager extends JFrame {
 	    JScrollPane scrollPane = new JScrollPane(sourceList);
 	    
 	    
-	    List<Stop> stops = manager.getStops();
-	    String[] sNames = new String[stops.size()];
-	    for(Stop s: stops){
-	    	sNames[stops.indexOf(s)]= s.getName();
-	    }
+	   
 	    
-	    addSourceElements(sNames);
+	    
 
 	   
 	   
@@ -293,6 +291,12 @@ public class RouteManager extends JFrame {
 				for(Object o: selected){
 					manager.updateStop((String)o, true,(String)RouteBox.getSelectedItem());
 				}
+				selected= sourceList.getSelectedValues();
+				
+				for(Object o: selected){
+					manager.updateStop((String)o, false, "unassigned");
+					
+				}
 				
 			}
 	    	
@@ -311,6 +315,32 @@ public class RouteManager extends JFrame {
 	    }
 	    model = new DefaultComboBoxModel(rtNames);
 	    RouteBox.setModel(model);
+	    RouteBox.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				String Selected= (String)RouteBox.getSelectedItem();
+				List<Stop> stUsed = manager.getStopsFromRoute(Selected);
+				String[] stopNames= new String[stUsed.size()];
+				
+				for(Stop s: stUsed){
+					stopNames[stUsed.indexOf(s)]=s.getName();
+				}
+				addDestinationElements(stopNames);
+				
+			}
+	    	
+	    });
+	    
+	    
+	    List<Stop> stops = manager.getUnassignedStops();
+	    String[] sNames = new String[stops.size()];
+	    for(Stop s: stops){
+	    	sNames[stops.indexOf(s)]= s.getName();
+	    }
+	    addSourceElements(sNames);
+	    
+	    
 	    
 	    ImageIcon icon= new ImageIcon(getClass().getResource("/image/compass.jpg"));
 		setIconImage(icon.getImage());
