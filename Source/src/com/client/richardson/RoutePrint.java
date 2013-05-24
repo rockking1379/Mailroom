@@ -55,7 +55,7 @@ public class RoutePrint extends JFrame {
 	
 	private JPanel rtHolder_1;
 	boolean ready = false;
-	JTextArea toPrint;
+	JTextArea toPrint = new JTextArea();
 
 	ArrayList<JCheckBox> checkBoxes;
 	List<Route> routes;
@@ -150,7 +150,7 @@ public class RoutePrint extends JFrame {
             	boolean packagesFound=false;
             	
             	
-            	toPrint = new JTextArea();
+            	
             	
             	toPrint.setFont(new Font("Monospaced",Font.PLAIN,12));
  
@@ -269,13 +269,8 @@ public class RoutePrint extends JFrame {
             		packages.add(new Package("sdfsdf","Mdfsdfg", "nehringtb@sfdd.ede", date,"34", "234234235346541111789763"));
             		packages.add(new Package("sdfsdfs","dfsdsdf", "nehringtb@sfdd.ede", date,"234", "234234235346541111797807"));
             		*/
-            		if(packages.size()==0){
-            			JOptionPane.showMessageDialog(null,"No packages were found for route "+s.getName()+". Please be sure you have scanned in packages");
-            			packagesFound = false;
-            			
-            		}
-            		else{
-            			packagesFound=true;
+            	
+            		
             		
             		
             		
@@ -349,22 +344,22 @@ public class RoutePrint extends JFrame {
             		
           
             		}
-            	}
             	
-             	if(packagesFound){
-           		setBounds(100,100,535,600);
-            	ready=true;
+            	
+             	
+           		
             
              	
             	
-             	}  	
+             	
           }
            toPrint.setText(toPrint.getText()+"\n\n\n\n");
          
         }
             	
         }
-            	
+            	setBounds(100,100,535,600);
+            	ready=true;
             }
            private void addSpacing(int j){
             	for(int i=0; i<j;i++){

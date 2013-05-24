@@ -316,6 +316,7 @@ public class AddAccount extends JFrame {
 //<<<<<<< HEAD
 				if(login!=null){
 					login.setVisible(true);
+					dispose();
 					
 				}
 				
@@ -368,7 +369,7 @@ public class AddAccount extends JFrame {
 				JOptionPane p = new JOptionPane();
 				if(!password.getText().equals(pre.getText())){
 					
-					p.showMessageDialog(null, "The two passwords did not match");
+					p.showMessageDialog(null, "The two passwords do not match");
 					return;
 				}
 				

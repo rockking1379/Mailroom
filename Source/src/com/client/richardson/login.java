@@ -152,6 +152,7 @@ public class login extends JFrame {
 		}
 		catch(IOException ex){
 			JOptionPane.showMessageDialog(this,"There are no records of accounts. You will now be redirected to the Account Creation Page");
+			setVisible(false);
 			new AddAccount();
 		}
 //=======
@@ -178,6 +179,7 @@ public class login extends JFrame {
 			System.out.println(hash);
 			File a= new File("Admin_Hash.txt");
 			File u= new File("User_Hash.txt");
+			
 			try {
 				BufferedReader reader = new BufferedReader(new FileReader(a));
 				String input;
