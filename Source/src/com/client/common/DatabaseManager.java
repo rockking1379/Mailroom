@@ -13,6 +13,7 @@ public class DatabaseManager
 	private List<Person> asuPeople;
 	private List<Stop> stops;
 	private List<Route> routes;
+	private List<Courier> couriers;
 	private List<Package> packages;
 	private String dbLocation;
 	private String fileLocation;
@@ -192,6 +193,26 @@ public class DatabaseManager
 				int id = rs.getInt("stop_id");
 				int route = rs.getInt("route_id");
 				stops.add(new Stop(name, route, id));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+	}
+	public void loadCouriers()
+	{
+		couriers = new ArrayList<Courier>();
+		
+		try
+		{
+			Statement statement = conn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Courier where Is_Used=0;");
+			while(rs.next())
+			{
+				String name = rs.getString("Name");
+				int id = rs.getInt("courier_id");
+				couriers.add(new Courier(name, id));
 			}
 		}
 		catch(Exception e)
@@ -473,13 +494,28 @@ public class DatabaseManager
 		}
 	}
 
-	///---Package Searching---///
-	public List<Package> findPackage(String[] criteria)
+	///---Couriers---///
+	public void addCourier(String courier, boolean isUsed)
 	{
-		List<Package> results = new ArrayList<Package>();
-		//Logic
-		return results;
+		//Courier logic
 	}
+	public void removeCourier(String courier)
+	{
+		//facade for deleting a courier
+		try
+		{
+			PreparedStatement statement = conn.prepareStatement("update Courier set Is_Used=?;");
+			statement.setBoolean(1, false);
+			statement.execute();
+			JOptionPane.showMessageDialog(null, "Courier " + courier + " Removed");
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecing to Database");
+		}
+	}
+	
+	///---Package Searching---///
 	public List<Package> findPackage(String beginDate, String endDate)
 	{
 		List<Package> results = new ArrayList<Package>();
@@ -559,7 +595,6 @@ public class DatabaseManager
 		
 		try
 		{
-			Statement statement = conn.createStatement();
 		}
 		catch(Exception e)
 		{
@@ -619,6 +654,10 @@ public class DatabaseManager
 	public List<Package> getPackages()
 	{
 		return packages;
+	}
+	public List<Courier> getCouriers()
+	{
+		return couriers;
 	}
 
 	///---Printing---///
