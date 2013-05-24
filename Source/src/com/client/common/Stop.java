@@ -5,21 +5,24 @@ public class Stop
 	private String name;
 	private int id;
 	private int route_id;
+	private int route_order;
 	
 	public Stop(String name)
 	{
 		this.name=name;
 	}
-	public Stop(String name, int route_id, int id)
+	public Stop(String name, int route_id, int id, int route_order)
 	{
 		this.name = name;
 		this.id = id;
 		this.route_id = route_id;
+		this.route_order = route_order;
 	}
-	public Stop(String name, int route_id)
+	public Stop(String name, int route_id, int route_order)
 	{
 		this.name = name;
 		this.route_id = route_id;
+		this.route_order = route_order;
 	}
 	
 	public String getName()
@@ -33,5 +36,9 @@ public class Stop
 	public int getRouteID()
 	{
 		return route_id;
+	}
+	public int getroutePos()
+	{
+		return route_order;
 	}
 }

@@ -71,6 +71,7 @@ public class DatabaseManager
 				
 					loadRoutes();
 					loadStops();
+					loadCouriers();
 				}
 				
 				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
@@ -192,7 +193,8 @@ public class DatabaseManager
 				String name = rs.getString("Name");
 				int id = rs.getInt("stop_id");
 				int route = rs.getInt("route_id");
-				stops.add(new Stop(name, route, id));
+				int order = rs.getInt("route_order");
+				stops.add(new Stop(name, route, id, order));
 			}
 		}
 		catch(Exception e)
@@ -255,7 +257,7 @@ public class DatabaseManager
 							));
 				}
 				
-				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
+				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
 			}
 			catch(Exception e)
 			{
@@ -728,5 +730,59 @@ public class DatabaseManager
 		}
 		
 		return results;
+	}
+	
+	///---User Stuff---///
+	public User login(String username, int password)
+	{
+		User u = null;
+		
+		
+		
+		return u;
+	}
+	public void createUser(User u, int password)
+	{
+		try
+		{
+			PreparedStatement statement = conn.prepareStatement("insert into User(Username, First_Name,Last_Name,Password) values(?,?,?,?);");
+			statement.setString(1, u.getUser());
+			statement.setString(2, u.getFName());
+			statement.setString(3, u.getLName());
+			statement.setInt(4, password);
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Erro Creating User " + u.getUser());
+		}
+	}
+	public void deleteUser(String username)
+	{
+		switch(JOptionPane.showConfirmDialog(null, "You are about to Delete: " + username + "\nDo You Wish to Continue?"))
+		{
+		case JOptionPane.YES_OPTION:
+		{
+			//Execute a statement
+			try
+			{
+				PreparedStatement statement = conn.prepareStatement("delete * from User where Username=?;");
+				statement.setString(1,username);
+				statement.execute();
+			}
+			catch(Exception e)
+			{
+				JOptionPane.showMessageDialog(null, "Error Deleting User " + username);
+			}
+			break;
+		}
+		case JOptionPane.NO_OPTION:
+		{
+			return;
+		}
+		case JOptionPane.CANCEL_OPTION:
+		{
+			return;
+		}
+		}
 	}
 }

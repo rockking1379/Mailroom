@@ -9,6 +9,7 @@ stop_id INTEGER PRIMARY KEY AUTOINCREMENT,
 Name varchar(50) NOT NULL,
 route_id int,
 Is_Used BOOLEAN NOT NULL,
+route_order int,
 FOREIGN KEY(route_id) REFERENCES Route(route_id)
 );
 CREATE TABLE Courier
@@ -34,6 +35,14 @@ stop_id int,
 courier_id int,
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
 FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
+);
+CREATE TABLE User
+(
+user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+User_Name varchar(50) NOT NULL,
+First_Name varchar(50) NOT NULL,
+Last_Name varchar(50) NOT NULL,
+Password INTEGER NOT NULL
 );
 
 insert into Route(Name) values('unassigned');

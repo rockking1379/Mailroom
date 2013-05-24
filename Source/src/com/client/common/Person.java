@@ -1,7 +1,5 @@
 package com.client.common;
 
-import java.awt.Component;
-
 public class Person 
 {
 	private String firstName;
@@ -56,33 +54,5 @@ public class Person
 	public String getBuilding()
 	{
 		return stop;
-	}
-	public Component getStop() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	public String getIdNumber() {
-		return idNumber;
-	}
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
-	public String getBoxNumber() {
-		return boxNumber;
-	}
-	public void setBoxNumber(String boxNumber) {
-		this.boxNumber = boxNumber;
-	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
-	public void setStop(String stop) {
-		this.stop = stop;
 	}
 }
