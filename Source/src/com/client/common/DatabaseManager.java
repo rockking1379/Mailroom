@@ -10,7 +10,8 @@ import javax.swing.JOptionPane;
 public class DatabaseManager
 {
 	///---Variables---///
-	private List<Person> asuPeople;
+	private List<Person> facStaff;
+	private List<Person> students;
 	private List<Stop> stops;
 	private List<Route> routes;
 	private List<Courier> couriers;
@@ -18,11 +19,11 @@ public class DatabaseManager
 	private String dbLocation;
 	private String fileLocation;
 	private Connection conn;
+	private boolean setup;
 	
 	///---Constructor(s)---///
 	public DatabaseManager()
 	{
-		asuPeople = new ArrayList<Person>();
 	}
 	
 	///---Set Methods---///
@@ -72,13 +73,15 @@ public class DatabaseManager
 					loadRoutes();
 					loadStops();
 					loadCouriers();
+					loadFacStaff();
+					loadStudent();
 				}
 				
-				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
+				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
 			} 
 			catch (Exception e) 
 			{
-				if(asuPeople.size() > 0)
+				if(facStaff.size() > 0 || students.size() > 0)
 				{
 					
 				}
@@ -153,11 +156,11 @@ public class DatabaseManager
 		
 		if(!building.equals(""))
 		{
-			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, building));
+			//asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, building));
 		}
 		else
 		{
-			asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, 2));
+			//asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, 2));
 		}
 	}
 	public void loadRoutes()
@@ -222,6 +225,14 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
+	public void loadFacStaff()
+	{
+		//Load Faculty and Staff
+	}
+	public void loadStudent()
+	{
+		//Load Students
+	}
 	public void loadPackages(boolean allStops, String stop)
 	{
 		//Load packages from today(if available)
@@ -257,7 +268,7 @@ public class DatabaseManager
 							));
 				}
 				
-				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nPeople:" + asuPeople.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
+				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nPackages:" + packages.size());
 			}
 			catch(Exception e)
 			{

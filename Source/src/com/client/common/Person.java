@@ -30,7 +30,7 @@ public class Person
 		this.stop = Integer.toString(stop);
 	}
 	
-	//Get Methods
+	///---Get Methods---///
 	public String getFirstName()
 	{
 		return firstName;
@@ -51,8 +51,14 @@ public class Person
 	{
 		return boxNumber;
 	}
-	public String getBuilding()
+	public String getStop()
 	{
 		return stop;
+	}
+	
+	///---Set Methods---///
+	public void setStop(String stop)
+	{
+		this.stop = stop;
 	}
 }
