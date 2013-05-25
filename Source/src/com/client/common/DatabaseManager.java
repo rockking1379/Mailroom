@@ -494,6 +494,7 @@ public class DatabaseManager
 			//Error with database Connection
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
+		loadStops();
 	}
 
 	///---Routes---///
