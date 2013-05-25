@@ -84,7 +84,7 @@ public class OpenScreen extends JFrame {
 	
 	public OpenScreen(boolean admin, DatabaseManager manager,String loggedIn) {
 				
-
+		this.manager=manager;
 				
 				
 				manager.loadPackages(true,null);

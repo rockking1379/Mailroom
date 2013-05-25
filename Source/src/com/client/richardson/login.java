@@ -208,7 +208,7 @@ public class login extends JFrame {
 		
 	}
 	public void loadSettings(){
-		manager = new DatabaseManager();
+		
 		File settings = new File("./properties.prop");
 		if(settings.exists())
 		{
@@ -261,7 +261,7 @@ public class login extends JFrame {
 				//Do nothing
 			}
 			manager.setup();
-			manager.loadPackages(true, null);
+			//manager.loadPackages(true, null);
 			
 		}
 		else

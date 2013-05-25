@@ -52,7 +52,7 @@ public class ScanPackage extends JFrame {
 	JComboBox comboBox;
 	String newDate;
 	Date date =new Date();
-
+	DatabaseManager manager;
 
 	/**
 	 * Launch the application.
@@ -83,7 +83,10 @@ public class ScanPackage extends JFrame {
 	 * Create the frame.
 	 */
 
-	public ScanPackage(final DatabaseManager manager) {
+	public ScanPackage(DatabaseManager manager) {
+		
+		this.manager=manager;
+		
 		setResizable(false);
 		setTitle("Scan My Package");
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/images.jpg"));
@@ -122,38 +125,7 @@ public class ScanPackage extends JFrame {
 		btnSave.setBounds(227, 188, 89, 23);
 		contentPane.add(btnSave);
 
-		btnSave.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				String stop=(String)comboBox.getSelectedItem();
-				
-				Package p = null;
-				if(selectedPerson==null){
-					int stopId=0;
-					String stopName=null;
-					for(Stop s: manager.getStops()){
-						if(s.getName().equals((String)comboBox.getSelectedItem()));
-						stopId=s.getID();
-						stopName=s.getName();
-						break;
-					}
-					selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown", "Unknown", BoxText.getText(),stopId);
-					String sps =selectedPerson.getFirstName()+","+selectedPerson.getLastName()+","+selectedPerson.getEmail()+","+selectedPerson.getID()
-							+selectedPerson.getBox()+","+stop;
-					//manager.createPerson(sps);
-					p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
-				}
-				else{
-					p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
-				}
-				
-				manager.addPackage(p);
-				clear();
-				
-			}
-			
-		});
+		btnSave.addActionListener(new SaveListener());
 
 		
 		JButton btnClear = new JButton("Clear");
@@ -202,33 +174,8 @@ public class ScanPackage extends JFrame {
 		btnAutoFill.setBounds(437, 23, 89, 20);
 		contentPane.add(btnAutoFill);
 
-		final ScanPackage frame = this;
-		btnAutoFill.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			ArrayList<Person> p=(ArrayList<Person>) manager.findPerson(NameText.getText(),LastNameText.getText());
-			if(p==null){
-				JOptionPane.showMessageDialog(null,"no one was found by that name.");
-				return;
-			}
-			if(p.size()==0){
-				JOptionPane.showMessageDialog(null,"no one was found by that name.");
-				return;
-			}
-			if(p.size()>1){
-				new MultipleResultDisplay(frame,p);
-			}
-			else{
-			selectedPerson=p.get(0);
-			selectedPerson.setStop("AAO");
-			BoxText.setText(selectedPerson.getBox());
-			comboBox.setSelectedItem(selectedPerson.getStop());
-			}
-				
-			}
-			
-		});
+		
+		btnAutoFill.addActionListener(new AutoFillListener(this));
 	
 		
 		BoxText = new JTextField();
@@ -362,15 +309,7 @@ public class ScanPackage extends JFrame {
         });
 		
 		
-		btnNewStop.addActionListener(new ActionListener() {
-	    	 
-            public void actionPerformed(ActionEvent e)
-            {
-                CreateStop newStop = new CreateStop(manager,frame);
-                newStop.setVisible(true);
-                dispose();
-            }
-        });
+		btnNewStop.addActionListener(new NewStopListener());
 		
 		
 	}
@@ -430,5 +369,69 @@ public class ScanPackage extends JFrame {
          NameText.setText("");
          LastNameText.setText("");
          BoxText.setText("");
+	}
+	public class SaveListener implements ActionListener{
+		public void actionPerformed(ActionEvent arg0) {
+			String stop=(String)comboBox.getSelectedItem();
+			
+			Package p = null;
+			if(selectedPerson==null){
+				int stopId=0;
+				String stopName=null;
+				for(Stop s: manager.getStops()){
+					if(s.getName().equals((String)comboBox.getSelectedItem()));
+					stopId=s.getID();
+					stopName=s.getName();
+					break;
+				}
+				selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown", "Unknown", BoxText.getText(),stopId);
+				String sps =selectedPerson.getFirstName()+","+selectedPerson.getLastName()+","+selectedPerson.getEmail()+","+selectedPerson.getID()
+						+selectedPerson.getBox()+","+stop;
+				//manager.createPerson(sps);
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
+			}
+			else{
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
+			}
+			
+			manager.addPackage(p);
+			clear();
+			
+		}
+	}
+	public class AutoFillListener implements ActionListener{
+		ScanPackage frame;
+		public AutoFillListener(JFrame frame){
+			this.frame=(ScanPackage)frame;
+		}
+		public void actionPerformed(ActionEvent e) {
+			ArrayList<Person> p=(ArrayList<Person>) manager.findPerson(NameText.getText(),LastNameText.getText());
+			if(p==null){
+				JOptionPane.showMessageDialog(null,"no one was found by that name.");
+				return;
+			}
+			if(p.size()==0){
+				JOptionPane.showMessageDialog(null,"no one was found by that name.");
+				return;
+			}
+			if(p.size()>1){
+				new MultipleResultDisplay(frame,p);
+			}
+			else{
+			selectedPerson=p.get(0);
+			selectedPerson.setStop("AAO");
+			BoxText.setText(selectedPerson.getBox());
+			comboBox.setSelectedItem(selectedPerson.getStop());
+			}
+				
+			}
+	}
+	public class NewStopListener implements ActionListener{
+		 public void actionPerformed(ActionEvent e)
+         {
+             CreateCarrier newCarrier = new CreateCarrier();
+             
+             newCarrier.setVisible(true);
+         }
 	}
 }
