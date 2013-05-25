@@ -83,7 +83,7 @@ public class OpenScreen extends JFrame {
 
 	
 	public OpenScreen(boolean admin, DatabaseManager manager,String loggedIn) {
-		setResizable(false);
+				setResizable(false);
 				this.loggedIn=loggedIn;
 				this.manager =manager;
 
@@ -201,7 +201,7 @@ public class OpenScreen extends JFrame {
 	         btnPrint.setBounds(20, 317, 121, 23);
 	         contentPane.add(btnPrint);
 	         
-	         JLabel lblLoggedInAs = new JLabel("Logged in as: ");
+	         JLabel lblLoggedInAs = new JLabel("Logged in as: "+ loggedIn);
 	         lblLoggedInAs.setForeground(Color.WHITE);
 	         lblLoggedInAs.setBounds(378, 384, 247, 14);
 	         contentPane.add(lblLoggedInAs);

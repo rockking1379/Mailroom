@@ -177,7 +177,7 @@ public class login extends JFrame {
 		
 
 			Integer hash = userName.getText().hashCode()+passwordField.getText().hashCode();
-			System.out.println(hash);
+			
 			User u = manager.login(userName.getText(),hash);
 			
 			if(u==null){
@@ -188,6 +188,7 @@ public class login extends JFrame {
 
 			String fullName = u.getFName()+" "+u.getLName();
 			
+
 			
 			
 					OpenScreen o = new OpenScreen(u.getAdmin(),manager,fullName);

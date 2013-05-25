@@ -14,11 +14,11 @@ public class SUBTable extends JPanel{
     private boolean DEBUG = false;
     private boolean delivered=false;
     private boolean picked_up=false;;
-
+    final JTable table;
     
 	public SUBTable() {
  super(new GridLayout(1,0));
- final JTable table = new JTable(new MyTableModel());
+  table = new JTable(new MyTableModel());
  table.setPreferredScrollableViewportSize(new Dimension(500, 70));
  table.setFillsViewportHeight(true);
  
@@ -47,6 +47,11 @@ table.setAutoCreateRowSorter(true);
 
  add(scrollPane);
  }
+
+
+public JTable getTable() {
+		return table;
+	}
 
 
 class MyTableModel extends AbstractTableModel {

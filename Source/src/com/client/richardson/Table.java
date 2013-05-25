@@ -40,19 +40,21 @@ public class Table extends JPanel{
 
  
  
- //Object[] values = {"String", 10, 20.0, 30.2, new Boolean(false)};
- MyTableModel a = (MyTableModel) table.getModel();
- //a.insertData(values);
- Object[] row2= a.row2;
-a.insertData(row2);
-Object[] row3= a.row3;
-Object[] row4= a.row4;
-Object[] row5= a.row5;
-a.insertData(row3);
-a.insertData(row4);
-a.insertData(row5);
+
+ MyTableModel atable = (MyTableModel) table.getModel();
+ Object[] values = atable.row1;
+ Object[] row2= atable.row2;
+Object[] row3= atable.row3;
+Object[] row4= atable.row4;
+Object[] row5= atable.row5;
+
+
+atable.insertData(values);
+atable.insertData(row2);
+atable.insertData(row3); 
+atable.insertData(row4);
+atable.insertData(row5);
 table.setAutoCreateRowSorter(true);
- 
 
  //Create the scroll pane and add the table to it.
 
