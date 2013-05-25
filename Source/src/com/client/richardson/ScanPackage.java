@@ -53,7 +53,8 @@ public class ScanPackage extends JFrame {
 	String newDate;
 	Date date =new Date();
 	DatabaseManager manager;
-
+	String loggedIn;
+	JComboBox comboBox_1;
 	/**
 	 * Launch the application.
 	 */
@@ -62,7 +63,7 @@ public class ScanPackage extends JFrame {
 			public void run() {
 				try {
 
-					ScanPackage frame = new ScanPackage(new DatabaseManager());
+					ScanPackage frame = new ScanPackage(new DatabaseManager(), "Someone");
 					
 					frame.addWindowListener(new WindowAdapter(){ 
 						  public void windowOpened( WindowEvent e){ 
@@ -83,9 +84,10 @@ public class ScanPackage extends JFrame {
 	 * Create the frame.
 	 */
 
-	public ScanPackage(DatabaseManager manager) {
+	public ScanPackage(DatabaseManager manager, String loggedIn) {
 		
 		this.manager=manager;
+		this.loggedIn=loggedIn;
 		
 		setResizable(false);
 		setTitle("Scan My Package");
@@ -206,14 +208,8 @@ public class ScanPackage extends JFrame {
 			
 		}
 		
-		
-		try{
 		comboBox.setModel(stopNames);
-		}
-		catch(NullPointerException ex){
-			
-			dispose();
-		}
+		
 		/*comboBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", 
 				"Community Partnership", "Computing Services", "Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", 
 				"Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music",
@@ -284,8 +280,16 @@ public class ScanPackage extends JFrame {
 		lblCarrier.setBounds(299, 134, 66, 14);
 		contentPane.add(lblCarrier);
 		
-		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1 = new JComboBox();
 		comboBox_1.setBounds(375, 131, 151, 20);
+		
+		String[] ca = new String[manager.getCouriers().size()];
+		
+		for(Courier c: manager.getCouriers()){
+			ca[manager.getCouriers().indexOf(c)]=c.getName();
+		}
+		
+		comboBox_1.setModel(new DefaultComboBoxModel(ca));
 		contentPane.add(comboBox_1);
 		
 		JLabel lblOtherCarrier = new JLabel("Other Carrier:");
@@ -298,15 +302,7 @@ public class ScanPackage extends JFrame {
 		contentPane.add(btnCreateNewCarrier);
 		setVisible(true);
 		
-		btnCreateNewCarrier.addActionListener(new ActionListener() {
-	    	 
-            public void actionPerformed(ActionEvent e)
-            {
-                CreateCarrier newCarrier = new CreateCarrier();
-                
-                newCarrier.setVisible(true);
-            }
-        });
+		btnCreateNewCarrier.addActionListener(new NewCourierListener());
 		
 		
 		btnNewStop.addActionListener(new NewStopListener());
@@ -375,6 +371,8 @@ public class ScanPackage extends JFrame {
 			String stop=(String)comboBox.getSelectedItem();
 			
 			Package p = null;
+			
+			
 			if(selectedPerson==null){
 				int stopId=0;
 				String stopName=null;
@@ -388,10 +386,10 @@ public class ScanPackage extends JFrame {
 				String sps =selectedPerson.getFirstName()+","+selectedPerson.getLastName()+","+selectedPerson.getEmail()+","+selectedPerson.getID()
 						+selectedPerson.getBox()+","+stop;
 				//manager.createPerson(sps);
-				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 			}
 			else{
-				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),"Someone","Someone");
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 			}
 			
 			manager.addPackage(p);
@@ -404,6 +402,8 @@ public class ScanPackage extends JFrame {
 		public AutoFillListener(JFrame frame){
 			this.frame=(ScanPackage)frame;
 		}
+		
+		
 		public void actionPerformed(ActionEvent e) {
 			ArrayList<Person> p=(ArrayList<Person>) manager.findPerson(NameText.getText(),LastNameText.getText());
 			if(p==null){
@@ -426,12 +426,22 @@ public class ScanPackage extends JFrame {
 				
 			}
 	}
+	JFrame f=this;
 	public class NewStopListener implements ActionListener{
 		 public void actionPerformed(ActionEvent e)
          {
-             CreateCarrier newCarrier = new CreateCarrier();
+             new CreateStop(manager,loggedIn);
+             dispose();
              
-             newCarrier.setVisible(true);
          }
+	}
+	public class NewCourierListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new CreateCarrier(manager,loggedIn);
+			dispose();
+		}
+		
 	}
 }

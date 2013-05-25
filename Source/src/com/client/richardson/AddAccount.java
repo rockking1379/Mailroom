@@ -64,6 +64,7 @@ public class AddAccount extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @wbp.parser.constructor
 	 */
 	public AddAccount(DatabaseManager manager) {
 //<<<<<<< HEAD
@@ -317,17 +318,7 @@ public class AddAccount extends JFrame {
 			
 			String s;
 		
-				
-				
-			
-			
-			
-//<<<<<<< HEAD
 			dispose();
-//=======
-			
-//>>>>>>> origin/Nick
-			
 		}
 			
 		}
@@ -343,94 +334,7 @@ public class AddAccount extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane p = new JOptionPane();
-				if(!password.getText().equals(pre.getText())){
-					
-					p.showMessageDialog(null, "The two passwords do not match");
-					return;
-				}
-				
-				Integer hash = username.getText().hashCode()+password.getText().hashCode();
-				System.out.println(hash);
-				
-				
-				try {
-					String file="User_Hash.txt";
-					if(rdbtnAdministrator.isSelected()){
-						file="Admin_Hash.txt";
-					}
-					File f = new File(file);
-					BufferedReader reader = new BufferedReader(new FileReader(f));
-					ArrayList<String> hashes= new ArrayList<String>();
-					String input;
-					while((input=reader.readLine())!=null){
-						hashes.add(input);
-					}
-					reader.close();
-					
-					
-					boolean found=false; 
-					String hashToRemove=null;
-					for(String s: hashes){
-						
-						if(s.equals(hash.toString())){
-						
-							hashToRemove=s;
-							found=true;
-							break;
-							}
-							
-							
-						
-					}
-					if(!found){
-						JOptionPane.showMessageDialog(null,"The account you wish to delete does not exist.");
-						return;
-					}
-					hashes.remove(hashToRemove);
-					
-					BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-					for(String s: hashes){
-						writer.write(s);
-						writer.newLine();
-					}
-					
-					
-					JOptionPane.showMessageDialog(null,"The account has been deleted");
-					
-	//<<<<<<< HEAD
-					if(login!=null){
-						login.setVisible(true);
-						
-					}
-					
-	//=======
-	//>>>>>>> origin/Nick
-					password.setText(null);
-					username.setText(null);
-					pre.setText(null);
-
-	//>>>>>>> origin/Nick
-				} catch (FileNotFoundException e1) {
-					
-					File f = new File("User_Hash.txt");
-					File fi = new File("Admin_Hash.txt");
-					try {
-						BufferedWriter w = new BufferedWriter(new FileWriter(f));
-						w.write("");
-						w= new BufferedWriter(new FileWriter(fi));
-						w.write("");
-						actionPerformed(e);
-					} catch (IOException e2) {
-						System.out.println("The hash files could not be created");
-						e2.printStackTrace();
-					}
-					
-					
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				new DelAccount(manager).setVisible(true);
 				
 				
 	//<<<<<<< HEAD

@@ -1,0 +1,26 @@
+                       Route: unassigned
+=================================================================
+Package Delivery for mail stop unassigned on 05/25/13
+=================================================================
+
+Last       First       Box#.       Track#       Sign Here
+=================================================================
+Package Delivery for mail stop AAO on 05/25/13
+=================================================================
+
+Last       First       Box#.       Track#       Sign Here
+=================================================================
+Package Delivery for mail stop Academic Affairs on 05/25/13
+=================================================================
+
+Last       First       Box#.       Track#       Sign Here
+=================================================================
+Package Delivery for mail stop Admissions on 05/25/13
+=================================================================
+
+Last       First       Box#.       Track#       Sign Here
+=================================================================
+Package Delivery for mail stop This is NEW on 05/25/13
+=================================================================
+
+Last       First       Box#.       Track#       Sign Here

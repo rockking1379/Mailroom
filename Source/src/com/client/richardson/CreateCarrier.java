@@ -9,14 +9,18 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Color;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
+import com.client.common.*;
 public class CreateCarrier extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-
+			DatabaseManager manager;
+			String loggedIn;
 	/**
 	 * Launch the application.
 	 */
@@ -24,7 +28,7 @@ public class CreateCarrier extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateCarrier frame = new CreateCarrier();
+					CreateCarrier frame = new CreateCarrier(new DatabaseManager(),"Someone");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -36,7 +40,9 @@ public class CreateCarrier extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateCarrier() {
+	public CreateCarrier(DatabaseManager manager,String loggedIn) {
+		this.loggedIn=loggedIn;
+		this.manager=manager;
 		setResizable(false);
 		setTitle("Add Carrier");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -61,6 +67,18 @@ public class CreateCarrier extends JFrame {
 		
 		JButton btnAdd = new JButton("ADD");
 		btnAdd.setBounds(83, 67, 89, 23);
+		btnAdd.addActionListener(new CreateCarrierListener());
 		contentPane.add(btnAdd);
+	}
+	
+	public class CreateCarrierListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			manager.addCourier(textField.getText(),true);
+			new ScanPackage(manager,loggedIn).setVisible(true);
+			dispose();
+		}
+		
 	}
 }

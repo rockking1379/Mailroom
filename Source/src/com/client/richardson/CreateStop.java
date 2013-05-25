@@ -24,6 +24,7 @@ public class CreateStop extends JFrame {
 	private JTextField textField;
 	ArrayList<Route> routes;
 	JFrame frame;
+	String loggedIn;
 	/**
 	 * Launch the application.
 	 */
@@ -31,7 +32,7 @@ public class CreateStop extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateStop frame = new CreateStop(new DatabaseManager(),new JFrame());
+					CreateStop frame = new CreateStop(new DatabaseManager(),"Someone");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -43,7 +44,7 @@ public class CreateStop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateStop(final DatabaseManager manager,final JFrame frame) {
+	public CreateStop(final DatabaseManager manager,final String loggedIn) {
 		this.frame=frame;
 		ArrayList<Route> routes;
 		setResizable(false);
@@ -127,13 +128,13 @@ public class CreateStop extends JFrame {
 				}
 				
 				if(frame.getTitle().equals("Scan My Package")){
-					new ScanPackage(manager);
+					new ScanPackage(manager,loggedIn);
 				}
 				else{
 					JFrame f = new JFrame("Create A Route");
 	                
 	                
-	                RouteMaker dual = new RouteMaker(manager,f);
+	                RouteMaker dual = new RouteMaker(manager,f,loggedIn);
 	                
 	                String[] stopNames= new String[manager.getStops().size()];
 	                

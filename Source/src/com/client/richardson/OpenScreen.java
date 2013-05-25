@@ -313,7 +313,7 @@ public class OpenScreen extends JFrame {
 			JFrame f = new JFrame("Create A Route");
             
             
-            RouteMaker dual = new RouteMaker(manager,f);
+            RouteMaker dual = new RouteMaker(manager,f,loggedIn);
             
             String[] stopNames= new String[manager.getStops().size()];
             
@@ -342,7 +342,7 @@ public class OpenScreen extends JFrame {
 	public class RouteManagerListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			
-		    new RouteManager(manager);
+		    new RouteManager(manager,loggedIn);
 		 
 	}
 	}
@@ -350,7 +350,7 @@ public class OpenScreen extends JFrame {
 		 public void actionPerformed(ActionEvent e)
          {
 
-             ScanPackage scan = new ScanPackage(manager);
+             ScanPackage scan = new ScanPackage(manager,loggedIn);
              scan.setVisible(true);
          }
 		
