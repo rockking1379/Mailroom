@@ -67,7 +67,8 @@ public class SubRoom extends JFrame {
 		 contentPane.setLayout(null);
 		
 		 SUBTable table = new SUBTable();
-		 final JTable table1 = table.getTable();
+		 final JTable table1 = table.table;
+		 
 		
          table1.setBounds(10, 11, 688, 434);
          contentPane.add(table1);

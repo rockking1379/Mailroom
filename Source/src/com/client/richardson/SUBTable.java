@@ -15,6 +15,7 @@ public class SUBTable extends JPanel{
     private boolean delivered=false;
     private boolean picked_up=false;;
     final JTable table;
+     public JTable atable;
     
 	public SUBTable() {
  super(new GridLayout(1,0));
@@ -37,6 +38,7 @@ atable.insertData(row3);
 atable.insertData(row4);
 atable.insertData(row5);
 table.setAutoCreateRowSorter(true);
+
  
 
  //Create the scroll pane and add the table to it.
@@ -50,6 +52,7 @@ table.setAutoCreateRowSorter(true);
 
 
 public JTable getTable() {
+		
 		return table;
 	}
 
