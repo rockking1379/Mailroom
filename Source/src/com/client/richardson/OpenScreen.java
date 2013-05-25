@@ -65,7 +65,7 @@ public class OpenScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OpenScreen frame = new OpenScreen(true);
+					OpenScreen frame = new OpenScreen(true,new DatabaseManager());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,9 +80,9 @@ public class OpenScreen extends JFrame {
 //<<<<<<< HEAD
 
 	
-	public OpenScreen(boolean admin) {
+	public OpenScreen(boolean admin,final DatabaseManager manager) {
 	
-				manager =new DatabaseManager();
+				this.manager =manager;
 
 				loadSettings();
 				

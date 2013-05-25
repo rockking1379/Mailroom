@@ -332,7 +332,7 @@ public class DatabaseManager
 		{
 			//Create Insertion String
 			PreparedStatement statement = null;
-			System.out.println(p.getStop());
+			
 			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id) values(?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
@@ -358,7 +358,7 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database: "+e.getMessage());
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
 	@SuppressWarnings("resource")
@@ -451,12 +451,12 @@ public class DatabaseManager
 			{
 				if(route.equals(routes.get(i).getName()))
 				{
-					statement.setInt(3, routes.get(i).getID());
+					statement.setInt(2, routes.get(i).getID());
 					break;
 				}
 			}
 			//Hopefully its true(but you never know)
-			statement.setBoolean(2, isUsed);
+			statement.setBoolean(3, isUsed);
 			
 			statement.execute();
 			JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
