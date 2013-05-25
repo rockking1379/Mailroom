@@ -83,13 +83,11 @@ public class OpenScreen extends JFrame {
 
 	
 	public OpenScreen(boolean admin, DatabaseManager manager,String loggedIn) {
-				setResizable(false);
-				this.loggedIn=loggedIn;
-				this.manager =manager;
-
-				loadSettings();
 				
-				//manager.loadPackages(true,null);
+
+				
+				
+				manager.loadPackages(true,null);
 				
 		setVisible(true);
 		setTitle("Adams State Mail Room System");
