@@ -1,9 +1,10 @@
 package com.client.richardson;
-
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Image;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -22,6 +23,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -30,36 +32,28 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import com.client.richardson.DatePicker;
+
+
+
 public class AdvSearch extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField FirstNameField;
 	private JTextField LastNameField;
-//=======
-//>>>>>>> origin/Nick
 	private JTextField BoxNum;
 	private JButton btnSearch;
-	private JTextField StartYear;
-	private JLabel label_2;
-	private JLabel label_3;
-	private JTextField EndYear;
 	private JLabel lblTracking;
 	private JTextField trackingField;
-	private JComboBox StartMonth;
-	private JComboBox StartDay;
-	private JComboBox EndMonth;
-	private JComboBox EndDay;
 	private JComboBox comboBox;
 	private JPanel SearchPanel;
-	private String sMonth="01";
-	private String eMonth="01";
-	private String sDay="01";
-	private String eDay="01";
 	private String sDate="";
 	private String eDate="";
-	private String sYear="2000";
-    private String eYear="4000";
+	private String sYear;
+	private String eYear;
     private boolean date = true;
+    private JTextField StartField;
+    private JTextField EndField;
 
 	
 	
@@ -113,7 +107,7 @@ public class AdvSearch extends JFrame {
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\compass.jpg"));
 		setTitle("Advanced Search");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 460, 167);
+		setBounds(100, 100, 481, 167);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -149,40 +143,8 @@ public class AdvSearch extends JFrame {
 		
 		JLabel lblTo = new JLabel("to");
 		lblTo.setForeground(new Color(255, 255, 255));
-		lblTo.setBounds(196, 86, 23, 14);
+		lblTo.setBounds(177, 85, 23, 14);
 		contentPane.add(lblTo);
-		
-		JLabel label = new JLabel("/");
-		label.setForeground(Color.WHITE);
-		label.setBounds(90, 85, 17, 14);
-		contentPane.add(label);
-		
-		JLabel label_1 = new JLabel("/");
-		label_1.setForeground(Color.WHITE);
-		label_1.setBounds(140, 85, 17, 14);
-		contentPane.add(label_1);
-		
-		StartYear = new JTextField();
-		StartYear.setBounds(150, 82, 39, 20);
-		contentPane.add(StartYear);
-		
-		label_2 = new JLabel("/");
-		label_2.setForeground(Color.WHITE);
-		label_2.setBounds(254, 85, 17, 14);
-		contentPane.add(label_2);
-		
-		label_3 = new JLabel("/");
-		label_3.setForeground(Color.WHITE);
-		label_3.setBounds(308, 85, 17, 14);
-		contentPane.add(label_3);
-		
-		EndYear = new JTextField();
-		EndYear.setBounds(318, 82, 39, 20);
-		contentPane.add(EndYear);
-		
-		StartYear.setDocument(new JTextFieldLimit(4));
-	         
-		EndYear.setDocument(new JTextFieldLimit(4));
 		
 		
 		
@@ -193,7 +155,6 @@ public class AdvSearch extends JFrame {
 		lblStop.setBounds(10, 61, 46, 14);
 		contentPane.add(lblStop);
 		
-
 		JLabel lblBox = new JLabel("Box #:");
 		lblBox.setForeground(new Color(255, 255, 255));
 		lblBox.setBounds(196, 61, 46, 14);
@@ -216,8 +177,13 @@ public class AdvSearch extends JFrame {
             {               
             	
                 try{
-                sYear = StartYear.getText();
-                eYear = EndYear.getText();
+                date=true;
+                sYear = StartField.getText();
+                sYear = sYear.replace("-", "");
+                System.out.println(sYear);
+                eYear = EndField.getText();
+                eYear = eYear.replace("-", "");
+                System.out.println(eYear);
         		int s = Integer.parseInt(sYear);
         		int ey = Integer.parseInt(eYear);
         		boolean i = s<=ey;
@@ -235,9 +201,6 @@ public class AdvSearch extends JFrame {
                 SearchPanel.setVisible(true);
         		}
                 }catch(Exception ex){
-
-                	
-
                 	Component frame = null;
 					JOptionPane.showMessageDialog(frame,
                 		    "You have entered an incorrect year!",
@@ -245,11 +208,9 @@ public class AdvSearch extends JFrame {
                 		    JOptionPane.ERROR_MESSAGE);
 					SearchPanel.setVisible(false);
 					setBounds(100, 100, 460, 167);
-
-                }}
-
+                }
                 
-       
+            }
         });
 		
 		
@@ -266,17 +227,15 @@ public class AdvSearch extends JFrame {
 		JCheckBox chckbxDelivered = new JCheckBox("Delivered");
 		chckbxDelivered.setForeground(new Color(255, 255, 255));
 		chckbxDelivered.setBackground(new Color(0, 102, 0));
-		chckbxDelivered.setBounds(361, 82, 85, 23);
+		chckbxDelivered.setBounds(376, 81, 85, 23);
 		contentPane.add(chckbxDelivered);
 		
 		JCheckBox chckbxPickedUp = new JCheckBox("Picked Up");
 		chckbxPickedUp.setForeground(new Color(255, 255, 255));
 		chckbxPickedUp.setBackground(new Color(0, 102, 0));
-		chckbxPickedUp.setBounds(361, 58, 83, 23);
+		chckbxPickedUp.setBounds(376, 60, 83, 23);
 		contentPane.add(chckbxPickedUp);
 		
-
-
 		JComboBox StopBox = new JComboBox();
 		StopBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
 	    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
@@ -286,79 +245,6 @@ public class AdvSearch extends JFrame {
 		
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
-		
-
-		StartMonth = new JComboBox();
-		StartMonth.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12"}));
-		StartMonth.setBounds(47, 82, 40, 20);
-		contentPane.add(StartMonth);
-
-		StartDay = new JComboBox();
-		StartDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31",}));
-		StartDay.setBounds(98, 82, 40, 20);
-		contentPane.add(StartDay);
-		
-		//This is how to get items out of comboBox
-		StartMonth.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {	
-				 Object month = StartMonth.getSelectedItem();
-				 String tsMonth = month.toString();			       
-			        long i = Integer.parseInt(tsMonth);
-			        sMonth= tsMonth.format("%02d",i);
-			        System.out.println(i);
-				if(i==2)
-				StartDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",}));
-				else{
-				StartDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31",}));
-				}
-				}
-        });
-	
-		StartDay.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				 Object info = StartDay.getSelectedItem();
-				  String tsDay = info.toString();			       
-			        long i = Integer.parseInt(tsDay);
-			        sDay= tsDay.format("%02d",i);
-			        System.out.println(i);		       
-				} });
-		
-		
-		
-		
-		EndMonth = new JComboBox();
-		EndMonth.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12"}));
-		EndMonth.setBounds(210, 82, 40, 20);
-		contentPane.add(EndMonth);
-		
-		EndDay = new JComboBox();
-		EndDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31",}));
-		EndDay.setBounds(262, 82, 40, 20);
-		contentPane.add(EndDay);
-		
-		EndMonth.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {				
-				 Object month = EndMonth.getSelectedItem();
-			        String teMonth = month.toString();			       
-			        long i = Integer.parseInt(teMonth);
-			        eMonth= teMonth.format("%02d",i);
-			        System.out.println(i);
-				if(i==2)
-				EndDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",}));
-				else{
-				EndDay.setModel(new DefaultComboBoxModel(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31",}));
-				}
-				}
-        });
-
-		EndDay.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				 Object info = EndDay.getSelectedItem();
-			        String teDay = info.toString();			       
-			        long i = Integer.parseInt(teDay);
-			        eDay= teDay.format("%02d",i);
-			        System.out.println(i);
-				} });
 		
 		
 		SearchPanel = new JPanel();
@@ -446,12 +332,61 @@ public class AdvSearch extends JFrame {
 		lblDeliveryStatus.setBounds(79, 60, 96, 14);
 		SearchPanel.add(lblDeliveryStatus);
 		lblDeliveryStatus.setForeground(Color.WHITE);
-
+		
+		StartField = new JTextField();
+		StartField.setBounds(47, 82, 86, 20);
+		contentPane.add(StartField);
+		StartField.setColumns(10);
+		
+		JButton btnDate = new JButton("");
+		btnDate.setBounds(135, 80, 32, 23);
+		contentPane.add(btnDate);
+		Image icon1;
+		try {
+			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
+			btnDate.setIcon(new ImageIcon(icon1));
+		} catch (IOException e1) {
+			
+		}
+		btnDate.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+            	 final JFrame f = new JFrame();
+            	 JPanel p = new JPanel();
+                 
+                    StartField.setText(new DatePicker(f).setPickedDate());
+            }
+    });
+	
+		
+		EndField = new JTextField();
+		EndField.setBounds(202, 82, 86, 20);
+		contentPane.add(EndField);
+		EndField.setColumns(10);
+		
+		JButton btnEDate = new JButton("");
+		btnEDate.setBounds(293, 81, 32, 23);
+		contentPane.add(btnEDate);
+		try {
+			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
+			btnEDate.setIcon(new ImageIcon(icon1));
+		} catch (IOException e1) {
+			
+		}
+		
+		btnEDate.addActionListener(new ActionListener() {
+			
+            public void actionPerformed(ActionEvent ae) {
+            	 final JFrame f = new JFrame();
+            	 
+                    EndField.setText(new DatePicker(f).setPickedDate());
+            }
+    });
+	
 	}
 	
 	public void dateCheck(){
-		sDate=new StringBuilder().append(sYear).append(sMonth).append(sDay).toString();
-		eDate=new StringBuilder().append(eYear).append(eMonth).append(eDay).toString();
+		sDate=new StringBuilder().append(sYear.substring(4 )).append(sYear.substring(0, 2)).append(sYear.substring(2, 4)).toString();
+		eDate=new StringBuilder().append(eYear.substring(4)).append(eYear.substring(0, 2)).append(eYear.substring(2, 4)).toString();
 		int sdate = Integer.parseInt(sDate);
 		int edate = Integer.parseInt(eDate);
 		
@@ -460,12 +395,8 @@ public class AdvSearch extends JFrame {
 		if(sdate>edate){
 			
 			date=false;
-			
+			System.out.println(date);
 		}
 		
 	}
-
-	
-
-
 }
