@@ -783,7 +783,7 @@ public class DatabaseManager
 		
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from User where Username=? and Password=?;");
+			PreparedStatement statement = conn.prepareStatement("select * from User where User_Name=? and Password=?;");
 			statement.setString(1, username);
 			statement.setInt(2, password);
 			ResultSet rs = statement.executeQuery();
