@@ -19,7 +19,6 @@ public class DatabaseManager
 	private String dbLocation;
 	private String fileLocation;
 	private Connection conn;
-	private boolean setup;
 	
 	///---Constructor(s)---///
 	public DatabaseManager()
@@ -97,9 +96,10 @@ public class DatabaseManager
 			System.exit(0);
 		}
 	}
+	@SuppressWarnings("unused")
 	public void createPerson(String person)
 	{
-		//Dilimanted by ',' or ';' not sure which yet
+		//Delimitated by ',' or ';' not sure which yet
 		String firstName = "";
 		String lastName = "";
 		String email = "";
@@ -257,8 +257,15 @@ public class DatabaseManager
 				{
 					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
 					statement.setInt(1, rs.getInt("stop_id"));
-			
 					ResultSet rs2 = statement.executeQuery();
+					
+					statement = conn.prepareStatement("select Name from User where user_id=?;");
+					statement.setInt(1, rs.getInt("processor"));
+					ResultSet rs3 = statement.executeQuery();
+					
+					statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+					statement.setInt(1, rs.getInt("courier_id"));
+					ResultSet rs4 = statement.executeQuery();
 					
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
@@ -266,7 +273,9 @@ public class DatabaseManager
 							rs.getDate("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
-							rs.getString("Tracking_Number")
+							rs.getString("Tracking_Number"),
+							rs3.getString("Name"),
+							rs4.getString("Name")
 							));
 				}
 				
@@ -304,8 +313,15 @@ public class DatabaseManager
 				{
 					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
 					statement.setInt(1, rs.getInt("stop_id"));
-			
 					ResultSet rs2 = statement.executeQuery();
+					
+					statement = conn.prepareStatement("select Name from User where user_id=?;");
+					statement.setInt(1, rs.getInt("processor"));
+					ResultSet rs3 = statement.executeQuery();
+					
+					statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+					statement.setInt(1, rs.getInt("courier_id"));
+					ResultSet rs4 = statement.executeQuery();
 					
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
@@ -313,7 +329,9 @@ public class DatabaseManager
 							rs.getDate("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
-							rs.getString("Tracking_Number")
+							rs.getString("Tracking_Number"),
+							rs3.getString("Name"),
+							rs4.getString("Name")
 							));
 				}
 			}
@@ -413,12 +431,12 @@ public class DatabaseManager
 	}
 	
 	///---Stops---///
-	public void addStop(String name, boolean isUsed, String route)
+	public void addStop(String name, boolean isUsed, String route, int route_order)
 	{
 		try
 		{
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used) values (?,?,?);");
+			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used, route_order) values (?,?,?,?);");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
 			{
@@ -430,6 +448,7 @@ public class DatabaseManager
 			}
 			//Hopefully its true(but you never know)
 			statement.setBoolean(3, isUsed);
+			statement.setInt(4, route_order);
 			
 			statement.execute();
 			JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
@@ -441,22 +460,31 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
-	public void updateStop(String name, boolean isUsed, String route)
+	public void updateStop(String name, boolean isUsed, String route, int route_order)
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Stop set Name = ?, Is_Used = ?, route_id = ? where stop_id = ?;");
+			PreparedStatement statement = conn.prepareStatement("update Stop set Name=?, Is_Used=?, route_id=?, route_order=? where stop_id=?;");
 			statement.setString(1, name);
+			//Hopefully its true(but you never know)
+			statement.setBoolean(2, isUsed);
 			for(int i = 0; i < routes.size(); i++)
 			{
 				if(route.equals(routes.get(i).getName()))
 				{
-					statement.setInt(2, routes.get(i).getID());
+					statement.setInt(3, routes.get(i).getID());
 					break;
 				}
 			}
-			//Hopefully its true(but you never know)
-			statement.setBoolean(3, isUsed);
+			statement.setInt(4, route_order);
+			for(int i = 0; i < stops.size(); i++)
+			{
+				if(stops.get(i).getName().equals(name))
+				{
+					statement.setString(5, stops.get(i).getName());
+					break;
+				}
+			}
 			
 			statement.execute();
 			JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
@@ -513,7 +541,20 @@ public class DatabaseManager
 	///---Couriers---///
 	public void addCourier(String courier, boolean isUsed)
 	{
-		//Courier logic
+		try
+		{
+			PreparedStatement statement = conn.prepareStatement("insert into Courier(Name, Is_Used) values(?,?);");
+			statement.setString(1, courier);
+			statement.setBoolean(2, isUsed);
+			
+			statement.execute();
+			JOptionPane.showMessageDialog(null, "Courier " + courier + " Added");
+			loadCouriers();
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
 	}
 	public void removeCourier(String courier)
 	{
@@ -542,23 +583,31 @@ public class DatabaseManager
 			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
 			statement.setString(1, beginDate);
 			statement.setString(2, endDate);
-			
 			ResultSet rs = statement.executeQuery();
-			
-			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
-			statement.setInt(1, rs.getInt("stop_id"));
-			
-			ResultSet rs2 = statement.executeQuery();
 			
 			while(rs.next())
 			{
-				results.add(new Package(rs.getString("First_Name"),
+				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from User where user_id=?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet rs3 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet rs4 = statement.executeQuery();
+				
+				packages.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
-						rs.getString("Tracking_Number")
+						rs.getString("Tracking_Number"),
+						rs3.getString("Name"),
+						rs4.getString("Name")
 						));
 			}
 		}
@@ -578,23 +627,31 @@ public class DatabaseManager
 			PreparedStatement statement = null;
 			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
 			statement.setString(1, tNumber);
-			
 			ResultSet rs = statement.executeQuery();
-			
-			statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
-			statement.setInt(1, rs.getInt("stop_id"));
-			
-			ResultSet rs2 = statement.executeQuery();
 			
 			while(rs.next())
 			{
-				results.add(new Package(rs.getString("First_Name"),
+				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from User where user_id=?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet rs3 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet rs4 = statement.executeQuery();
+				
+				packages.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
-						rs.getString("Tracking_Number")
+						rs.getString("Tracking_Number"),
+						rs3.getString("Name"),
+						rs4.getString("Name")
 						));
 			}
 		}
@@ -605,12 +662,77 @@ public class DatabaseManager
 		
 		return results;		
 	}
-	public List<Package> searchPackages(String search)
+	public List<Package> searchPackages(String search, int location)
 	{
 		List<Package> results = new ArrayList<Package>();
-		
+		location = 0;//Remove later if API is enhanced
 		try
 		{
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
+			switch(location)
+			{
+				case 0://Contains
+				{
+					search = "%" + search + "%";
+					statement.setString(1, search);
+					statement.setString(2, search);
+					statement.setString(3, search);
+					statement.setString(4, search);
+					statement.setString(5, search);
+					statement.setString(6, search);					
+					break;
+				}
+				case 1://Begins With
+				{
+					search = "%" + search;
+					statement.setString(1, search);
+					statement.setString(2, search);
+					statement.setString(3, search);
+					statement.setString(4, search);
+					statement.setString(5, search);
+					statement.setString(6, search);					
+					break;
+				}
+				case 2://Ends With
+				{
+					search = search + "%";
+					statement.setString(1, search);
+					statement.setString(2, search);
+					statement.setString(3, search);
+					statement.setString(4, search);
+					statement.setString(5, search);
+					statement.setString(6, search);					
+					break;
+				}
+			}
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from User where user_id=?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet rs3 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet rs4 = statement.executeQuery();
+				
+				packages.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("ASU_Email"),
+						rs.getDate("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number"),
+						rs3.getString("Name"),
+						rs4.getString("Name")
+						));
+			}
+			
 		}
 		catch(Exception e)
 		{
@@ -626,7 +748,9 @@ public class DatabaseManager
 		
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from FacStaff where First_Name like %?% and Last_Name like %?%;");
+			firstName = "%" + firstName + "%";
+			lastName = "%" + lastName + "%";
+			PreparedStatement statement = conn.prepareStatement("select * from FacStaff where First_Name like ? and Last_Name like ?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			ResultSet rs = statement.executeQuery();
@@ -650,7 +774,7 @@ public class DatabaseManager
 				results.add(new Person(fName, lName, email, idNumber, suite, stop));
 			}
 			
-			statement = conn.prepareStatement("select * from Student where First_Name like %?% and Last_Name like %?%;");
+			statement = conn.prepareStatement("select * from Student where First_Name like ? and Last_Name like ?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			rs = statement.executeQuery();
@@ -797,6 +921,8 @@ public class DatabaseManager
 				u = new User(uname, firstName, lastName, admin);
 				break;
 			}
+			statement.close();
+			rs.close();
 			
 			return u;
 		}
@@ -811,12 +937,15 @@ public class DatabaseManager
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("insert into User(Username, First_Name,Last_Name,Password, Admin) values(?,?,?,?,?);");
+			PreparedStatement statement = conn.prepareStatement("insert into User(User_Name, First_Name,Last_Name,Password, Admin) values(?,?,?,?,?);");
 			statement.setString(1, u.getUser());
 			statement.setString(2, u.getFName());
 			statement.setString(3, u.getLName());
 			statement.setInt(4, password);
 			statement.setBoolean(5, u.getAdmin());
+			
+			statement.execute();
+			statement.close();
 		}
 		catch(Exception e)
 		{
@@ -832,9 +961,11 @@ public class DatabaseManager
 			//Execute a statement
 			try
 			{
-				PreparedStatement statement = conn.prepareStatement("delete * from User where Username=?;");
+				PreparedStatement statement = conn.prepareStatement("delete * from User where User_Name=?;");
 				statement.setString(1,username);
 				statement.execute();
+				statement.close();
+				JOptionPane.showMessageDialog(null, "User " + username + " Deleted");
 			}
 			catch(Exception e)
 			{
