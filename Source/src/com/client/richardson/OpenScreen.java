@@ -83,6 +83,7 @@ public class OpenScreen extends JFrame {
 
 	
 	public OpenScreen(boolean admin, DatabaseManager manager,String loggedIn) {
+		setResizable(false);
 				
 				this.manager=manager;
 				this.loggedIn=loggedIn;
