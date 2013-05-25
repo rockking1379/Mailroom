@@ -809,6 +809,65 @@ public class DatabaseManager
 	{
 		List<Person> results = new ArrayList<Person>();
 		
+		try
+		{
+			firstName = "%" + firstName + "%";
+			lastName = "%" + lastName + "%";
+			PreparedStatement statement = conn.prepareStatement("select * from FacStaff where First_Name like ? and Last_Name like ? and Suite_Number=?;");
+			statement.setString(1, firstName);
+			statement.setString(2, lastName);
+			statement.setString(3, boxNumber);
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				String idNumber = rs.getString("ID_Number");
+				String email = rs.getString("ASU_Email");
+				String fName = rs.getString("First_Name");
+				String lName = rs.getString("Last_Name");
+				String suite = rs.getString("Suite_Number");
+				String stop = "";
+				for(int i = 0; i < stops.size(); i++)
+				{
+					if(stops.get(i).getID() == rs.getInt("stop_id"))
+					{
+						stop = stops.get(i).getName();
+					}
+				}
+				
+				results.add(new Person(fName, lName, email, idNumber, suite, stop));
+			}
+			
+			statement = conn.prepareStatement("select * from Student where First_Name like ? and Last_Name like ? and Box_Number=?;");
+			statement.setString(1, firstName);
+			statement.setString(2, lastName);
+			statement.setString(3, boxNumber);
+			rs = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				String idNumber = rs.getString("ID_Number");
+				String email = rs.getString("ASU_Email");
+				String fName = rs.getString("First_Name");
+				String lName = rs.getString("Last_Name");
+				String box = rs.getString("Box_Number");
+				String stop = "";
+				for(int i = 0; i < stops.size(); i++)
+				{
+					if(stops.get(i).getID() == rs.getInt("stop_id"))
+					{
+						stop = stops.get(i).getName();
+					}
+				}
+				
+				results.add(new Person(fName, lName, email, idNumber, box, stop));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+		
 		return results;
 	}
 
