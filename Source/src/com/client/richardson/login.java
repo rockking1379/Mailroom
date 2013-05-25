@@ -219,7 +219,7 @@ public class login extends JFrame {
 				else{
 //<<<<<<< HEAD
 					
-					OpenScreen o = new OpenScreen(admin);
+					OpenScreen o = new OpenScreen(admin, null);
 					o.setVisible(true);
 					adminHash=null;
 					userHash=null;
