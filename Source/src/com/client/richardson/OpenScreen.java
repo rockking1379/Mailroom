@@ -84,8 +84,8 @@ public class OpenScreen extends JFrame {
 	
 	public OpenScreen(boolean admin, DatabaseManager manager,String loggedIn) {
 				
-		this.manager=manager;
-				
+				this.manager=manager;
+				this.loggedIn=loggedIn;
 				
 				manager.loadPackages(true,null);
 				
@@ -106,7 +106,7 @@ public class OpenScreen extends JFrame {
 		JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 		
-		JMenuItem mntmCreateNewAccount = new JMenuItem("Create New Account");
+		JMenuItem mntmCreateNewAccount = new JMenuItem("Account Manager");
 
 		mntmCreateNewAccount.addActionListener(new CreateAccountListener());
 
