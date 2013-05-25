@@ -580,7 +580,7 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			statement = conn.prepareStatement("select * from Package where Date ? and ?;");
+			statement = conn.prepareStatement("select * from Package where Date between ? and ?;");
 			statement.setString(1, beginDate);
 			statement.setString(2, endDate);
 			ResultSet rs = statement.executeQuery();
