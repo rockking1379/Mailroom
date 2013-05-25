@@ -978,7 +978,6 @@ public class DatabaseManager
 				String lastName = rs.getString("Last_Name");
 				boolean admin = rs.getBoolean("Admin");
 				u = new User(uname, firstName, lastName, admin);
-				break;
 			}
 			statement.close();
 			rs.close();
