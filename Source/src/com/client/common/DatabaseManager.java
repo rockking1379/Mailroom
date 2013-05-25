@@ -370,14 +370,16 @@ public class DatabaseManager
 				}
 			}
 			
-			PreparedStatement s2 = conn.prepareStatement("select courier_id from Courier;");
+			PreparedStatement s2 = conn.prepareStatement("select courier_id from Courier where Name=?;");
+			s2.setString(1, p.getCourier());
 			ResultSet rs = s2.executeQuery();
 			while(rs.next())
 			{
 				statement.setInt(10, rs.getInt("courier_id"));
 			}
 			
-			s2 = conn.prepareStatement("select user_id from User;");
+			s2 = conn.prepareStatement("select user_id from User where User_Name=?;");
+			s2.setString(1, p.getUser());
 			rs = s2.executeQuery();
 			while(rs.next())
 			{
