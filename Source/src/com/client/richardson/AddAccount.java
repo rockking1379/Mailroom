@@ -4,7 +4,7 @@ import java.awt.BorderLayout;
 import java.io.*;
 import java.util.ArrayList;
 import java.awt.EventQueue;
-
+import com.client.common.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -36,7 +36,6 @@ import javax.swing.JPasswordField;
 public class AddAccount extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField username;
 	private JPasswordField password;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JPasswordField pre;
@@ -44,7 +43,7 @@ public class AddAccount extends JFrame {
 	final JFrame login;
 	JButton btnDelete;
 	JButton btnCreate;
-
+	DatabaseManager manager;
 
 	/**
 	 * Launch the application.
@@ -53,7 +52,7 @@ public class AddAccount extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddAccount frame = new AddAccount();
+					AddAccount frame = new AddAccount(new DatabaseManager());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -65,8 +64,9 @@ public class AddAccount extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AddAccount() {
+	public AddAccount(DatabaseManager manager) {
 //<<<<<<< HEAD
+		this.manager=manager;
 		login=null;
 //=======
 //>>>>>>> origin/Nick
@@ -75,7 +75,7 @@ public class AddAccount extends JFrame {
 		
 		this.setBackground(Color.GREEN);
 		
-		setBounds(100, 100, 457, 192);
+		setBounds(100, 100, 356, 280);
 		contentPane = new JPanel();
 //<<<<<<< HEAD
 //=======
@@ -93,37 +93,27 @@ public class AddAccount extends JFrame {
 		lblPleaseInputA.setBounds(71, 11, 293, 14);
 		contentPane.add(lblPleaseInputA);
 		
-		username = new JTextField();
-		//<<<<<<< HEAD
-		username.setBounds(150, 36, 168, 20);
-		contentPane.add(username);
-		username.setColumns(10);
-		
 		password = new JPasswordField();
-		password.setBounds(125, 67, 195, 20);
+		password.setBounds(125, 130, 195, 20);
 		contentPane.add(password);
 		password.setColumns(10);
 		
 		 rdbtnAdministrator = new JRadioButton("Administrator");
-		 //=======
-		username.setBounds(125, 36, 195, 20);
-		contentPane.add(username);
-		username.setColumns(10);
 		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setForeground(new Color(255, 255, 255));
-		lblUsername.setBounds(10, 39, 103, 14);
+		lblUsername.setBounds(14, 102, 103, 14);
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password:");
 		lblPassword.setForeground(new Color(255, 255, 255));
-		lblPassword.setBounds(10, 70, 80, 14);
+		lblPassword.setBounds(10, 133, 80, 14);
 		contentPane.add(lblPassword);
 		
 		
 		 btnCreate = new JButton("Create Account");
 		btnCreate.addActionListener(new ButtonListener());
-		btnCreate.setBounds(313, 130, 128, 23);
+		btnCreate.setBounds(192, 218, 128, 23);
 		contentPane.add(btnCreate);
 		
 		 rdbtnAdministrator = new JRadioButton("Administrator");
@@ -131,7 +121,7 @@ public class AddAccount extends JFrame {
 		 rdbtnAdministrator.setForeground(new Color(255, 255, 255));
 		 //>>>>>>> origin/Nick
 		buttonGroup.add(rdbtnAdministrator);
-		rdbtnAdministrator.setBounds(71, 130, 109, 23);
+		rdbtnAdministrator.setBounds(71, 188, 109, 23);
 		contentPane.add(rdbtnAdministrator);
 		
 		JRadioButton rdbtnUser = new JRadioButton("User");
@@ -142,29 +132,55 @@ public class AddAccount extends JFrame {
 //>>>>>>> origin/Nick
 		rdbtnUser.setSelected(true);
 		buttonGroup.add(rdbtnUser);
-		rdbtnUser.setBounds(182, 130, 109, 23);
+		rdbtnUser.setBounds(182, 188, 109, 23);
 		contentPane.add(rdbtnUser);
 		
 //<<<<<<< HEAD
 		JLabel lblReenterPassword = new JLabel("Re-enter Password");
 		lblReenterPassword.setForeground(Color.WHITE);
-		lblReenterPassword.setBounds(10, 106, 121, 14);
+		lblReenterPassword.setBounds(10, 167, 121, 14);
 		contentPane.add(lblReenterPassword);
 		
 		pre = new JPasswordField();
-		pre.setBounds(125, 103, 195, 20);
+		pre.setBounds(125, 161, 195, 20);
 		contentPane.add(pre);
 		pre.setColumns(10);
 		
 		btnDelete = new JButton("Delete Account");
-		btnDelete.setBounds(313, 7, 128, 23);
+		btnDelete.setBounds(54, 218, 128, 23);
 		btnDelete.addActionListener(new DeleteListener());
 		contentPane.add(btnDelete);
 		
+		username = new JTextField();
+		username.setBounds(127, 99, 193, 20);
+		contentPane.add(username);
+		username.setColumns(10);
+		
+		JLabel lblFirstName = new JLabel("First Name");
+		lblFirstName.setForeground(Color.WHITE);
+		lblFirstName.setBounds(10, 36, 107, 14);
+		contentPane.add(lblFirstName);
+		
+		JLabel lblLastName = new JLabel("Last Name");
+		lblLastName.setForeground(Color.WHITE);
+		lblLastName.setBounds(14, 77, 76, 14);
+		contentPane.add(lblLastName);
+		
+		firstName = new JTextField();
+		firstName.setBounds(125, 36, 195, 20);
+		contentPane.add(firstName);
+		firstName.setColumns(10);
+		
+		lastName = new JTextField();
+		lastName.setBounds(125, 68, 195, 20);
+		contentPane.add(lastName);
+		lastName.setColumns(10);
+		
 		setVisible(true);
 	}
-	public AddAccount(login login) {
+	public AddAccount(login login,DatabaseManager manager) {
 		this.login=login;
+		this.manager = manager;
 		
 		setTitle("Create Account");
 		setResizable(false);
@@ -270,49 +286,13 @@ public class AddAccount extends JFrame {
 			}
 			
 			Integer hash = username.getText().hashCode()+password.getText().hashCode();
-			System.out.println(hash);
+			
+			User u = new User(username.getText(),firstName.getText(),lastName.getText(), rdbtnAdministrator.isSelected());
 			
 			
-			try {
-				String file="User_Hash.txt";
-				if(rdbtnAdministrator.isSelected()){
-					file="Admin_Hash.txt";
-				}
-				File f = new File(file);
-				BufferedReader reader = new BufferedReader(new FileReader(f));
-				ArrayList<String> hashes= new ArrayList<String>();
-				String input;
-				while((input=reader.readLine())!=null){
-					hashes.add(input);
-				}
-				reader.close();
-				
-				for(String s: hashes){
-					
-					if(s.equals(hash.toString())){
-						
-						System.out.println("Account exists");
-						System.out.println(s);
-						p.showMessageDialog(null, "This account already exists");
-					return;
-						}
-						
-						
-					
-				}
-				
-				
-				BufferedWriter writer = new BufferedWriter(new FileWriter(f));
-				for(String s: hashes){
-					writer.write(s);
-					writer.newLine();
-				}
-				
-				writer.write(hash.toString());
-				writer.newLine();
-				writer.close();
-				
-				
+			
+			
+			
 //<<<<<<< HEAD
 				if(login!=null){
 					login.setVisible(true);
@@ -327,25 +307,11 @@ public class AddAccount extends JFrame {
 				pre.setText(null);
 
 //>>>>>>> origin/Nick
-			} catch (FileNotFoundException e1) {
+			
+			
 				
-				File f = new File("User_Hash.txt");
-				File fi = new File("Admin_Hash.txt");
-				try {
-					BufferedWriter w = new BufferedWriter(new FileWriter(f));
-					w.write("");
-					w= new BufferedWriter(new FileWriter(fi));
-					w.write("");
-				} catch (IOException e2) {
-					System.out.println("The hash files could not be created");
-					e2.printStackTrace();
-				}
-				actionPerformed(e);
 				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
 			
 			
 //<<<<<<< HEAD
@@ -360,6 +326,9 @@ public class AddAccount extends JFrame {
 	
 //<<<<<<< HEAD
 		JFrame f = this;
+		private JTextField username;
+		private JTextField firstName;
+		private JTextField lastName;
 		
 	
 		public class DeleteListener implements ActionListener{
@@ -466,7 +435,6 @@ public class AddAccount extends JFrame {
 				
 				
 			}
-			
 		}
 
 	

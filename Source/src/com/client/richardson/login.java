@@ -21,6 +21,9 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JPasswordField;
 
+import com.client.common.DatabaseManager;
+import com.client.common.User;
+
 import java.awt.Font;
 //>>>>>>> origin/Nick
 
@@ -32,6 +35,7 @@ public class login extends JFrame {
 	public boolean accountExists;
 	JLabel lblLoginError;
 	private JPasswordField passwordField;
+	DatabaseManager manager;
 	
 	File adminHash = new File("Admin_Hash.txt");
 	File userHash = new File("User_Hash.txt");
@@ -67,6 +71,7 @@ public class login extends JFrame {
 	 * Create the frame.
 	 */
 	public login() {
+		manager = new DatabaseManager();
 //<<<<<<< HEAD
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 350, 203);
@@ -153,7 +158,7 @@ public class login extends JFrame {
 		catch(IOException ex){
 			JOptionPane.showMessageDialog(this,"There are no records of accounts. You will now be redirected to the Account Creation Page");
 			setVisible(false);
-			new AddAccount();
+			new AddAccount(this,manager);
 		}
 //=======
 //>>>>>>> origin/Nick
@@ -168,58 +173,24 @@ public class login extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			ArrayList<String> hashes = new ArrayList<String>();
-//<<<<<<< HEAD
+			
+		
 
 			Integer hash = userName.getText().hashCode()+passwordField.getText().hashCode();
-
-			
-
-
 			System.out.println(hash);
-			File a= new File("Admin_Hash.txt");
-			File u= new File("User_Hash.txt");
+			User u = manager.login(userName.getText(),hash);
 			
-			try {
-				BufferedReader reader = new BufferedReader(new FileReader(a));
-				String input;
-				while((input=reader.readLine())!=null){
-					hashes.add(input);
-				}
-				
-				for(String s: hashes){
-					if(s.equals(hash.toString())){
-						admin=true;
-						accountExists=true;
-						
-						
-					}
-				}
-				if(!accountExists){
-					admin=false;
-					reader = new BufferedReader(new FileReader("User_Hash.txt"));
-					
-					hashes = new ArrayList<String>();
-					
-					while((input=reader.readLine())!=null){
-						hashes.add(input);
-					}
-					for(String st: hashes){
-						if(st.equals(hash.toString())){
-							accountExists=true;
-							
-						}
-						
-					}
-				}
-				if(!accountExists){
-					lblLoginError.setVisible(true);
-					
-				}
-				else{
-//<<<<<<< HEAD
-					
-					OpenScreen o = new OpenScreen(admin);
+			if(u==null){
+				lblLoginError.setVisible(true);
+				return;
+			}
+			
+
+			String fullName = u.getFName()+" "+u.getLName();
+			
+			
+			
+					OpenScreen o = new OpenScreen(u.getAdmin(),manager,fullName);
 					o.setVisible(true);
 					adminHash=null;
 					userHash=null;
@@ -227,17 +198,10 @@ public class login extends JFrame {
 //=======
 					
 //>>>>>>> origin/Nick
-				}
+				
 					
 				
-				
-			} catch (FileNotFoundException e1) {
-				new AddAccount().setVisible(true);
-				
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+		
 			
 		}
 		

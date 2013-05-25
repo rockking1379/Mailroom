@@ -47,9 +47,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import javax.swing.JLabel;
 
 public class OpenScreen extends JFrame {
 	DatabaseManager manager;
+	String loggedIn;
 //=======
 
 
@@ -57,7 +59,7 @@ public class OpenScreen extends JFrame {
 
 //>>>>>>> origin/Nick
 	private JPanel contentPane;
-
+	
 	/**
 	 * Launch the application.
 	 */
@@ -65,7 +67,7 @@ public class OpenScreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					OpenScreen frame = new OpenScreen(true,new DatabaseManager());
+					OpenScreen frame = new OpenScreen(true,new DatabaseManager(),"Someone");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -80,8 +82,9 @@ public class OpenScreen extends JFrame {
 //<<<<<<< HEAD
 
 	
-	public OpenScreen(boolean admin,final DatabaseManager manager) {
-	
+	public OpenScreen(boolean admin, DatabaseManager manager,String loggedIn) {
+		setResizable(false);
+				this.loggedIn=loggedIn;
 				this.manager =manager;
 
 				loadSettings();
@@ -94,7 +97,7 @@ public class OpenScreen extends JFrame {
 		setIconImage(icon.getImage());
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 863, 447);
+		setBounds(100, 100, 863, 474);
 
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -107,74 +110,22 @@ public class OpenScreen extends JFrame {
 		
 		JMenuItem mntmCreateNewAccount = new JMenuItem("Create New Account");
 
-		mntmCreateNewAccount.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new AddAccount();
-
-				
-			}
-			
-		});
+		mntmCreateNewAccount.addActionListener(new CreateAccountListener());
 
 		mnFile.add(mntmCreateNewAccount);
 		
 		JMenuItem mntmCreateNewRoute = new JMenuItem("Create New Route");
 		mnFile.add(mntmCreateNewRoute);
 		
-		mntmCreateNewRoute.addActionListener(new ActionListener() { 
-            public void actionPerformed(ActionEvent e)
-            {
-            	
-            	
-               
-
-            	JFrame f = new JFrame("Create A Route");
-                
-                
-                RouteMaker dual = new RouteMaker(manager,f);
-                
-                String[] stopNames= new String[manager.getStops().size()];
-                
-                
-                
-                for(Stop s: manager.getStops()){
-                	stopNames[manager.getStops().indexOf(s)] = s.getName();
-                }
-                try{
-                dual.addSourceElements(stopNames);
-            	}
-                catch(NullPointerException ex){
-            		
-            		
-            		
-            	}
-               
-                f.getContentPane().add(dual, BorderLayout.CENTER);
-                f.setSize(493, 360);
-                f.setVisible(true);
-                f.setResizable(false);
-            	
-            	
-
-            }
-        });
+		mntmCreateNewRoute.addActionListener( new CreateRoute());
 		
 		
 		
 
 		JMenuItem crtRt = new JMenuItem("Manage Routes");
 		
-		crtRt.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				
-				    new RouteManager(manager);
-				 
-			}
-		});
+		crtRt.addActionListener(new RouteManagerListener());
+		
 		
 		mnFile.add(mntmCreateNewAccount);
 		mnFile.add(crtRt);
@@ -205,15 +156,7 @@ public class OpenScreen extends JFrame {
 		btnScanPackage.setBounds(20, 22, 121, 80);
 		contentPane.add(btnScanPackage);
 		
-	    btnScanPackage.addActionListener(new ActionListener() {
-	    	 
-            public void actionPerformed(ActionEvent e)
-            {
-
-                ScanPackage scan = new ScanPackage(manager);
-                scan.setVisible(true);
-            }
-        });
+	    btnScanPackage.addActionListener(new ScanPackageListener());
 		
 		JButton btnPrintRoute = new JButton("Print Route");
 		btnPrintRoute.setToolTipText("Print a package route");
@@ -221,15 +164,7 @@ public class OpenScreen extends JFrame {
 		btnPrintRoute.setBounds(20, 113, 121, 80);
 		contentPane.add(btnPrintRoute);
 	        
-		 btnPrintRoute.addActionListener(new ActionListener() {
-	    	 
-	            public void actionPerformed(ActionEvent e)
-	            {
-
-	                RoutePrint route = new RoutePrint(manager);
-	                route.setVisible(true);
-	            }
-	        });
+		 btnPrintRoute.addActionListener(new PrintRouteListener());
 		
 	         Table newContentPane = new Table();
 
@@ -265,6 +200,11 @@ public class OpenScreen extends JFrame {
 	         JButton btnPrint = new JButton("Print");
 	         btnPrint.setBounds(20, 317, 121, 23);
 	         contentPane.add(btnPrint);
+	         
+	         JLabel lblLoggedInAs = new JLabel("Logged in as: ");
+	         lblLoggedInAs.setForeground(Color.WHITE);
+	         lblLoggedInAs.setBounds(378, 384, 247, 14);
+	         contentPane.add(lblLoggedInAs);
 
 	         
 	         btnSearch.addActionListener(new ActionListener() {
@@ -368,8 +308,71 @@ public class OpenScreen extends JFrame {
 		}
 	}
 
-	
-	
-	
+	public class CreateRoute implements ActionListener{
 
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			JFrame f = new JFrame("Create A Route");
+            
+            
+            RouteMaker dual = new RouteMaker(manager,f);
+            
+            String[] stopNames= new String[manager.getStops().size()];
+            
+            
+            
+            for(Stop s: manager.getStops()){
+            	stopNames[manager.getStops().indexOf(s)] = s.getName();
+            }
+            try{
+            dual.addSourceElements(stopNames);
+        	}
+            catch(NullPointerException ex){
+        		
+        		
+        		
+        	}
+           
+            f.getContentPane().add(dual, BorderLayout.CENTER);
+            f.setSize(493, 360);
+            f.setVisible(true);
+            f.setResizable(false);
+			
+		}
+		
+	}
+	public class RouteManagerListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
+		    new RouteManager(manager);
+		 
+	}
+	}
+	public class ScanPackageListener implements ActionListener{
+		 public void actionPerformed(ActionEvent e)
+         {
+
+             ScanPackage scan = new ScanPackage(manager);
+             scan.setVisible(true);
+         }
+		
+	}
+	public class PrintRouteListener implements ActionListener{
+		
+		  public void actionPerformed(ActionEvent e)
+          {
+
+              RoutePrint route = new RoutePrint(manager);
+              route.setVisible(true);
+          }
+	}
+	public class CreateAccountListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new AddAccount(manager);
+
+			
+		}
+		
+	}
 }
