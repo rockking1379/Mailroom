@@ -430,7 +430,7 @@ public class ScanPackage extends JFrame {
 	public class NewStopListener implements ActionListener{
 		 public void actionPerformed(ActionEvent e)
          {
-             new CreateStop(manager,loggedIn);
+             new CreateStop(manager,loggedIn,f);
              dispose();
              
          }

@@ -280,7 +280,7 @@ public class RouteManager extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				    new CreateStop(manager,loggedIn);
+				    new CreateStop(manager,loggedIn,frame);
 				 
 			}
 		});

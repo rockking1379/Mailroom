@@ -235,11 +235,12 @@ public class RouteMaker extends JPanel {
     JButton NewStop = new JButton("New Stop");
     NewStop.setBounds(193, 277, 110, 23);
     add(NewStop);
+    
     NewStop.addActionListener(new ActionListener(){
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			new CreateStop(manager,loggedIn);
+			new CreateStop(manager,loggedIn,new JFrame());
 			frame.dispose();
 			
 		}

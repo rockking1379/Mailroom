@@ -32,7 +32,7 @@ public class CreateStop extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CreateStop frame = new CreateStop(new DatabaseManager(),"Someone");
+					CreateStop frame = new CreateStop(new DatabaseManager(),"Someone",new JFrame());
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class CreateStop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public CreateStop(final DatabaseManager manager,final String loggedIn) {
+	public CreateStop(final DatabaseManager manager,final String loggedIn,final JFrame frame) {
 		this.frame=frame;
 		ArrayList<Route> routes;
 		setResizable(false);

@@ -191,7 +191,7 @@ public class login extends JFrame {
 
 			
 			
-					OpenScreen o = new OpenScreen(u.getAdmin(),manager,fullName);
+					OpenScreen o = new OpenScreen(u.getAdmin(),manager,u.getUser());
 					o.setVisible(true);
 					adminHash=null;
 					userHash=null;
