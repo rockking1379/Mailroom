@@ -470,7 +470,7 @@ public class DatabaseManager
 			statement.setBoolean(2, isUsed);
 			for(int i = 0; i < routes.size(); i++)
 			{
-				if(route.equals(routes.get(i).getName()))
+				if(routes.get(i).getName().equals(route))
 				{
 					statement.setInt(3, routes.get(i).getID());
 					break;
@@ -481,7 +481,7 @@ public class DatabaseManager
 			{
 				if(stops.get(i).getName().equals(name))
 				{
-					statement.setString(5, stops.get(i).getName());
+					statement.setInt(5, stops.get(i).getID());
 					break;
 				}
 			}
