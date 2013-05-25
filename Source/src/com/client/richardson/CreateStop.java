@@ -96,13 +96,34 @@ public class CreateStop extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				ArrayList<Stop> stops;
+				int largestSequence=0;
 				if(comboBox.getSelectedIndex()==-1){
-					manager.addStop(textField.getText(), false, "unassigned");
+					
+					stops = (ArrayList<Stop>) manager.getStopsFromRoute("unassigned");
+					for(Stop s: stops){
+						if(s.getroutePos()>largestSequence){
+							largestSequence=s.getroutePos();
+						}
+					}
+					
+					
+					manager.addStop(textField.getText(), false, "unassigned",largestSequence+1);
 					
 				}
 				else{
+					
 					String route = (String)comboBox.getSelectedItem();
-					manager.addStop(textField.getText(), true, route);
+					stops=(ArrayList<Stop>) manager.getStopsFromRoute(route);
+					
+					for(Stop s: stops){
+						if(s.getroutePos()>largestSequence){
+							largestSequence=s.getroutePos();
+						}
+					}
+					
+					
+					manager.addStop(textField.getText(), true, route,largestSequence+1);
 				}
 				
 				if(frame.getTitle().equals("Scan My Package")){

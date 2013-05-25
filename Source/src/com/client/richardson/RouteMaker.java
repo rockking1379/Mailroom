@@ -306,13 +306,14 @@ public class RouteMaker extends JPanel {
 		
 		ArrayList<Stop> stops = new ArrayList<Stop>();
 		manager.addRoute(rtName);
+		int i=0;
 		for(String s: inDest){
-			manager.updateStop(s, true, RouteField.getText());
-			stops.add(new Stop(s));
+			manager.updateStop(s, true, RouteField.getText(),i);
+			i++;
 		}
 		
 	
-		
+		frame.dispose();
 			
 			
 	

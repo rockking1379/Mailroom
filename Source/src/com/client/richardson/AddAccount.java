@@ -287,12 +287,18 @@ public class AddAccount extends JFrame {
 			}
 			
 			Integer hash = username.getText().hashCode()+password.getText().hashCode();
+			if(manager.login(username.getText(), hash)!=null){
+				JOptionPane.showMessageDialog(null,"This account already exists");
+				return;
+			}
+			
+			
 			
 			User u = new User(username.getText(),firstName.getText(),lastName.getText(), rdbtnAdministrator.isSelected());
 			
 			
 			
-			
+			manager.createUser(u, hash);
 			
 //<<<<<<< HEAD
 				if(login!=null){
@@ -309,7 +315,8 @@ public class AddAccount extends JFrame {
 
 //>>>>>>> origin/Nick
 			
-			
+			String s;
+		
 				
 				
 			

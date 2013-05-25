@@ -297,8 +297,10 @@ public class RouteManager extends JFrame {
 					selected.add(i, destListModel.getElementAt(i));
 					
 				}
+				int ind=0;
 				for(Object o: selected){
-					manager.updateStop((String)o, true, (String)RouteBox.getSelectedItem());
+					manager.updateStop((String)o, true, (String)RouteBox.getSelectedItem(),ind);
+					ind++;
 					System.out.println((String)o);
 				}
 				 
@@ -308,9 +310,9 @@ public class RouteManager extends JFrame {
 					
 					
 				}
-				
+				ind=0;
 				for(Object o: selected){
-					manager.updateStop((String)o, false, "unassigned");
+					manager.updateStop((String)o, false, "unassigned",ind);
 					
 				}
 				
