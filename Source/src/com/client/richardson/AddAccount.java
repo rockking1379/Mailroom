@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.awt.EventQueue;
 import com.client.common.*;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -31,7 +32,7 @@ import javax.swing.ButtonGroup;
 //<<<<<<< HEAD
 //=======
 import javax.swing.JPasswordField;
-
+import com.client.common.*;
 
 public class AddAccount extends JFrame {
 
