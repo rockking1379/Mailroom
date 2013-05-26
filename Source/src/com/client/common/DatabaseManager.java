@@ -642,7 +642,7 @@ public class DatabaseManager
 		try
 		{
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("select * from Package where Tracking_Number=?;");
+			statement = conn.prepareStatement("select * from Package where Tracking_Number like ?;");
 			statement.setString(1, tNumber);
 			ResultSet rs = statement.executeQuery();
 			
