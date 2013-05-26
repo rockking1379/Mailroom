@@ -416,7 +416,7 @@ public class AdvSearch extends JFrame {
 			ArrayList<Package> results = new ArrayList<Package>();
 			if(!trackingField.getText().equals("")){
 				
-				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages("34234234",0);
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
 				
 				for(com.client.common.Package p: sresults){
 					
@@ -427,6 +427,7 @@ public class AdvSearch extends JFrame {
 			
 			
 			table.setSearchResults(results);
+			dispose();
 		}
 		
 	}
