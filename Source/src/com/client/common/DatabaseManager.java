@@ -330,7 +330,7 @@ public class DatabaseManager
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
-							rs3.getString("Name"),
+							rs3.getString("User_Name"),
 							rs4.getString("Name")
 							));
 				}
@@ -608,7 +608,7 @@ public class DatabaseManager
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select Name from User where user_id=?;");
+				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 				
@@ -623,7 +623,7 @@ public class DatabaseManager
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
-						rs3.getString("Name"),
+						rs3.getString("User_Name"),
 						rs4.getString("Name")
 						));
 			}
@@ -652,7 +652,7 @@ public class DatabaseManager
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select Name from User where user_id=?;");
+				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 				
@@ -667,7 +667,7 @@ public class DatabaseManager
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
-						rs3.getString("Name"),
+						rs3.getString("User_Name"),
 						rs4.getString("Name")
 						));
 			}
@@ -738,7 +738,7 @@ public class DatabaseManager
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
-				packages.add(new Package(rs.getString("First_Name"),
+				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
