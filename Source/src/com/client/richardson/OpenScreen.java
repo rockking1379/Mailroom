@@ -52,7 +52,7 @@ import javax.swing.JLabel;
 public class OpenScreen extends JFrame {
 	DatabaseManager manager;
 	String loggedIn;
-//=======
+	Table displayTable;
 
 
 
@@ -165,13 +165,13 @@ public class OpenScreen extends JFrame {
 	        
 		 btnPrintRoute.addActionListener(new PrintRouteListener());
 		
-	         Table newContentPane = new Table();
+	         displayTable = new Table(manager);
 
-	         newContentPane.setBounds(151, 11, 716, 366);
+	         displayTable.setBounds(151, 11, 716, 366);
 
 
-	         contentPane.add(newContentPane);
-	         newContentPane.setOpaque(true);
+	         contentPane.add(displayTable);
+	         displayTable.setOpaque(true);
 	         
 	         JButton btnSearch = new JButton("Search");
 	         btnSearch.setToolTipText("Search for a package");
@@ -206,14 +206,7 @@ public class OpenScreen extends JFrame {
 	         contentPane.add(lblLoggedInAs);
 
 	         
-	         btnSearch.addActionListener(new ActionListener() {
-		    	 
-	             public void actionPerformed(ActionEvent e)
-	             {
-	                 AdvSearch search = new AdvSearch();
-	                 search.setVisible(true);
-	             }
-	         });
+	         btnSearch.addActionListener(new SearchListener());
 	          
 	         setVisible(true); 
 	}
@@ -373,5 +366,12 @@ public class OpenScreen extends JFrame {
 			
 		}
 		
+	}
+	public class SearchListener implements ActionListener{
+		 public void actionPerformed(ActionEvent e)
+         {
+             AdvSearch search = new AdvSearch(displayTable);
+             search.setVisible(true);
+         }
 	}
 }

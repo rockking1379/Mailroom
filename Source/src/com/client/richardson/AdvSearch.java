@@ -3,6 +3,8 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
+import com.client.common.*;
+import com.client.common.Package;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,6 +26,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -32,6 +35,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
+import com.client.common.DatabaseManager;
 import com.client.richardson.DatePicker;
 
 
@@ -88,7 +92,7 @@ public class AdvSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdvSearch frame = new AdvSearch();
+					AdvSearch frame = new AdvSearch(new Table(null));
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -100,7 +104,11 @@ public class AdvSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public AdvSearch() {
+	Table table;
+	DatabaseManager manager;
+	public AdvSearch(Table table) {
+		this.table=table;
+		manager = table.manager;
 		
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/download.jpg"));
 		setIconImage(icon.getImage());
@@ -167,6 +175,7 @@ public class AdvSearch extends JFrame {
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(345, 105, 89, 23);
+		btnSearch.addActionListener(new SearchListener());
 		contentPane.add(btnSearch);
 		
 		
@@ -396,6 +405,28 @@ public class AdvSearch extends JFrame {
 			
 			date=false;
 			System.out.println(date);
+		}
+		
+	}
+	public class SearchListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			
+			ArrayList<Package> results = new ArrayList<Package>();
+			if(!trackingField.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
+				
+				for(com.client.common.Package p: sresults){
+					
+					results.add(p);
+				}
+				
+			}
+			
+			
+			table.setSearchResults(results);
 		}
 		
 	}

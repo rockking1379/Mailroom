@@ -18,10 +18,14 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 
+import com.client.common.*;
+import com.client.common.Package;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
  
@@ -34,7 +38,7 @@ public class Table extends JPanel {
     private boolean DEBUG = false;
     private boolean delivered=false;
     private boolean print=false;
-
+    MyTableModel atable;
     private boolean picked_up;
     private String pickdate;
     private JTable table;
@@ -43,7 +47,7 @@ public class Table extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
  
         //Create and set up the content pane.
-        Table newContentPane = new Table();
+        Table newContentPane = new Table(new DatabaseManager());
         newContentPane.setOpaque(true); //content panes must be opaque
         frame.setContentPane(newContentPane);
  
@@ -51,8 +55,12 @@ public class Table extends JPanel {
         frame.pack();
         frame.setVisible(true);
    }
-    public Table() {
+    DatabaseManager manager;
+    public Table(DatabaseManager manager) {
+    	
         super(new GridLayout(1,0));
+        
+        this.manager=manager;
  
         MyTableModel model = new MyTableModel();
         
@@ -80,21 +88,18 @@ public class Table extends JPanel {
         
         
 
-       MyTableModel atable = (MyTableModel) table.getModel();
-       Object[] values = atable.row1;
-       Object[] row2= atable.row2;
-       Object[] row3= atable.row3;
-       Object[] row4= atable.row4;
-       Object[] row5= atable.row5;
-
-
-       atable.insertData(values);
-       atable.insertData(row2);
-       atable.insertData(row3); 
-       atable.insertData(row4);
-       atable.insertData(row5);
+       atable = (MyTableModel) table.getModel();
+   
+       atable.insertData(atable.row1);
+       atable.insertData(atable.row2);
+       atable.insertData(atable.row3); 
+       atable.insertData(atable.row4);
+       atable.insertData(atable.row5a);
+       atable.insertData(atable.yourmom);
+       
        table.setFillsViewportHeight(true);
  
+       	table.setAutoCreateRowSorter(true);
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
  
@@ -177,7 +182,8 @@ public class Table extends JPanel {
    public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
    public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date),"", delivered};
    public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date),"", delivered};
-   public final Object[] row5 = {print, "Joe", "Brown","SUB","1024861834",  ft.format(date),"", delivered};
+   public final Object[] row5a = {print, "Joe", "Brown","SUB","1024861834",  ft.format(date),"", delivered};
+   public final Object[] yourmom = {print, "Jill", "Brown","REX","1024544861834",  ft.format(date),"", delivered};
 
    @Override
 
@@ -236,6 +242,21 @@ public class Table extends JPanel {
      * this method should be invoked from the
      * event-dispatching thread.
      */
+    }
     
-   
-}}
+    public void setSearchResults(ArrayList<Package> results){
+    	
+    	while(atable.getRowCount()>0){
+    		atable.removeRow(0);
+    	}
+    	
+    	for(Package p: results){
+    		
+    		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
+    		
+    	}
+    	
+    }
+    
+    
+}
