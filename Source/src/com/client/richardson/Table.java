@@ -6,6 +6,7 @@ package com.client.richardson;
 
  
 import javax.swing.DefaultCellEditor;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -150,12 +151,11 @@ public class Table extends JPanel {
     public void setUpSportColumn(JTable table, TableColumn sportColumn) {
         //Set up the editor for the sport cells.
         JComboBox comboBox = new JComboBox();
-        comboBox.addItem("Snowboarding");
-        comboBox.addItem("Rowing");
-        comboBox.addItem("Knitting");
-        comboBox.addItem("Speed reading");
-        comboBox.addItem("Pool");
-        comboBox.addItem("None of the above");
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", 
+		"Community Partnership", "Computing Services", "Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", 
+		"Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music",
+		"Nursing", "One Stop", "Payroll", "Plachy", "Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", 
+		"Student Life", "SUB Office", "SUB Mailroom", "SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound"}));
         sportColumn.setCellEditor(new DefaultCellEditor(comboBox));
  
         //Set up tool tips for the sport cells.
