@@ -96,7 +96,7 @@ public class OpenScreen extends JFrame {
 		setIconImage(icon.getImage());
 		setBackground(new Color(0, 102, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 863, 474);
+		setBounds(100, 100, 893, 439);
 
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -167,7 +167,7 @@ public class OpenScreen extends JFrame {
 		
 	         Table newContentPane = new Table();
 
-	         newContentPane.setBounds(151, 11, 686, 366);
+	         newContentPane.setBounds(151, 11, 716, 366);
 
 
 	         contentPane.add(newContentPane);
