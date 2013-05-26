@@ -456,7 +456,7 @@ public class DatabaseManager
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
 			{
-				if(route.equals(routes.get(i).getName()))
+				if(routes.get(i).getName().equals(route))
 				{
 					statement.setInt(2, routes.get(i).getID());
 					break;
