@@ -23,6 +23,8 @@ public class DatabaseManager
 	///---Constructor(s)---///
 	public DatabaseManager()
 	{
+		facStaff = new ArrayList<Person>();
+		students = new ArrayList<Person>();
 	}
 	
 	///---Set Methods---///
@@ -74,9 +76,7 @@ public class DatabaseManager
 					loadCouriers();
 					loadFacStaff();
 					loadStudent();
-				}
-				
-				//JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
+				}	
 			} 
 			catch (Exception e) 
 			{
@@ -96,7 +96,6 @@ public class DatabaseManager
 			System.exit(0);
 		}
 	}
-	@SuppressWarnings("unused")
 	public void createPerson(String person)
 	{
 		//Delimitated by ',' or ';' not sure which yet
@@ -156,11 +155,11 @@ public class DatabaseManager
 		
 		if(!building.equals(""))
 		{
-			//asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, building));
+			facStaff.add(new Person(firstName, lastName, email, idNumber, boxNumber, building));
 		}
 		else
 		{
-			//asuPeople.add(new Person(firstName, lastName, email, idNumber, boxNumber, 2));
+			students.add(new Person(firstName, lastName, email, idNumber, boxNumber, 2));
 		}
 	}
 	public void loadRoutes()
@@ -228,12 +227,10 @@ public class DatabaseManager
 	public void loadFacStaff()
 	{
 		//Load Faculty and Staff
-		facStaff = new ArrayList<Person>();
 	}
 	public void loadStudent()
 	{
 		//Load Students
-		students = new ArrayList<Person>();
 	}
 	public void loadPackages(boolean allStops, String stop)
 	{
