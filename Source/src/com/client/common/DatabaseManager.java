@@ -679,6 +679,51 @@ public class DatabaseManager
 		
 		return results;		
 	}
+	public List<Package> findPackage(boolean delivered, boolean pickedUp)
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		try
+		{
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Delivered=? and Picked_Up=?;");
+			statement.setBoolean(1, delivered);
+			statement.setBoolean(2, pickedUp);
+		
+			ResultSet rs = statement.executeQuery();
+		
+			while(rs.next())
+			{
+				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = statement.executeQuery();
+			
+				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet rs3 = statement.executeQuery();
+			
+				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet rs4 = statement.executeQuery();
+			
+				packages.add(new Package(rs.getString("First_Name"),
+					rs.getString("Last_Name"),
+					rs.getString("ASU_Email"),
+					rs.getDate("Date"),
+					rs.getString("Box_Number"),
+					rs2.getString("Name"),
+					rs.getString("Tracking_Number"),
+					rs3.getString("User_Name"),
+					rs4.getString("Name")
+					));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		
+		return results;
+	}
 	public List<Package> searchPackages(String search, int location)
 	{
 		List<Package> results = new ArrayList<Package>();
