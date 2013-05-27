@@ -21,7 +21,7 @@ public class SUBTable extends JPanel{
  super(new GridLayout(1,0));
   table = new JTable(new MyTableModel());
  table.setPreferredScrollableViewportSize(new Dimension(500, 70));
- table.setFillsViewportHeight(true);
+// table.setFillsViewportHeight(true);
  
  MyTableModel atable = (MyTableModel) table.getModel();
  
