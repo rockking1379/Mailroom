@@ -61,8 +61,9 @@ public class AdvSearch extends JFrame {
     private boolean date = true;
     private JTextField StartField;
     private JTextField EndField;
-
-	
+    JComboBox StopBox;
+    JCheckBox chckbxPickedUp;
+    JCheckBox chckbxDelivered;
 	
 	
 
@@ -231,24 +232,27 @@ public class AdvSearch extends JFrame {
 		contentPane.add(trackingField);
 		trackingField.setColumns(10);
 		
-		JCheckBox chckbxDelivered = new JCheckBox("Delivered");
+		chckbxDelivered = new JCheckBox("Delivered");
 		chckbxDelivered.setForeground(new Color(255, 255, 255));
 		chckbxDelivered.setBackground(new Color(0, 102, 0));
 		chckbxDelivered.setBounds(376, 81, 85, 23);
 		contentPane.add(chckbxDelivered);
 		
-		JCheckBox chckbxPickedUp = new JCheckBox("Picked Up");
+		chckbxPickedUp = new JCheckBox("Picked Up");
 		chckbxPickedUp.setForeground(new Color(255, 255, 255));
 		chckbxPickedUp.setBackground(new Color(0, 102, 0));
 		chckbxPickedUp.setBounds(376, 60, 83, 23);
 		contentPane.add(chckbxPickedUp);
 		
-		JComboBox StopBox = new JComboBox();
-		StopBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
-	    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
-	    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
-	    		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
-	    		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound"}));
+		StopBox = new JComboBox();
+		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
+		ArrayList<String> stopNames = new ArrayList<String>();
+		System.out.println(stops.size()-1);
+		for(Stop s: stops){
+			stopNames.add(s.getName());
+		}
+		
+		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
 		
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
@@ -336,7 +340,7 @@ public class AdvSearch extends JFrame {
 					
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum())){
+						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
 							add=false;
 						}
 					}
@@ -356,7 +360,7 @@ public class AdvSearch extends JFrame {
 					
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum())){
+						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
 							add=false;
 						}
 					}
@@ -377,7 +381,7 @@ public class AdvSearch extends JFrame {
 					
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum())){
+						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
 							add=false;
 						}
 					}
@@ -398,7 +402,7 @@ public class AdvSearch extends JFrame {
 					
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum())){
+						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
 							add=false;
 						}
 					}
@@ -453,5 +457,36 @@ public class AdvSearch extends JFrame {
 			dispose();
 		}
 		
+	}
+	private boolean matchesParams(Package p){
+		
+		boolean matches=true;
+		
+		if(!trackingField.getText().equals("") && !p.getTrackNum().equals(trackingField.getText())){
+			matches=false;
+		}
+		if(!FirstNameField.getText().equals("") && !p.getFName().equals(FirstNameField.getText())){
+			matches=false;
+		}
+		if(!LastNameField.getText().equals("") && !p.getLName().equals(LastNameField.getText())){
+			matches=false;
+		}
+		if(!BoxNum.getText().equals("") && !p.getBoxNum().equals(BoxNum.getText())){
+			matches=false;
+		}
+		
+		
+		String stop= (String)StopBox.getSelectedItem();
+		
+		if(!p.getStop().equals(stop)){
+			matches=false;
+		}
+		
+		
+		
+		
+		return matches;
+		
+			
 	}
 }

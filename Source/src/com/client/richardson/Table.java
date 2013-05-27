@@ -252,7 +252,7 @@ public class Table extends JPanel {
     		atable.insertData(new Object []  {"","","","","","","",""});
 			atable.removeRow(0);
 
-    	//	JOptionPane.showMessageDialog(null, "There were no results found");
+    	
     		
     	}
     	

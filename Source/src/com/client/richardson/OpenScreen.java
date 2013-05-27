@@ -38,6 +38,7 @@ import javax.swing.JMenuItem;
 //<<<<<<< HEAD
 
 import com.client.common.*;
+import com.client.common.Package;
 
 import java.awt.Dialog.ModalExclusionType;
 import java.io.BufferedReader;
@@ -47,6 +48,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+
 import javax.swing.JLabel;
 
 public class OpenScreen extends JFrame {
@@ -178,19 +181,9 @@ public class OpenScreen extends JFrame {
 	         btnSearch.setFont(new Font("Tahoma", Font.BOLD, 13));
 	         btnSearch.setBounds(20, 204, 121, 80);
 	         contentPane.add(btnSearch);
-	         
-
 	         JButton btnRefresh = new JButton("Refesh");
 
-	         btnRefresh.addActionListener(new ActionListener(){
-
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					//we need search parameters for the class table
-					
-				}
-	        	 
-	         });
+	         btnRefresh.addActionListener(new RefreshListener());
 	         btnRefresh.setFont(new Font("Tahoma", Font.BOLD, 11));
 	         btnRefresh.setBounds(20, 354, 121, 23);
 	         contentPane.add(btnRefresh);
@@ -373,5 +366,16 @@ public class OpenScreen extends JFrame {
              AdvSearch search = new AdvSearch(displayTable);
              search.setVisible(true);
          }
+	}
+	public class RefreshListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+				
+			displayTable.setSearchResults((ArrayList<Package>) manager.findPackage(false,false));
+				
+			
+		}
+		
 	}
 }
