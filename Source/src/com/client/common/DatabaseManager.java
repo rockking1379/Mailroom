@@ -246,7 +246,7 @@ public class DatabaseManager
 			try
 			{
 				 
-				PreparedStatement statement = conn.prepareStatement("select * from Package where Date=? and Picked_Up='0';");
+				PreparedStatement statement = conn.prepareStatement("select * from Package where At_Stop='0' and Picked_Up='0';");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 				statement.setString(1, date);
@@ -293,7 +293,7 @@ public class DatabaseManager
 				 
 				PreparedStatement statement = null;
 				
-				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=?;");
+				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=? and Picked_Up='0';");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 				statement.setString(1, date);
@@ -685,7 +685,7 @@ public class DatabaseManager
 		
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Delivered=? and Picked_Up=?;");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where At_Stop=? and Picked_Up=?;");
 			statement.setBoolean(1, delivered);
 			statement.setBoolean(2, pickedUp);
 		
