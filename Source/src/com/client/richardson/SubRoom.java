@@ -131,7 +131,7 @@ public class SubRoom extends JFrame {
 	    	 
              public void actionPerformed(ActionEvent e)
              {
-                 AdvSearch search = new AdvSearch();
+                 SUBAdvSearch search = new SUBAdvSearch();
                  search.setVisible(true);
              }
          });
