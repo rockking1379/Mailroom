@@ -256,7 +256,7 @@ public class AdvSearch extends JFrame {
 		
 		
 		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
-		StopBox.setSelectedIndex(0);
+		StopBox.setSelectedItem("All Stops");
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
 		
@@ -332,7 +332,7 @@ public class AdvSearch extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			ArrayList<Package> results = new ArrayList<Package>();
-			ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
+			
 			
 			
 			if(!trackingField.getText().equals("")){
@@ -367,8 +367,11 @@ public class AdvSearch extends JFrame {
 				for(com.client.common.Package p: sresults){
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) || !matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -388,8 +391,11 @@ public class AdvSearch extends JFrame {
 				for(com.client.common.Package p: sresults){
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) || !matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -418,9 +424,7 @@ public class AdvSearch extends JFrame {
 						}
 					}
 					if(add){
-						
 					results.add(p);
-						
 					}
 				}
 				
@@ -432,8 +436,9 @@ public class AdvSearch extends JFrame {
 				String eDate=null;
 				
 				try {
-					Date sdDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(StartField.getText());
-					Date edDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(EndField.getText());
+					sdDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(StartField.getText());
+					edDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(EndField.getText());
+					
 					System.out.println(sDate+" "+eDate);
 					
 					 sDate = DateFormat.getDateInstance(DateFormat.SHORT).format(sdDate);
@@ -450,10 +455,12 @@ public class AdvSearch extends JFrame {
 					
 
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) || !matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
-							break;
 						}
 					}
 					if(add){
@@ -464,25 +471,76 @@ public class AdvSearch extends JFrame {
 			}
 			
 			
-		
+			String selectedStop =(String)StopBox.getSelectedItem();
+			if(!selectedStop.equals("All Stops")){
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(selectedStop,0);
+				
+				
+				for(com.client.common.Package p: sresults){
+					
+					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+						}
+					}
+					if(add){
+					results.add(p);
+					}
+				}
+				
+			}
+			
+			ArrayList<Package> sresults = (ArrayList<Package>) manager.findPackage(chckbxDelivered.isSelected(),chckbxPickedUp.isSelected());
+			
+
+			for(com.client.common.Package p: sresults){
+				
+				boolean add=true;
+				if(!matchesParams(p)){
+					add=false;
+				}
+				for(Package pa: results){
+					if(p.getTrackNum().equals(pa.getTrackNum())){
+						add=false;
+					}
+				}
+				if(add){
+				results.add(p);
+				}
+			}
 			
 			table.setSearchResults(results);
 			dispose();
 		}
 		
 	}
+	
+	Date sdDate;
+	Date edDate;
 	private boolean matchesParams(Package p){
 		
 		boolean matches=true;
 		
+		String s=FirstNameField.getText().toLowerCase();
 		
-		if(!FirstNameField.getText().equals("") && !p.getFName().toLowerCase().equals(FirstNameField.getText().toLowerCase())){
+		
+		String person =p.getFName().toUpperCase();
+		String entered =FirstNameField.getText().toUpperCase();
+		
+		if(!FirstNameField.getText().equals("") && !person.equals(entered.toUpperCase())){
+			System.out.println(person.equals(entered));
 			matches=false;
 		}
-		if(!LastNameField.getText().equals("") && !p.getLName().toLowerCase().equals(LastNameField.getText().toLowerCase())){
+		person = p.getLName().toUpperCase();
+		entered =LastNameField.getText().toUpperCase();
+		if(!LastNameField.getText().equals("") && !person.equals(entered)){
 			matches=false;
 		}
-		if(!BoxNum.getText().equals("") && !p.getBoxNum().toLowerCase().equals(BoxNum.getText().toLowerCase())){
+		if(!BoxNum.getText().equals("") && !p.getBoxNum().toUpperCase().equals(BoxNum.getText().toUpperCase())){
 			matches=false;
 		}
 		
@@ -492,7 +550,15 @@ public class AdvSearch extends JFrame {
 		if(!stop.equals("All Stops") && !p.getStop().equals(stop)){
 			matches=false;
 		}
-		
+		try {
+			Date pDate =new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(p.getDate());
+			if(sdDate.compareTo(pDate)>0 || edDate.compareTo(pDate)<0){
+				matches=false;
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		

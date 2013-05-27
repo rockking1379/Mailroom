@@ -249,15 +249,16 @@ public class Table extends JPanel {
     	//int i=atable.getRowCount()-1;
     	
     	if(results.size()==0){
-    		/*atable.insertData(new Object []  {"","","","","","","",""});
+    		atable.insertData(new Object []  {"","","","","","","",""});
 			atable.removeRow(0);
-			*/
+			
     	
     		
     	}
     	
-    	
+    	atable.insertData(new Object []  {"","","","","","","",""});
     	while(atable.getRowCount()>=1 && !(atable.getValueAt(0, 5).equals(""))){
+    		
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
