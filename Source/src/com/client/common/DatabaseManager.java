@@ -1076,31 +1076,31 @@ public class DatabaseManager
 	{
 		switch(JOptionPane.showConfirmDialog(null, "You are about to Delete: " + username + "\nDo You Wish to Continue?"))
 		{
-		case JOptionPane.YES_OPTION:
-		{
-			//Execute a statement
-			try
+			case JOptionPane.YES_OPTION:
 			{
-				PreparedStatement statement = conn.prepareStatement("delete from User where User_Name=?;");
-				statement.setString(1,username);
-				statement.execute();
-				statement.close();
-				JOptionPane.showMessageDialog(null, "User " + username + " Deleted");
+				//Execute a statement
+				try
+				{
+					PreparedStatement statement = conn.prepareStatement("delete from User where User_Name=?;");
+					statement.setString(1,username);
+					statement.execute();
+					statement.close();
+					JOptionPane.showMessageDialog(null, "User " + username + " Deleted");
+				}
+				catch(Exception e)
+				{
+					JOptionPane.showMessageDialog(null, "Error Deleting User " + username);
+				}
+				break;
 			}
-			catch(Exception e)
+			case JOptionPane.NO_OPTION:
 			{
-				JOptionPane.showMessageDialog(null, "Error Deleting User " + username);
+				return;
 			}
-			break;
-		}
-		case JOptionPane.NO_OPTION:
-		{
-			return;
-		}
-		case JOptionPane.CANCEL_OPTION:
-		{
-			return;
-		}
+			case JOptionPane.CANCEL_OPTION:
+			{
+				return;
+			}
 		}
 	}
 }
