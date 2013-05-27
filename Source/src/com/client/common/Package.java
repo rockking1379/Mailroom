@@ -1,8 +1,5 @@
 package com.client.common;
 
-import java.text.DateFormat;
-import java.util.Date;
-
 public class Package 
 {
 	private String firstName;
@@ -16,12 +13,12 @@ public class Package
 	private String courier;
 	
 	//Optimal
-	public Package(String firstName, String lastName, String email, Date date, String boxNumber, String stop, String trackingNumber, String user, String courier)
+	public Package(String firstName, String lastName, String email, String date, String boxNumber, String stop, String trackingNumber, String user, String courier)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
+		this.date =  date;
 		this.boxNumber = boxNumber;
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -30,12 +27,12 @@ public class Package
 	}
 	
 	//Faculty?
-	public Package(String firstName, String lastName, String email, Date date, String stop, String trackingNumber, String user, String courier)
+	public Package(String firstName, String lastName, String email, String date, String stop, String trackingNumber, String user, String courier)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
+		this.date =  date;
 		this.boxNumber = "0";
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -44,12 +41,12 @@ public class Package
 	}
 	
 	//Leave in Richardson
-	public Package(String firstName, String lastName, String email, Date date, String trackingNumber, String user, String courier)
+	public Package(String firstName, String lastName, String email, String date, String trackingNumber, String user, String courier)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  DateFormat.getDateInstance(DateFormat.SHORT).format(date).toString();
+		this.date =  date;
 		this.boxNumber = "0";
 		this.stop = "RICHARDSON";
 		this.trackingNumber = trackingNumber;

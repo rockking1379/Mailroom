@@ -270,7 +270,7 @@ public class DatabaseManager
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
-							rs.getDate("Date"),
+							rs.getString("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
@@ -326,7 +326,7 @@ public class DatabaseManager
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
-							rs.getDate("Date"),
+							rs.getString("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
@@ -619,7 +619,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -663,7 +663,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -708,7 +708,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 					rs.getString("Last_Name"),
 					rs.getString("ASU_Email"),
-					rs.getDate("Date"),
+					rs.getString("Date"),
 					rs.getString("Box_Number"),
 					rs2.getString("Name"),
 					rs.getString("Tracking_Number"),
@@ -786,7 +786,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -1081,7 +1081,7 @@ public class DatabaseManager
 			//Execute a statement
 			try
 			{
-				PreparedStatement statement = conn.prepareStatement("delete * from User where User_Name=?;");
+				PreparedStatement statement = conn.prepareStatement("delete from User where User_Name=?;");
 				statement.setString(1,username);
 				statement.execute();
 				statement.close();
