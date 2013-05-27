@@ -26,7 +26,12 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -418,13 +423,118 @@ public class AdvSearch extends JFrame {
 				
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
 				
+				
 				for(com.client.common.Package p: sresults){
 					
-					results.add(p);
+					if(results.size()!=0){
+						for(Package pa: results){
+							if(!pa.getTrackNum().equals(p.getTrackNum())){
+								results.add(p);
+							}
+						}
+					}
+					else{
+						results.add(p);
+					}
 				}
 				
 			}
 			
+			
+			if(!FirstNameField.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(FirstNameField.getText(),0);
+				
+				for(com.client.common.Package p: sresults){
+					
+					if(results.size()!=0){
+						for(Package pa: results){
+							if(!pa.getTrackNum().equals(p.getTrackNum())){
+								results.add(p);
+							}
+						}
+					}
+					else{
+						results.add(p);
+					}
+				}
+				
+			}
+			
+			if(!LastNameField.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(LastNameField.getText(),0);
+				
+				for(com.client.common.Package p: sresults){
+					
+					if(results.size()!=0){
+						for(Package pa: results){
+							if(!pa.getTrackNum().equals(p.getTrackNum())){
+								results.add(p);
+							}
+						}
+					}
+					else{
+						results.add(p);
+					}
+				}
+				
+			}
+			
+			if(!BoxNum.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(BoxNum.getText(),0);
+				
+				for(com.client.common.Package p: sresults){
+					
+					if(results.size()!=0){
+						for(Package pa: results){
+							if(!pa.getTrackNum().equals(p.getTrackNum())){
+								results.add(p);
+							}
+						}
+					}
+					else{
+						results.add(p);
+					}
+				}
+				
+			}
+			
+			
+			if(!StartField.getText().equals("")&&!EndField.getText().equals("")){
+				String sDate=null;
+				String eDate=null;
+				
+				try {
+					Date sdDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(StartField.getText());
+					Date edDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(EndField.getText());
+					
+					 sDate = DateFormat.getDateInstance(DateFormat.SHORT).format(sdDate);
+					 eDate=DateFormat.getDateInstance(DateFormat.SHORT).format(edDate);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				System.out.println(sDate+" "+eDate);
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.findPackage(sDate,eDate);
+				
+				for(com.client.common.Package p: sresults){
+					
+					if(results.size()!=0){
+						for(Package pa: results){
+							if(!pa.getTrackNum().equals(p.getTrackNum())){
+								results.add(p);
+							}
+						}
+					}
+					else{
+						results.add(p);
+					}
+				}
+				
+			}
 			
 			table.setSearchResults(results);
 			dispose();

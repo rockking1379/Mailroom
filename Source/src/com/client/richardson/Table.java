@@ -247,10 +247,10 @@ public class Table extends JPanel {
     public void setSearchResults(ArrayList<Package> results){
     	//int i=atable.getRowCount()-1;
     	
-    	while(atable.getRowCount()>=0){
+    	while(atable.getRowCount()>=0 && !(atable.getValueAt(0,5)=="")){
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
-    		if(atable.getRowCount()==1){
+    		if(atable.getRowCount()==1 ){
     			atable.insertData(new Object []  {"","","","","","","",""});
     			atable.removeRow(0);
     			break;
@@ -262,6 +262,9 @@ public class Table extends JPanel {
     		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
     		
     		
+    	}
+    	if(atable.getRowCount()>1){
+    		atable.removeRow(0);
     	}
     	
     }
