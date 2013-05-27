@@ -325,6 +325,7 @@ public class AdvSearch extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			ArrayList<Package> results = new ArrayList<Package>();
+			ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
 			if(!trackingField.getText().equals("")){
 				
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
@@ -332,15 +333,83 @@ public class AdvSearch extends JFrame {
 				
 				for(com.client.common.Package p: sresults){
 					
+					
+					boolean add=true;
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+						}
+					}
+					if(add){
 					results.add(p);
+					}
+				}
+				
+			}
+			
+			if(!FirstNameField.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(FirstNameField.getText(),0);
+				
+				
+				for(com.client.common.Package p: sresults){
+					
+					boolean add=true;
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+						}
+					}
+					if(add){
+					results.add(p);
+					}
 				}
 				
 			}
 			
 			
+			if(!LastNameField.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(LastNameField.getText(),0);
+				
+				
+				for(com.client.common.Package p: sresults){
+					
+					boolean add=true;
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+						}
+					}
+					if(add){
+					results.add(p);
+					}
+				}
+				
+			}
 			
 			
-			/*
+			if(!BoxNum.getText().equals("")){
+				
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(BoxNum.getText(),0);
+				
+				
+				for(com.client.common.Package p: sresults){
+					
+					boolean add=true;
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+						}
+					}
+					if(add){
+					results.add(p);
+					}
+				}
+				
+			}
+			
+			
 			if(!StartField.getText().equals("")&&!EndField.getText().equals("")){
 				String sDate=null;
 				String eDate=null;
@@ -362,13 +431,22 @@ public class AdvSearch extends JFrame {
 				
 				for(com.client.common.Package p: sresults){
 					
-					
-						results.add(p);
-					
+
+					boolean add=true;
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+							break;
+						}
+					}
+					if(add){
+					results.add(p);
+					}
 				}
 				
 			}
-			*/
+			
+			
 		
 			
 			table.setSearchResults(results);
