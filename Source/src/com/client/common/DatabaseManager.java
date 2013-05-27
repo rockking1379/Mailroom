@@ -616,7 +616,7 @@ public class DatabaseManager
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
-				packages.add(new Package(rs.getString("First_Name"),
+				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
@@ -660,7 +660,7 @@ public class DatabaseManager
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
-				packages.add(new Package(rs.getString("First_Name"),
+				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getDate("Date"),
@@ -705,7 +705,7 @@ public class DatabaseManager
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 			
-				packages.add(new Package(rs.getString("First_Name"),
+				results.add(new Package(rs.getString("First_Name"),
 					rs.getString("Last_Name"),
 					rs.getString("ASU_Email"),
 					rs.getDate("Date"),
