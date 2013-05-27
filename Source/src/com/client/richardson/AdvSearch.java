@@ -54,8 +54,6 @@ public class AdvSearch extends JFrame {
 	private JButton btnSearch;
 	private JLabel lblTracking;
 	private JTextField trackingField;
-	private JComboBox comboBox;
-	private JPanel SearchPanel;
 	private String sDate="";
 	private String eDate="";
 	private String sYear;
@@ -115,12 +113,13 @@ public class AdvSearch extends JFrame {
 		this.table=table;
 		manager = table.manager;
 		
+		setResizable(false);
 		ImageIcon icon= new ImageIcon(getClass().getResource("/image/download.jpg"));
 		setIconImage(icon.getImage());
 		//setIconImage(Toolkit.getDefaultToolkit().getImage("src\\compass.jpg"));
 		setTitle("Advanced Search");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 481, 167);
+		setBounds(100, 100, 481, 166);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 0));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -208,11 +207,6 @@ public class AdvSearch extends JFrame {
                 		    "You have entered a date start date after your entered end date!",
                 		    "Year error",
                 		    JOptionPane.ERROR_MESSAGE);
-					setBounds(100, 100, 460, 167);
-					SearchPanel.setVisible(false);
-        		}else{
-        		setBounds(100, 100, 460, 225);
-                SearchPanel.setVisible(true);
         		}
                 }catch(Exception ex){
                 	Component frame = null;
@@ -220,8 +214,7 @@ public class AdvSearch extends JFrame {
                 		    "You have entered an incorrect year!",
                 		    "Year error",
                 		    JOptionPane.ERROR_MESSAGE);
-					SearchPanel.setVisible(false);
-					setBounds(100, 100, 460, 167);
+					
                 }
                 
             }
@@ -259,93 +252,6 @@ public class AdvSearch extends JFrame {
 		
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
-		
-		
-		SearchPanel = new JPanel();
-		SearchPanel.setBackground(new Color(0, 102, 0));
-		SearchPanel.setBounds(0, 105, 446, 77);
-		contentPane.add(SearchPanel);
-		SearchPanel.setLayout(null);
-		SearchPanel.setVisible(false);
-		
-		comboBox = new JComboBox();
-		comboBox.setBounds(10, 0, 209, 20);
-		SearchPanel.add(comboBox);
-		
-		JLabel lblName = new JLabel("Name:");
-		lblName.setBounds(10, 31, 46, 14);
-		SearchPanel.add(lblName);
-		lblName.setForeground(Color.WHITE);
-		
-		JLabel lblFirst = new JLabel("First");
-		lblFirst.setBounds(97, 31, 60, 14);
-		SearchPanel.add(lblFirst);
-		lblFirst.setForeground(Color.WHITE);
-		
-		JLabel lblLast = new JLabel("Last");
-		lblLast.setBounds(47, 31, 46, 14);
-		SearchPanel.add(lblLast);
-		lblLast.setForeground(Color.WHITE);
-		
-		JLabel lblAtStop = new JLabel("Stop:");
-		lblAtStop.setBounds(196, 31, 46, 14);
-		SearchPanel.add(lblAtStop);
-		lblAtStop.setForeground(Color.WHITE);
-		
-		JLabel lblAtThisStop = new JLabel("At This Stop");
-		lblAtThisStop.setBounds(231, 31, 104, 14);
-		SearchPanel.add(lblAtThisStop);
-		lblAtThisStop.setForeground(Color.WHITE);
-		
-		JLabel lblTrackingSearch = new JLabel("Tracking # :");
-		lblTrackingSearch.setBounds(10, 45, 66, 14);
-		SearchPanel.add(lblTrackingSearch);
-		lblTrackingSearch.setForeground(Color.WHITE);
-		
-		JLabel lblTrackingnumber = new JLabel("TrackingNumber");
-		lblTrackingnumber.setBounds(84, 45, 176, 14);
-		SearchPanel.add(lblTrackingnumber);
-		lblTrackingnumber.setForeground(Color.WHITE);
-		
-		JLabel lblBoxSearch = new JLabel("Box #:");
-		lblBoxSearch.setBounds(318, 31, 46, 14);
-		SearchPanel.add(lblBoxSearch);
-		lblBoxSearch.setForeground(Color.WHITE);
-		
-		JLabel lblBoxnum = new JLabel("BoxNum");
-		lblBoxnum.setBounds(355, 31, 52, 14);
-		SearchPanel.add(lblBoxnum);
-		lblBoxnum.setForeground(Color.WHITE);
-		
-		JLabel lblDeliveredDate = new JLabel("Delivered Date:");
-		lblDeliveredDate.setBounds(260, 60, 86, 14);
-		SearchPanel.add(lblDeliveredDate);
-		lblDeliveredDate.setForeground(Color.WHITE);
-		
-		JLabel lblDate = new JLabel("Date");
-		lblDate.setBounds(351, 60, 95, 14);
-		SearchPanel.add(lblDate);
-		lblDate.setForeground(Color.WHITE);
-		
-		JLabel lblScanDate = new JLabel("Scan Date:");
-		lblScanDate.setBounds(279, 45, 78, 14);
-		SearchPanel.add(lblScanDate);
-		lblScanDate.setForeground(Color.WHITE);
-		
-		JLabel lblScanDate_1 = new JLabel("Scan Date");
-		lblScanDate_1.setBounds(345, 45, 89, 14);
-		SearchPanel.add(lblScanDate_1);
-		lblScanDate_1.setForeground(Color.WHITE);
-		
-		JLabel lblDelivered = new JLabel("Delivered:");
-		lblDelivered.setBounds(10, 60, 66, 14);
-		SearchPanel.add(lblDelivered);
-		lblDelivered.setForeground(Color.WHITE);
-		
-		JLabel lblDeliveryStatus = new JLabel("Delivery Status");
-		lblDeliveryStatus.setBounds(79, 60, 96, 14);
-		SearchPanel.add(lblDeliveryStatus);
-		lblDeliveryStatus.setForeground(Color.WHITE);
 		
 		StartField = new JTextField();
 		StartField.setBounds(47, 82, 86, 20);
@@ -426,82 +332,15 @@ public class AdvSearch extends JFrame {
 				
 				for(com.client.common.Package p: sresults){
 					
-					if(results.size()!=0){
-						for(Package pa: results){
-							if(!pa.getTrackNum().equals(p.getTrackNum())){
-								results.add(p);
-							}
-						}
-					}
-					else{
-						results.add(p);
-					}
+					results.add(p);
 				}
 				
 			}
 			
 			
-			if(!FirstNameField.getText().equals("")){
-				
-				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(FirstNameField.getText(),0);
-				
-				for(com.client.common.Package p: sresults){
-					
-					if(results.size()!=0){
-						for(Package pa: results){
-							if(!pa.getTrackNum().equals(p.getTrackNum())){
-								results.add(p);
-							}
-						}
-					}
-					else{
-						results.add(p);
-					}
-				}
-				
-			}
-			
-			if(!LastNameField.getText().equals("")){
-				
-				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(LastNameField.getText(),0);
-				
-				for(com.client.common.Package p: sresults){
-					
-					if(results.size()!=0){
-						for(Package pa: results){
-							if(!pa.getTrackNum().equals(p.getTrackNum())){
-								results.add(p);
-							}
-						}
-					}
-					else{
-						results.add(p);
-					}
-				}
-				
-			}
-			
-			if(!BoxNum.getText().equals("")){
-				
-				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(BoxNum.getText(),0);
-				
-				for(com.client.common.Package p: sresults){
-					
-					if(results.size()!=0){
-						for(Package pa: results){
-							if(!pa.getTrackNum().equals(p.getTrackNum())){
-								results.add(p);
-							}
-						}
-					}
-					else{
-						results.add(p);
-					}
-				}
-				
-			}
 			
 			
+			/*
 			if(!StartField.getText().equals("")&&!EndField.getText().equals("")){
 				String sDate=null;
 				String eDate=null;
@@ -509,6 +348,7 @@ public class AdvSearch extends JFrame {
 				try {
 					Date sdDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(StartField.getText());
 					Date edDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(EndField.getText());
+					System.out.println(sDate+" "+eDate);
 					
 					 sDate = DateFormat.getDateInstance(DateFormat.SHORT).format(sdDate);
 					 eDate=DateFormat.getDateInstance(DateFormat.SHORT).format(edDate);
@@ -522,19 +362,14 @@ public class AdvSearch extends JFrame {
 				
 				for(com.client.common.Package p: sresults){
 					
-					if(results.size()!=0){
-						for(Package pa: results){
-							if(!pa.getTrackNum().equals(p.getTrackNum())){
-								results.add(p);
-							}
-						}
-					}
-					else{
+					
 						results.add(p);
-					}
+					
 				}
 				
 			}
+			*/
+		
 			
 			table.setSearchResults(results);
 			dispose();

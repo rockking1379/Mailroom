@@ -9,6 +9,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -247,7 +248,16 @@ public class Table extends JPanel {
     public void setSearchResults(ArrayList<Package> results){
     	//int i=atable.getRowCount()-1;
     	
-    	while(atable.getRowCount()>=0 && !(atable.getValueAt(0,5)=="")){
+    	if(results.size()==0){
+    		atable.insertData(new Object []  {"","","","","","","",""});
+			atable.removeRow(0);
+
+    		//JOptionPane.showMessageDialog(null, "There were no results found");
+    		return;
+    	}
+    	
+    	
+    	while(atable.getRowCount()>=1 && !(atable.getValueAt(0, 5)=="")){
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
