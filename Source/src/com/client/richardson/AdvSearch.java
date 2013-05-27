@@ -247,13 +247,16 @@ public class AdvSearch extends JFrame {
 		StopBox = new JComboBox();
 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
 		ArrayList<String> stopNames = new ArrayList<String>();
+		
 		System.out.println(stops.size()-1);
+		stopNames.add("All Stops");
 		for(Stop s: stops){
 			stopNames.add(s.getName());
 		}
 		
-		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
 		
+		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
+		StopBox.setSelectedIndex(0);
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
 		
@@ -330,6 +333,8 @@ public class AdvSearch extends JFrame {
 			
 			ArrayList<Package> results = new ArrayList<Package>();
 			ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
+			
+			
 			if(!trackingField.getText().equals("")){
 				
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
@@ -339,8 +344,11 @@ public class AdvSearch extends JFrame {
 					
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -360,7 +368,7 @@ public class AdvSearch extends JFrame {
 					
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum()) || !matchesParams(p)){
 							add=false;
 						}
 					}
@@ -381,7 +389,7 @@ public class AdvSearch extends JFrame {
 					
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum()) || !matchesParams(p)){
 							add=false;
 						}
 					}
@@ -401,13 +409,18 @@ public class AdvSearch extends JFrame {
 				for(com.client.common.Package p: sresults){
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
 					if(add){
+						
 					results.add(p);
+						
 					}
 				}
 				
@@ -438,7 +451,7 @@ public class AdvSearch extends JFrame {
 
 					boolean add=true;
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum())){
+						if(p.getTrackNum().equals(pa.getTrackNum()) || !matchesParams(p)){
 							add=false;
 							break;
 						}
@@ -462,23 +475,21 @@ public class AdvSearch extends JFrame {
 		
 		boolean matches=true;
 		
-		if(!trackingField.getText().equals("") && !p.getTrackNum().equals(trackingField.getText())){
+		
+		if(!FirstNameField.getText().equals("") && !p.getFName().toLowerCase().equals(FirstNameField.getText().toLowerCase())){
 			matches=false;
 		}
-		if(!FirstNameField.getText().equals("") && !p.getFName().equals(FirstNameField.getText())){
+		if(!LastNameField.getText().equals("") && !p.getLName().toLowerCase().equals(LastNameField.getText().toLowerCase())){
 			matches=false;
 		}
-		if(!LastNameField.getText().equals("") && !p.getLName().equals(LastNameField.getText())){
-			matches=false;
-		}
-		if(!BoxNum.getText().equals("") && !p.getBoxNum().equals(BoxNum.getText())){
+		if(!BoxNum.getText().equals("") && !p.getBoxNum().toLowerCase().equals(BoxNum.getText().toLowerCase())){
 			matches=false;
 		}
 		
 		
 		String stop= (String)StopBox.getSelectedItem();
 		
-		if(!p.getStop().equals(stop)){
+		if(!stop.equals("All Stops") && !p.getStop().equals(stop)){
 			matches=false;
 		}
 		

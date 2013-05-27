@@ -91,13 +91,13 @@ public class Table extends JPanel {
 
        atable = (MyTableModel) table.getModel();
    
-       atable.insertData(atable.row1);
+     /* atable.insertData(atable.row1);
        atable.insertData(atable.row2);
        atable.insertData(atable.row3); 
        atable.insertData(atable.row4);
        atable.insertData(atable.row5a);
        atable.insertData(atable.yourmom);
-       
+       */
        table.setFillsViewportHeight(true);
  
        	table.setAutoCreateRowSorter(true);
@@ -180,11 +180,11 @@ public class Table extends JPanel {
    
    private Vector data = new Vector();
    public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313",  ft.format(date),"", delivered};
-   public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
+  /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
    public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date),"", delivered};
    public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date),"", delivered};
    public final Object[] row5a = {print, "Joe", "Brown","SUB","1024861834",  ft.format(date),"", delivered};
-   public final Object[] yourmom = {print, "Jill", "Brown","REX","1024544861834",  ft.format(date),"", delivered};
+   public final Object[] yourmom = {print, "Jill", "Brown","REX","1024544861834",  ft.format(date),"", delivered};*/
 
    @Override
 
@@ -249,15 +249,15 @@ public class Table extends JPanel {
     	//int i=atable.getRowCount()-1;
     	
     	if(results.size()==0){
-    		atable.insertData(new Object []  {"","","","","","","",""});
+    		/*atable.insertData(new Object []  {"","","","","","","",""});
 			atable.removeRow(0);
-
+			*/
     	
     		
     	}
     	
     	
-    	while(atable.getRowCount()>=1 && !(atable.getValueAt(0, 5)=="")){
+    	while(atable.getRowCount()>=1 && !(atable.getValueAt(0, 5).equals(""))){
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
