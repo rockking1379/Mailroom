@@ -436,13 +436,13 @@ public class AdvSearch extends JFrame {
 				//String eDate=null;
 				
 				try {
-					sdDate = new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(StartField.getText());
-					edDate = new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(EndField.getText());
+					sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(StartField.getText());
+					edDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(EndField.getText());
 					
 					System.out.println(sDate+" "+eDate);
 					
-					 sDate = DateFormat.getDateInstance(DateFormat.SHORT).format(sdDate);
-					 eDate=DateFormat.getDateInstance(DateFormat.SHORT).format(edDate);
+					 sDate = StartField.getText();
+					 eDate=EndField.getText();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -557,7 +557,7 @@ public class AdvSearch extends JFrame {
 		try {
 			System.out.println(p.getDate());
 
-			Date pDate =new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(p.getDate());
+			Date pDate =new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
 			System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
 			if(sdDate.compareTo(pDate)>0 || edDate.compareTo(pDate)<0){
 				
