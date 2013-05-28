@@ -69,7 +69,8 @@ User_Name varchar(50) NOT NULL,
 First_Name varchar(50) NOT NULL,
 Last_Name varchar(50) NOT NULL,
 Password INTEGER NOT NULL,
-Admin BOOLEAN NOT NULL
+Admin BOOLEAN NOT NULL,
+Active BOOLEAN,
 );
 
 insert into Route(Name) values('unassigned');
