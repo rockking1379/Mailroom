@@ -28,6 +28,9 @@ local.properties
 # PDT-specific
 .buildpath
 
+#Properties Files
+*.prop
+.prop
 
 #################
 ## Visual Studio
