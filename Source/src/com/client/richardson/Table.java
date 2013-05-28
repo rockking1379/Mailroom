@@ -183,15 +183,11 @@ public class Table extends JPanel {
   	    SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
   		String pickdate=ft.format(date);
   		
-   private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #", "Date","Username","Delivered"};
-   //private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username","Delivered"};
-   
+   private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username","Delivered"};
    
    private Vector data = new Vector();
-   public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313",  ft.format(date),"", delivered};
-   //public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313", "FedEx",  ft.format(date),"", delivered};
-   
-   /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
+   public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313","",  ft.format(date),"", delivered};
+  /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
    public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date),"", delivered};
    public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date),"", delivered};
    public final Object[] row5a = {print, "Joe", "Brown","SUB","1024861834",  ft.format(date),"", delivered};
