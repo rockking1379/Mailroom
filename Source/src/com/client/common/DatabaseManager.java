@@ -821,7 +821,7 @@ public class DatabaseManager
 		
 		return results;
 	}
-	public List<Package> searchPackages(String search, int location, String stop)
+	public List<Package> searchPackages(String search, int location)
 	{
 		List<Package> results = new ArrayList<Package>();
 		location = 0;//Remove later if API is enhanced
