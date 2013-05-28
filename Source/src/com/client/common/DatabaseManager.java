@@ -374,7 +374,7 @@ public class DatabaseManager
 			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
-			statement.setDate(2, p.getDate());
+			statement.setString(2, p.getDate());
 			statement.setString(3, p.getEmail());
 			statement.setString(4, p.getFName());
 			statement.setString(5, p.getLName());

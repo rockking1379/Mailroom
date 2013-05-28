@@ -5,7 +5,7 @@ public class Package
 	private String firstName;
 	private String lastName;
 	private String email;
-	private java.sql.Date date;
+	private String date;
 	private String boxNumber;
 	private String stop;
 	private String trackingNumber;
@@ -18,7 +18,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  (java.sql.Date)date;
+		this.date =  new java.sql.Date(date.getTime()).toString();
 		this.boxNumber = boxNumber;
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -32,7 +32,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  (java.sql.Date)date;
+		this.date =  new java.sql.Date(date.getTime()).toString();
 		this.boxNumber = "0";
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -46,7 +46,7 @@ public class Package
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  (java.sql.Date)date;
+		this.date =  new java.sql.Date(date.getTime()).toString();
 		this.boxNumber = "0";
 		this.stop = "unassigned";
 		this.trackingNumber = trackingNumber;
@@ -67,7 +67,7 @@ public class Package
 	{
 		return email;
 	}
-	public java.sql.Date getDate()
+	public String getDate()
 	{
 		return date;
 	}
