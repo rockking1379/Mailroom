@@ -6,6 +6,7 @@ public class Stop
 	private int id;
 	private int route_id;
 	private int route_order;
+	boolean student;
 	
 	///---Constructors
 	public Stop(String name)
@@ -18,6 +19,14 @@ public class Stop
 		this.id = id;
 		this.route_id = route_id;
 		this.route_order = route_order;
+	}
+	public Stop(String name, int route_id, int id, int route_order, boolean student)
+	{
+		this.name = name;
+		this.id = id;
+		this.route_id = route_id;
+		this.route_order = route_order;
+		this.student = student;
 	}
 	public Stop(String name, int route_id, int route_order)
 	{
@@ -42,5 +51,9 @@ public class Stop
 	public int getroutePos()
 	{
 		return route_order;
+	}
+	public boolean getType()
+	{
+		return student;
 	}
 }

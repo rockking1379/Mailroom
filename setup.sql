@@ -10,6 +10,7 @@ Name varchar(50) NOT NULL,
 route_id int,
 Is_Used BOOLEAN NOT NULL,
 route_order int,
+Student BOOLEAN,
 FOREIGN KEY(route_id) REFERENCES Route(route_id)
 );
 CREATE TABLE Courier

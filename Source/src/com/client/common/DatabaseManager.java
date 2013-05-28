@@ -198,7 +198,8 @@ public class DatabaseManager
 				int id = rs.getInt("stop_id");
 				int route = rs.getInt("route_id");
 				int order = rs.getInt("route_order");
-				stops.add(new Stop(name, route, id, order));
+				boolean student = rs.getBoolean("Student");
+				stops.add(new Stop(name, route, id, order, student));
 			}
 		}
 		catch(Exception e)
@@ -529,7 +530,6 @@ public class DatabaseManager
 			}
 			
 			statement.execute();
-			JOptionPane.showMessageDialog(null, "Stop " + name + " Updated");
 		}
 		catch(Exception e)
 		{
@@ -892,6 +892,87 @@ public class DatabaseManager
 					break;
 				}
 			}
+			ResultSet rs = statement.executeQuery();
+			
+			while(rs.next())
+			{
+				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet rs3 = statement.executeQuery();
+				
+				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet rs4 = statement.executeQuery();
+				
+				results.add(new Package(rs.getString("First_Name"),
+						rs.getString("Last_Name"),
+						rs.getString("ASU_Email"),
+						rs.getString("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number"),
+						rs3.getString("User_Name"),
+						rs4.getString("Name")
+						));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+		return results;
+	}
+	public List<Package> searchPackages(String search, int location, Date beginDate, Date endDate)
+	{
+		List<Package> results = new ArrayList<Package>();
+		location = 0;//Remove later if API is enhanced
+		try
+		{
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? where Date between ? and ?");
+			switch(location)
+			{
+				case 0://Contains
+				{
+					search = "%" + search + "%";
+					statement.setString(1, search);
+					statement.setString(2, search);
+					statement.setString(3, search);
+					statement.setString(4, search);
+					statement.setString(5, search);
+					statement.setString(6, search);
+					break;
+				}
+				case 1://Begins With
+				{
+					search = "%" + search;
+					statement.setString(1, search);
+					statement.setString(2, search);
+					statement.setString(3, search);
+					statement.setString(4, search);
+					statement.setString(5, search);
+					statement.setString(6, search);
+					break;
+				}
+				case 2://Ends With
+				{
+					search = search + "%";
+					statement.setString(1, search);
+					statement.setString(2, search);
+					statement.setString(3, search);
+					statement.setString(4, search);
+					statement.setString(5, search);
+					statement.setString(6, search);
+					break;
+				}
+			}
+			statement.setDate(7, (java.sql.Date)beginDate);
+			statement.setDate(8, (java.sql.Date)endDate);
+			
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next())
