@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 
 
 public class CreateStop extends JFrame {
@@ -93,6 +94,12 @@ public class CreateStop extends JFrame {
 		btnCreate.setBounds(104, 144, 89, 23);
 		contentPane.add(btnCreate);
 		
+		final JCheckBox chcforStudent = new JCheckBox("Student Route");
+		chcforStudent.setForeground(new Color(255, 255, 255));
+		chcforStudent.setBackground(new Color(0, 102, 0));
+		chcforStudent.setBounds(207, 163, 97, 23);
+		contentPane.add(chcforStudent);
+		
 		btnCreate.addActionListener(new ActionListener(){
 
 			@Override
@@ -109,7 +116,7 @@ public class CreateStop extends JFrame {
 					}
 					
 					
-					manager.addStop(textField.getText(), false, "unassigned",largestSequence+1);
+					manager.addStop(textField.getText(), false, "unassigned",largestSequence+1,chcforStudent.isSelected());
 					
 				}
 				else{
@@ -124,7 +131,7 @@ public class CreateStop extends JFrame {
 					}
 					
 					
-					manager.addStop(textField.getText(), true, route,largestSequence+1);
+					manager.addStop(textField.getText(), true, route,largestSequence+1,chcforStudent.isSelected());
 				}
 				
 				if(frame.getTitle().equals("Scan My Package")){

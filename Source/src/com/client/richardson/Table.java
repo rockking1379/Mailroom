@@ -95,7 +95,7 @@ public class Table extends JPanel {
        ArrayList<Package> undilivered = (ArrayList<Package>) manager.findPackage(false,false);
       
        for(Package p: undilivered){
-    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
+    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),p.getDate(),p.getUser(),false});
        }
    
      /* atable.insertData(atable.row1);
@@ -256,20 +256,20 @@ public class Table extends JPanel {
     	//int i=atable.getRowCount()-1;
     	
     	if(results.size()==0){
-    		atable.insertData(new Object []  {false,"","","","","","",false});
+    		atable.insertData(new Object []  {false,"","","","","","","",false});
 			atable.removeRow(0);
 			
     	
     		
     	}
     	
-    	atable.insertData(new Object []  {false,"","","","","","",false});
+    	atable.insertData(new Object []  {false,"","","","","","","",false});
     	while(atable.getRowCount()>=1 || !(atable.getValueAt(0, 5).equals(""))){
     		
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
-    			atable.insertData(new Object []  {false,"","","","","","",false});
+    			atable.insertData(new Object []  {false,"","","","","","","",false});
     			atable.removeRow(0);
     			break;
     		}
@@ -277,7 +277,7 @@ public class Table extends JPanel {
     	
     	for(Package p: results){
     		
-    		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
+    		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),p.getDate(),p.getUser(),false});
     		
     		
     	}

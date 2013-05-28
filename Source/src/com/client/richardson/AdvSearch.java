@@ -554,18 +554,13 @@ public class AdvSearch extends JFrame {
 		
 
 		if(!StartField.getText().equals("") && !EndField.getText().equals("")){
-		try {
-			System.out.println(p.getDate());
+		System.out.println(p.getDate());
 
-			Date pDate =new SimpleDateFormat("MM/dd/yy",Locale.ENGLISH).parse(p.getDate());
-			System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
-			if(sdDate.compareTo(pDate)>0 || edDate.compareTo(pDate)<0){
-				
-				matches=false;
-			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		Date pDate = p.getDate();
+		if(sdDate.compareTo(pDate)>0 || edDate.compareTo(pDate)<0){
+			
+			matches=false;
 		}
 	}
 		
