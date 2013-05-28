@@ -76,9 +76,11 @@ public class prog
 			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
 			
 			JFileChooser fc = new JFileChooser();
+			JOptionPane.showMessageDialog(null, "Select Database");
 			fc.showDialog(null, "SELECT");
 			fc.setFileFilter(null);
 			File database = fc.getSelectedFile();
+			JOptionPane.showMessageDialog(null, "Select Person File");
 			fc.showDialog(null, "SELECT");
 			File persons = fc.getSelectedFile();
 			
