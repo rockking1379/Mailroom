@@ -184,10 +184,14 @@ public class Table extends JPanel {
   		String pickdate=ft.format(date);
   		
    private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #", "Date","Username","Delivered"};
+   //private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username","Delivered"};
+   
    
    private Vector data = new Vector();
    public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313",  ft.format(date),"", delivered};
-  /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
+   //public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313", "FedEx",  ft.format(date),"", delivered};
+   
+   /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
    public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date),"", delivered};
    public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date),"", delivered};
    public final Object[] row5a = {print, "Joe", "Brown","SUB","1024861834",  ft.format(date),"", delivered};
@@ -256,20 +260,20 @@ public class Table extends JPanel {
     	//int i=atable.getRowCount()-1;
     	
     	if(results.size()==0){
-    		atable.insertData(new Object []  {"","","","","","","",""});
+    		atable.insertData(new Object []  {false,"","","","","","",false});
 			atable.removeRow(0);
 			
     	
     		
     	}
     	
-    	atable.insertData(new Object []  {"","","","","","","",""});
-    	while(atable.getRowCount()>=1 && !(atable.getValueAt(0, 5).equals(""))){
+    	atable.insertData(new Object []  {false,"","","","","","",false});
+    	while(atable.getRowCount()>=1 || !(atable.getValueAt(0, 5).equals(""))){
     		
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
-    			atable.insertData(new Object []  {"","","","","","","",""});
+    			atable.insertData(new Object []  {false,"","","","","","",false});
     			atable.removeRow(0);
     			break;
     		}

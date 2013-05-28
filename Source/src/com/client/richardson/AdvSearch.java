@@ -337,7 +337,7 @@ public class AdvSearch extends JFrame {
 			
 			if(!trackingField.getText().equals("")){
 				
-				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0,);
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
 				
 				
 				for(com.client.common.Package p: sresults){
@@ -432,8 +432,8 @@ public class AdvSearch extends JFrame {
 			
 			
 			if(!StartField.getText().equals("")&&!EndField.getText().equals("")){
-				String sDate=null;
-				String eDate=null;
+				//String sDate=null;
+				//String eDate=null;
 				
 				try {
 					sdDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(StartField.getText());
@@ -471,7 +471,7 @@ public class AdvSearch extends JFrame {
 			}
 			
 			
-			String selectedStop =(String)StopBox.getSelectedItem();
+			selectedStop =(String)StopBox.getSelectedItem();
 			if(!selectedStop.equals("All Stops")){
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(selectedStop,0);
 				
@@ -550,15 +550,24 @@ public class AdvSearch extends JFrame {
 		if(!stop.equals("All Stops") && !p.getStop().equals(stop)){
 			matches=false;
 		}
+		
+		
+
+		if(!StartField.getText().equals("") && !EndField.getText().equals("")){
 		try {
-			Date pDate =new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(p.getDate());
+			System.out.println(p.getDate());
+
+			Date pDate =new SimpleDateFormat("MM/dd/yy",Locale.ENGLISH).parse(p.getDate());
+			System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
 			if(sdDate.compareTo(pDate)>0 || edDate.compareTo(pDate)<0){
+				
 				matches=false;
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
 		
 		
 		
