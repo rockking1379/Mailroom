@@ -36,6 +36,7 @@ public class SubRoom extends JPanel {
 
 	    private boolean picked_up;
 	    private String pickdate;
+	    Table displayTable;
 
     private boolean DEBUG = false;
     private JTable table;
@@ -249,7 +250,7 @@ public class SubRoom extends JPanel {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                SUBAdvSearch search = new SUBAdvSearch();
+                SUBAdvSearch search = new SUBAdvSearch(displayTable);
                 search.setVisible(true);
             }
         });

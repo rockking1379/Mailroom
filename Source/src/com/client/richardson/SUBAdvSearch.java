@@ -247,13 +247,16 @@ public class SUBAdvSearch extends JFrame {
 		StopBox = new JComboBox();
 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
 		ArrayList<String> stopNames = new ArrayList<String>();
+		
 		System.out.println(stops.size()-1);
+		stopNames.add("All Stops");
 		for(Stop s: stops){
 			stopNames.add(s.getName());
 		}
 		
-		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
 		
+		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
+		StopBox.setSelectedItem("All Stops");
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
 		
@@ -329,7 +332,9 @@ public class SUBAdvSearch extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			ArrayList<Package> results = new ArrayList<Package>();
-			ArrayList<Integer> indexToBeRemoved = new ArrayList<Integer>();
+			String selectedStop =(String)StopBox.getSelectedItem();
+			
+			
 			if(!trackingField.getText().equals("")){
 				
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
@@ -339,8 +344,11 @@ public class SUBAdvSearch extends JFrame {
 					
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -359,8 +367,11 @@ public class SUBAdvSearch extends JFrame {
 				for(com.client.common.Package p: sresults){
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -380,8 +391,11 @@ public class SUBAdvSearch extends JFrame {
 				for(com.client.common.Package p: sresults){
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -401,8 +415,11 @@ public class SUBAdvSearch extends JFrame {
 				for(com.client.common.Package p: sresults){
 					
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
-						if(p.getTrackNum().equals(pa.getTrackNum()) && matchesParams(p)){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
 						}
 					}
@@ -415,16 +432,17 @@ public class SUBAdvSearch extends JFrame {
 			
 			
 			if(!StartField.getText().equals("")&&!EndField.getText().equals("")){
-				String sDate=null;
-				String eDate=null;
+				//String sDate=null;
+				//String eDate=null;
 				
 				try {
-					Date sdDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(StartField.getText());
-					Date edDate = new SimpleDateFormat("MM-dd-yyyy",Locale.ENGLISH).parse(EndField.getText());
+					sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(StartField.getText());
+					edDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(EndField.getText());
+					
 					System.out.println(sDate+" "+eDate);
 					
-					 sDate = DateFormat.getDateInstance(DateFormat.SHORT).format(sdDate);
-					 eDate=DateFormat.getDateInstance(DateFormat.SHORT).format(edDate);
+					 sDate = StartField.getText();
+					 eDate=EndField.getText();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -437,10 +455,12 @@ public class SUBAdvSearch extends JFrame {
 					
 
 					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
 					for(Package pa: results){
 						if(p.getTrackNum().equals(pa.getTrackNum())){
 							add=false;
-							break;
 						}
 					}
 					if(add){
@@ -451,37 +471,103 @@ public class SUBAdvSearch extends JFrame {
 			}
 			
 			
-		
+			selectedStop =(String)StopBox.getSelectedItem();
+			if(!selectedStop.equals("All Stops")){
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(selectedStop,0);
+				
+				
+				for(com.client.common.Package p: sresults){
+					
+					boolean add=true;
+					if(!matchesParams(p)){
+						add=false;
+					}
+					for(Package pa: results){
+						if(p.getTrackNum().equals(pa.getTrackNum())){
+							add=false;
+						}
+					}
+					if(add){
+					results.add(p);
+					}
+				}
+				
+			}
+			
+			ArrayList<Package> sresults = (ArrayList<Package>) manager.findPackage(chckbxDelivered.isSelected(),chckbxPickedUp.isSelected());
+			
+
+			for(com.client.common.Package p: sresults){
+				
+				boolean add=true;
+				if(!matchesParams(p)){
+					add=false;
+				}
+				for(Package pa: results){
+					if(p.getTrackNum().equals(pa.getTrackNum())){
+						add=false;
+					}
+				}
+				if(add){
+				results.add(p);
+				}
+			}
 			
 			table.setSearchResults(results);
 			dispose();
 		}
 		
 	}
+	
+	Date sdDate;
+	Date edDate;
 	private boolean matchesParams(Package p){
 		
 		boolean matches=true;
 		
-		if(!trackingField.getText().equals("") && !p.getTrackNum().equals(trackingField.getText())){
+		String s=FirstNameField.getText().toLowerCase();
+		
+		
+		String person =p.getFName().toUpperCase();
+		String entered =FirstNameField.getText().toUpperCase();
+		
+		if(!FirstNameField.getText().equals("") && !person.equals(entered.toUpperCase())){
+			System.out.println(person.equals(entered));
 			matches=false;
 		}
-		if(!FirstNameField.getText().equals("") && !p.getFName().equals(FirstNameField.getText())){
+		person = p.getLName().toUpperCase();
+		entered =LastNameField.getText().toUpperCase();
+		if(!LastNameField.getText().equals("") && !person.equals(entered)){
 			matches=false;
 		}
-		if(!LastNameField.getText().equals("") && !p.getLName().equals(LastNameField.getText())){
-			matches=false;
-		}
-		if(!BoxNum.getText().equals("") && !p.getBoxNum().equals(BoxNum.getText())){
+		if(!BoxNum.getText().equals("") && !p.getBoxNum().toUpperCase().equals(BoxNum.getText().toUpperCase())){
 			matches=false;
 		}
 		
 		
 		String stop= (String)StopBox.getSelectedItem();
 		
-		if(!p.getStop().equals(stop)){
+		if(!stop.equals("All Stops") && !p.getStop().equals(stop)){
 			matches=false;
 		}
 		
+		
+
+		if(!StartField.getText().equals("") && !EndField.getText().equals("")){
+		try {
+			System.out.println(p.getDate());
+
+			Date pDate =new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(p.getDate());
+			System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
+			if(sdDate.compareTo(pDate)>0 && edDate.compareTo(pDate)<0){
+				
+				matches=false;
+			}
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 		
 		
 		
