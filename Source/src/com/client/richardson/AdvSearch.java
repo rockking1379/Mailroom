@@ -332,12 +332,12 @@ public class AdvSearch extends JFrame {
 		public void actionPerformed(ActionEvent arg0) {
 			
 			ArrayList<Package> results = new ArrayList<Package>();
-			
+			String selectedStop =(String)StopBox.getSelectedItem();
 			
 			
 			if(!trackingField.getText().equals("")){
 				
-				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
+				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0,);
 				
 				
 				for(com.client.common.Package p: sresults){

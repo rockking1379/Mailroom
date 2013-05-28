@@ -22,6 +22,7 @@ import javax.swing.table.TableRowSorter;
 import com.client.common.*;
 import com.client.common.Package;
 
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -90,6 +91,12 @@ public class Table extends JPanel {
         
 
        atable = (MyTableModel) table.getModel();
+       
+       ArrayList<Package> undilivered = (ArrayList<Package>) manager.findPackage(false,false);
+      
+       for(Package p: undilivered){
+    	 // atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
+       }
    
      /* atable.insertData(atable.row1);
        atable.insertData(atable.row2);
