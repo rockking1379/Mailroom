@@ -268,7 +268,7 @@ public class ScanPackage extends JFrame {
 		lblDate_1.setBounds(166, 159, 96, 20);
 		contentPane.add(lblDate_1);
 		
-        SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
         newDate = ft.format(date);
 		lblDate_1.setText(newDate);
 		
@@ -360,8 +360,9 @@ public class ScanPackage extends JFrame {
 		lblDate_1.setBounds(110, 130, 96, 20);
 		contentPane.add(lblDate_1);
 		Date date =new Date();
-        SimpleDateFormat ft = new SimpleDateFormat ("MM / dd / yyyy");
+        SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
         String newDate = ft.format(date);
+        System.out.println(newDate);
 		lblDate_1.setText(newDate);
 		return date;
 
@@ -375,16 +376,17 @@ public class ScanPackage extends JFrame {
 	public class SaveListener implements ActionListener{
 		public void actionPerformed(ActionEvent arg0) {
 			String stop=(String)comboBox.getSelectedItem();
-			
+			String tDate = newDate;
 			Package p = null;
 			
 			try
 			{
-				String tDate =  new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(lblDate_1.getText()).toString();
+				tDate = newDate;
 			}
 			catch(Exception e)
 			{
 				//Unknown
+				System.out.println(e.getMessage());
 			}
 			
 			if(selectedPerson==null){
