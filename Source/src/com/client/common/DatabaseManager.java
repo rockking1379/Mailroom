@@ -246,11 +246,7 @@ public class DatabaseManager
 			try
 			{
 				 
-				PreparedStatement statement = conn.prepareStatement("select * from Package where At_Stop='0' and Picked_Up='0';");
-				Date d = new Date();
-				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
-				statement.setString(1, date);
-			
+				PreparedStatement statement = conn.prepareStatement("select * from Package where At_Stop='0' and Picked_Up='0';");			
 				ResultSet rs = statement.executeQuery();
 				
 				while(rs.next())
@@ -290,9 +286,7 @@ public class DatabaseManager
 		{
 			try
 			{
-				 
-				PreparedStatement statement = null;
-				
+				PreparedStatement statement = null;				
 				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=? and Picked_Up='0';");
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
