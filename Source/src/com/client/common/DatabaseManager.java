@@ -1237,7 +1237,7 @@ public class DatabaseManager
 		
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from User where User_Name=? and Password=?;");
+			PreparedStatement statement = conn.prepareStatement("select * from User where User_Name=? and Password=? and Active=1;");
 			statement.setString(1, username);
 			statement.setInt(2, password);
 			ResultSet rs = statement.executeQuery();
@@ -1266,7 +1266,7 @@ public class DatabaseManager
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("insert into User(User_Name, First_Name,Last_Name,Password, Admin) values(?,?,?,?,?);");
+			PreparedStatement statement = conn.prepareStatement("insert into User(User_Name, First_Name,Last_Name,Password, Admin,Active) values(?,?,?,?,?,1);");
 			statement.setString(1, u.getUser());
 			statement.setString(2, u.getFName());
 			statement.setString(3, u.getLName());
@@ -1290,7 +1290,7 @@ public class DatabaseManager
 				//Execute a statement
 				try
 				{
-					PreparedStatement statement = conn.prepareStatement("delete from User where User_Name=?;");
+					PreparedStatement statement = conn.prepareStatement("update User set Active=0 where User_Name=?;");
 					statement.setString(1,username);
 					statement.execute();
 					statement.close();
