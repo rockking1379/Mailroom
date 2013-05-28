@@ -827,7 +827,7 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? and stop_id=?");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
 			switch(location)
 			{
 				case 0://Contains
@@ -839,14 +839,6 @@ public class DatabaseManager
 					statement.setString(4, search);
 					statement.setString(5, search);
 					statement.setString(6, search);
-					for(int i=0; i < stops.size(); i++)
-					{
-						if(stops.get(i).getName().equals(stop))
-						{
-							statement.setInt(7, stops.get(i).getID());
-							break;
-						}
-					}
 					break;
 				}
 				case 1://Begins With
@@ -858,14 +850,6 @@ public class DatabaseManager
 					statement.setString(4, search);
 					statement.setString(5, search);
 					statement.setString(6, search);
-					for(int i=0; i < stops.size(); i++)
-					{
-						if(stops.get(i).getName().equals(stop))
-						{
-							statement.setInt(7, stops.get(i).getID());
-							break;
-						}
-					}
 					break;
 				}
 				case 2://Ends With
@@ -877,14 +861,6 @@ public class DatabaseManager
 					statement.setString(4, search);
 					statement.setString(5, search);
 					statement.setString(6, search);
-					for(int i=0; i < stops.size(); i++)
-					{
-						if(stops.get(i).getName().equals(stop))
-						{
-							statement.setInt(7, stops.get(i).getID());
-							break;
-						}
-					}
 					break;
 				}
 			}
