@@ -417,6 +417,7 @@ public class DatabaseManager
 				statement.setString(2, tNumber);
 				statement.execute();
 			}
+			statement.close();
 		}
 		catch(Exception e)
 		{
@@ -552,6 +553,105 @@ public class DatabaseManager
 		}
 	}
 
+	///---Person---///
+	public void addPerson(Person p)
+	{
+		//Do Person logic
+		try
+		{
+			PreparedStatement statement = null;
+			String emailEnd = "";
+			int index = 0;
+			while(p.getEmail().charAt(index) != '@')
+			{
+				index++;
+			}
+			index++;
+			for(int i = index; i < p.getEmail().length(); i++)
+			{
+				emailEnd += p.getEmail().charAt(i);
+			}
+			if(emailEnd.equals("grizzlies.adams.edu"))
+			{
+				//Add Student
+				statement = conn.prepareStatement("insert into Student(ID_Number, ASU_Email, First_Name, Last_Name, Box_Number, stop_id) values(?,?,?,?,?,?);");
+				statement.setString(1, p.getID());
+				statement.setString(2, p.getEmail());
+				statement.setString(3, p.getFirstName());
+				statement.setString(4, p.getLastName());
+				statement.setString(5, p.getBox());
+				statement.setInt(6, Integer.valueOf(p.getStop()));
+			}
+			else
+			{
+				//Add Faculty or Staff
+				statement = conn.prepareStatement("insert into Student(ID_Number, ASU_Email, First_Name, Last_Name, Suite_Number, stop_id) values(?,?,?,?,?,?);");
+				statement.setString(1, p.getID());
+				statement.setString(2, p.getEmail());
+				statement.setString(3, p.getFirstName());
+				statement.setString(4, p.getLastName());
+				statement.setString(5, p.getBox());
+				for(int i = 0; i < stops.size(); i++)
+				{
+					if(stops.get(i).getName().equals(p.getStop()))
+					{
+						statement.setInt(6, stops.get(i).getID());
+						break;
+					}
+				}
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Adding Person");
+		}
+	}
+	public void updatePerson(Person p)
+	{
+		//Update Person logic
+		try
+		{
+			PreparedStatement statement = null;
+			String emailEnd = "";
+			int index = 0;
+			while(p.getEmail().charAt(index) != '@')
+			{
+				index++;
+			}
+			index++;
+			for(int i = index; i < p.getEmail().length(); i++)
+			{
+				emailEnd += p.getEmail().charAt(i);
+			}
+			
+			if(emailEnd.equals("grizzlies.adams.edu"))
+			{
+				//Students don't really get updated
+			}
+			else
+			{
+				statement = conn.prepareStatement("update FacStaff set First_Name=?, Last_Name=?, ASU_Email=?, Suite_Number=?, stop_id=? where ID_Number=?;");
+				statement.setString(1, p.getFirstName());
+				statement.setString(2, p.getLastName());
+				statement.setString(3, p.getEmail());
+				statement.setString(4, p.getBox());
+				for(int i = 0; i < stops.size(); i++)
+				{
+					if(stops.get(i).getName().equals(p.getStop()))
+					{
+						statement.setInt(5, stops.get(i).getID());
+						break;
+					}
+				}
+				statement.setString(6, p.getID());
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Updating Person");
+		}
+	}
+	
 	///---Couriers---///
 	public void addCourier(String courier, boolean isUsed)
 	{
@@ -721,13 +821,13 @@ public class DatabaseManager
 		
 		return results;
 	}
-	public List<Package> searchPackages(String search, int location)
+	public List<Package> searchPackages(String search, int location, String stop)
 	{
 		List<Package> results = new ArrayList<Package>();
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? and stop_id=?");
 			switch(location)
 			{
 				case 0://Contains
@@ -738,7 +838,15 @@ public class DatabaseManager
 					statement.setString(3, search);
 					statement.setString(4, search);
 					statement.setString(5, search);
-					statement.setString(6, search);					
+					statement.setString(6, search);
+					for(int i=0; i < stops.size(); i++)
+					{
+						if(stops.get(i).getName().equals(stop))
+						{
+							statement.setInt(7, stops.get(i).getID());
+							break;
+						}
+					}
 					break;
 				}
 				case 1://Begins With
@@ -749,7 +857,15 @@ public class DatabaseManager
 					statement.setString(3, search);
 					statement.setString(4, search);
 					statement.setString(5, search);
-					statement.setString(6, search);					
+					statement.setString(6, search);
+					for(int i=0; i < stops.size(); i++)
+					{
+						if(stops.get(i).getName().equals(stop))
+						{
+							statement.setInt(7, stops.get(i).getID());
+							break;
+						}
+					}
 					break;
 				}
 				case 2://Ends With
@@ -760,7 +876,15 @@ public class DatabaseManager
 					statement.setString(3, search);
 					statement.setString(4, search);
 					statement.setString(5, search);
-					statement.setString(6, search);					
+					statement.setString(6, search);
+					for(int i=0; i < stops.size(); i++)
+					{
+						if(stops.get(i).getName().equals(stop))
+						{
+							statement.setInt(7, stops.get(i).getID());
+							break;
+						}
+					}
 					break;
 				}
 			}
