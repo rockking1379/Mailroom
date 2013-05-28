@@ -20,6 +20,25 @@ import java.awt.BorderLayout;
  String day = "";
  JDialog d;
  JButton[] button = new JButton[49];
+ 
+ public static void main(String[] args) {
+     JLabel label = new JLabel("Selected Date:");
+     final JTextField text = new JTextField(20);
+     JButton b = new JButton("popup");
+     JPanel p = new JPanel();
+     p.add(label);
+     p.add(text);
+     p.add(b);
+     final JFrame f = new JFrame();
+     f.getContentPane().add(p);
+     f.pack();
+     f.setVisible(true);
+     b.addActionListener(new ActionListener() {
+             public void actionPerformed(ActionEvent ae) {
+                     text.setText(new DatePicker(f).setPickedDate());
+             }
+     });
+}
 
  public DatePicker(JFrame parent) {
          d = new JDialog();
@@ -94,32 +113,16 @@ import java.awt.BorderLayout;
  public String setPickedDate() {
          if (day.equals(""))
                  return day;
-         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat(
-                         "MM-dd-yyyy");
+         java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+         System.out.println(sdf);
          java.util.Calendar cal = java.util.Calendar.getInstance();
+         System.out.println(cal);
          cal.set(year, month, Integer.parseInt(day));
          return sdf.format(cal.getTime());
  }
 }
 
   class Picker {
- public static void main(String[] args) {
-         JLabel label = new JLabel("Selected Date:");
-         final JTextField text = new JTextField(20);
-         JButton b = new JButton("popup");
-         JPanel p = new JPanel();
-         p.add(label);
-         p.add(text);
-         p.add(b);
-         final JFrame f = new JFrame();
-         f.getContentPane().add(p);
-         f.pack();
-         f.setVisible(true);
-         b.addActionListener(new ActionListener() {
-                 public void actionPerformed(ActionEvent ae) {
-                         text.setText(new DatePicker(f).setPickedDate());
-                 }
-         });
- }
+
 
   }
