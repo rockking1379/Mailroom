@@ -5,30 +5,45 @@ package com.client.richardson;
 
 
  
+import javax.swing.AbstractButton;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 import com.client.common.*;
 import com.client.common.Package;
+import com.client.richardson.SubRoom.CheckBoxHeader;
+import com.client.richardson.SubRoom.MyItemListener;
+import com.client.richardson.SubRoom.MyMouseListener;
 
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Vector;
  
 /** 
@@ -44,6 +59,112 @@ public class Table extends JPanel {
     private boolean picked_up;
     private String pickdate;
     private JTable table;
+    
+    TableColumn tc;  
+    MyItemListener it;  
+    CheckBoxHeader cbh;  
+    CheckBoxHeader rendererComponent;  
+      
+    class MyItemListener implements ItemListener{     
+        public void itemStateChanged(ItemEvent e){    
+            Object source = e.getSource();     
+            if (source instanceof AbstractButton == false) return;     
+            boolean checked = e.getStateChange() == ItemEvent.SELECTED;     
+            for(int x = 0, y = table.getRowCount(); x < y; x++){     
+              table.setValueAt(new Boolean(checked),x,0);     
+            }  
+        }     
+    }  
+      
+    class MyMouseListener extends MouseAdapter{  
+        public void mouseClicked(MouseEvent mouseEvent) {  
+            int checkedCount = 0;  
+            rendererComponent.removeItemListener(it);  
+            if (rendererComponent instanceof JCheckBox) {  
+                boolean[] flags = new boolean[table.getRowCount()];  
+                for (int i = 0; i < table.getRowCount(); i++) {  
+                    flags[i] = ((Boolean) table.getValueAt(i, 0)).booleanValue();  
+                    if(flags[i]){  
+                        checkedCount++;  
+                    }  
+                }  
+                if(checkedCount== table.getRowCount()){  
+                    ((JCheckBox)rendererComponent).setSelected(true);                 
+                }  
+                if(checkedCount!= table.getRowCount()){  
+                    ((JCheckBox)rendererComponent).setSelected(false);      
+                }  
+            }  
+            rendererComponent.addItemListener(it);  
+            table.getTableHeader().repaint();  
+        }  
+    }  
+    public CheckBoxHeader getRendererComponent() {  
+        return rendererComponent;  
+    }  
+    public void setRendererComponent(CheckBoxHeader rendererComponent) {  
+        rendererComponent.setText("Delivered");  
+        this.rendererComponent = rendererComponent;  
+    }  
+    
+    class CheckBoxHeader extends JCheckBox implements TableCellRenderer, MouseListener {     
+        protected int column;     
+        protected boolean mousePressed = false;    
+        ItemListener it1;   
+        public CheckBoxHeader(ItemListener itemListener) {     
+            setRendererComponent(this);  
+            this.it1 = itemListener;  
+            rendererComponent.addItemListener(it1);     
+        }     
+        public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column) {  
+          if (table != null) {     
+            JTableHeader header = table.getTableHeader();    
+            if (header != null) {     
+              rendererComponent.setForeground(header.getForeground());     
+              rendererComponent.setBackground(header.getBackground());     
+              rendererComponent.setFont(header.getFont());  
+              header.addMouseListener(rendererComponent);     
+            }     
+          }     
+          setColumn(column);     
+          setBorder(UIManager.getBorder("TableHeader.cellBorder"));     
+          return rendererComponent;     
+        }     
+        protected void setColumn(int column) {     
+          this.column = column;     
+        }     
+        public int getColumn() {     
+          return column;     
+        }     
+        protected void handleClickEvent(MouseEvent e) {     
+          if (mousePressed) {     
+            mousePressed=false;           
+            JTableHeader header = (JTableHeader)(e.getSource());     
+            JTable tableView = header.getTable();     
+            TableColumnModel columnModel = tableView.getColumnModel();     
+            int viewColumn = columnModel.getColumnIndexAtX(e.getX());     
+            int column = tableView.convertColumnIndexToModel(viewColumn);     
+            if (viewColumn == this.column && e.getClickCount() == 1 && column != -1) {     
+                doClick();     
+            }   
+          }     
+        }     
+        public void mouseClicked(MouseEvent e) {     
+          handleClickEvent(e);     
+          ((JTableHeader)e.getSource()).repaint();     
+        }     
+        public void mousePressed(MouseEvent e) {     
+          mousePressed = true;     
+        }     
+        public void mouseReleased(MouseEvent e) {     
+        }     
+        public void mouseEntered(MouseEvent e) {     
+        }     
+        public void mouseExited(MouseEvent e) {     
+        }   
+      }   
+    
+    
     public static void main(String[] args) {
    	 JFrame frame = new JFrame("TableRenderDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,14 +192,14 @@ public class Table extends JPanel {
         table.setPreferredScrollableViewportSize(new Dimension(716, 366));
         
 
-        table.getColumnModel().getColumn(0).setPreferredWidth(40);
-        table.getColumnModel().getColumn(1).setPreferredWidth(110);
-        table.getColumnModel().getColumn(2).setPreferredWidth(110);
+        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+        table.getColumnModel().getColumn(1).setPreferredWidth(90);
+        table.getColumnModel().getColumn(2).setPreferredWidth(90);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
         table.getColumnModel().getColumn(4).setPreferredWidth(144);
         table.getColumnModel().getColumn(5).setPreferredWidth(70);
         table.getColumnModel().getColumn(6).setPreferredWidth(82);
-        table.getColumnModel().getColumn(6).setPreferredWidth(60);
+       
         
         table.getColumnModel().getColumn(0).setResizable(false);
         table.getColumnModel().getColumn(1).setResizable(false);
@@ -88,6 +209,15 @@ public class Table extends JPanel {
         table.getColumnModel().getColumn(5).setResizable(false);
         table.getColumnModel().getColumn(6).setResizable(false);
         
+        tc = table.getColumnModel().getColumn(0);     
+        tc.setCellEditor(table.getDefaultEditor(Boolean.class));     
+        tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));     
+        it = new MyItemListener();  
+        cbh = new CheckBoxHeader(it);   
+        tc.setHeaderRenderer(cbh);   
+        table.addMouseListener(new MyMouseListener());   
+        
+        
         
 
        atable = (MyTableModel) table.getModel();
@@ -95,7 +225,16 @@ public class Table extends JPanel {
        ArrayList<Package> undilivered = (ArrayList<Package>) manager.findPackage(false,false);
       
        for(Package p: undilivered){
-    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),p.getDate(),p.getUser(),false});
+    	   SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
+   		Date sdDate = null;
+			try {
+				sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+     		String date=ft.format(sdDate);
+    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),false});
        }
    
      /* atable.insertData(atable.row1);
@@ -183,10 +322,10 @@ public class Table extends JPanel {
   	    SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
   		String pickdate=ft.format(date);
   		
-   private String[] columnNames = {"Print" ,"First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username","Delivered"};
+   private String[] columnNames = {"Delivered","First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username"};
    
    private Vector data = new Vector();
-   public final Object[] row1 ={print,"Kathy", "Smith","Rex","5452548313","",  ft.format(date),"", delivered};
+   public final Object[] row1 ={delivered,"Kathy", "Smith","Rex","5452548313","",  ft.format(date),"", };
   /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
    public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date),"", delivered};
    public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date),"", delivered};
@@ -194,6 +333,7 @@ public class Table extends JPanel {
    public final Object[] yourmom = {print, "Jill", "Brown","REX","1024544861834",  ft.format(date),"", delivered};*/
 
    @Override
+   
 
    public int getColumnCount() {
    return columnNames.length;
@@ -256,28 +396,38 @@ public class Table extends JPanel {
     	//int i=atable.getRowCount()-1;
     	
     	if(results.size()==0){
-    		atable.insertData(new Object []  {false,"","","","","","","",false});
+    		atable.insertData(new Object []  {false,"","","","","","","",});
 			atable.removeRow(0);
 			
     	
     		
     	}
     	
-    	atable.insertData(new Object []  {false,"","","","","","","",false});
+    	atable.insertData(new Object []  {false,"","","","","","","",});
     	while(atable.getRowCount()>=1 || !(atable.getValueAt(0, 5).equals(""))){
     		
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
-    			atable.insertData(new Object []  {false,"","","","","","","",false});
+    			atable.insertData(new Object []  {false,"","","","","","","",});
     			atable.removeRow(0);
     			break;
     		}
     	}
     	
     	for(Package p: results){
+    		SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
+    		Date sdDate = null;
+			try {
+				sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+      		String date=ft.format(sdDate);
     		
-    		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),p.getDate(),p.getUser(),false});
+    		
+    		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),});
     		
     		
     	}

@@ -3,7 +3,13 @@ package com.client.richardson;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
+
+
 
 import com.client.common.DatabaseManager;
 
@@ -12,9 +18,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
  
 public class SubRoom extends JPanel {
 	
@@ -30,6 +42,109 @@ public class SubRoom extends JPanel {
     private JTextField filterText;
     private TableRowSorter<MyTableModel> sorter;
     private DatabaseManager manager;
+    TableColumn tc;  
+    MyItemListener it;  
+    CheckBoxHeader cbh;  
+    CheckBoxHeader rendererComponent;  
+      
+    class MyItemListener implements ItemListener{     
+        public void itemStateChanged(ItemEvent e){    
+            Object source = e.getSource();     
+            if (source instanceof AbstractButton == false) return;     
+            boolean checked = e.getStateChange() == ItemEvent.SELECTED;     
+            for(int x = 0, y = table.getRowCount(); x < y; x++){     
+              table.setValueAt(new Boolean(checked),x,0);     
+            }  
+        }     
+    }  
+      
+    class MyMouseListener extends MouseAdapter{  
+        public void mouseClicked(MouseEvent mouseEvent) {  
+            int checkedCount = 0;  
+            rendererComponent.removeItemListener(it);  
+            if (rendererComponent instanceof JCheckBox) {  
+                boolean[] flags = new boolean[table.getRowCount()];  
+                for (int i = 0; i < table.getRowCount(); i++) {  
+                    flags[i] = ((Boolean) table.getValueAt(i, 0)).booleanValue();  
+                    if(flags[i]){  
+                        checkedCount++;  
+                    }  
+                }  
+                if(checkedCount== table.getRowCount()){  
+                    ((JCheckBox)rendererComponent).setSelected(true);                 
+                }  
+                if(checkedCount!= table.getRowCount()){  
+                    ((JCheckBox)rendererComponent).setSelected(false);      
+                }  
+            }  
+            rendererComponent.addItemListener(it);  
+            table.getTableHeader().repaint();  
+        }  
+    }  
+    public CheckBoxHeader getRendererComponent() {  
+        return rendererComponent;  
+    }  
+    public void setRendererComponent(CheckBoxHeader rendererComponent) {  
+        rendererComponent.setText("Delivered");  
+        this.rendererComponent = rendererComponent;  
+    }  
+    
+    class CheckBoxHeader extends JCheckBox implements TableCellRenderer, MouseListener {     
+        protected int column;     
+        protected boolean mousePressed = false;    
+        ItemListener it1;   
+        public CheckBoxHeader(ItemListener itemListener) {     
+            setRendererComponent(this);  
+            this.it1 = itemListener;  
+            rendererComponent.addItemListener(it1);     
+        }     
+        public Component getTableCellRendererComponent(JTable table, Object value,boolean isSelected, boolean hasFocus, int row, int column) {  
+          if (table != null) {     
+            JTableHeader header = table.getTableHeader();    
+            if (header != null) {     
+              rendererComponent.setForeground(header.getForeground());     
+              rendererComponent.setBackground(header.getBackground());     
+              rendererComponent.setFont(header.getFont());  
+              header.addMouseListener(rendererComponent);     
+            }     
+          }     
+          setColumn(column);     
+          setBorder(UIManager.getBorder("TableHeader.cellBorder"));     
+          return rendererComponent;     
+        }     
+        protected void setColumn(int column) {     
+          this.column = column;     
+        }     
+        public int getColumn() {     
+          return column;     
+        }     
+        protected void handleClickEvent(MouseEvent e) {     
+          if (mousePressed) {     
+            mousePressed=false;           
+            JTableHeader header = (JTableHeader)(e.getSource());     
+            JTable tableView = header.getTable();     
+            TableColumnModel columnModel = tableView.getColumnModel();     
+            int viewColumn = columnModel.getColumnIndexAtX(e.getX());     
+            int column = tableView.convertColumnIndexToModel(viewColumn);     
+            if (viewColumn == this.column && e.getClickCount() == 1 && column != -1) {     
+                doClick();     
+            }   
+          }     
+        }     
+        public void mouseClicked(MouseEvent e) {     
+          handleClickEvent(e);     
+          ((JTableHeader)e.getSource()).repaint();     
+        }     
+        public void mousePressed(MouseEvent e) {     
+          mousePressed = true;     
+        }     
+        public void mouseReleased(MouseEvent e) {     
+        }     
+        public void mouseEntered(MouseEvent e) {     
+        }     
+        public void mouseExited(MouseEvent e) {     
+        }   
+      }   
  
     public SubRoom() {
         super();
@@ -56,6 +171,15 @@ public class SubRoom extends JPanel {
        atable.insertData(row4);
        atable.insertData(row5);
        table.setFillsViewportHeight(true);
+       
+       tc = table.getColumnModel().getColumn(0);     
+       tc.setCellEditor(table.getDefaultEditor(Boolean.class));     
+       tc.setCellRenderer(table.getDefaultRenderer(Boolean.class));     
+       it = new MyItemListener();  
+       cbh = new CheckBoxHeader(it);   
+       tc.setHeaderRenderer(cbh);   
+       table.addMouseListener(new MyMouseListener());   
+       
  
         //For the purposes of this example, better to have a single
         //selection.
@@ -165,11 +289,11 @@ public class SubRoom extends JPanel {
     		
      private String[] columnNames = {"First Name", "Last Name", "Box #", "Tracking #", "Carrier","Date", "Delivered", "Picked Up"};
      private Vector data = new Vector();
-     public final Object[] row1 ={"Kathy", "Smith", 678, L4, "FedEx", ft.format(date), delivered, picked_up };
-     public final Object[] row2 =  {"John", "Doe", 1041, L41, "USPS Mail", ft.format(date), delivered, picked_up };
-     public final Object[] row3 ={"Sue", "Black", 386, L4,  "FedEx Express", ft.format(date), delivered,picked_up };
-     public final Object[] row4 ={"Jane", "White", 1437, L41, "DHL", ft.format(date), delivered, picked_up };
-     public final Object[] row5 ={"Joe", "Brown",  19, L4, "FedEx", ft.format(date), delivered,  picked_up };
+     public final Object[] row1 ={delivered,"Kathy", "Smith", 678, L4, "FedEx", ft.format(date),  picked_up };
+     public final Object[] row2 =  {delivered,"John", "Doe", 1041, L41, "USPS Mail", ft.format(date),  picked_up };
+     public final Object[] row3 ={ delivered,"Sue", "Black", 386, L4,  "FedEx Express", ft.format(date),picked_up };
+     public final Object[] row4 ={ delivered,"Jane", "White", 1437, L41, "DHL", ft.format(date), picked_up };
+     public final Object[] row5 ={ delivered,"Joe", "Brown",  19, L4, "FedEx", ft.format(date),  picked_up };
 
   public int getColumnCount() {
   return columnNames.length;
