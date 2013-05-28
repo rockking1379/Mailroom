@@ -447,18 +447,26 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
 	}
-	public void updatePackage(String tNumber, boolean atStop, boolean pickedUp)
+	public void updatePackage(String tNumber, boolean atStop, boolean pickedUp, String stop)
 	{
 		try
 		{
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("update Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=? where Tracking_Number=?;");
+			statement = conn.prepareStatement("update Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=?, set stop_id=? where Tracking_Number=?;");
 			Date d = new Date();
 			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
 			statement.setBoolean(1, atStop);
 			statement.setBoolean(2, pickedUp);
 			statement.setString(3, date);
-			statement.setString(4, tNumber);
+			for(int i = 0; i < stops.size(); i++)
+			{
+				if(stops.get(i).getName().equals(stop))
+				{
+					statement.setInt(4, stops.get(i).getID());
+					break;
+				}
+			}
+			statement.setString(5, tNumber);
 			statement.execute();
 		}
 		catch(Exception e)

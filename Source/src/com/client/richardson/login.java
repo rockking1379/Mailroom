@@ -209,6 +209,7 @@ public class login extends JFrame {
 	}
 	public void loadSettings(){
 		
+		
 		File settings = new File("./properties.prop");
 		if(settings.exists())
 		{
@@ -260,18 +261,22 @@ public class login extends JFrame {
 			{
 				//Do nothing
 			}
-			manager.setup();
-			//manager.loadPackages(true, null);
-			
+			if(!manager.setup()){
+				JOptionPane.showMessageDialog(null,"No accounts were found. You will now be re-directed to the account creation page");
+				new AddAccount(this,manager);
+				dispose();
+			}
 		}
 		else
 		{
 			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
 			
 			JFileChooser fc = new JFileChooser();
+			JOptionPane.showMessageDialog(null, "Select Database");
 			fc.showDialog(null, "SELECT");
 			fc.setFileFilter(null);
 			File database = fc.getSelectedFile();
+			JOptionPane.showMessageDialog(null, "Select Person File");
 			fc.showDialog(null, "SELECT");
 			File persons = fc.getSelectedFile();
 			
@@ -292,8 +297,7 @@ public class login extends JFrame {
 			{
 				//Ignore the exceptions
 			}
-			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");	
-			System.exit(0);
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
 		}
 	}
 
