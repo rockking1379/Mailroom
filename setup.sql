@@ -59,6 +59,7 @@ First_Name varchar(50) NOT NULL,
 Last_Name varchar(50) NOT NULL,
 Box_Number varchar(50),
 stop_id int,
+Forward_Address varchar(150),
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
 );
 CREATE TABLE User
