@@ -1,158 +1,257 @@
 package com.client.richardson;
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.EventQueue;
-import java.awt.Image;
+import javax.swing.*;
+import javax.swing.event.*;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableRowSorter;
 
+import com.client.common.DatabaseManager;
 
-import com.client.common.*;
-import javax.imageio.ImageIO;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.JTextField;
-import javax.swing.JButton;
+import java.awt.Dimension;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
 import java.awt.Color;
-import java.awt.Toolkit;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-public class SubRoom extends JFrame {
-
-	private JPanel contentPane;
-	private JTextField SearchField;
-	private DatabaseManager manager;
+ 
+public class SubRoom extends JPanel {
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SubRoom frame = new SubRoom();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	 
+	    private boolean delivered=false;
+	    private boolean print=false;
 
-	/**
-	 * Create the frame.
-	 * @throws IOException 
-	 */
-	public SubRoom() throws IOException {
-		manager=new DatabaseManager();
-		
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("Images/Untitled.jpg"));
-		setTitle("Student Union Mail Room");
-		//ImageIcon icon= new ImageIcon(getClass().getResource("/image/Untitled.jpg"));
-		//setIconImage(icon.getImage());
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 719, 523);
-		contentPane = new JPanel();
-		
-		contentPane.setBackground(new Color(0, 102, 0));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		 contentPane.setLayout(null);
-		
-		 SUBTable table = new SUBTable();
-		 final JTable table1 = table.table;
-		 
-		
-         table1.setBounds(10, 11, 688, 434);
-         contentPane.add(table1);
-         table1.setOpaque(true);
-         getContentPane().repaint();
+	    private boolean picked_up;
+	    private String pickdate;
+
+    private boolean DEBUG = false;
+    private JTable table;
+    private JTextField filterText;
+    private TableRowSorter<MyTableModel> sorter;
+    private DatabaseManager manager;
+ 
+    public SubRoom() {
+        super();
+        setBackground(new Color(0, 102, 0));
+ 
+        //Create a table with a sorter.
+        MyTableModel model = new MyTableModel();
+        sorter = new TableRowSorter<MyTableModel>(model);
+        table = new JTable(model);
+        table.setRowSorter(sorter);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+
+       MyTableModel atable = (MyTableModel) table.getModel();
+       Object[] values = atable.row1;
+       Object[] row2= atable.row2;
+       Object[] row3= atable.row3;
+       Object[] row4= atable.row4;
+       Object[] row5= atable.row5;
+
+
+       atable.insertData(values);
+       atable.insertData(row2);
+       atable.insertData(row3); 
+       atable.insertData(row4);
+       atable.insertData(row5);
+       table.setFillsViewportHeight(true);
+ 
+        //For the purposes of this example, better to have a single
+        //selection.
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+ 
+        //When selection changes, provide user with row numbers for
         
-         
+        //both view and model.
+        table.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent event) {
+                        int viewRow = table.getSelectedRow();
+                        if (viewRow < 0) {
+                            //Selection got filtered away.
+                          
+                        } else {
+                            int modelRow =  table.convertRowIndexToModel(viewRow);
+                            
+                        }
+                    }
+                }
+        );
+        setLayout(null);
+ 
+ 
+        //Create the scroll pane and add the table to it.
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 11, 641, 435);
+ 
+        //Add the scroll pane to this panel.
+        add(scrollPane);
+ 
+        //Create a separate form for filterText and statusText
+        JPanel form = new JPanel();
+        form.setBackground(new Color(0, 102, 0));
+        form.setBounds(0, 449, 661, 62);
+        form.setLayout(null);
+        JLabel l1 = new JLabel("Search:", SwingConstants.LEFT);
+        l1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        l1.setForeground(new Color(255, 255, 255));
+        l1.setBounds(10, 26, 86, 20);
+        form.add(l1);
+        filterText = new JTextField();
+        filterText.setBounds(73, 25, 210, 20);
+        //Whenever filterText changes, invoke newFilter.
+        filterText.getDocument().addDocumentListener(
+                new DocumentListener() {
+                    public void changedUpdate(DocumentEvent e) {
+                        newFilter();
+                    }
+                    public void insertUpdate(DocumentEvent e) {
+                        newFilter();
+                    }
+                    public void removeUpdate(DocumentEvent e) {
+                        newFilter();
+                    }
+                });
+        l1.setLabelFor(filterText);
+        form.add(filterText);
 
-         SearchField = new JTextField();
-         SearchField.setBounds(20, 456, 297, 20);
-         contentPane.add(SearchField);
-         SearchField.setColumns(10);
-         SearchField.addActionListener(new ActionListener() {
-
-        	    public void actionPerformed(ActionEvent e) {
-
-        	        String value = SearchField.getText();
-
-        	        for (int row = 0; row <= table1.getRowCount() - 1; row++) {
-
-        	            for (int col = 0; col <= table1.getColumnCount() - 1; col++) {
-
-        	                if (value.equals(table1.getValueAt(row, col))) {
-
-        	                    // this will automatically set the view of the scroll in the location of the value
-        	                    table1.scrollRectToVisible(table1.getCellRect(row, 0, true));
-
-        	                    // this will automatically set the focus of the searched/selected row/value
-        	                    table1.setRowSelectionInterval(row, row);
-
-        	                    for (int i = 0; i <= table1.getColumnCount() - 1; i++) {
-
-        	                        table1.getColumnModel().getColumn(i).setCellRenderer(new HighlightRenderer());
-        	                      
-        	                    } 
-        	                } 
-        	               
-        	            }
-        	        }
-        	      
-        	    }
-        	});
-         
-         JButton btnSearch = new JButton("Search");
-         btnSearch.setBounds(345, 455, 89, 23);
-         contentPane.add(btnSearch);
-         
-         JButton btnAdvancedSearch = new JButton("Advanced Search");
-
-         JButton btnRefresh = new JButton("Refresh");
-         btnRefresh.setBounds(609, 455, 89, 23);
-         contentPane.add(btnRefresh);
-
-         btnAdvancedSearch.setBounds(455, 455, 144, 23);
-         contentPane.add(btnAdvancedSearch);
-
-       
-         
-         btnAdvancedSearch.addActionListener(new ActionListener() {
+        add(form);
+        
+        JButton btnAdvancedSearch = new JButton("Advanced Search");
+        btnAdvancedSearch.setBounds(385, 22, 155, 23);
+        form.add(btnAdvancedSearch);
+        btnAdvancedSearch.addActionListener(new ActionListener() {
 	    	 
-             public void actionPerformed(ActionEvent e)
-             {
-                 SUBAdvSearch search = new SUBAdvSearch();
-                 search.setVisible(true);
-             }
-         });
-	}
-	private class HighlightRenderer extends DefaultTableCellRenderer {
+            public void actionPerformed(ActionEvent e)
+            {
+                SUBAdvSearch search = new SUBAdvSearch();
+                search.setVisible(true);
+            }
+        });
+        
+        JButton btnRefesh = new JButton("Refresh");
+        btnRefesh.setBounds(562, 22, 89, 23);
+        form.add(btnRefesh);
+    }
+ 
+    /** 
+     * Update the row filter regular expression from the expression in
+     * the text box.
+     */
+    private void newFilter() {
+        RowFilter<MyTableModel, Object> rf = null;
+        //If current expression doesn't parse, don't update.
+        try {
+            rf = RowFilter.regexFilter(filterText.getText(), table.getSelectedColumns());
+        } catch (java.util.regex.PatternSyntaxException e) {
+            return;
+        }
+        sorter.setRowFilter(rf);
+    }
+ 
+ 
+ 
+ 
+    class MyTableModel extends AbstractTableModel {
+    	  Date date =new Date();
+    	  Object[][] data1 = null;
+    	    SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
+    	    String pickdate="";
+    		String trackNum= "0214123574841245546";
+    		String trackNum1= "021412357484124465465455875346";
+    		String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
+    		String L41= trackNum1.substring(trackNum1.length()-4,trackNum1.length());
+    		
+     private String[] columnNames = {"First Name", "Last Name", "Box #", 
+     		"Tracking #", "Date", "Delivered", "Picked Up"};
+     private Vector data = new Vector();
+     public final Object[] row1 ={"Kathy", "Smith", 678, L4,  ft.format(date), delivered, picked_up };
+     public final Object[] row2 =  {"John", "Doe", 1041, L41, ft.format(date), delivered, picked_up };
+     public final Object[] row3 ={"Sue", "Black", 386, L4,  ft.format(date), delivered,picked_up };
+     public final Object[] row4 ={"Jane", "White", 1437, L41, ft.format(date), delivered, picked_up };
+     public final Object[] row5 ={"Joe", "Brown",  19, L4,  ft.format(date), delivered,  picked_up };
 
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+  public int getColumnCount() {
+  return columnNames.length;
+  }
 
-		    // everything as usual
-		    super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+ @Override
 
-		    // added behavior
-		    if(row == table.getSelectedRow()) {
+  public int getRowCount() {
+  return data.size();
+  }
 
-		        // this will customize that kind of border that will be use to highlight a row
-		        setBorder(BorderFactory.createMatteBorder(2, 1, 2, 1, Color.GREEN)); 
-		        //table.getColumnClass(column);
-		    }
+ @Override
+  public Object getValueAt(int row, int col) {
+  return ((Vector) data.get(row)).get(col);
+  }
 
-		    return this;
-		  }
-		}
+  public String getColumnName(int col){
+  return columnNames[col];
+  }
+
+  public Class getColumnClass(int c){
+  return getValueAt(0,c).getClass();
+  }
+  
+
+  public void setValueAt(Object value, int row, int col){
+ ((Vector) data.get(row)).setElementAt(value, col);
+  fireTableCellUpdated(row,col);
+  }
+
+  public boolean isCellEditable(int row, int col){
+ 	 if (col < 5&& col>=3) {
+          return false;
+      } else {
+          return true;
+      }
+ }
+
+  public void insertData(Object[] values){
+  data.add(new Vector());
+  for(int i =0; i<values.length; i++){
+  ((Vector) data.get(data.size()-1)).add(values[i]);
+  }
+  fireTableDataChanged();
+  }
+
+  public void removeRow(int row){
+  data.removeElementAt(row);
+  fireTableDataChanged();
+  }
+
+    }
+ 
+    /**
+     * Create the GUI and show it.  For thread safety,
+     * this method should be invoked from the
+     * event-dispatching thread.
+     */
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setTitle("Student Union Mail Room");
+        frame.setSize(665, 525);
+        //ImageIcon icon= new ImageIcon(frame.getClass().getResource("/image/Untitled.jpg"));
+		//frame.setIconImage(icon.getImage());
+       
+        SubRoom newContentPane = new SubRoom();
+        newContentPane.setOpaque(true); 
+       
+        frame.setContentPane(newContentPane);
+        frame.setResizable(false);
+        frame.setVisible(true);
+    }
+ 
+    public static void main(String[] args) {
+      
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
+            }
+        });
+    }
 }
