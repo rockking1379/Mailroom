@@ -342,7 +342,7 @@ public class DatabaseManager
 		try
 		{
 			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery("select * from User");	
+			ResultSet rs = s.executeQuery("select * from User where Active=1;");	
 			
 			while(rs.next())
 			{
