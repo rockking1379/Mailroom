@@ -196,8 +196,8 @@ public class Table extends JPanel {
         table.getColumnModel().getColumn(1).setPreferredWidth(90);
         table.getColumnModel().getColumn(2).setPreferredWidth(90);
         table.getColumnModel().getColumn(3).setPreferredWidth(100);
-        table.getColumnModel().getColumn(4).setPreferredWidth(144);
-        table.getColumnModel().getColumn(5).setPreferredWidth(70);
+        table.getColumnModel().getColumn(4).setPreferredWidth(130);
+        table.getColumnModel().getColumn(5).setPreferredWidth(84);
         table.getColumnModel().getColumn(6).setPreferredWidth(82);
        
         
@@ -302,12 +302,25 @@ public class Table extends JPanel {
  
     public void setUpSportColumn(JTable table, TableColumn sportColumn) {
         //Set up the editor for the sport cells.
-        JComboBox comboBox = new JComboBox();
-        comboBox.setModel(new DefaultComboBoxModel(new String[] {"AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", 
-		"Community Partnership", "Computing Services", "Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", 
-		"Finance/ Administration", "Financial Aid", "Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music",
-		"Nursing", "One Stop", "Payroll", "Plachy", "Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", 
-		"Student Life", "SUB Office", "SUB Mailroom", "SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound"}));
+    	JComboBox comboBox = new JComboBox();
+ 		DefaultComboBoxModel stopNames=null;
+ 		boolean noStops =false;
+ 		try{
+ 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
+ 		String[] sa= new String[stops.size()];
+ 		
+ 		for(Stop s: stops){
+ 			sa[stops.indexOf(s)]= s.getName();
+ 			
+ 		}
+ 		 stopNames = new DefaultComboBoxModel(sa);
+ 		}
+ 		catch(NegativeArraySizeException ex){
+ 			JOptionPane.showMessageDialog(this, "Please create Stops before scanning in packages");
+ 			
+ 		}
+ 		
+ 		comboBox.setModel(stopNames);
         sportColumn.setCellEditor(new DefaultCellEditor(comboBox));
  
         //Set up tool tips for the sport cells.
