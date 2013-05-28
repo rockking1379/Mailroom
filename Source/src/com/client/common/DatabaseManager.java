@@ -468,12 +468,12 @@ public class DatabaseManager
 	}
 	
 	///---Stops---///
-	public void addStop(String name, boolean isUsed, String route, int route_order)
+	public void addStop(String name, boolean isUsed, String route, int route_order, boolean student)
 	{
 		try
 		{
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used, route_order) values (?,?,?,?);");
+			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used, route_order, Student) values (?,?,?,?,?);");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
 			{
@@ -486,6 +486,7 @@ public class DatabaseManager
 			//Hopefully its true(but you never know)
 			statement.setBoolean(3, isUsed);
 			statement.setInt(4, route_order);
+			statement.setBoolean(5, student);
 			
 			statement.execute();
 			JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
