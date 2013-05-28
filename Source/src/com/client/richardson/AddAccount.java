@@ -180,93 +180,119 @@ public class AddAccount extends JFrame {
 		
 		setVisible(true);
 	}
+	
+	
 	public AddAccount(login login,DatabaseManager manager) {
 		this.login=login;
 		this.manager = manager;
 		
+//=======
+//>>>>>>> origin/Nick
 		setTitle("Create Account");
 		setResizable(false);
 		
 		this.setBackground(Color.GREEN);
 		
-		setBounds(100, 100, 450, 192);
+		setBounds(100, 100, 356, 280);
 		contentPane = new JPanel();
+//<<<<<<< HEAD
+//=======
+		contentPane.setBackground(new Color(0, 102, 0));
+		//>>>>>>> origin/Nick
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JLabel lblPleaseInputA = new JLabel("Please input a username and password");
+//<<<<<<< HEAD
+//=======
+		lblPleaseInputA.setForeground(new Color(255, 255, 255));
+		//>>>>>>> origin/Nick
 		lblPleaseInputA.setBounds(71, 11, 293, 14);
 		contentPane.add(lblPleaseInputA);
 		
-		username = new JTextField();
-		username.setBounds(150, 36, 168, 20);
-		contentPane.add(username);
-		username.setColumns(10);
-		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(37, 39, 103, 14);
-		contentPane.add(lblUsername);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(36, 64, 80, 14);
-		contentPane.add(lblPassword);
-		
 		password = new JPasswordField();
-		password.setBounds(150, 67, 168, 20);
+		password.setBounds(125, 130, 195, 20);
 		contentPane.add(password);
 		password.setColumns(10);
 		
+		 rdbtnAdministrator = new JRadioButton("Administrator");
 		
-		JButton btnOk = new JButton("OK");
-		btnOk.addActionListener(new ButtonListener());
-		btnOk.setBounds(345, 130, 89, 23);
-		contentPane.add(btnOk);
+		JLabel lblUsername = new JLabel("Username:");
+		lblUsername.setForeground(new Color(255, 255, 255));
+		lblUsername.setBounds(14, 102, 103, 14);
+		contentPane.add(lblUsername);
+		
+		JLabel lblPassword = new JLabel("Password:");
+		lblPassword.setForeground(new Color(255, 255, 255));
+		lblPassword.setBounds(10, 133, 80, 14);
+		contentPane.add(lblPassword);
+		
+		
+		 btnCreate = new JButton("Create Account");
+		btnCreate.addActionListener(new ButtonListener());
+		btnCreate.setBounds(192, 218, 128, 23);
+		contentPane.add(btnCreate);
 		
 		 rdbtnAdministrator = new JRadioButton("Administrator");
+		 rdbtnAdministrator.setBackground(new Color(0, 102, 0));
+		 rdbtnAdministrator.setForeground(new Color(255, 255, 255));
+		 //>>>>>>> origin/Nick
 		buttonGroup.add(rdbtnAdministrator);
-		rdbtnAdministrator.setSelected(true);
-		rdbtnAdministrator.setBounds(71, 130, 109, 23);
+		rdbtnAdministrator.setBounds(71, 188, 109, 23);
 		contentPane.add(rdbtnAdministrator);
 		
 		JRadioButton rdbtnUser = new JRadioButton("User");
+		//<<<<<<< HEAD
+		//=======
+		rdbtnUser.setForeground(new Color(255, 255, 255));
+		rdbtnUser.setBackground(new Color(0, 102, 0));
+//>>>>>>> origin/Nick
 		rdbtnUser.setSelected(true);
-		rdbtnUser.setEnabled(false);
 		buttonGroup.add(rdbtnUser);
-		rdbtnUser.setBounds(182, 130, 109, 23);
+		rdbtnUser.setBounds(182, 188, 109, 23);
 		contentPane.add(rdbtnUser);
 		
+//<<<<<<< HEAD
 		JLabel lblReenterPassword = new JLabel("Re-enter Password");
-		lblReenterPassword.setBounds(37, 109, 103, 14);
+		lblReenterPassword.setForeground(Color.WHITE);
+		lblReenterPassword.setBounds(10, 167, 121, 14);
 		contentPane.add(lblReenterPassword);
 		
 		pre = new JPasswordField();
-		pre.setBounds(150, 103, 168, 20);
+		pre.setBounds(125, 161, 195, 20);
 		contentPane.add(pre);
 		pre.setColumns(10);
-//=======
-		lblReenterPassword = new JLabel("Re-enter Password:");
-		lblReenterPassword.setForeground(new Color(255, 255, 255));
-		lblReenterPassword.setBounds(10, 109, 130, 14);
-		contentPane.add(lblReenterPassword);
 		
-		password = new JPasswordField();
-		password.setBounds(125, 67, 195, 20);
-		contentPane.add(password);
+		btnDelete = new JButton("Delete Account");
+		btnDelete.setBounds(54, 218, 128, 23);
+		btnDelete.addActionListener(new DeleteListener());
+		contentPane.add(btnDelete);
 		
-		pre = new JPasswordField();
-		pre.setBounds(125, 103, 195, 20);
-		contentPane.add(pre);
+		username = new JTextField();
+		username.setBounds(127, 99, 193, 20);
+		contentPane.add(username);
+		username.setColumns(10);
 		
-		JButton btnDeleteAccount = new JButton("Delete Account");
-		btnDeleteAccount.setBounds(313, 7, 121, 23);
+		JLabel lblFirstName = new JLabel("First Name");
+		lblFirstName.setForeground(Color.WHITE);
+		lblFirstName.setBounds(10, 36, 107, 14);
+		contentPane.add(lblFirstName);
 		
-		contentPane.add(btnDeleteAccount);
+		JLabel lblLastName = new JLabel("Last Name");
+		lblLastName.setForeground(Color.WHITE);
+		lblLastName.setBounds(14, 77, 76, 14);
+		contentPane.add(lblLastName);
 		
+		firstName = new JTextField();
+		firstName.setBounds(125, 36, 195, 20);
+		contentPane.add(firstName);
+		firstName.setColumns(10);
 		
-       
-		
-//>>>>>>> origin/Nick
+		lastName = new JTextField();
+		lastName.setBounds(125, 68, 195, 20);
+		contentPane.add(lastName);
+		lastName.setColumns(10);
 		
 		setVisible(true);
 	}

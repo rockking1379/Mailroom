@@ -398,8 +398,8 @@ public class ScanPackage extends JFrame {
 					stopName=s.getName();
 					break;
 				}
-				selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown", "Unknown", BoxText.getText(),stopId);
-				
+				selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown@", "Unknown", BoxText.getText(),stopId);
+				manager.addPerson(selectedPerson);
 				//manager.createPerson(sps);
 				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),tDate,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 			}
