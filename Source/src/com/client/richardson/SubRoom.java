@@ -163,14 +163,13 @@ public class SubRoom extends JPanel {
     		String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
     		String L41= trackNum1.substring(trackNum1.length()-4,trackNum1.length());
     		
-     private String[] columnNames = {"First Name", "Last Name", "Box #", 
-     		"Tracking #", "Date", "Delivered", "Picked Up"};
+     private String[] columnNames = {"First Name", "Last Name", "Box #", "Tracking #", "Carrier","Date", "Delivered", "Picked Up"};
      private Vector data = new Vector();
-     public final Object[] row1 ={"Kathy", "Smith", 678, L4,  ft.format(date), delivered, picked_up };
-     public final Object[] row2 =  {"John", "Doe", 1041, L41, ft.format(date), delivered, picked_up };
-     public final Object[] row3 ={"Sue", "Black", 386, L4,  ft.format(date), delivered,picked_up };
-     public final Object[] row4 ={"Jane", "White", 1437, L41, ft.format(date), delivered, picked_up };
-     public final Object[] row5 ={"Joe", "Brown",  19, L4,  ft.format(date), delivered,  picked_up };
+     public final Object[] row1 ={"Kathy", "Smith", 678, L4, "FedEx", ft.format(date), delivered, picked_up };
+     public final Object[] row2 =  {"John", "Doe", 1041, L41, "USPS Mail", ft.format(date), delivered, picked_up };
+     public final Object[] row3 ={"Sue", "Black", 386, L4,  "FedEx Express", ft.format(date), delivered,picked_up };
+     public final Object[] row4 ={"Jane", "White", 1437, L41, "DHL", ft.format(date), delivered, picked_up };
+     public final Object[] row5 ={"Joe", "Brown",  19, L4, "FedEx", ft.format(date), delivered,  picked_up };
 
   public int getColumnCount() {
   return columnNames.length;
