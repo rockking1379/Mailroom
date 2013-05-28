@@ -5,7 +5,7 @@ public class Package
 	private String firstName;
 	private String lastName;
 	private String email;
-	private String date;
+	private java.sql.Date date;
 	private String boxNumber;
 	private String stop;
 	private String trackingNumber;
@@ -13,12 +13,12 @@ public class Package
 	private String courier;
 	
 	//Optimal
-	public Package(String firstName, String lastName, String email, String date, String boxNumber, String stop, String trackingNumber, String user, String courier)
+	public Package(String firstName, String lastName, String email, java.util.Date date, String boxNumber, String stop, String trackingNumber, String user, String courier)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  date;
+		this.date =  (java.sql.Date)date;
 		this.boxNumber = boxNumber;
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -27,12 +27,12 @@ public class Package
 	}
 	
 	//Faculty?
-	public Package(String firstName, String lastName, String email, String date, String stop, String trackingNumber, String user, String courier)
+	public Package(String firstName, String lastName, String email, java.util.Date date, String stop, String trackingNumber, String user, String courier)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  date;
+		this.date =  (java.sql.Date)date;
 		this.boxNumber = "0";
 		this.stop = stop;
 		this.trackingNumber = trackingNumber;
@@ -41,12 +41,12 @@ public class Package
 	}
 	
 	//Leave in Richardson
-	public Package(String firstName, String lastName, String email, String date, String trackingNumber, String user, String courier)
+	public Package(String firstName, String lastName, String email, java.util.Date date, String trackingNumber, String user, String courier)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
-		this.date =  date;
+		this.date =  (java.sql.Date)date;
 		this.boxNumber = "0";
 		this.stop = "RICHARDSON";
 		this.trackingNumber = trackingNumber;
@@ -67,7 +67,7 @@ public class Package
 	{
 		return email;
 	}
-	public String getDate()
+	public java.sql.Date getDate()
 	{
 		return date;
 	}

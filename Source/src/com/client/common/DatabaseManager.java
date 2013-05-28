@@ -270,7 +270,7 @@ public class DatabaseManager
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
-							rs.getString("Date"),
+							rs.getDate("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
@@ -326,7 +326,7 @@ public class DatabaseManager
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
-							rs.getString("Date"),
+							rs.getDate("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
@@ -380,7 +380,7 @@ public class DatabaseManager
 			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
-			statement.setString(2, p.getDate());
+			statement.setDate(2, p.getDate());
 			statement.setString(3, p.getEmail());
 			statement.setString(4, p.getFName());
 			statement.setString(5, p.getLName());
@@ -744,7 +744,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getString("Date"),
+						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -788,7 +788,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getString("Date"),
+						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -833,7 +833,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 					rs.getString("Last_Name"),
 					rs.getString("ASU_Email"),
-					rs.getString("Date"),
+					rs.getDate("Date"),
 					rs.getString("Box_Number"),
 					rs2.getString("Name"),
 					rs.getString("Tracking_Number"),
@@ -911,7 +911,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getString("Date"),
+						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -992,7 +992,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getString("Date"),
+						rs.getDate("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
