@@ -217,6 +217,7 @@ public class AddAccount extends JFrame {
 		password.setColumns(10);
 		
 		 rdbtnAdministrator = new JRadioButton("Administrator");
+		 rdbtnAdministrator.setSelected(true);
 		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setForeground(new Color(255, 255, 255));
@@ -237,6 +238,7 @@ public class AddAccount extends JFrame {
 		 rdbtnAdministrator = new JRadioButton("Administrator");
 		 rdbtnAdministrator.setBackground(new Color(0, 102, 0));
 		 rdbtnAdministrator.setForeground(new Color(255, 255, 255));
+		 rdbtnAdministrator.setSelected(true);
 		 //>>>>>>> origin/Nick
 		buttonGroup.add(rdbtnAdministrator);
 		rdbtnAdministrator.setBounds(71, 188, 109, 23);
@@ -245,6 +247,7 @@ public class AddAccount extends JFrame {
 		JRadioButton rdbtnUser = new JRadioButton("User");
 		//<<<<<<< HEAD
 		//=======
+		rdbtnUser.setEnabled(false);
 		rdbtnUser.setForeground(new Color(255, 255, 255));
 		rdbtnUser.setBackground(new Color(0, 102, 0));
 //>>>>>>> origin/Nick
@@ -265,6 +268,7 @@ public class AddAccount extends JFrame {
 		pre.setColumns(10);
 		
 		btnDelete = new JButton("Delete Account");
+		btnDelete.setEnabled(false);
 		btnDelete.setBounds(54, 218, 128, 23);
 		btnDelete.addActionListener(new DeleteListener());
 		contentPane.add(btnDelete);
