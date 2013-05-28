@@ -24,6 +24,8 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
+
 import com.client.common.*;
 import com.client.common.Package;
 
@@ -376,6 +378,14 @@ public class ScanPackage extends JFrame {
 			
 			Package p = null;
 			
+			try
+			{
+				String tDate =  new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(lblDate_1.getText()).toString();
+			}
+			catch(Exception e)
+			{
+				//Unknown
+			}
 			
 			if(selectedPerson==null){
 				int stopId=0;
@@ -389,10 +399,10 @@ public class ScanPackage extends JFrame {
 				selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown", "Unknown", BoxText.getText(),stopId);
 				
 				//manager.createPerson(sps);
-				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),tDate,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 			}
 			else{
-				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),date,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
+				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),tDate,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 				System.out.println(packDate);
 			}
 			
