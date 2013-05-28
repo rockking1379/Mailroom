@@ -95,7 +95,7 @@ public class Table extends JPanel {
        ArrayList<Package> undilivered = (ArrayList<Package>) manager.findPackage(false,false);
       
        for(Package p: undilivered){
-    	 // atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
+    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getDate(),p.getUser(),false});
        }
    
      /* atable.insertData(atable.row1);
