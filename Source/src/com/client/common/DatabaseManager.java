@@ -38,7 +38,7 @@ public class DatabaseManager
 	}
 	
 	///---Setup---///
-	public void setup()
+	public boolean setup()
 	{
 		if((dbLocation != null) && (fileLocation != null))
 		{
@@ -95,6 +95,8 @@ public class DatabaseManager
 			JOptionPane.showMessageDialog(null, "Error with Database Manager");
 			System.exit(0);
 		}
+		
+		return checkUser();
 	}
 	public void createPerson(String person)
 	{
@@ -338,6 +340,32 @@ public class DatabaseManager
 			}
 		}
 		
+	}
+	public boolean checkUser()
+	{
+		int index = 0;
+		try
+		{
+			Statement s = conn.createStatement();
+			ResultSet rs = s.executeQuery("select * from User");	
+			
+			while(rs.next())
+			{
+				index++;
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		if(index == 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 	
 	///---Packages---///
