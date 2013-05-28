@@ -48,7 +48,7 @@ public class Package
 		this.email = email;
 		this.date =  (java.sql.Date)date;
 		this.boxNumber = "0";
-		this.stop = "RICHARDSON";
+		this.stop = "unassigned";
 		this.trackingNumber = trackingNumber;
 		this.user = user;
 		this.courier = courier;
