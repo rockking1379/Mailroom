@@ -266,7 +266,7 @@ public class DatabaseManager
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
-							rs.getDate("Date"),
+							rs.getString("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
@@ -320,7 +320,7 @@ public class DatabaseManager
 					packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
-							rs.getDate("Date"),
+							rs.getString("Date"),
 							rs.getString("Box_Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
@@ -739,7 +739,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -783,7 +783,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -828,7 +828,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 					rs.getString("Last_Name"),
 					rs.getString("ASU_Email"),
-					rs.getDate("Date"),
+					rs.getString("Date"),
 					rs.getString("Box_Number"),
 					rs2.getString("Name"),
 					rs.getString("Tracking_Number"),
@@ -906,7 +906,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
@@ -922,7 +922,7 @@ public class DatabaseManager
 		}
 		return results;
 	}
-	public List<Package> searchPackages(String search, int location, Date beginDate, Date endDate)
+	public List<Package> searchPackages(String search, int location, String beginDate, String endDate)
 	{
 		List<Package> results = new ArrayList<Package>();
 		location = 0;//Remove later if API is enhanced
@@ -965,8 +965,8 @@ public class DatabaseManager
 					break;
 				}
 			}
-			statement.setDate(7, (java.sql.Date)beginDate);
-			statement.setDate(8, (java.sql.Date)endDate);
+			statement.setString(7, beginDate);
+			statement.setString(8, endDate);
 			
 			ResultSet rs = statement.executeQuery();
 			
@@ -987,7 +987,7 @@ public class DatabaseManager
 				results.add(new Package(rs.getString("First_Name"),
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
-						rs.getDate("Date"),
+						rs.getString("Date"),
 						rs.getString("Box_Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
