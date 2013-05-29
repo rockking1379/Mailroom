@@ -1,4 +1,4 @@
-package com.client.richardson;
+package split.mailrooms;
 
 import javax.swing.*;
 import javax.swing.event.*;
@@ -54,7 +54,7 @@ public class SubRoom extends JPanel {
     private JTable table;
     private JTextField filterText;
     private TableRowSorter<MyTableModel> sorter;
-    DatabaseManager manager;
+    private DatabaseManager manager;
     TableColumn tc;  
     MyItemListener it;  
     CheckBoxHeader cbh;  
@@ -253,9 +253,6 @@ public class SubRoom extends JPanel {
 
         add(form);
         
-        
-        final SubRoom table=this;
-        
         JButton btnAdvancedSearch = new JButton("Advanced Search");
         btnAdvancedSearch.setBounds(496, 10, 155, 23);
         form.add(btnAdvancedSearch);
@@ -263,7 +260,7 @@ public class SubRoom extends JPanel {
 	    	 
             public void actionPerformed(ActionEvent e)
             {
-                SUBAdvSearch search = new SUBAdvSearch(table);
+                SUBAdvSearch search = new SUBAdvSearch(displayTable);
                 search.setVisible(true);
             }
         });
@@ -292,8 +289,6 @@ public class SubRoom extends JPanel {
         JButton btnRefesh = new JButton("Refresh");
         btnRefesh.setBounds(645, 22, 89, 23);
         add(btnRefesh);
-        
-        btnRefesh.addActionListener(new RefreshListener());
         
         String firstStop= (String)comboBox.getSelectedItem();
         
@@ -572,57 +567,4 @@ public class SubRoom extends JPanel {
     		atable.removeRow(0);
     	}
     }
-    
-    
-    public class RefreshListener implements ActionListener{
-
-		@Override
-		public void actionPerformed(ActionEvent arg0) {
-				
-			
-		
-			updateTabel();
-				
-			
-		}
-		
-	}
-    
-    
-public void updateTabel(){
-    	
-    	for(int i=0; i<atable.getRowCount(); i++){
-    		
-    		for(Package p: inTabel){
-    			
-    			if(p.getTrackNum().equals(atable.getValueAt(i, 4))){
-    				
-    				if(!p.getStop().equals(atable.getValueAt(i,3)) || p.getDelivered()!=(boolean)atable.getValueAt(i,0)){
-    					manager.updatePackage((String)atable.getValueAt(i, 4), (boolean)atable.getValueAt(i,0),(boolean)atable.getValueAt(i,7), p.getStop());
-    					
-    				}
-    			}
-    			
-    			
-    		}
-    		
-    		
-    	}
-    	
-    	
-    	String stopSelected = (String)comboBox.getSelectedItem();
-    	manager.loadPackages(false,stopSelected);
-    	
-    	
-    	ArrayList<Package> allPacs = new ArrayList<Package>();
-    	
-    	for(Package p: manager.getPackagesFromStop(stopSelected)){
-    		allPacs.add(p);
-    	}
-    	
-    	
-    	
-    	addPackagesToTable(allPacs);
-    }
 }
-

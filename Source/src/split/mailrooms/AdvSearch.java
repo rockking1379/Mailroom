@@ -1,4 +1,4 @@
-package com.client.richardson;
+package split.mailrooms;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -26,6 +26,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -43,12 +44,10 @@ import javax.swing.JOptionPane;
 
 import com.client.common.DatabaseManager;
 import com.client.richardson.DatePicker;
-import com.client.richardson.AdvSearch.SearchListener;
-import com.client.richardson.SubRoom.MyTableModel;
 
 
 
-public class SUBAdvSearch extends JFrame {
+public class AdvSearch extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField FirstNameField;
@@ -111,9 +110,9 @@ public class SUBAdvSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	SubRoom table;
+	Table table;
 	DatabaseManager manager;
-	public SUBAdvSearch(SubRoom table) {
+	public AdvSearch(Table table) {
 		this.table=table;
 		manager = table.manager;
 		
@@ -533,7 +532,7 @@ public class SUBAdvSearch extends JFrame {
 				}
 			}
 			
-			table.addPackagesToTable(results);
+			table.setSearchResults(results);
 			dispose();
 		}
 		

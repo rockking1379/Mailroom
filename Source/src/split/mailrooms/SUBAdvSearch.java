@@ -1,4 +1,4 @@
-package com.client.richardson;
+package split.mailrooms;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
@@ -30,7 +30,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -43,7 +42,6 @@ import javax.swing.JOptionPane;
 
 import com.client.common.DatabaseManager;
 import com.client.richardson.DatePicker;
-import com.client.richardson.AdvSearch.SearchListener;
 import com.client.richardson.SubRoom.MyTableModel;
 
 
@@ -99,7 +97,7 @@ public class SUBAdvSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AdvSearch frame = new AdvSearch(new Table(null));
+					SUBAdvSearch frame = new SUBAdvSearch(table);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -111,9 +109,9 @@ public class SUBAdvSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	SubRoom table;
+	static Table table;
 	DatabaseManager manager;
-	public SUBAdvSearch(SubRoom table) {
+	public SUBAdvSearch(Table table) {
 		this.table=table;
 		manager = table.manager;
 		
@@ -192,7 +190,7 @@ public class SUBAdvSearch extends JFrame {
 	    btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {               
-            	if(!StartField.getText().equals("")&& !EndField.getText().equals("")){
+            	
                 try{
                 date=true;
                 sYear = StartField.getText();
@@ -205,7 +203,6 @@ public class SUBAdvSearch extends JFrame {
         		int ey = Integer.parseInt(eYear);
         		boolean i = s<=ey;
         		dateCheck();
-        		
         		if(i==false||date==false){
         			Component frame = null;
 					JOptionPane.showMessageDialog(frame,
@@ -221,11 +218,9 @@ public class SUBAdvSearch extends JFrame {
                 		    JOptionPane.ERROR_MESSAGE);
 					
                 }
-            
-            
+                
             }
-            }
-	    });
+        });
 		
 		
 		lblTracking = new JLabel("Tracking # :");
@@ -250,18 +245,6 @@ public class SUBAdvSearch extends JFrame {
 		chckbxPickedUp.setBounds(376, 60, 83, 23);
 		contentPane.add(chckbxPickedUp);
 		
-		chckbxPickedUp.addItemListener(new ItemListener(){
-
-			@Override
-			public void itemStateChanged(ItemEvent arg0) {
-				if(chckbxPickedUp.isSelected()==true && chckbxDelivered.isSelected()==false){
-					chckbxDelivered.setSelected(true);
-				}
-				
-			}
-			
-		});
-		
 		StopBox = new JComboBox();
 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
 		ArrayList<String> stopNames = new ArrayList<String>();
@@ -272,10 +255,8 @@ public class SUBAdvSearch extends JFrame {
 			stopNames.add(s.getName());
 		}
 		
-		Object[] blah = stopNames.toArray();
-		Arrays.sort(blah);
 		
-		StopBox.setModel(new DefaultComboBoxModel(blah));
+		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
 		StopBox.setSelectedItem("All Stops");
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);
@@ -533,7 +514,7 @@ public class SUBAdvSearch extends JFrame {
 				}
 			}
 			
-			table.addPackagesToTable(results);
+			table.setSearchResults(results);
 			dispose();
 		}
 		
