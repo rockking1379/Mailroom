@@ -104,7 +104,7 @@ public class AddAccount extends JFrame {
 		
 		JLabel lblUsername = new JLabel("Username:");
 		lblUsername.setForeground(new Color(255, 255, 255));
-		lblUsername.setBounds(14, 102, 103, 14);
+		lblUsername.setBounds(10, 102, 103, 14);
 		contentPane.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password:");
@@ -140,7 +140,7 @@ public class AddAccount extends JFrame {
 //<<<<<<< HEAD
 		JLabel lblReenterPassword = new JLabel("Re-enter Password");
 		lblReenterPassword.setForeground(Color.WHITE);
-		lblReenterPassword.setBounds(10, 167, 121, 14);
+		lblReenterPassword.setBounds(10, 166, 121, 14);
 		contentPane.add(lblReenterPassword);
 		
 		pre = new JPasswordField();
@@ -160,12 +160,12 @@ public class AddAccount extends JFrame {
 		
 		JLabel lblFirstName = new JLabel("First Name");
 		lblFirstName.setForeground(Color.WHITE);
-		lblFirstName.setBounds(10, 36, 107, 14);
+		lblFirstName.setBounds(10, 39, 107, 14);
 		contentPane.add(lblFirstName);
 		
 		JLabel lblLastName = new JLabel("Last Name");
 		lblLastName.setForeground(Color.WHITE);
-		lblLastName.setBounds(14, 77, 76, 14);
+		lblLastName.setBounds(10, 71, 76, 14);
 		contentPane.add(lblLastName);
 		
 		firstName = new JTextField();
