@@ -609,6 +609,7 @@ public class DatabaseManager
 						break;
 					}
 				}
+				statement.execute();
 		}
 		catch(Exception e)
 		{
