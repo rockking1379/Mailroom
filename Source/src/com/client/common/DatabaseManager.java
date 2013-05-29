@@ -375,7 +375,7 @@ public class DatabaseManager
 			//Create Insertion String
 			PreparedStatement statement = null;
 			
-			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
+			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
 			statement.setString(2, p.getDate());
