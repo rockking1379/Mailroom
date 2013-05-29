@@ -308,13 +308,16 @@ public class DatabaseManager
 			try
 			{
 				PreparedStatement statement = null;				
-				statement = conn.prepareStatement("select * from Package where stop_id=? and Picked_Up='0';");
+				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=? and Picked_Up='0';");
+				Date d = new Date();
+				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+				statement.setString(1, date);
 			
 				for(int i = 0; i < stops.size(); i++)
 				{
 					if(stops.get(i).getName().equals(stop))
 					{
-						statement.setInt(1, stops.get(i).getID());
+						statement.setInt(2, stops.get(i).getID());
 						break;
 					}
 				}
