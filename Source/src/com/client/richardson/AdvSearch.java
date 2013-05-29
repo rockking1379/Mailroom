@@ -247,6 +247,18 @@ public class AdvSearch extends JFrame {
 		chckbxPickedUp.setBounds(376, 60, 83, 23);
 		contentPane.add(chckbxPickedUp);
 		
+		chckbxPickedUp.addItemListener(new ItemListener(){
+
+			@Override
+			public void itemStateChanged(ItemEvent arg0) {
+				if(chckbxPickedUp.isSelected()==true && chckbxDelivered.isSelected()==false){
+					chckbxDelivered.setSelected(true);
+				}
+				
+			}
+			
+		});
+		
 		StopBox = new JComboBox();
 		ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
 		ArrayList<String> stopNames = new ArrayList<String>();
