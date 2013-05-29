@@ -208,7 +208,7 @@ public class SubRoom extends JPanel {
  
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 11, 641, 435);
+        scrollPane.setBounds(10, 67, 641, 435);
  
         //Add the scroll pane to this panel.
         add(scrollPane);
@@ -216,15 +216,15 @@ public class SubRoom extends JPanel {
         //Create a separate form for filterText and statusText
         JPanel form = new JPanel();
         form.setBackground(new Color(0, 102, 0));
-        form.setBounds(0, 449, 661, 62);
+        form.setBounds(0, 513, 661, 62);
         form.setLayout(null);
         JLabel l1 = new JLabel("Search:", SwingConstants.LEFT);
         l1.setFont(new Font("Tahoma", Font.PLAIN, 12));
         l1.setForeground(new Color(255, 255, 255));
-        l1.setBounds(10, 26, 86, 20);
+        l1.setBounds(10, 10, 86, 20);
         form.add(l1);
         filterText = new JTextField();
-        filterText.setBounds(73, 25, 210, 20);
+        filterText.setBounds(73, 11, 210, 20);
         //Whenever filterText changes, invoke newFilter.
         filterText.getDocument().addDocumentListener(
                 new DocumentListener() {
@@ -244,7 +244,7 @@ public class SubRoom extends JPanel {
         add(form);
         
         JButton btnAdvancedSearch = new JButton("Advanced Search");
-        btnAdvancedSearch.setBounds(385, 22, 155, 23);
+        btnAdvancedSearch.setBounds(382, 10, 155, 23);
         form.add(btnAdvancedSearch);
         btnAdvancedSearch.addActionListener(new ActionListener() {
 	    	 
@@ -256,8 +256,18 @@ public class SubRoom extends JPanel {
         });
         
         JButton btnRefesh = new JButton("Refresh");
-        btnRefesh.setBounds(562, 22, 89, 23);
+        btnRefesh.setBounds(562, 10, 89, 23);
         form.add(btnRefesh);
+        
+        JLabel lblPleaseSelectA = new JLabel("Please Select a Stop: ");
+        lblPleaseSelectA.setForeground(Color.WHITE);
+        lblPleaseSelectA.setFont(new Font("Tahoma", Font.PLAIN, 12));
+        lblPleaseSelectA.setBounds(117, 25, 136, 14);
+        add(lblPleaseSelectA);
+        
+        JComboBox comboBox = new JComboBox();
+        comboBox.setBounds(268, 23, 174, 20);
+        add(comboBox);
     }
  
     /** 
@@ -358,7 +368,7 @@ public class SubRoom extends JPanel {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Student Union Mail Room");
-        frame.setSize(665, 525);
+        frame.setSize(667, 590);
         //ImageIcon icon= new ImageIcon(frame.getClass().getResource("/image/Untitled.jpg"));
 		//frame.setIconImage(icon.getImage());
        
