@@ -380,8 +380,7 @@ public class ScanPackage extends JFrame {
 			Package p = null;
 			
 			
-			
-			if(TrackText.getText().equals("") || BoxText.getText().equals("") || NameText.getText().equals("") || LastNameText.getText().equals("")){
+			if(TrackText.getText().length()<4 ||  NameText.getText().equals("") || LastNameText.getText().equals("")){
 				JOptionPane.showMessageDialog(null,"You have empty fields. Please be fure you have entered information for all the above fields.");
 				return;
 			}
