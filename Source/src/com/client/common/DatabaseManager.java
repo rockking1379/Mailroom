@@ -335,7 +335,7 @@ public class DatabaseManager
 					statement.setInt(1, rs.getInt("stop_id"));
 					ResultSet rs2 = statement.executeQuery();
 					
-					statement = readConn.prepareStatement("select Name from User where user_id=?;");
+					statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 					statement.setInt(1, rs.getInt("processor"));
 					ResultSet rs3 = statement.executeQuery();
 					
