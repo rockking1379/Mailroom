@@ -19,6 +19,7 @@ import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
@@ -280,10 +281,12 @@ public class SubRoom extends JPanel {
         
         ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
         String[] names = new String[stops.size()];
+       
         
         for(Stop s: stops){
-        	names[stops.indexOf(s)]=s.getName();
+        	names[stops.indexOf(s)]=s.getName(); 
         }
+        Arrays.sort(names);
         comboBox.setModel(new DefaultComboBoxModel(names));
         
         comboBox.addItemListener(new StopListener());
