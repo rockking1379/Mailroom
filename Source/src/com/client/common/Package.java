@@ -11,6 +11,8 @@ public class Package
 	private String trackingNumber;
 	private String user;
 	private String courier;
+	private boolean delivered;
+	private boolean pickedUp;
 	
 	//Optimal
 	public Package(String firstName, String lastName, String email, String date, String boxNumber, String stop, String trackingNumber, String user, String courier)
@@ -90,5 +92,27 @@ public class Package
 	public String getUser()
 	{
 		return user;
+	}
+	public boolean getDelivered()
+	{
+		return delivered;
+	}
+	public boolean getPickedUp()
+	{
+		return pickedUp;
+	}
+	
+	///---Set Methods---///
+	public void setStop(String name)
+	{
+		this.stop = name;
+	}
+	public void setDelivered(boolean delivered)
+	{
+		this.delivered = delivered;
+	}
+	public void setPickedUp(boolean pickedUp)
+	{
+		this.pickedUp = pickedUp;
 	}
 }
