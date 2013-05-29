@@ -823,7 +823,7 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Number like ?");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
 			switch(location)
 			{
 				case 0://Contains
@@ -903,7 +903,7 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Number like ? where Date between ? and ?");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? where Date between ? and ?");
 			switch(location)
 			{
 				case 0://Contains
