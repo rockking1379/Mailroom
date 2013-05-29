@@ -603,7 +603,7 @@ public class DatabaseManager
 				statement.setString(5, p.getBox());
 				for(int i = 0; i < stops.size(); i++)
 				{
-					if(stops.get(i).getName().equals(p.getStop()) || stops.get(i).getID() == Integer.valueOf(p.getStop()))
+					if(stops.get(i).getName().equals(p.getStop()))
 					{
 						statement.setInt(6, stops.get(i).getID());
 						break;
@@ -621,20 +621,20 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Person set First_Name=?, Last_Name=?, ASU_Email=?, Number=?, stop_id=? where ID_Number=?;");
-			statement.setString(1, p.getFirstName());
-			statement.setString(2, p.getLastName());
-			statement.setString(3, p.getEmail());
-			statement.setString(4, p.getBox());
+			PreparedStatement statement = conn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where Frist_Name=? and Last_Name=? and Number=?;");
+			statement.setString(1, p.getEmail());
 			for(int i = 0; i < stops.size(); i++)
 			{
 				if(stops.get(i).getName().equals(p.getStop()))
 				{
-					statement.setInt(5, stops.get(i).getID());
+					statement.setInt(2, stops.get(i).getID());
 					break;
 				}
 			}
-			statement.setString(6, p.getID());
+			statement.setString(3, p.getID());
+			statement.setString(4, p.getFirstName());
+			statement.setString(5, p.getLastName());
+			statement.setString(6, p.getBox());
 		}
 		catch(Exception e)
 		{
