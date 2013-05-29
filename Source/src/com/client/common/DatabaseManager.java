@@ -621,7 +621,7 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update FacStaff set First_Name=?, Last_Name=?, ASU_Email=?, Suite_Number=?, stop_id=? where ID_Number=?;");
+			PreparedStatement statement = conn.prepareStatement("update Person set First_Name=?, Last_Name=?, ASU_Email=?, Number=?, stop_id=? where ID_Number=?;");
 			statement.setString(1, p.getFirstName());
 			statement.setString(2, p.getLastName());
 			statement.setString(3, p.getEmail());
@@ -1001,7 +1001,7 @@ public class DatabaseManager
 				String email = rs.getString("ASU_Email");
 				String fName = rs.getString("First_Name");
 				String lName = rs.getString("Last_Name");
-				String suite = rs.getString("Suite_Number");
+				String suite = rs.getString("Number");
 				String stop = "";
 				for(int i = 0; i < stops.size(); i++)
 				{
@@ -1041,7 +1041,7 @@ public class DatabaseManager
 				String email = rs.getString("ASU_Email");
 				String fName = rs.getString("First_Name");
 				String lName = rs.getString("Last_Name");
-				String suite = rs.getString("Suite_Number");
+				String suite = rs.getString("Number");
 				String stop = "";
 				for(int i = 0; i < stops.size(); i++)
 				{
