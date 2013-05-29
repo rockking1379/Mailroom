@@ -379,6 +379,14 @@ public class ScanPackage extends JFrame {
 			String tDate = newDate;
 			Package p = null;
 			
+			
+			
+			if(TrackText.getText().equals("") || BoxText.getText().equals("") || NameText.getText().equals("") || LastNameText.getText().equals("")){
+				JOptionPane.showMessageDialog(null,"You have empty fields. Please be fure you have entered information for all the above fields.");
+				return;
+			}
+			
+			
 			try
 			{
 				tDate = newDate;
@@ -438,9 +446,10 @@ public class ScanPackage extends JFrame {
 			}
 			else{
 			selectedPerson=p.get(0);
-			selectedPerson.setStop("AAO");
 			BoxText.setText(selectedPerson.getBox());
 			comboBox.setSelectedItem(selectedPerson.getStop());
+			NameText.setText(selectedPerson.getFirstName());
+			LastNameText.setText(selectedPerson.getLastName());
 			}
 				
 			}
