@@ -27,6 +27,20 @@ public class Package
 		this.user = user;
 		this.courier = courier;
 	}
+	public Package(String firstName, String lastName, String email, String date, String boxNumber, String stop, String trackingNumber, String user, String courier, boolean delivered, boolean pickedUp)
+	{
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.date =  date;
+		this.boxNumber = boxNumber;
+		this.stop = stop;
+		this.trackingNumber = trackingNumber;
+		this.user = user;
+		this.courier = courier;
+		this.delivered = delivered;
+		this.pickedUp = pickedUp;
+	}
 	
 	//Faculty?
 	public Package(String firstName, String lastName, String email, String date, String stop, String trackingNumber, String user, String courier)
