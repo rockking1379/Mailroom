@@ -24,6 +24,7 @@ import java.awt.event.WindowEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 import com.client.common.*;
@@ -207,6 +208,7 @@ public class ScanPackage extends JFrame {
 			sa[stops.indexOf(s)]= s.getName();
 			
 		}
+		Arrays.sort(sa);
 		 stopNames = new DefaultComboBoxModel(sa);
 		}
 		catch(NegativeArraySizeException ex){
@@ -294,7 +296,7 @@ public class ScanPackage extends JFrame {
 		for(Courier c: manager.getCouriers()){
 			ca[manager.getCouriers().indexOf(c)]=c.getName();
 		}
-		
+		Arrays.sort(ca);
 		comboBox_1.setModel(new DefaultComboBoxModel(ca));
 		contentPane.add(comboBox_1);
 		
