@@ -635,6 +635,8 @@ public class DatabaseManager
 			statement.setString(4, p.getFirstName());
 			statement.setString(5, p.getLastName());
 			statement.setString(6, p.getBox());
+			
+			statement.execute();
 		}
 		catch(Exception e)
 		{
