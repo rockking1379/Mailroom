@@ -1321,6 +1321,33 @@ public class DatabaseManager
 		}
 		
 	}
+	public boolean verifyUser(String username)
+	{
+		int index = 0;
+		try
+		{
+			PreparedStatement s = conn.prepareStatement("select * from User where User_Name=?;");
+			s.setString(1, username);
+			ResultSet rs = s.executeQuery();	
+			
+			while(rs.next())
+			{
+				index++;
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		if(index == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 	public void createUser(User u, int password)
 	{
 		try
