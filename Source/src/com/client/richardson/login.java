@@ -304,7 +304,8 @@ public class login extends JFrame {
 			{
 				//Ignore the exceptions
 			}
-			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");
+			System.exit(0);
 		}
 	}
 	
