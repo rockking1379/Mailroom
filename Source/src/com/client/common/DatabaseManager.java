@@ -663,7 +663,7 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where Frist_Name=? and Last_Name=? and Number=?;");
+			PreparedStatement statement = conn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where First_Name=? and Last_Name=? and Number=?;");
 			statement.setString(1, p.getEmail());
 			for(int i = 0; i < stops.size(); i++)
 			{
