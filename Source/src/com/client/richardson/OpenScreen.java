@@ -191,7 +191,7 @@ public class OpenScreen extends JFrame {
 	         
 	         JButton btnPrint = new JButton("Print");
 	         btnPrint.setBounds(20, 317, 121, 23);
-	         contentPane.add(btnPrint);
+	        // contentPane.add(btnPrint);
 	         
 	         JLabel lblLoggedInAs = new JLabel("Logged in as: "+ loggedIn);
 	         lblLoggedInAs.setForeground(Color.WHITE);
