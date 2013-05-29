@@ -86,7 +86,7 @@ public class RoutePrint extends JFrame {
 		
 		for(Route r: routes){
 			JCheckBox ch=new JCheckBox(r.getName());
-			ch.setBackground(new Color(0,255,0));
+			ch.setBackground(new Color(51, 204, 0));
 			checkBoxes.add(ch);
 		}
 		

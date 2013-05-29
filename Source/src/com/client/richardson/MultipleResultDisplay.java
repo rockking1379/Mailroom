@@ -75,12 +75,14 @@ public class MultipleResultDisplay extends JFrame {
 		btnSelect.setBounds(307, 175, 89, 23);
 		contentPane.add(btnSelect);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		
+		JPanel resultPanel = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(resultPanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(21, 84, 361, 80);
 		contentPane.add(scrollPane);
 		
-		JPanel resultPanel = new JPanel();
-		scrollPane.setViewportView(resultPanel);
+		
+		//scrollPane.setViewportView(resultPanel);
 		resultPanel.setForeground(Color.WHITE);
 		resultPanel.setBackground(new Color(51, 204, 0));
 		resultPanel.setLayout(new GridLayout(0, 2, 0, 0));
