@@ -18,7 +18,8 @@ public class DatabaseManager
 	private List<Package> packages;
 	private String dbLocation;
 	private String fileLocation;
-	private Connection conn;
+	private Connection readConn;
+	private Connection writeConn;
 	private boolean isSetup = false;
 	
 	///---Constructor(s)---///
@@ -52,7 +53,7 @@ public class DatabaseManager
 			try 
 			{
 				Class.forName("org.sqlite.JDBC");
-				conn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				//readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				if(!people.exists())
 				{
 					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
@@ -171,7 +172,8 @@ public class DatabaseManager
 		routes = new ArrayList<Route>();
 		try
 		{
-			Statement statement = conn.createStatement();
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement statement = readConn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from Route");
 			while(rs.next())
 			{
@@ -179,6 +181,7 @@ public class DatabaseManager
 				int id = rs.getInt("route_id");
 				routes.add(new Route(name, id));
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -191,7 +194,8 @@ public class DatabaseManager
 		stops = new ArrayList<Stop>();
 		try
 		{
-			Statement statement = conn.createStatement();
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement statement = readConn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from Stop;");
 			while(rs.next())
 			{
@@ -202,6 +206,7 @@ public class DatabaseManager
 				boolean student = rs.getBoolean("Student");
 				stops.add(new Stop(name, route, id, order, student));
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -214,7 +219,8 @@ public class DatabaseManager
 		
 		try
 		{
-			Statement statement = conn.createStatement();
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement statement = readConn.createStatement();
 			ResultSet rs = statement.executeQuery("select * from Courier where Is_Used=1;");
 			while(rs.next())
 			{
@@ -222,6 +228,7 @@ public class DatabaseManager
 				int id = rs.getInt("courier_id");
 				couriers.add(new Courier(name, id));
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -246,21 +253,21 @@ public class DatabaseManager
 		{
 			try
 			{
-				 
-				PreparedStatement statement = conn.prepareStatement("select * from Package where At_Stop='0' and Picked_Up='0';");			
+				readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				PreparedStatement statement = readConn.prepareStatement("select * from Package where At_Stop='0' and Picked_Up='0';");			
 				ResultSet rs = statement.executeQuery();
 				
 				while(rs.next())
 				{
-					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+					statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 					statement.setInt(1, rs.getInt("stop_id"));
 					ResultSet rs2 = statement.executeQuery();
 					
-					statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+					statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 					statement.setInt(1, rs.getInt("processor"));
 					ResultSet rs3 = statement.executeQuery();
 					
-					statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+					statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 					statement.setInt(1, rs.getInt("courier_id"));
 					ResultSet rs4 = statement.executeQuery();
 					
@@ -296,6 +303,7 @@ public class DatabaseManager
 								));
 					}
 				}
+				readConn.close();
 			}
 			catch(Exception e)
 			{
@@ -306,8 +314,9 @@ public class DatabaseManager
 		{
 			try
 			{
+				readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 				PreparedStatement statement = null;				
-				statement = conn.prepareStatement("select * from Package where stop_id=? and Picked_Up='0';");
+				statement = readConn.prepareStatement("select * from Package where stop_id=? and Picked_Up='0';");
 			
 				for(int i = 0; i < stops.size(); i++)
 				{
@@ -322,15 +331,15 @@ public class DatabaseManager
 				
 				while(rs.next())
 				{
-					statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+					statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 					statement.setInt(1, rs.getInt("stop_id"));
 					ResultSet rs2 = statement.executeQuery();
 					
-					statement = conn.prepareStatement("select Name from User where user_id=?;");
+					statement = readConn.prepareStatement("select Name from User where user_id=?;");
 					statement.setInt(1, rs.getInt("processor"));
 					ResultSet rs3 = statement.executeQuery();
 					
-					statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+					statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 					statement.setInt(1, rs.getInt("courier_id"));
 					ResultSet rs4 = statement.executeQuery();
 					
@@ -366,6 +375,7 @@ public class DatabaseManager
 								));
 					}
 				}
+				readConn.close();
 			}
 			catch(Exception e)
 			{
@@ -384,13 +394,15 @@ public class DatabaseManager
 		int index = 0;
 		try
 		{
-			Statement s = conn.createStatement();
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement s = readConn.createStatement();
 			ResultSet rs = s.executeQuery("select * from User where Active=1;");	
 			
 			while(rs.next())
 			{
 				index++;
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -412,9 +424,9 @@ public class DatabaseManager
 		try
 		{
 			//Create Insertion String
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			
-			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
+			statement = writeConn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
 			statement.setString(2, p.getDate());
@@ -433,7 +445,7 @@ public class DatabaseManager
 				}
 			}
 			
-			PreparedStatement s2 = conn.prepareStatement("select courier_id from Courier where Name=?;");
+			PreparedStatement s2 = writeConn.prepareStatement("select courier_id from Courier where Name=?;");
 			s2.setString(1, p.getCourier());
 			ResultSet rs = s2.executeQuery();
 			while(rs.next())
@@ -441,7 +453,7 @@ public class DatabaseManager
 				statement.setInt(10, rs.getInt("courier_id"));
 			}
 			
-			s2 = conn.prepareStatement("select user_id from User where User_Name=?;");
+			s2 = writeConn.prepareStatement("select user_id from User where User_Name=?;");
 			s2.setString(1, p.getUser());
 			rs = s2.executeQuery();
 			while(rs.next())
@@ -450,7 +462,8 @@ public class DatabaseManager
 			}
 			
 			statement.execute();
-			
+			statement.close();
+			writeConn.close();
 			packages.add(p);
 		}
 		catch(Exception e)
@@ -463,12 +476,13 @@ public class DatabaseManager
 	{
 		try
 		{
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
+			statement = writeConn.prepareStatement("select At_Stop from Package where Tracking_Number=?;");
 			ResultSet rs = statement.executeQuery();
 			if(rs.getBoolean("At_Stop"))
 			{
-				statement = conn.prepareStatement("update Package set Picked_Up=?, Pick_Up_Date=? where Tracking_Number=?;");
+				statement = writeConn.prepareStatement("update Package set Picked_Up=?, Pick_Up_Date=? where Tracking_Number=?;");
 				statement.setBoolean(1, value);
 				Date d = new Date();
 				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
@@ -478,12 +492,13 @@ public class DatabaseManager
 			}
 			else
 			{
-				statement = conn.prepareStatement("update Package set At_Stop=? where Tracking_Number=?;");
+				statement = writeConn.prepareStatement("update Package set At_Stop=? where Tracking_Number=?;");
 				statement.setBoolean(1, value);
 				statement.setString(2, tNumber);
 				statement.execute();
 			}
 			statement.close();
+			writeConn.close();
 		}
 		catch(Exception e)
 		{
@@ -494,8 +509,9 @@ public class DatabaseManager
 	{
 		try
 		{
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number=?;");
+			statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number=?;");
 			Date d = new Date();
 			java.sql.Date sDate = new java.sql.Date(d.getTime());
 			statement.setBoolean(1, atStop);
@@ -511,6 +527,8 @@ public class DatabaseManager
 			}
 			statement.setString(5, tNumber);
 			statement.execute();
+			statement.close();
+			writeConn.close();
 		}
 		catch(Exception e)
 		{
@@ -523,8 +541,9 @@ public class DatabaseManager
 	{
 		try
 		{
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("insert into Stop(Name, route_id, Is_Used, route_order, Student) values (?,?,?,?,?);");
+			statement = writeConn.prepareStatement("insert into Stop(Name, route_id, Is_Used, route_order, Student) values (?,?,?,?,?);");
 			statement.setString(1, name);
 			for(int i = 0; i < routes.size(); i++)
 			{
@@ -540,6 +559,8 @@ public class DatabaseManager
 			statement.setBoolean(5, student);
 			
 			statement.execute();
+			statement.close();
+			writeConn.close();
 			JOptionPane.showMessageDialog(null, "Stop " + name + " Added");
 			loadStops();
 		}
@@ -553,7 +574,8 @@ public class DatabaseManager
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Stop set Name=?, Is_Used=?, route_id=?, route_order=? where stop_id=?;");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = writeConn.prepareStatement("update Stop set Name=?, Is_Used=?, route_id=?, route_order=? where stop_id=?;");
 			statement.setString(1, name);
 			//Hopefully its true(but you never know)
 			statement.setBoolean(2, isUsed);
@@ -576,6 +598,8 @@ public class DatabaseManager
 			}
 			
 			statement.execute();
+			statement.close();
+			writeConn.close();
 		}
 		catch(Exception e)
 		{
@@ -591,10 +615,13 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			statement = conn.prepareStatement("insert into Route(Name) values(?);");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = writeConn.prepareStatement("insert into Route(Name) values(?);");
 			statement.setString(1, route);
 			statement.execute();
 			loadRoutes();
+			statement.close();
+			writeConn.close();
 			JOptionPane.showMessageDialog(null,"Route Created");
 		}
 		catch(Exception e)
@@ -607,10 +634,13 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			statement = conn.prepareStatement("update Routes Route(Name) set Name=? where Name=?;");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = writeConn.prepareStatement("update Routes Route(Name) set Name=? where Name=?;");
 			statement.setString(1, currentName);
 			statement.setString(2, previousName);
 			statement.execute();
+			statement.close();
+			writeConn.close();
 			JOptionPane.showMessageDialog(null, "Updated " + previousName + " to " + currentName);
 			for(int i = 0; i < routes.size(); i++)
 			{
@@ -633,8 +663,8 @@ public class DatabaseManager
 		//Do Person logic
 		try
 		{
-				
-				PreparedStatement statement = conn.prepareStatement("insert into Person(ID_Number, ASU_Email, First_Name, Last_Name, Number, stop_id) values(?,?,?,?,?,?);");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				PreparedStatement statement = writeConn.prepareStatement("insert into Person(ID_Number, ASU_Email, First_Name, Last_Name, Number, stop_id) values(?,?,?,?,?,?);");
 				statement.setString(1, p.getID());
 				statement.setString(2, p.getEmail());
 				statement.setString(3, p.getFirstName());
@@ -649,6 +679,8 @@ public class DatabaseManager
 					}
 				}
 				statement.execute();
+				statement.close();
+				writeConn.close();
 		}
 		catch(Exception e)
 		{
@@ -660,7 +692,8 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where First_Name=? and Last_Name=? and Number=?;");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = writeConn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where First_Name=? and Last_Name=? and Number=?;");
 			statement.setString(1, p.getEmail());
 			for(int i = 0; i < stops.size(); i++)
 			{
@@ -676,6 +709,8 @@ public class DatabaseManager
 			statement.setString(6, p.getBox());
 			
 			statement.execute();
+			statement.close();
+			writeConn.close();
 		}
 		catch(Exception e)
 		{
@@ -688,11 +723,14 @@ public class DatabaseManager
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("insert into Courier(Name, Is_Used) values(?,?);");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = writeConn.prepareStatement("insert into Courier(Name, Is_Used) values(?,?);");
 			statement.setString(1, courier);
 			statement.setBoolean(2, isUsed);
 			
 			statement.execute();
+			statement.close();
+			writeConn.close();
 			JOptionPane.showMessageDialog(null, "Courier " + courier + " Added");
 			loadCouriers();
 		}
@@ -706,9 +744,12 @@ public class DatabaseManager
 		//facade for deleting a courier
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Courier set Is_Used=?;");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = writeConn.prepareStatement("update Courier set Is_Used=?;");
 			statement.setBoolean(1, false);
 			statement.execute();
+			statement.close();
+			writeConn.close();
 			JOptionPane.showMessageDialog(null, "Courier " + courier + " Removed");
 		}
 		catch(Exception e)
@@ -725,22 +766,23 @@ public class DatabaseManager
 		PreparedStatement statement = null;
 		try
 		{
-			statement = conn.prepareStatement("select * from Package where Date between ? and ?;");
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			statement = readConn.prepareStatement("select * from Package where Date between ? and ?;");
 			statement.setString(1, beginDate);
 			statement.setString(2, endDate);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next())
 			{
-				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
@@ -776,6 +818,7 @@ public class DatabaseManager
 							));
 				}
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -790,22 +833,23 @@ public class DatabaseManager
 		
 		try
 		{
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("select * from Package where Tracking_Number like ?;");
+			statement = readConn.prepareStatement("select * from Package where Tracking_Number like ?;");
 			statement.setString(1, tNumber);
 			ResultSet rs = statement.executeQuery();
 			
 			while(rs.next())
 			{
-				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
@@ -841,6 +885,7 @@ public class DatabaseManager
 							));
 				}
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -855,7 +900,8 @@ public class DatabaseManager
 		
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where At_Stop=? and Picked_Up=?;");
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = readConn.prepareStatement("select * from Package where At_Stop=? and Picked_Up=?;");
 			statement.setBoolean(1, delivered);
 			statement.setBoolean(2, pickedUp);
 		
@@ -863,15 +909,15 @@ public class DatabaseManager
 		
 			while(rs.next())
 			{
-				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 			
-				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 			
-				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 			
@@ -907,6 +953,7 @@ public class DatabaseManager
 							));
 				}
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -921,7 +968,8 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = readConn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
 			switch(location)
 			{
 				case 0://Contains
@@ -962,15 +1010,15 @@ public class DatabaseManager
 			
 			while(rs.next())
 			{
-				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
@@ -1006,6 +1054,7 @@ public class DatabaseManager
 							));
 				}
 			}
+			readConn.close();
 			
 		}
 		catch(Exception e)
@@ -1020,7 +1069,8 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? where Date between ? and ?");
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = readConn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? where Date between ? and ?");
 			switch(location)
 			{
 				case 0://Contains
@@ -1064,15 +1114,15 @@ public class DatabaseManager
 			
 			while(rs.next())
 			{
-				statement = conn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
 				statement.setInt(1, rs.getInt("stop_id"));
 				ResultSet rs2 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select User_Name from User where user_id=?;");
+				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
 				statement.setInt(1, rs.getInt("processor"));
 				ResultSet rs3 = statement.executeQuery();
 				
-				statement = conn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
 				statement.setInt(1, rs.getInt("courier_id"));
 				ResultSet rs4 = statement.executeQuery();
 				
@@ -1108,6 +1158,7 @@ public class DatabaseManager
 							));
 				}
 			}
+			readConn.close();
 			
 		}
 		catch(Exception e)
@@ -1124,9 +1175,10 @@ public class DatabaseManager
 		
 		try
 		{
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			firstName = "%" + firstName + "%";
 			lastName = "%" + lastName + "%";
-			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ?;");
+			PreparedStatement statement = readConn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			ResultSet rs = statement.executeQuery();
@@ -1149,6 +1201,7 @@ public class DatabaseManager
 				
 				results.add(new Person(fName, lName, email, idNumber, suite, stop));
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -1163,9 +1216,10 @@ public class DatabaseManager
 		
 		try
 		{
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			firstName = "%" + firstName + "%";
 			lastName = "%" + lastName + "%";
-			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Number=?;");
+			PreparedStatement statement = readConn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Number=?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			statement.setString(3, boxNumber);
@@ -1189,6 +1243,7 @@ public class DatabaseManager
 				
 				results.add(new Person(fName, lName, email, idNumber, suite, stop));
 			}
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -1261,7 +1316,7 @@ public class DatabaseManager
 	{
 		try
 		{
-			conn.close();
+			readConn.close();
 		}
 		catch(Exception e)
 		{
@@ -1293,7 +1348,8 @@ public class DatabaseManager
 		
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from User where User_Name=? and Password=? and Active=1;");
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = readConn.prepareStatement("select * from User where User_Name=? and Password=? and Active=1;");
 			statement.setString(1, username);
 			statement.setInt(2, password);
 			ResultSet rs = statement.executeQuery();
@@ -1308,7 +1364,7 @@ public class DatabaseManager
 			}
 			statement.close();
 			rs.close();
-			
+			readConn.close();
 			return u;
 		}
 		catch(Exception e)
@@ -1323,14 +1379,16 @@ public class DatabaseManager
 		int index = 0;
 		try
 		{
-			PreparedStatement s = conn.prepareStatement("select * from User where User_Name=? and Active=1;");
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement s = readConn.prepareStatement("select * from User where User_Name=? and Active=1;");
 			s.setString(1, username);
 			ResultSet rs = s.executeQuery();	
-			
+			readConn.close();
 			while(rs.next())
 			{
 				index++;
 			}
+			s.close();
 		}
 		catch(Exception e)
 		{
@@ -1349,7 +1407,8 @@ public class DatabaseManager
 	{
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("insert into User(User_Name, First_Name,Last_Name,Password, Admin,Active) values(?,?,?,?,?,1);");
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = writeConn.prepareStatement("insert into User(User_Name, First_Name,Last_Name,Password, Admin,Active) values(?,?,?,?,?,1);");
 			statement.setString(1, u.getUser());
 			statement.setString(2, u.getFName());
 			statement.setString(3, u.getLName());
@@ -1358,6 +1417,7 @@ public class DatabaseManager
 			
 			statement.execute();
 			statement.close();
+			writeConn.close();
 		}
 		catch(Exception e)
 		{
@@ -1373,10 +1433,12 @@ public class DatabaseManager
 				//Execute a statement
 				try
 				{
-					PreparedStatement statement = conn.prepareStatement("update User set Active=0 where User_Name=?;");
+					writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+					PreparedStatement statement = writeConn.prepareStatement("update User set Active=0 where User_Name=?;");
 					statement.setString(1,username);
 					statement.execute();
 					statement.close();
+					writeConn.close();
 					JOptionPane.showMessageDialog(null, "User " + username + " Deleted");
 				}
 				catch(Exception e)
