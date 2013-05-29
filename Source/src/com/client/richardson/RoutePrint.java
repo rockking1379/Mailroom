@@ -136,7 +136,7 @@ public class RoutePrint extends JFrame {
 		
 		scrollPane.setViewportView(rtHolder_1);
 		
-		rtHolder_1.setBackground(new Color(0,255,0));
+		rtHolder_1.setBackground(new Color(51, 204, 0));
 		rtHolder_1.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		
