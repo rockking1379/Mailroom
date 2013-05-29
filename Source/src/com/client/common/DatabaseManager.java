@@ -19,6 +19,7 @@ public class DatabaseManager
 	private String dbLocation;
 	private String fileLocation;
 	private Connection conn;
+	private boolean isSetup = false;
 	
 	///---Constructor(s)---///
 	public DatabaseManager()
@@ -295,8 +296,11 @@ public class DatabaseManager
 								));
 					}
 				}
-				
-				JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
+				if(!isSetup)
+				{
+					JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
+					isSetup = true;
+				}
 			}
 			catch(Exception e)
 			{
