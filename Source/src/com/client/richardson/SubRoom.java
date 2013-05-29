@@ -12,9 +12,11 @@ import javax.swing.table.TableRowSorter;
 
 
 import com.client.common.DatabaseManager;
+import com.client.common.Package;
 
 import java.awt.Dimension;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import java.awt.Color;
@@ -208,7 +210,7 @@ public class SubRoom extends JPanel {
  
         //Create the scroll pane and add the table to it.
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 67, 641, 435);
+        scrollPane.setBounds(10, 67, 828, 435);
  
         //Add the scroll pane to this panel.
         add(scrollPane);
@@ -216,7 +218,7 @@ public class SubRoom extends JPanel {
         //Create a separate form for filterText and statusText
         JPanel form = new JPanel();
         form.setBackground(new Color(0, 102, 0));
-        form.setBounds(0, 513, 661, 62);
+        form.setBounds(79, 510, 661, 62);
         form.setLayout(null);
         JLabel l1 = new JLabel("Search:", SwingConstants.LEFT);
         l1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -224,7 +226,7 @@ public class SubRoom extends JPanel {
         l1.setBounds(10, 10, 86, 20);
         form.add(l1);
         filterText = new JTextField();
-        filterText.setBounds(73, 11, 210, 20);
+        filterText.setBounds(73, 11, 274, 20);
         //Whenever filterText changes, invoke newFilter.
         filterText.getDocument().addDocumentListener(
                 new DocumentListener() {
@@ -244,7 +246,7 @@ public class SubRoom extends JPanel {
         add(form);
         
         JButton btnAdvancedSearch = new JButton("Advanced Search");
-        btnAdvancedSearch.setBounds(382, 10, 155, 23);
+        btnAdvancedSearch.setBounds(496, 10, 155, 23);
         form.add(btnAdvancedSearch);
         btnAdvancedSearch.addActionListener(new ActionListener() {
 	    	 
@@ -255,19 +257,19 @@ public class SubRoom extends JPanel {
             }
         });
         
-        JButton btnRefesh = new JButton("Refresh");
-        btnRefesh.setBounds(562, 10, 89, 23);
-        form.add(btnRefesh);
-        
         JLabel lblPleaseSelectA = new JLabel("Please Select a Stop: ");
         lblPleaseSelectA.setForeground(Color.WHITE);
         lblPleaseSelectA.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        lblPleaseSelectA.setBounds(117, 25, 136, 14);
+        lblPleaseSelectA.setBounds(120, 25, 136, 14);
         add(lblPleaseSelectA);
         
         JComboBox comboBox = new JComboBox();
-        comboBox.setBounds(268, 23, 174, 20);
+        comboBox.setBounds(249, 23, 217, 20);
         add(comboBox);
+        
+        JButton btnRefesh = new JButton("Refresh");
+        btnRefesh.setBounds(645, 22, 89, 23);
+        add(btnRefesh);
     }
  
     /** 
@@ -289,7 +291,8 @@ public class SubRoom extends JPanel {
  
  
     class MyTableModel extends AbstractTableModel {
-    	  Date date =new Date();
+    	  public final DatabaseManager manager = null;
+		Date date =new Date();
     	  Object[][] data1 = null;
     	    SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
     	    String pickdate="";
@@ -298,13 +301,13 @@ public class SubRoom extends JPanel {
     		String L4= trackNum.substring(trackNum.length()-4,trackNum.length());
     		String L41= trackNum1.substring(trackNum1.length()-4,trackNum1.length());
     		
-     private String[] columnNames = {"First Name", "Last Name", "Box #", "Tracking #", "Carrier","Date", "Delivered", "Picked Up"};
+     private String[] columnNames = {"Delivered","First Name", "Last Name", "Box #", "Tracking #", "Carrier","Date", " Picked Up", "Picked Up Date"};
      private Vector data = new Vector();
-     public final Object[] row1 ={delivered,"Kathy", "Smith", 678, L4, "FedEx", ft.format(date),  picked_up };
-     public final Object[] row2 =  {delivered,"John", "Doe", 1041, L41, "USPS Mail", ft.format(date),  picked_up };
-     public final Object[] row3 ={ delivered,"Sue", "Black", 386, L4,  "FedEx Express", ft.format(date),picked_up };
-     public final Object[] row4 ={ delivered,"Jane", "White", 1437, L41, "DHL", ft.format(date), picked_up };
-     public final Object[] row5 ={ delivered,"Joe", "Brown",  19, L4, "FedEx", ft.format(date),  picked_up };
+     public final Object[] row1 ={delivered,"Kathy", "Smith", 678, L4, "FedEx", ft.format(date),  picked_up, "" };
+     public final Object[] row2 =  {delivered,"John", "Doe", 1041, L41, "USPS Mail", ft.format(date),  picked_up,"" };
+     public final Object[] row3 ={ delivered,"Sue", "Black", 386, L4,  "FedEx Express", ft.format(date),picked_up,"" };
+     public final Object[] row4 ={ delivered,"Jane", "White", 1437, L41, "DHL", ft.format(date), picked_up , ""};
+     public final Object[] row5 ={ delivered,"Joe", "Brown",  19, L4, "FedEx", ft.format(date),  picked_up ,""};
 
   public int getColumnCount() {
   return columnNames.length;
@@ -356,6 +359,8 @@ public class SubRoom extends JPanel {
   fireTableDataChanged();
   }
 
+
+
     }
  
     /**
@@ -368,7 +373,7 @@ public class SubRoom extends JPanel {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Student Union Mail Room");
-        frame.setSize(667, 590);
+        frame.setSize(865, 590);
         //ImageIcon icon= new ImageIcon(frame.getClass().getResource("/image/Untitled.jpg"));
 		//frame.setIconImage(icon.getImage());
        
@@ -376,7 +381,7 @@ public class SubRoom extends JPanel {
         newContentPane.setOpaque(true); 
        
         frame.setContentPane(newContentPane);
-        frame.setResizable(false);
+        //frame.setResizable(false);
         frame.setVisible(true);
     }
  

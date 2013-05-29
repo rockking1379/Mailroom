@@ -42,6 +42,7 @@ import javax.swing.JOptionPane;
 
 import com.client.common.DatabaseManager;
 import com.client.richardson.DatePicker;
+import com.client.richardson.SubRoom.MyTableModel;
 
 
 
@@ -96,7 +97,7 @@ public class SUBAdvSearch extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SUBAdvSearch frame = new SUBAdvSearch(new Table(null));
+					SUBAdvSearch frame = new SUBAdvSearch(table);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -108,7 +109,7 @@ public class SUBAdvSearch extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	Table table;
+	static Table table;
 	DatabaseManager manager;
 	public SUBAdvSearch(Table table) {
 		this.table=table;
