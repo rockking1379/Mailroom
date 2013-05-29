@@ -267,7 +267,7 @@ public class DatabaseManager
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
 							rs.getString("Date"),
-							rs.getString("Box_Number"),
+							rs.getString("Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
 							rs3.getString("User_Name"),
@@ -323,7 +323,7 @@ public class DatabaseManager
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
 							rs.getString("Date"),
-							rs.getString("Box_Number"),
+							rs.getString("Number"),
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
 							rs3.getString("User_Name"),
@@ -375,7 +375,7 @@ public class DatabaseManager
 			//Create Insertion String
 			PreparedStatement statement = null;
 			
-			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
+			statement = conn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
 			statement.setString(2, p.getDate());
@@ -621,7 +621,7 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update FacStaff set First_Name=?, Last_Name=?, ASU_Email=?, Suite_Number=?, stop_id=? where ID_Number=?;");
+			PreparedStatement statement = conn.prepareStatement("update Person set First_Name=?, Last_Name=?, ASU_Email=?, Number=?, stop_id=? where ID_Number=?;");
 			statement.setString(1, p.getFirstName());
 			statement.setString(2, p.getLastName());
 			statement.setString(3, p.getEmail());
@@ -707,7 +707,7 @@ public class DatabaseManager
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getString("Date"),
-						rs.getString("Box_Number"),
+						rs.getString("Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
@@ -753,7 +753,7 @@ public class DatabaseManager
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getString("Date"),
-						rs.getString("Box_Number"),
+						rs.getString("Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
@@ -800,7 +800,7 @@ public class DatabaseManager
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getString("Date"),
-						rs.getString("Box_Number"),
+						rs.getString("Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
@@ -823,7 +823,7 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Number like ?");
 			switch(location)
 			{
 				case 0://Contains
@@ -880,7 +880,7 @@ public class DatabaseManager
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getString("Date"),
-						rs.getString("Box_Number"),
+						rs.getString("Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
@@ -903,7 +903,7 @@ public class DatabaseManager
 		location = 0;//Remove later if API is enhanced
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? where Date between ? and ?");
+			PreparedStatement statement = conn.prepareStatement("select * from Package where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Number like ? where Date between ? and ?");
 			switch(location)
 			{
 				case 0://Contains
@@ -963,7 +963,7 @@ public class DatabaseManager
 						rs.getString("Last_Name"),
 						rs.getString("ASU_Email"),
 						rs.getString("Date"),
-						rs.getString("Box_Number"),
+						rs.getString("Number"),
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
@@ -1001,7 +1001,7 @@ public class DatabaseManager
 				String email = rs.getString("ASU_Email");
 				String fName = rs.getString("First_Name");
 				String lName = rs.getString("Last_Name");
-				String suite = rs.getString("Suite_Number");
+				String suite = rs.getString("Number");
 				String stop = "";
 				for(int i = 0; i < stops.size(); i++)
 				{
@@ -1029,7 +1029,7 @@ public class DatabaseManager
 		{
 			firstName = "%" + firstName + "%";
 			lastName = "%" + lastName + "%";
-			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Suite_Number=?;");
+			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Number=?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			statement.setString(3, boxNumber);
@@ -1041,7 +1041,7 @@ public class DatabaseManager
 				String email = rs.getString("ASU_Email");
 				String fName = rs.getString("First_Name");
 				String lName = rs.getString("Last_Name");
-				String suite = rs.getString("Suite_Number");
+				String suite = rs.getString("Number");
 				String stop = "";
 				for(int i = 0; i < stops.size(); i++)
 				{
