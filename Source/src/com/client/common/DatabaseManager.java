@@ -1326,7 +1326,7 @@ public class DatabaseManager
 		int index = 0;
 		try
 		{
-			PreparedStatement s = conn.prepareStatement("select * from User where User_Name=?;");
+			PreparedStatement s = conn.prepareStatement("select * from User where User_Name=? and Active=1;");
 			s.setString(1, username);
 			ResultSet rs = s.executeQuery();	
 			
