@@ -39,25 +39,14 @@ FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
 FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
 FOREIGN KEY(processor) REFERENCES User(user_id)
 );
-CREATE TABLE FacStaff
+CREATE TABLE Person
 (
 id INTEGER PRIMARY KEY AUTOINCREMENT,
 ID_Number varchar(50),
 ASU_Email varchar(50),
 First_Name varchar(50) NOT NULL,
 Last_Name varchar(50) NOT NULL,
-Suite_Number varchar(50),
-stop_id int,
-FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
-);
-CREATE TABLE Student
-(
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-ID_Number varchar(50),
-ASU_Email varchar(50),
-First_Name varchar(50) NOT NULL,
-Last_Name varchar(50) NOT NULL,
-Box_Number varchar(50),
+Number varchar(50),
 stop_id int,
 Forward_Address varchar(150),
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)

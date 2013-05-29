@@ -271,7 +271,9 @@ public class DatabaseManager
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
 							rs3.getString("User_Name"),
-							rs4.getString("Name")
+							rs4.getString("Name"),
+							rs.getBoolean("At_Stop"),
+							rs.getBoolean("Picked_Up")
 							));
 				}
 				
@@ -325,7 +327,9 @@ public class DatabaseManager
 							rs2.getString("Name"),
 							rs.getString("Tracking_Number"),
 							rs3.getString("User_Name"),
-							rs4.getString("Name")
+							rs4.getString("Name"),
+							rs.getBoolean("At_Stop"),
+							rs.getBoolean("Picked_Up")
 							));
 				}
 			}
@@ -752,7 +756,9 @@ public class DatabaseManager
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
-						rs4.getString("Name")
+						rs4.getString("Name"),
+						rs.getBoolean("At_Stop"),
+						rs.getBoolean("Picked_Up")
 						));
 			}
 		}
@@ -796,7 +802,9 @@ public class DatabaseManager
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
-						rs4.getString("Name")
+						rs4.getString("Name"),
+						rs.getBoolean("At_Stop"),
+						rs.getBoolean("Picked_Up")
 						));
 			}
 		}
@@ -834,15 +842,17 @@ public class DatabaseManager
 				ResultSet rs4 = statement.executeQuery();
 			
 				results.add(new Package(rs.getString("First_Name"),
-					rs.getString("Last_Name"),
-					rs.getString("ASU_Email"),
-					rs.getString("Date"),
-					rs.getString("Box_Number"),
-					rs2.getString("Name"),
-					rs.getString("Tracking_Number"),
-					rs3.getString("User_Name"),
-					rs4.getString("Name")
-					));
+						rs.getString("Last_Name"),
+						rs.getString("ASU_Email"),
+						rs.getString("Date"),
+						rs.getString("Box_Number"),
+						rs2.getString("Name"),
+						rs.getString("Tracking_Number"),
+						rs3.getString("User_Name"),
+						rs4.getString("Name"),
+						rs.getBoolean("At_Stop"),
+						rs.getBoolean("Picked_Up")
+						));
 			}
 		}
 		catch(Exception e)
@@ -919,7 +929,9 @@ public class DatabaseManager
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
-						rs4.getString("Name")
+						rs4.getString("Name"),
+						rs.getBoolean("At_Stop"),
+						rs.getBoolean("Picked_Up")
 						));
 			}
 			
@@ -1000,7 +1012,9 @@ public class DatabaseManager
 						rs2.getString("Name"),
 						rs.getString("Tracking_Number"),
 						rs3.getString("User_Name"),
-						rs4.getString("Name")
+						rs4.getString("Name"),
+						rs.getBoolean("At_Stop"),
+						rs.getBoolean("Picked_Up")
 						));
 			}
 			
