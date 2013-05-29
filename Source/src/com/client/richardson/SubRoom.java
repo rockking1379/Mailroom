@@ -13,11 +13,14 @@ import javax.swing.table.TableRowSorter;
 
 import com.client.common.DatabaseManager;
 import com.client.common.Package;
+import com.client.common.Stop;
 
 import java.awt.Dimension;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Vector;
 import java.awt.Color;
 import java.awt.Component;
@@ -29,6 +32,13 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
  
 public class SubRoom extends JPanel {
 	
@@ -39,7 +49,7 @@ public class SubRoom extends JPanel {
 	    private boolean picked_up;
 	    private String pickdate;
 	    Table displayTable;
-
+	    MyTableModel atable;
     private boolean DEBUG = false;
     private JTable table;
     private JTextField filterText;
@@ -48,7 +58,8 @@ public class SubRoom extends JPanel {
     TableColumn tc;  
     MyItemListener it;  
     CheckBoxHeader cbh;  
-    CheckBoxHeader rendererComponent;  
+    CheckBoxHeader rendererComponent; 
+    ArrayList<Package> inTabel = new ArrayList<Package>();
       
     class MyItemListener implements ItemListener{     
         public void itemStateChanged(ItemEvent e){    
@@ -149,10 +160,15 @@ public class SubRoom extends JPanel {
         }   
       }   
  
+    
+    JComboBox comboBox;
     public SubRoom() {
         super();
         setBackground(new Color(0, 102, 0));
- 
+        manager=new DatabaseManager();
+        loadSettings();
+        manager.loadPackages(true,null);
+        
         //Create a table with a sorter.
         MyTableModel model = new MyTableModel();
         sorter = new TableRowSorter<MyTableModel>(model);
@@ -160,19 +176,11 @@ public class SubRoom extends JPanel {
         table.setRowSorter(sorter);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 
-       MyTableModel atable = (MyTableModel) table.getModel();
-       Object[] values = atable.row1;
-       Object[] row2= atable.row2;
-       Object[] row3= atable.row3;
-       Object[] row4= atable.row4;
-       Object[] row5= atable.row5;
+        atable = (MyTableModel) table.getModel();
+      
 
 
-       atable.insertData(values);
-       atable.insertData(row2);
-       atable.insertData(row3); 
-       atable.insertData(row4);
-       atable.insertData(row5);
+       
        table.setFillsViewportHeight(true);
        
        tc = table.getColumnModel().getColumn(0);     
@@ -263,13 +271,31 @@ public class SubRoom extends JPanel {
         lblPleaseSelectA.setBounds(120, 25, 136, 14);
         add(lblPleaseSelectA);
         
-        JComboBox comboBox = new JComboBox();
+        comboBox = new JComboBox();
         comboBox.setBounds(249, 23, 217, 20);
         add(comboBox);
+        
+        ArrayList<Stop> stops = (ArrayList<Stop>) manager.getStops();
+        String[] names = new String[stops.size()];
+        
+        for(Stop s: stops){
+        	names[stops.indexOf(s)]=s.getName();
+        }
+        comboBox.setModel(new DefaultComboBoxModel(names));
+        
+        comboBox.addItemListener(new StopListener());
+        comboBox.setSelectedItem("SUB Mailroom");
         
         JButton btnRefesh = new JButton("Refresh");
         btnRefesh.setBounds(645, 22, 89, 23);
         add(btnRefesh);
+        
+        String firstStop= (String)comboBox.getSelectedItem();
+        
+        addPackagesToTable((ArrayList<Package>)manager.getPackagesFromStop(firstStop));
+        
+        
+        
     }
  
     /** 
@@ -303,11 +329,7 @@ public class SubRoom extends JPanel {
     		
      private String[] columnNames = {"Delivered","First Name", "Last Name", "Box #", "Tracking #", "Carrier","Date", " Picked Up", "Picked Up Date"};
      private Vector data = new Vector();
-     public final Object[] row1 ={delivered,"Kathy", "Smith", 678, L4, "FedEx", ft.format(date),  picked_up, "" };
-     public final Object[] row2 =  {delivered,"John", "Doe", 1041, L41, "USPS Mail", ft.format(date),  picked_up,"" };
-     public final Object[] row3 ={ delivered,"Sue", "Black", 386, L4,  "FedEx Express", ft.format(date),picked_up,"" };
-     public final Object[] row4 ={ delivered,"Jane", "White", 1437, L41, "DHL", ft.format(date), picked_up , ""};
-     public final Object[] row5 ={ delivered,"Joe", "Brown",  19, L4, "FedEx", ft.format(date),  picked_up ,""};
+    
 
   public int getColumnCount() {
   return columnNames.length;
@@ -392,5 +414,157 @@ public class SubRoom extends JPanel {
                 createAndShowGUI();
             }
         });
+    }
+    
+    public void loadSettings()
+	{
+		
+		File settings = new File("./properties.prop");
+		if(settings.exists())
+		{
+			try
+			{
+				FileInputStream fStream = new FileInputStream(settings);
+				DataInputStream dis = new DataInputStream(fStream);
+				BufferedReader br = new BufferedReader(new InputStreamReader(dis));
+		
+				String settingLine;
+				while((settingLine = br.readLine()) != null)
+				{
+					//Read Settings
+					String setting = "";				
+					int index = 0;
+					while(settingLine.charAt(index) != ';')
+					{
+						setting += settingLine.charAt(index);
+						index++;
+					}
+					index++;
+					if(setting.toUpperCase().equals("DATABASE"))
+					{
+						//Read in Database configuration
+						String temp = "";
+						for(int i = index; i < settingLine.length(); i++)
+						{
+							temp += settingLine.charAt(i);
+						}
+						manager.setDatabase(temp);
+					}
+					else
+					{
+						if(setting.toUpperCase().equals("PERSONS"))
+						{
+							String temp = "";
+							
+							for(int i = index; i < settingLine.length(); i++)
+							{
+								temp += settingLine.charAt(i);
+							}
+							manager.setFile(temp);
+						}
+					}
+				}
+				br.close();
+			}
+			catch(Exception e)
+			{
+				//Do nothing
+			}
+			manager.setup();
+		}
+		else
+		{
+			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
+			
+			JFileChooser fc = new JFileChooser();
+			JOptionPane.showMessageDialog(null, "Select Database");
+			fc.showDialog(null, "SELECT");
+			fc.setFileFilter(null);
+			File database = fc.getSelectedFile();
+			JOptionPane.showMessageDialog(null, "Select Person File");
+			fc.showDialog(null, "SELECT");
+			File persons = fc.getSelectedFile();
+			
+			try 
+			{
+				if(settings.createNewFile())
+				{
+					FileWriter fOutput = new FileWriter(settings);
+					BufferedWriter bw = new BufferedWriter(fOutput);
+					bw.write("DATABASE;" + database.getAbsolutePath());
+					bw.newLine();
+					bw.write("PERSONS;" + persons.getAbsolutePath() + "\n");
+					bw.close();
+					fOutput.close();
+				}
+			} 
+			catch (Exception e) 
+			{
+				//Ignore the exceptions
+			}
+			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
+		}
+	}
+    
+    public class StopListener implements ItemListener{
+
+		@Override
+		public void itemStateChanged(ItemEvent e) {
+			String currentStop = (String)comboBox.getSelectedItem();
+			
+			
+			
+			addPackagesToTable((ArrayList<Package>)manager.getPackagesFromStop(currentStop));
+			
+			if(atable.getRowCount()>1){
+	    		//atable.removeRow(0);
+	    	}
+			
+		}
+    	
+    }
+    
+    public void addPackagesToTable(ArrayList<Package> results){
+    	//int i=atable.getRowCount()-1;
+    	inTabel.clear();
+    	
+    	if(results.size()==0 || atable.getRowCount()==0){
+    		atable.insertData(new Object []  {false,"","","","","","",false,""});
+			
+			
+    	}
+    	
+    	atable.insertData(new Object []  {false,"","","","","","",false,""});
+    	while(atable.getRowCount()>1 || !(atable.getValueAt(0, 4).equals(""))){
+    		
+    		atable.removeRow(atable.getRowCount()-1);
+    		System.out.println(atable.getRowCount()-1);
+    		if(atable.getRowCount()==1 ){
+    			atable.insertData(new Object []  {false,"","","","","","",false,""});
+    			atable.removeRow(0);
+    			break;
+    		}
+    	}
+    	
+    	for(Package p: results){
+    		inTabel.add(p);
+    		SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
+    		Date sdDate = null;
+			try {
+				sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+      		String date=ft.format(sdDate);
+    		
+    		
+    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getBoxNum(),p.getTrackNum(),p.getCourier(),date,p.getPickedUp(),""});
+    		
+    		
+    	}
+    	if(atable.getRowCount()>1){
+    		atable.removeRow(0);
+    	}
     }
 }
