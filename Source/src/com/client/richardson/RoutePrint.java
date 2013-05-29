@@ -233,7 +233,7 @@ public class RoutePrint extends JFrame {
             	String tab ="       ";
             	String sign = "________________________\n\n";
             	
-            	String fieldHeader= "Last"+tab+"First"+tab+"Box#."+tab+"Track#"+tab+"Sign Here";
+            	String fieldHeader= "Last"+tab+"First"+tab+"Box#."+tab+"Track#"+tab+"Print Name Here.";
             	
             	addSpacing(33-c.getText().length());
             	toPrint.setText(toPrint.getText()+"Route: "+c.getText()+"\n");
@@ -254,21 +254,18 @@ public class RoutePrint extends JFrame {
             		packages = (ArrayList<Package>) manager.getPackagesFromStop(s.getName());
             		
             		
-            		/*packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", date,"93","234234235346541111532"));
-            		packages.add(new Package("sdf","Yehriwerng", "nehringtb@sfdd.ede", date, "93", "23423423534654111112308"));
-            		packages.add(new Package("dfs","Xdfsd", "nehringtb@sfdd.ede", date,"909", "2342342353465411112347"));
-            		packages.add(new Package("sdafsdf","Ddd", "nehringtb@sfdd.ede", date, "324", "234234235346541111676908"));
-            		packages.add(new Package("sdfsdf","Edfsdfsdfdf", "nehringtb@sfdd.ede", date,"234", "234234235346541111456456"));
-            		packages.add(new Package("sdfsdf","Edfsdfg", "nehringtb@sfdd.ede", date,"234", "234234235346541111789763"));
-            		packages.add(new Package("sdfsdfs","Ddfsdsdf", "nehringtb@sfdd.ede", date,"34","234234235346541111797807"));
-            		packages.add(new Package("asdfasd","Wdfsdf", "nehringtb@sfdd.ede", date,"2343", "234234235346541111532"));
-            		packages.add(new Package("sdf","Rehriwerng", "nehringtb@sfdd.ede", date,"234", "23423423534654111112308"));
-            		packages.add(new Package("dfs","Hdfsd", "nehringtb@sfdd.ede", date,"345", "2342342353465411112347"));
-            		packages.add(new Package("sdafsdf","Add", "nehringtb@sfdd.ede", date,"345", "234234235346541111676908"));
-            		packages.add(new Package("sdfsdf","Ldfsdfsdfdf", "nehringtb@sfdd.ede", date,"098", "234234235346541111456456"));
-            		packages.add(new Package("sdfsdf","Mdfsdfg", "nehringtb@sfdd.ede", date,"34", "234234235346541111789763"));
-            		packages.add(new Package("sdfsdfs","dfsdsdf", "nehringtb@sfdd.ede", date,"234", "234234235346541111797807"));
+            	/*	packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","9333333333333333333333","234234235346541111532", "sadfasdfasdfasdfasdf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","93333333333333333333333","234234235346541111532", "asdfasdfasdfasdfsdf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","93333333333333333333333","234234235346541111532", "sadfasdfasdfasdfsdaf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","933333333333333333333","234234235346541111532", "asdfasdfsadfasdfasdfasdf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","93333333333333333333333333","234234235346541111532", "asdfasdfasdfsadf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","93333333333333333333333333333","234234235346541111532", "sdfsadfasdfasdfasdf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","9333333333333333333333333","234234235346541111532", "fsadfsdafsadfasdfsadfsd"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","93333333333333333333333","234234235346541111532", "asdfasdfsadfasdfsadfsadfsadfsd"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","9333333333333333333333","234234235346541111532", "asdfsdfasdfsdfsdfsdfsdfsadf"));
+            		packages.add(new Package("Thomas","Aehirng", "asdfadsfgdfgsdb@grizzlies.adams.ede", "Date","93333333333333333333333333333","234234235346541111532", "sadfasdfsdfsdfasdfsadfasdfasdf"));
             		*/
+            		
             	
             		
             		
@@ -338,10 +335,7 @@ public class RoutePrint extends JFrame {
             			toPrint.setText(toPrint.getText()+sign);
             			
             			
-            			String printName = "Print Name "+sign+"\n";
-            			addSpacing(68-printName.length());
-            			toPrint.setText(toPrint.getText()+printName);
-            		
+            			
           
             		}
             	

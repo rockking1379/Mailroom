@@ -567,7 +567,7 @@ public class SubRoom extends JPanel {
       		String date=ft.format(sdDate);
     		
     		
-    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getBoxNum(),p.getTrackNum(),p.getCourier(),date,p.getPickedUp(),""});
+    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getBoxNum(),p.getTrackNum(),p.getCourier(),date,p.getPickedUp(),p.getPickedUpDate()});
     		
     		
     	}
