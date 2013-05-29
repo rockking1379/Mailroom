@@ -296,11 +296,6 @@ public class DatabaseManager
 								));
 					}
 				}
-				if(!isSetup)
-				{
-					JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
-					isSetup = true;
-				}
 			}
 			catch(Exception e)
 			{
@@ -312,16 +307,13 @@ public class DatabaseManager
 			try
 			{
 				PreparedStatement statement = null;				
-				statement = conn.prepareStatement("select * from Package where Date=? and stop_id=? and Picked_Up='0';");
-				Date d = new Date();
-				String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
-				statement.setString(1, date);
+				statement = conn.prepareStatement("select * from Package where stop_id=? and Picked_Up='0';");
 			
 				for(int i = 0; i < stops.size(); i++)
 				{
 					if(stops.get(i).getName().equals(stop))
 					{
-						statement.setInt(2, stops.get(i).getID());
+						statement.setInt(1, stops.get(i).getID());
 						break;
 					}
 				}
@@ -379,6 +371,11 @@ public class DatabaseManager
 			{
 				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 			}
+		}
+		if(!isSetup)
+		{
+			JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
+			isSetup = true;
 		}
 		
 	}
@@ -663,7 +660,7 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = conn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where Frist_Name=? and Last_Name=? and Number=?;");
+			PreparedStatement statement = conn.prepareStatement("update Person set ASU_Email=?, stop_id=?, ID_Number=? where First_Name=? and Last_Name=? and Number=?;");
 			statement.setString(1, p.getEmail());
 			for(int i = 0; i < stops.size(); i++)
 			{
@@ -1320,6 +1317,33 @@ public class DatabaseManager
 			return null;
 		}
 		
+	}
+	public boolean verifyUser(String username)
+	{
+		int index = 0;
+		try
+		{
+			PreparedStatement s = conn.prepareStatement("select * from User where User_Name=? and Active=1;");
+			s.setString(1, username);
+			ResultSet rs = s.executeQuery();	
+			
+			while(rs.next())
+			{
+				index++;
+			}
+		}
+		catch(Exception e)
+		{
+			
+		}
+		if(index == 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	public void createUser(User u, int password)
 	{
