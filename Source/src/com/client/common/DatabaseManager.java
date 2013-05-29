@@ -452,12 +452,12 @@ public class DatabaseManager
 		try
 		{
 			PreparedStatement statement = null;
-			statement = conn.prepareStatement("update Package set At_Stop=?, set Picked_Up=?, set Pick_Up_Date=?, set stop_id=? where Tracking_Number=?;");
+			statement = conn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number=?;");
 			Date d = new Date();
-			String date = DateFormat.getDateInstance(DateFormat.SHORT).format(d);
+			java.sql.Date sDate = new java.sql.Date(d.getTime());
 			statement.setBoolean(1, atStop);
 			statement.setBoolean(2, pickedUp);
-			statement.setString(3, date);
+			statement.setString(3, sDate.toString());
 			for(int i = 0; i < stops.size(); i++)
 			{
 				if(stops.get(i).getName().equals(stop))
