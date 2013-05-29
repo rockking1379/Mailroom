@@ -26,10 +26,12 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.Array;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 
@@ -269,8 +271,10 @@ public class AdvSearch extends JFrame {
 			stopNames.add(s.getName());
 		}
 		
+		Object[] blah = stopNames.toArray();
+		Arrays.sort(blah);
 		
-		StopBox.setModel(new DefaultComboBoxModel(stopNames.toArray()));
+		StopBox.setModel(new DefaultComboBoxModel(blah));
 		StopBox.setSelectedItem("All Stops");
 		StopBox.setBounds(47, 58, 142, 20);
 		contentPane.add(StopBox);

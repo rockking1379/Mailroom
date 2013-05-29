@@ -42,6 +42,7 @@ import java.awt.event.MouseListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Vector;
@@ -312,9 +313,9 @@ public class Table extends JPanel {
  		String[] sa= new String[stops.size()];
  		
  		for(Stop s: stops){
- 			sa[stops.indexOf(s)]= s.getName();
- 			
+ 			sa[stops.indexOf(s)]= s.getName();	
  		}
+ 		Arrays.sort(sa);
  		 stopNames = new DefaultComboBoxModel(sa);
  		}
  		catch(NegativeArraySizeException ex){
