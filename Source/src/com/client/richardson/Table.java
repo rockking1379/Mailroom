@@ -444,7 +444,7 @@ public class Table extends JPanel {
       		String date=ft.format(sdDate);
     		
     		
-    		atable.insertData(new Object[]{p.getPickedUp(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),});
+    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),});
     		
     		
     	}
@@ -462,7 +462,7 @@ public class Table extends JPanel {
     			if(p.getTrackNum().equals(atable.getValueAt(i, 4))){
     				
     				if(!p.getStop().equals(atable.getValueAt(i,3)) || p.getDelivered()!=(boolean)atable.getValueAt(i,0)){
-    					manager.updatePackage((String)atable.getValueAt(i, 4), (boolean)atable.getValueAt(i,0),false, (String)atable.getValueAt(i,3));
+    					manager.updatePackage((String)atable.getValueAt(i, 4), (boolean)atable.getValueAt(i,0),(boolean)atable.getValueAt(i,0), (String)atable.getValueAt(i,3));
     					
     				}
     			}
@@ -472,6 +472,7 @@ public class Table extends JPanel {
     		
     		
     	}
+    	manager.loadPackages(true,null);
     	setSearchResults((ArrayList<Package>)manager.findPackage(false,false));
     }
     
