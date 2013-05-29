@@ -64,6 +64,7 @@ public class Table extends JPanel {
     MyItemListener it;  
     CheckBoxHeader cbh;  
     CheckBoxHeader rendererComponent;  
+    ArrayList<Package> inTabel = new ArrayList<Package>();
       
     class MyItemListener implements ItemListener{     
         public void itemStateChanged(ItemEvent e){    
@@ -234,6 +235,7 @@ public class Table extends JPanel {
 				e.printStackTrace();
 			}
      		String date=ft.format(sdDate);
+     		inTabel.add(p);
     	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),false});
        }
    
@@ -407,6 +409,7 @@ public class Table extends JPanel {
     
     public void setSearchResults(ArrayList<Package> results){
     	//int i=atable.getRowCount()-1;
+    	inTabel.clear();
     	
     	if(results.size()==0){
     		atable.insertData(new Object []  {false,"","","","","","","",});
@@ -429,6 +432,7 @@ public class Table extends JPanel {
     	}
     	
     	for(Package p: results){
+    		inTabel.add(p);
     		SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
     		Date sdDate = null;
 			try {
@@ -440,7 +444,7 @@ public class Table extends JPanel {
       		String date=ft.format(sdDate);
     		
     		
-    		atable.insertData(new Object[]{false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),});
+    		atable.insertData(new Object[]{p.getPickedUp(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),});
     		
     		
     	}
@@ -448,6 +452,27 @@ public class Table extends JPanel {
     		atable.removeRow(0);
     	}
     	
+    }
+    public void updateTabel(){
+    	
+    	for(int i=0; i<atable.getRowCount(); i++){
+    		System.out.println(atable.getValueAt(0,0));
+    		for(Package p: inTabel){
+    			
+    			if(p.getTrackNum().equals(atable.getValueAt(i, 4))){
+    				
+    				if(!p.getStop().equals(atable.getValueAt(i,3)) || p.getDelivered()!=(boolean)atable.getValueAt(i,0)){
+    					manager.updatePackage((String)atable.getValueAt(i, 4), (boolean)atable.getValueAt(i,0),false, (String)atable.getValueAt(i,3));
+    					
+    				}
+    			}
+    			
+    			
+    		}
+    		
+    		
+    	}
+    	setSearchResults((ArrayList<Package>)manager.findPackage(false,false));
     }
     
     

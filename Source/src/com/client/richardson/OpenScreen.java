@@ -372,7 +372,9 @@ public class OpenScreen extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 				
-			displayTable.setSearchResults((ArrayList<Package>) manager.findPackage(false,false));
+			
+		
+			displayTable.updateTabel();
 				
 			
 		}
