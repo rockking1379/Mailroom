@@ -189,7 +189,7 @@ public class AdvSearch extends JFrame {
 	    btnSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e)
             {               
-            	
+            	if(!StartField.getText().equals("")&& !EndField.getText().equals("")){
                 try{
                 date=true;
                 sYear = StartField.getText();
@@ -202,6 +202,7 @@ public class AdvSearch extends JFrame {
         		int ey = Integer.parseInt(eYear);
         		boolean i = s<=ey;
         		dateCheck();
+        		
         		if(i==false||date==false){
         			Component frame = null;
 					JOptionPane.showMessageDialog(frame,
@@ -217,9 +218,11 @@ public class AdvSearch extends JFrame {
                 		    JOptionPane.ERROR_MESSAGE);
 					
                 }
-                
+            
+            
             }
-        });
+            }
+	    });
 		
 		
 		lblTracking = new JLabel("Tracking # :");
