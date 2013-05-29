@@ -389,21 +389,24 @@ public class ScanPackage extends JFrame {
 				System.out.println(e.getMessage());
 			}
 			
+			String stopName=(String)comboBox.getSelectedItem();
 			if(selectedPerson==null){
 				int stopId=0;
-				String stopName=null;
+				
 				for(Stop s: manager.getStops()){
 					if(s.getName().equals((String)comboBox.getSelectedItem()));
 					stopId=s.getID();
 					stopName=s.getName();
 					break;
 				}
-				selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown@", "Unknown", BoxText.getText(),stopId);
+				selectedPerson=new Person(NameText.getText(),LastNameText.getText(), "Unknown@", "Unknown", BoxText.getText(),stop);
 				manager.addPerson(selectedPerson);
 				//manager.createPerson(sps);
 				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),tDate,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 			}
 			else{
+				selectedPerson.setStop(stopName);
+				manager.updatePerson(selectedPerson);
 				p = new Package(NameText.getText(),LastNameText.getText(),selectedPerson.getEmail(),tDate,BoxText.getText(),stop,TrackText.getText(),loggedIn,(String)comboBox_1.getSelectedItem());
 				System.out.println(packDate);
 			}
