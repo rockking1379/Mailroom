@@ -75,15 +75,17 @@ public class MultipleResultDisplay extends JFrame {
 		btnSelect.setBounds(307, 175, 89, 23);
 		contentPane.add(btnSelect);
 		
-		JScrollPane scrollPane = new JScrollPane();
+		
+		JPanel resultPanel = new JPanel();
+		JScrollPane scrollPane = new JScrollPane(resultPanel,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane.setBounds(21, 84, 361, 80);
 		contentPane.add(scrollPane);
 		
-		JPanel resultPanel = new JPanel();
-		scrollPane.setViewportView(resultPanel);
+		
+		//scrollPane.setViewportView(resultPanel);
 		resultPanel.setForeground(Color.WHITE);
-		resultPanel.setBackground(new Color(0, 128, 0));
-		resultPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		resultPanel.setBackground(new Color(51, 204, 0));
+		resultPanel.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		
 		final ButtonGroup group = new ButtonGroup();
@@ -91,7 +93,7 @@ public class MultipleResultDisplay extends JFrame {
 		for(Person p: results){
 			String s = p.getLastName()+" "+p.getFirstName()+" "+p.getBox();
 			JCheckBox c = new JCheckBox(s);
-			c.setBackground(new Color(0,128,0));
+			c.setBackground(new Color(51,204,0));
 			c.setForeground(Color.WHITE);
 			checkBoxes.add(c);
 			group.add(c);

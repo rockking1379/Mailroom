@@ -219,6 +219,7 @@ public class Table extends JPanel {
         tc.setHeaderRenderer(cbh);   
         table.addMouseListener(new MyMouseListener());   
         
+        table.getTableHeader().setReorderingAllowed(false);
         
         
 
@@ -257,7 +258,7 @@ public class Table extends JPanel {
         //initColumnSizes(table);
  
         //Fiddle with the Sport column's cell editors/renderers.
-        setUpSportColumn(table, table.getColumnModel().getColumn(3));
+        setUpStopColumn(table, table.getColumnModel().getColumn(3));
  
         //Add the scroll pane to this panel.
         add(scrollPane);
@@ -303,7 +304,7 @@ public class Table extends JPanel {
         }
     }
  
-    public void setUpSportColumn(JTable table, TableColumn sportColumn) {
+    public void setUpStopColumn(JTable table, TableColumn sportColumn) {
         //Set up the editor for the sport cells.
     	JComboBox comboBox = new JComboBox();
  		DefaultComboBoxModel stopNames=null;
@@ -381,7 +382,7 @@ public class Table extends JPanel {
    }
 
    public boolean isCellEditable(int row, int col){
-  	 if (col < 7&& col>=4) {
+  	 if (col>=4) {
            return false;
        } else {
            return true;
