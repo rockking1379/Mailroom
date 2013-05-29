@@ -1029,7 +1029,7 @@ public class DatabaseManager
 		{
 			firstName = "%" + firstName + "%";
 			lastName = "%" + lastName + "%";
-			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Suite_Number=?;");
+			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Number=?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			statement.setString(3, boxNumber);
