@@ -594,33 +594,8 @@ public class DatabaseManager
 		//Do Person logic
 		try
 		{
-			PreparedStatement statement = null;
-			String emailEnd = "";
-			int index = 0;
-			while(p.getEmail().charAt(index) != '@')
-			{
-				index++;
-			}
-			index++;
-			for(int i = index; i < p.getEmail().length(); i++)
-			{
-				emailEnd += p.getEmail().charAt(i);
-			}
-			if(emailEnd.equals("grizzlies.adams.edu"))
-			{
-				//Add Student
-				statement = conn.prepareStatement("insert into Student(ID_Number, ASU_Email, First_Name, Last_Name, Box_Number, stop_id) values(?,?,?,?,?,?);");
-				statement.setString(1, p.getID());
-				statement.setString(2, p.getEmail());
-				statement.setString(3, p.getFirstName());
-				statement.setString(4, p.getLastName());
-				statement.setString(5, p.getBox());
-				statement.setInt(6, Integer.valueOf(p.getStop()));
-			}
-			else
-			{
-				//Add Faculty or Staff
-				statement = conn.prepareStatement("insert into Student(ID_Number, ASU_Email, First_Name, Last_Name, Suite_Number, stop_id) values(?,?,?,?,?,?);");
+				
+				PreparedStatement statement = conn.prepareStatement("insert into Person(ID_Number, ASU_Email, First_Name, Last_Name, Number, stop_id) values(?,?,?,?,?,?);");
 				statement.setString(1, p.getID());
 				statement.setString(2, p.getEmail());
 				statement.setString(3, p.getFirstName());
@@ -628,13 +603,12 @@ public class DatabaseManager
 				statement.setString(5, p.getBox());
 				for(int i = 0; i < stops.size(); i++)
 				{
-					if(stops.get(i).getName().equals(p.getStop()))
+					if(stops.get(i).getName().equals(p.getStop()) || stops.get(i).getID() == Integer.valueOf(p.getStop()))
 					{
 						statement.setInt(6, stops.get(i).getID());
 						break;
 					}
 				}
-			}
 		}
 		catch(Exception e)
 		{
@@ -646,40 +620,20 @@ public class DatabaseManager
 		//Update Person logic
 		try
 		{
-			PreparedStatement statement = null;
-			String emailEnd = "";
-			int index = 0;
-			while(p.getEmail().charAt(index) != '@')
+			PreparedStatement statement = conn.prepareStatement("update FacStaff set First_Name=?, Last_Name=?, ASU_Email=?, Suite_Number=?, stop_id=? where ID_Number=?;");
+			statement.setString(1, p.getFirstName());
+			statement.setString(2, p.getLastName());
+			statement.setString(3, p.getEmail());
+			statement.setString(4, p.getBox());
+			for(int i = 0; i < stops.size(); i++)
 			{
-				index++;
-			}
-			index++;
-			for(int i = index; i < p.getEmail().length(); i++)
-			{
-				emailEnd += p.getEmail().charAt(i);
-			}
-			
-			if(emailEnd.equals("grizzlies.adams.edu"))
-			{
-				//Students don't really get updated
-			}
-			else
-			{
-				statement = conn.prepareStatement("update FacStaff set First_Name=?, Last_Name=?, ASU_Email=?, Suite_Number=?, stop_id=? where ID_Number=?;");
-				statement.setString(1, p.getFirstName());
-				statement.setString(2, p.getLastName());
-				statement.setString(3, p.getEmail());
-				statement.setString(4, p.getBox());
-				for(int i = 0; i < stops.size(); i++)
+				if(stops.get(i).getName().equals(p.getStop()))
 				{
-					if(stops.get(i).getName().equals(p.getStop()))
-					{
-						statement.setInt(5, stops.get(i).getID());
-						break;
-					}
+					statement.setInt(5, stops.get(i).getID());
+					break;
 				}
-				statement.setString(6, p.getID());
 			}
+			statement.setString(6, p.getID());
 		}
 		catch(Exception e)
 		{
@@ -1035,7 +989,7 @@ public class DatabaseManager
 		{
 			firstName = "%" + firstName + "%";
 			lastName = "%" + lastName + "%";
-			PreparedStatement statement = conn.prepareStatement("select * from FacStaff where First_Name like ? and Last_Name like ?;");
+			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			ResultSet rs = statement.executeQuery();
@@ -1057,30 +1011,6 @@ public class DatabaseManager
 				}
 				
 				results.add(new Person(fName, lName, email, idNumber, suite, stop));
-			}
-			
-			statement = conn.prepareStatement("select * from Student where First_Name like ? and Last_Name like ?;");
-			statement.setString(1, firstName);
-			statement.setString(2, lastName);
-			rs = statement.executeQuery();
-			
-			while(rs.next())
-			{
-				String idNumber = rs.getString("ID_Number");
-				String email = rs.getString("ASU_Email");
-				String fName = rs.getString("First_Name");
-				String lName = rs.getString("Last_Name");
-				String box = rs.getString("Box_Number");
-				String stop = "";
-				for(int i = 0; i < stops.size(); i++)
-				{
-					if(stops.get(i).getID() == rs.getInt("stop_id"))
-					{
-						stop = stops.get(i).getName();
-					}
-				}
-				
-				results.add(new Person(fName, lName, email, idNumber, box, stop));
 			}
 		}
 		catch(Exception e)
@@ -1098,7 +1028,7 @@ public class DatabaseManager
 		{
 			firstName = "%" + firstName + "%";
 			lastName = "%" + lastName + "%";
-			PreparedStatement statement = conn.prepareStatement("select * from FacStaff where First_Name like ? and Last_Name like ? and Suite_Number=?;");
+			PreparedStatement statement = conn.prepareStatement("select * from Person where First_Name like ? and Last_Name like ? and Suite_Number=?;");
 			statement.setString(1, firstName);
 			statement.setString(2, lastName);
 			statement.setString(3, boxNumber);
@@ -1121,31 +1051,6 @@ public class DatabaseManager
 				}
 				
 				results.add(new Person(fName, lName, email, idNumber, suite, stop));
-			}
-			
-			statement = conn.prepareStatement("select * from Student where First_Name like ? and Last_Name like ? and Box_Number=?;");
-			statement.setString(1, firstName);
-			statement.setString(2, lastName);
-			statement.setString(3, boxNumber);
-			rs = statement.executeQuery();
-			
-			while(rs.next())
-			{
-				String idNumber = rs.getString("ID_Number");
-				String email = rs.getString("ASU_Email");
-				String fName = rs.getString("First_Name");
-				String lName = rs.getString("Last_Name");
-				String box = rs.getString("Box_Number");
-				String stop = "";
-				for(int i = 0; i < stops.size(); i++)
-				{
-					if(stops.get(i).getID() == rs.getInt("stop_id"))
-					{
-						stop = stops.get(i).getName();
-					}
-				}
-				
-				results.add(new Person(fName, lName, email, idNumber, box, stop));
 			}
 		}
 		catch(Exception e)
