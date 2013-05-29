@@ -18,6 +18,8 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JPasswordField;
@@ -38,6 +40,7 @@ public class login extends JFrame {
 	JLabel lblLoginError;
 	private JPasswordField passwordField;
 	DatabaseManager manager;
+	JButton btnOk;
 	
 	File adminHash = new File("Admin_Hash.txt");
 	File userHash = new File("User_Hash.txt");
@@ -105,10 +108,11 @@ public class login extends JFrame {
 		contentPane.add(userName);
 		userName.setColumns(10);
 		
-		JButton btnOk = new JButton("OK");
+		btnOk = new JButton("OK");
 		btnOk.addActionListener(new OkListener(this));
 		btnOk.setBounds(139, 131, 89, 23);
 		contentPane.add(btnOk);
+		
 		
 		JButton btnClose = new JButton("Close");
 		
@@ -148,7 +152,10 @@ public class login extends JFrame {
 		
 		passwordField = new JPasswordField();
 		passwordField.setBounds(96, 81, 151, 20);
+		passwordField.addKeyListener(new keyListener());
 		contentPane.add(passwordField);
+		this.addKeyListener(new keyListener());
+		userName.addKeyListener(new keyListener());
 //<<<<<<< HEAD
 		
 		
@@ -299,6 +306,41 @@ public class login extends JFrame {
 			}
 			JOptionPane.showMessageDialog(null, "Restart Application for changes to take effect.\nThanks!");			
 		}
+	}
+	
+	private class keyListener implements KeyListener
+	{
+
+		@Override
+		public void keyPressed(KeyEvent e) 
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_ENTER)
+			{
+				btnOk.doClick();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) 
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_ENTER)
+			{
+				btnOk.doClick();
+			}
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) 
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_ENTER)
+			{
+				btnOk.doClick();
+			}
+		}
+		
 	}
 
 	
