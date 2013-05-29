@@ -271,8 +271,6 @@ public class DatabaseManager
 					statement.setInt(1, rs.getInt("courier_id"));
 					ResultSet rs4 = statement.executeQuery();
 					
-					if(rs.getString("Pick_Up_Date") == null)
-					{
 						packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
@@ -286,22 +284,6 @@ public class DatabaseManager
 							rs.getBoolean("Picked_Up"),
 							rs.getString("Pick_Up_Date")
 							));
-					}
-					else
-					{
-						packages.add(new Package(rs.getString("First_Name"),
-								rs.getString("Last_Name"),
-								rs.getString("ASU_Email"),
-								rs.getString("Date"),
-								rs.getString("Box_Number"),
-								rs2.getString("Name"),
-								rs.getString("Tracking_Number"),
-								rs3.getString("User_Name"),
-								rs4.getString("Name"),
-								rs.getBoolean("At_Stop"),
-								rs.getBoolean("Picked_Up")
-								));
-					}
 				}
 				readConn.close();
 			}
@@ -343,8 +325,6 @@ public class DatabaseManager
 					statement.setInt(1, rs.getInt("courier_id"));
 					ResultSet rs4 = statement.executeQuery();
 					
-					if(rs.getString("Pick_Up_Date") == null)
-					{
 						packages.add(new Package(rs.getString("First_Name"),
 							rs.getString("Last_Name"),
 							rs.getString("ASU_Email"),
@@ -358,22 +338,6 @@ public class DatabaseManager
 							rs.getBoolean("Picked_Up"),
 							rs.getString("Pick_Up_Date")
 							));
-					}
-					else
-					{
-						packages.add(new Package(rs.getString("First_Name"),
-								rs.getString("Last_Name"),
-								rs.getString("ASU_Email"),
-								rs.getString("Date"),
-								rs.getString("Box_Number"),
-								rs2.getString("Name"),
-								rs.getString("Tracking_Number"),
-								rs3.getString("User_Name"),
-								rs4.getString("Name"),
-								rs.getBoolean("At_Stop"),
-								rs.getBoolean("Picked_Up")
-								));
-					}
 				}
 				readConn.close();
 			}
