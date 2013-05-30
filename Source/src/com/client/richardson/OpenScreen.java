@@ -388,7 +388,7 @@ public class OpenScreen extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			new DelStop().setVisible(true);
+			new DelStop(manager).setVisible(true);
 			
 		}
 		
