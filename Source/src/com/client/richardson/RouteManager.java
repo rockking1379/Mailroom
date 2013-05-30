@@ -296,7 +296,7 @@ public class RouteManager extends JFrame {
 				
 				for(int i=0; i<destListModel.getSize();i++){
 					selected.add(i, destListModel.getElementAt(i));
-					System.out.println(destListModel.getElementAt(i));
+					
 					
 				}
 				int ind=0;

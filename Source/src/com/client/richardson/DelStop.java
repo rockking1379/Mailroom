@@ -209,6 +209,8 @@ public class DelStop extends JFrame {
 	    btnDelete.setBounds(193, 244, 110, 23);
 	    getContentPane().add(btnDelete);
 	    
+	    btnDelete.addActionListener(new DeleteStop());
+	    
 	    lblAvailableStops = new JLabel("Available Stops:");
 	    lblAvailableStops.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    lblAvailableStops.setForeground(new Color(255, 255, 255));
@@ -224,6 +226,33 @@ public class DelStop extends JFrame {
 	    ImageIcon icon= new ImageIcon(getClass().getResource("/image/compass.jpg"));
 		setIconImage(icon.getImage());
 	}
+	
+	 public class DeleteStop implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList selected=new ArrayList();
+				
+				for(int i=0; i<destListModel.getSize();i++){
+					selected.add(i, destListModel.getElementAt(i));
+					
+					
+				}
+				int ind=0;
+				for(Object o: selected){
+					manager.updateStop((String)o, false, "unassigned",ind);
+					ind++;
+					
+					System.out.println((String)o);
+				}
+				 
+				
+				dispose();
+			}
+			
+			
+			  
+		  }
 	  private class AddListener implements ActionListener {
 		    public void actionPerformed(ActionEvent e) {
 		      Object selected[] = sourceList.getSelectedValues();
@@ -329,5 +358,7 @@ class SortedListModel extends AbstractListModel {
 	    }
 	    return removed;
 	  }
+	  
+	 
 	
 } // end class MultipleSelectionTest
