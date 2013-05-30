@@ -228,6 +228,10 @@ public class Table extends JPanel {
        atable = (MyTableModel) table.getModel();
        
        ArrayList<Package> undilivered = (ArrayList<Package>) manager.findPackage(false,false);
+       
+       if(undilivered.size()==0){
+    	   atable.insertData(new Object []  {false,"","","","","","","",""});
+       }
       
        for(Package p: undilivered){
     	   SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
@@ -415,7 +419,7 @@ public class Table extends JPanel {
     	//int i=atable.getRowCount()-1;
     	inTabel.clear();
     	
-    	if(results.size()==0){
+    	if(results.size()==0 || atable.getRowCount()<=1){
     		atable.insertData(new Object []  {false,"","","","","","","",""});
 			atable.removeRow(0);
 			
