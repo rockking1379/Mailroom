@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import com.client.common.*;
+
 import javax.swing.*;
+import com.client.common.*;
 
 
 
@@ -24,11 +27,11 @@ public class DelStop extends JFrame {
 	  private SortedListModel1 destListModel;
 	  private JButton addButton;
 	  private JButton removeButton;
-	  DatabaseManager manager;
+	  
 	  ArrayList<String> inDest = new ArrayList<String>();
 	  private JLabel lblAvailableStops;
 	  private JLabel lblStopsToBe;
-
+	  DatabaseManager manager;
 	  
 
 	 
@@ -153,7 +156,7 @@ public class DelStop extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DelStop frame = new DelStop();
+					DelStop frame = new DelStop(new DatabaseManager());
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					
 					    frame.setSize(493, 313);
@@ -170,7 +173,8 @@ public class DelStop extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DelStop() {
+	public DelStop(DatabaseManager manager) {
+		this.manager=manager;
 		setTitle("Delete Stop");
 		setSize(493, 313);
 		
@@ -180,12 +184,14 @@ public class DelStop extends JFrame {
 	    sourceList = new JList(sourceListModel);
 	    getContentPane().setLayout(null);
 	    JScrollPane scrollPane = new JScrollPane(sourceList);
-	    addSourceElements(new String[] {  "AAO", "Academic Affairs", "Admissions\t", "AITC", "Alumni/Foundation", "Art", "AS&F", "Bookstore", "Business Office", "Communications", "Community Partnership", "Computing Services",
-	    		"Counseling & Career", "Counselor Education", "EEO", "English/ Communication", "Enrollment", "Extended Studies", "Facilities Office", "Facilities Warehouse", "Finance/ Administration", "Financial Aid", 
-	    		"Gingerbread House", "Graduate School", "HGPPSL", "Hold for Pickup", "Housing", "HPPE", "Human Resources", "Institutional Research", "Library", "Museum", "Music", "Nursing", "One Stop", "Payroll", "Plachy", 
-	    		"Police Department", "President", "Print Shop", "Purchasing", "Radio Station", "Records", "REX", "School of Business", "SMT", "SODEXO", "Student Affairs", "Student Life", "SUB Office", "SUB Mailroom", 
-	    		"SVP Enrollment Manager", "Teacher Education", "Theatre", "Title V", "Upward Bound" });
 
+
+	    List<Stop> stops = manager.getUnassignedStops();
+	    String[] sNames = new String[stops.size()];
+	    for(Stop s: stops){
+	    	sNames[stops.indexOf(s)]= s.getName();
+	    }
+	    addSourceElements(sNames);
 	   
 	   
 	    scrollPane.setBounds(5, 64, 183, 214);
@@ -209,6 +215,8 @@ public class DelStop extends JFrame {
 	    btnDelete.setBounds(193, 244, 110, 23);
 	    getContentPane().add(btnDelete);
 	    
+	    btnDelete.addActionListener(new DeleteStop());
+	    
 	    lblAvailableStops = new JLabel("Available Stops:");
 	    lblAvailableStops.setFont(new Font("Tahoma", Font.BOLD, 14));
 	    lblAvailableStops.setForeground(new Color(255, 255, 255));
@@ -224,6 +232,33 @@ public class DelStop extends JFrame {
 	    ImageIcon icon= new ImageIcon(getClass().getResource("/image/compass.jpg"));
 		setIconImage(icon.getImage());
 	}
+	
+	 public class DeleteStop implements ActionListener{
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ArrayList selected=new ArrayList();
+				
+				for(int i=0; i<destListModel.getSize();i++){
+					selected.add(i, destListModel.getElementAt(i));
+					
+					
+				}
+				int ind=0;
+				for(Object o: selected){
+					manager.updateStop((String)o, false, "unassigned",ind);
+					ind++;
+					
+					System.out.println((String)o);
+				}
+				 
+				
+				dispose();
+			}
+			
+			
+			  
+		  }
 	  private class AddListener implements ActionListener {
 		    public void actionPerformed(ActionEvent e) {
 		      Object selected[] = sourceList.getSelectedValues();
@@ -329,5 +364,7 @@ class SortedListModel extends AbstractListModel {
 	    }
 	    return removed;
 	  }
+	  
+	 
 	
 } // end class MultipleSelectionTest

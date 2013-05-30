@@ -34,7 +34,7 @@ Pick_Up_Date DATE,
 stop_id int,
 courier_id int,
 processor int,
-Returned BOOLEAN NOT NULL,
+Returned BOOLEAN,
 FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
 FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
 FOREIGN KEY(processor) REFERENCES User(user_id)

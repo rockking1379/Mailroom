@@ -13,6 +13,7 @@ public class Package
 	private String courier;
 	private boolean delivered;
 	private boolean pickedUp;
+	private boolean returned;
 	private String pickUpDate;
 	
 	//Optimal
@@ -42,7 +43,7 @@ public class Package
 		this.delivered = delivered;
 		this.pickedUp = pickedUp;
 	}
-	public Package(String firstName, String lastName, String email, String date, String boxNumber, String stop, String trackingNumber, String user, String courier, boolean delivered, boolean pickedUp, String pickUpDate)
+	public Package(String firstName, String lastName, String email, String date, String boxNumber, String stop, String trackingNumber, String user, String courier, boolean delivered, boolean pickedUp, String pickUpDate, boolean returned)
 	{
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -56,6 +57,7 @@ public class Package
 		this.delivered = delivered;
 		this.pickedUp = pickedUp;
 		this.pickUpDate = pickUpDate;
+		this.returned = returned;
 	}
 	
 	//Faculty?
@@ -134,6 +136,10 @@ public class Package
 	public String getPickedUpDate()
 	{
 		return pickUpDate;
+	}
+	public boolean getReturn()
+	{
+		return returned;
 	}
 	
 	///---Set Methods---///

@@ -189,7 +189,7 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			Statement statement = readConn.createStatement();
-			ResultSet rs = statement.executeQuery("select * from Stop;");
+			ResultSet rs = statement.executeQuery("select * from Stop where Is_Used='1';");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
@@ -328,7 +328,8 @@ public class DatabaseManager
 							rs4.getString("Name"),
 							rs.getBoolean("At_Stop"),
 							rs.getBoolean("Picked_Up"),
-							rs.getString("Pick_Up_Date")
+							rs.getString("Pick_Up_Date"),
+							rs.getBoolean("Returned")
 							));
 				}
 				readConn.close();
@@ -382,7 +383,8 @@ public class DatabaseManager
 							rs4.getString("Name"),
 							rs.getBoolean("At_Stop"),
 							rs.getBoolean("Picked_Up"),
-							rs.getString("Pick_Up_Date")
+							rs.getString("Pick_Up_Date"),
+							rs.getBoolean("Returned")
 							));
 				}
 				readConn.close();
@@ -502,7 +504,7 @@ public class DatabaseManager
 			//Create Insertion String
 			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			statement = writeConn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor) values(?,?,?,?,?,?,?,?,?,?,?);");
+			statement = writeConn.prepareStatement("insert into Package(Tracking_Number, Date, ASU_Email, First_Name, Last_Name, Box_Number, At_Stop, Picked_Up, stop_id, courier_id, processor, Returned) values(?,?,?,?,?,?,?,?,?,?,?,?);");
 		
 			statement.setString(1, p.getTrackNum());
 			statement.setString(2, p.getDate());
@@ -536,6 +538,7 @@ public class DatabaseManager
 			{
 				statement.setInt(11, rs.getInt("user_id"));
 			}
+			statement.setBoolean(12, false);
 			
 			statement.execute();
 			statement.close();
@@ -589,7 +592,7 @@ public class DatabaseManager
 			PreparedStatement statement = null;
 			if(pickedUp)
 			{
-				statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number=?;");
+				statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number like ?;");
 				Date d = new Date();
 				java.sql.Date sDate = new java.sql.Date(d.getTime());
 				statement.setBoolean(1, atStop);
@@ -603,7 +606,7 @@ public class DatabaseManager
 						break;
 					}
 				}
-				statement.setString(5, tNumber);
+				statement.setString(5, "%" + tNumber + "%");
 			}
 			else
 			{
@@ -627,6 +630,24 @@ public class DatabaseManager
 		catch(Exception e)
 		{
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+		}
+	}
+	public void returnPackage(String tNumber)
+	{
+		try
+		{
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = null;
+			statement = writeConn.prepareStatement("update Package set Returned=? where Tracking_Number like ?;");
+			statement.setBoolean(1, true);
+			statement.setString(2, "%" + tNumber + "%");
+			statement.execute();
+			statement.close();
+			writeConn.close();
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Returning Package");
 		}
 	}
 	
@@ -1076,7 +1097,8 @@ public class DatabaseManager
 					rs4.getString("Name"),
 					rs.getBoolean("At_Stop"),
 					rs.getBoolean("Picked_Up"),
-					rs.getString("Pick_Up_Date")
+					rs.getString("Pick_Up_Date"),
+					rs.getBoolean("Returned")
 					));
 			}
 		}

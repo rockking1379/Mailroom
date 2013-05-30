@@ -121,7 +121,10 @@ public class OpenScreen extends JFrame {
 		
 		mntmCreateNewRoute.addActionListener( new CreateRoute());
 		
+		JMenuItem deleteStop = new JMenuItem("Delete Stop");
+		mnFile.add(deleteStop);
 		
+		deleteStop.addActionListener(new DeleteStop());
 		
 
 		JMenuItem crtRt = new JMenuItem("Manage Routes");
@@ -376,6 +379,16 @@ public class OpenScreen extends JFrame {
 		
 			displayTable.updateTabel();
 				
+			
+		}
+		
+	}
+	
+	public class DeleteStop implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			new DelStop(manager).setVisible(true);
 			
 		}
 		
