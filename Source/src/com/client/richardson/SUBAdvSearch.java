@@ -355,6 +355,20 @@ public class SUBAdvSearch extends JFrame {
 			String selectedStop =(String)StopBox.getSelectedItem();
 			
 			
+			try {
+				sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(StartField.getText());
+				edDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(EndField.getText());
+				
+				System.out.println(sDate+" "+eDate);
+				
+				 sDate = StartField.getText();
+				 eDate=EndField.getText();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 			if(!trackingField.getText().equals("")){
 				
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.searchPackages(trackingField.getText(),0);
@@ -455,18 +469,7 @@ public class SUBAdvSearch extends JFrame {
 				//String sDate=null;
 				//String eDate=null;
 				
-				try {
-					sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(StartField.getText());
-					edDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(EndField.getText());
-					
-					System.out.println(sDate+" "+eDate);
-					
-					 sDate = StartField.getText();
-					 eDate=EndField.getText();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 				
 				System.out.println(sDate+" "+eDate);
 				ArrayList<Package> sresults =(ArrayList<Package>) manager.findPackage(sDate,eDate);
@@ -577,9 +580,9 @@ public class SUBAdvSearch extends JFrame {
 		try {
 			System.out.println(p.getDate());
 
-			Date pDate =new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(p.getDate());
-			System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
-			if(sdDate.compareTo(pDate)>0 && edDate.compareTo(pDate)<0){
+			Date pDate =new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
+			//System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
+			if(sdDate.compareTo(pDate)>=0 && edDate.compareTo(pDate)<+0){
 				
 				matches=false;
 			}
@@ -588,6 +591,9 @@ public class SUBAdvSearch extends JFrame {
 			e.printStackTrace();
 		}
 	}
+		if(p.getPickedUp()!=chckbxPickedUp.isSelected() && p.getDelivered()!=chckbxDelivered.isSelected()){
+			matches=false;
+		}
 		
 		
 		
