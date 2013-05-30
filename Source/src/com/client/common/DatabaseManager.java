@@ -754,34 +754,8 @@ public class DatabaseManager
 			statement.setString(2, endDate);
 			ResultSet rs = statement.executeQuery();
 			
-			while(rs.next())
-			{
-				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
-				statement.setInt(1, rs.getInt("stop_id"));
-				ResultSet rs2 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
-				statement.setInt(1, rs.getInt("processor"));
-				ResultSet rs3 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
-				statement.setInt(1, rs.getInt("courier_id"));
-				ResultSet rs4 = statement.executeQuery();
-				
-					results.add(new Package(rs.getString("First_Name"),
-						rs.getString("Last_Name"),
-						rs.getString("ASU_Email"),
-						rs.getString("Date"),
-						rs.getString("Box_Number"),
-						rs2.getString("Name"),
-						rs.getString("Tracking_Number"),
-						rs3.getString("User_Name"),
-						rs4.getString("Name"),
-						rs.getBoolean("At_Stop"),
-						rs.getBoolean("Picked_Up"),
-						rs.getString("Pick_Up_Date")
-						));
-			}
+			results = processResults(rs, readConn, statement);
+			
 			readConn.close();
 		}
 		catch(Exception e)
@@ -803,34 +777,8 @@ public class DatabaseManager
 			statement.setString(1, tNumber);
 			ResultSet rs = statement.executeQuery();
 			
-			while(rs.next())
-			{
-				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
-				statement.setInt(1, rs.getInt("stop_id"));
-				ResultSet rs2 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
-				statement.setInt(1, rs.getInt("processor"));
-				ResultSet rs3 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
-				statement.setInt(1, rs.getInt("courier_id"));
-				ResultSet rs4 = statement.executeQuery();
-				
-				results.add(new Package(rs.getString("First_Name"),
-						rs.getString("Last_Name"),
-						rs.getString("ASU_Email"),
-						rs.getString("Date"),
-						rs.getString("Box_Number"),
-						rs2.getString("Name"),
-						rs.getString("Tracking_Number"),
-						rs3.getString("User_Name"),
-						rs4.getString("Name"),
-						rs.getBoolean("At_Stop"),
-						rs.getBoolean("Picked_Up"),
-						rs.getString("Pick_Up_Date")
-						));
-			}
+			results = processResults(rs, readConn, statement);
+			
 			readConn.close();
 		}
 		catch(Exception e)
@@ -853,34 +801,8 @@ public class DatabaseManager
 		
 			ResultSet rs = statement.executeQuery();
 		
-			while(rs.next())
-			{
-				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
-				statement.setInt(1, rs.getInt("stop_id"));
-				ResultSet rs2 = statement.executeQuery();
+			results = processResults(rs, readConn, statement);
 			
-				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
-				statement.setInt(1, rs.getInt("processor"));
-				ResultSet rs3 = statement.executeQuery();
-			
-				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
-				statement.setInt(1, rs.getInt("courier_id"));
-				ResultSet rs4 = statement.executeQuery();
-			
-				results.add(new Package(rs.getString("First_Name"),
-						rs.getString("Last_Name"),
-						rs.getString("ASU_Email"),
-						rs.getString("Date"),
-						rs.getString("Box_Number"),
-						rs2.getString("Name"),
-						rs.getString("Tracking_Number"),
-						rs3.getString("User_Name"),
-						rs4.getString("Name"),
-						rs.getBoolean("At_Stop"),
-						rs.getBoolean("Picked_Up"),
-						rs.getString("Pick_Up_Date")
-						));
-			}
 			readConn.close();
 		}
 		catch(Exception e)
@@ -936,34 +858,8 @@ public class DatabaseManager
 			}
 			ResultSet rs = statement.executeQuery();
 			
-			while(rs.next())
-			{
-				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
-				statement.setInt(1, rs.getInt("stop_id"));
-				ResultSet rs2 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
-				statement.setInt(1, rs.getInt("processor"));
-				ResultSet rs3 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
-				statement.setInt(1, rs.getInt("courier_id"));
-				ResultSet rs4 = statement.executeQuery();
-				
-				results.add(new Package(rs.getString("First_Name"),
-						rs.getString("Last_Name"),
-						rs.getString("ASU_Email"),
-						rs.getString("Date"),
-						rs.getString("Box_Number"),
-						rs2.getString("Name"),
-						rs.getString("Tracking_Number"),
-						rs3.getString("User_Name"),
-						rs4.getString("Name"),
-						rs.getBoolean("At_Stop"),
-						rs.getBoolean("Picked_Up"),
-						rs.getString("Pick_Up_Date")
-						));
-			}
+			results = processResults(rs, readConn, statement);
+			
 			readConn.close();
 			
 		}
@@ -1022,34 +918,8 @@ public class DatabaseManager
 			
 			ResultSet rs = statement.executeQuery();
 			
-			while(rs.next())
-			{
-				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
-				statement.setInt(1, rs.getInt("stop_id"));
-				ResultSet rs2 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
-				statement.setInt(1, rs.getInt("processor"));
-				ResultSet rs3 = statement.executeQuery();
-				
-				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
-				statement.setInt(1, rs.getInt("courier_id"));
-				ResultSet rs4 = statement.executeQuery();
-				
-				results.add(new Package(rs.getString("First_Name"),
-						rs.getString("Last_Name"),
-						rs.getString("ASU_Email"),
-						rs.getString("Date"),
-						rs.getString("Box_Number"),
-						rs2.getString("Name"),
-						rs.getString("Tracking_Number"),
-						rs3.getString("User_Name"),
-						rs4.getString("Name"),
-						rs.getBoolean("At_Stop"),
-						rs.getBoolean("Picked_Up"),
-						rs.getString("Pick_Up_Date")
-						));
-			}
+			results = processResults(rs, readConn, statement);
+			
 			readConn.close();
 			
 		}
@@ -1057,6 +927,50 @@ public class DatabaseManager
 		{
 			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
 		}
+		return results;
+	}
+	
+	///---Processes Package Search Results---///
+	public List<Package> processResults(ResultSet rs, Connection readConn, PreparedStatement statement)
+	{
+		List<Package> results = new ArrayList<Package>();
+		
+		try
+		{
+			while(rs.next())
+			{
+				statement = readConn.prepareStatement("select Name from Stop where stop_id=?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = statement.executeQuery();
+			
+				statement = readConn.prepareStatement("select User_Name from User where user_id=?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet rs3 = statement.executeQuery();
+			
+				statement = readConn.prepareStatement("select Name from Courier where courier_id=?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet rs4 = statement.executeQuery();
+			
+				results.add(new Package(rs.getString("First_Name"),
+					rs.getString("Last_Name"),
+					rs.getString("ASU_Email"),
+					rs.getString("Date"),
+					rs.getString("Box_Number"),
+					rs2.getString("Name"),
+					rs.getString("Tracking_Number"),
+					rs3.getString("User_Name"),
+					rs4.getString("Name"),
+					rs.getBoolean("At_Stop"),
+					rs.getBoolean("Picked_Up"),
+					rs.getString("Pick_Up_Date")
+					));
+			}
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null,"Error Processing Search Results");
+		}
+		
 		return results;
 	}
 	
