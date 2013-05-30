@@ -388,7 +388,7 @@ public class ScanPackage extends JFrame {
 			}
 			
 			
-			ArrayList<Package> allScanned = (ArrayList<Package>)manager.findPackage(null,null);
+			ArrayList<Package> allScanned = (ArrayList<Package>)manager.findPackage(false,false);
 			
 			for(Package pac: allScanned){
 				
