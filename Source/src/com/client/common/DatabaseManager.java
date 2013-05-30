@@ -245,16 +245,17 @@ public class DatabaseManager
 				ResultSet rs2 = s.executeQuery();
 				while(rs2.next())
 				{
-					building = rs.getString("Name");
+					building = rs2.getString("Name");
 				}
 				
 				facStaff.add((new Person(rs.getString("First_Name"), rs.getString("Last_Name"), rs.getString("ASU_Email"), rs.getString("ID_Number"), rs.getString("Number"), building)));
 			}
-			
+			statement.close();
+			readConn.close();
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Loading Faculty/Staff");
+			JOptionPane.showMessageDialog(null, "Error Loading Faculty/Staff\n" + e.getMessage());
 		}
 		
 	}
@@ -275,16 +276,17 @@ public class DatabaseManager
 				ResultSet rs2 = s.executeQuery();
 				while(rs2.next())
 				{
-					building = rs.getString("Name");
+					building = rs2.getString("Name");
 				}
 				
 				students.add((new Person(rs.getString("First_Name"), rs.getString("Last_Name"), rs.getString("ASU_Email"), rs.getString("ID_Number"), rs.getString("Number"), building)));
 			}
-			
+			statement.close();
+			readConn.close();
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Loading Faculty/Staff");
+			JOptionPane.showMessageDialog(null, "Error Loading Students\n" + e.getMessage());
 		}
 	}
 	public void loadPackages(boolean allStops, String stop)
