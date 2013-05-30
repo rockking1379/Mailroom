@@ -404,8 +404,8 @@ public class SubRoom extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Student Union Mail Room");
         frame.setSize(865, 590);
-        //ImageIcon icon= new ImageIcon(frame.getClass().getResource("/image/Untitled.jpg"));
-		//frame.setIconImage(icon.getImage());
+       ImageIcon icon= new ImageIcon(frame.getClass().getResource("/image/Untitled.jpg"));
+		frame.setIconImage(icon.getImage());
        
         SubRoom newContentPane = new SubRoom();
         newContentPane.setOpaque(true); 
