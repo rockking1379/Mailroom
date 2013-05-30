@@ -3,11 +3,13 @@ package com.client.richardson;
 import java.awt.BorderLayout;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
@@ -298,10 +300,21 @@ public class RoutePrint extends JFrame {
             		
             		
             		for (Package p: packages){
+            			Date pDate=null;
             			
             			
+            			try {
+							pDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
+						} catch (ParseException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+            			
+            			Date tDate = new Date();
             			
             			
+            			if(((tDate.getMonth()+tDate.getDate()+tDate.getYear())==(pDate.getMonth()+pDate.getDate()+pDate.getYear()))){
+            				
             			
             			
             			String var =p.getLName();
@@ -340,7 +353,7 @@ public class RoutePrint extends JFrame {
             		}
             	
             	
-             	
+            		}
            		
             
              	

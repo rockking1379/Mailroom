@@ -315,7 +315,7 @@ public class RouteManager extends JFrame {
 				}
 				ind=0;
 				for(Object o: selected){
-					manager.updateStop((String)o, false, "unassigned",ind);
+					manager.updateStop((String)o, true, "unassigned",ind);
 					
 				}
 				
