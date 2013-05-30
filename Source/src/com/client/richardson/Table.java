@@ -201,6 +201,7 @@ public class Table extends JPanel {
         table.getColumnModel().getColumn(4).setPreferredWidth(130);
         table.getColumnModel().getColumn(5).setPreferredWidth(84);
         table.getColumnModel().getColumn(6).setPreferredWidth(82);
+        table.getColumnModel().getColumn(7).setPreferredWidth(70);
        
         
         table.getColumnModel().getColumn(0).setResizable(false);
@@ -210,6 +211,7 @@ public class Table extends JPanel {
         table.getColumnModel().getColumn(4).setResizable(false);
         table.getColumnModel().getColumn(5).setResizable(false);
         table.getColumnModel().getColumn(6).setResizable(false);
+        table.getColumnModel().getColumn(7).setResizable(false);
         
         tc = table.getColumnModel().getColumn(0);     
         tc.setCellEditor(table.getDefaultEditor(Boolean.class));     
@@ -238,7 +240,7 @@ public class Table extends JPanel {
 			}
      		String date=ft.format(sdDate);
      		inTabel.add(p);
-    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),false});
+    	  atable.insertData(new Object[] {false,p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),"",});
        }
    
      /* atable.insertData(atable.row1);
@@ -339,10 +341,10 @@ public class Table extends JPanel {
   	    SimpleDateFormat ft = new SimpleDateFormat ("MM-dd-yyyy");
   		String pickdate=ft.format(date);
   		
-   private String[] columnNames = {"Delivered","First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username"};
+   private String[] columnNames = {"Delivered","First Name", "Last Name", "Stop","Tracking #","Carrier", "Date","Username","Delivered Date"};
    
    private Vector data = new Vector();
-   public final Object[] row1 ={delivered,"Kathy", "Smith","Rex","5452548313","",  ft.format(date),"", };
+   public final Object[] row1 ={delivered,"Kathy", "Smith","Rex","5452548313","",  ft.format(date),"", ""};
   /* public final Object[] row2 = {print, "John", "Doe","SUB",  "5846421596", ft.format(date),"", delivered};
    public final Object[] row3 = {print, "Sue", "Black","Bookstore", "2684359112",  ft.format(date),"", delivered};
    public final Object[] row4 = {print, "Jane", "White", "Plachy", "2059872641", ft.format(date),"", delivered};
@@ -414,20 +416,20 @@ public class Table extends JPanel {
     	inTabel.clear();
     	
     	if(results.size()==0){
-    		atable.insertData(new Object []  {false,"","","","","","","",});
+    		atable.insertData(new Object []  {false,"","","","","","","",""});
 			atable.removeRow(0);
 			
     	
     		
     	}
     	
-    	atable.insertData(new Object []  {false,"","","","","","","",});
+    	atable.insertData(new Object []  {false,"","","","","","","",""});
     	while(atable.getRowCount()>=1 || !(atable.getValueAt(0, 5).equals(""))){
     		
     		atable.removeRow(atable.getRowCount()-1);
     		System.out.println(atable.getRowCount()-1);
     		if(atable.getRowCount()==1 ){
-    			atable.insertData(new Object []  {false,"","","","","","","",});
+    			atable.insertData(new Object []  {false,"","","","","","","",""});
     			atable.removeRow(0);
     			break;
     		}
@@ -446,7 +448,7 @@ public class Table extends JPanel {
       		String date=ft.format(sdDate);
     		
     		
-    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),});
+    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),p.getPickedUpDate()});
     		
     		
     	}
