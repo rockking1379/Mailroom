@@ -301,6 +301,8 @@ public class RoutePrint extends JFrame {
             		
             		for (Package p: packages){
             			Date pDate=null;
+            			
+            			
             			try {
 							pDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
 						} catch (ParseException e1) {
@@ -311,9 +313,9 @@ public class RoutePrint extends JFrame {
             			Date tDate = new Date();
             			
             			
-            			if((tDate.compareTo(pDate))!=0){
-            				return;
-            			}
+            			if(((tDate.getMonth()+tDate.getDate()+tDate.getYear())==(pDate.getMonth()+pDate.getDate()+pDate.getYear()))){
+            				
+            			
             			
             			String var =p.getLName();
             			if(var.length()>=11){
@@ -351,7 +353,7 @@ public class RoutePrint extends JFrame {
             		}
             	
             	
-             	
+            		}
            		
             
              	
