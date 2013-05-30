@@ -611,7 +611,7 @@ public class AdvSearch extends JFrame {
 		try {
 			System.out.println(p.getDate());
 
-			Date pDate =new SimpleDateFormat("yyyy-mm-dd",Locale.ENGLISH).parse(p.getDate());
+			Date pDate =new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(p.getDate());
 			System.out.println(((sdDate.compareTo(pDate)>0)+" "+(edDate.compareTo(pDate)<0)));
 			if(sdDate.compareTo(pDate)>0 && edDate.compareTo(pDate)<0){
 				
