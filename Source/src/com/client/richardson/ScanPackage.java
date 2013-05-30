@@ -62,6 +62,7 @@ public class ScanPackage extends JFrame {
 	String loggedIn;
 	JComboBox comboBox_1;
 	JButton btnSave = null;
+	JButton btnAutoFill = null;
 	
 	 String packDate= DateFormat.getDateInstance(DateFormat.SHORT).format(date);
 
@@ -118,6 +119,7 @@ public class ScanPackage extends JFrame {
 		
 		NameText = new JTextField();
 		NameText.setBounds(110, 80, 179, 20);
+		NameText.addKeyListener(new fieldListener());
 		contentPane.add(NameText);
 		NameText.setColumns(10);
 
@@ -183,13 +185,12 @@ public class ScanPackage extends JFrame {
 		lblTracking.setBounds(35, 60, 66, 14);
 		contentPane.add(lblTracking);
 		
-		JButton btnAutoFill = new JButton("Auto Fill");
+		btnAutoFill = new JButton("Auto Fill");
 		btnAutoFill.setBounds(437, 23, 89, 20);
 		contentPane.add(btnAutoFill);
 
 		
-		btnAutoFill.addActionListener(new AutoFillListener(this));
-	
+		btnAutoFill.addActionListener(new AutoFillListener(this));	
 		
 		BoxText = new JTextField();
 		BoxText.setBounds(375, 106, 151, 20);
@@ -264,6 +265,7 @@ public class ScanPackage extends JFrame {
 		
 		LastNameText = new JTextField();
 		LastNameText.setBounds(375, 80, 151, 20);
+		LastNameText.addKeyListener(new fieldListener());
 		contentPane.add(LastNameText);
 		LastNameText.setColumns(10);
 		
@@ -438,6 +440,7 @@ public class ScanPackage extends JFrame {
 			
 			manager.addPackage(p);
 			clear();
+			TrackText.requestFocus();
 			
 		}
 	}
@@ -500,6 +503,31 @@ public class ScanPackage extends JFrame {
 			if(key == KeyEvent.VK_ENTER)
 			{
 				btnSave.doClick();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) 
+		{
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) 
+		{
+		}
+		
+	}
+	
+	private class fieldListener implements KeyListener
+	{
+
+		@Override
+		public void keyPressed(KeyEvent e) 
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_ENTER)
+			{
+				btnAutoFill.doClick();
 			}
 		}
 
