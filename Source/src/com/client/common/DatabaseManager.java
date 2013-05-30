@@ -157,14 +157,7 @@ public class DatabaseManager
 			}
 		}
 		
-		if(!building.equals(""))
-		{
-			facStaff.add(new Person(firstName, lastName, email, idNumber, boxNumber, building));
-		}
-		else
-		{
-			students.add(new Person(firstName, lastName, email, idNumber, boxNumber, 2));
-		}
+		ETL(new Person(firstName, lastName, email, idNumber, boxNumber, building));
 	}
 	public void loadRoutes()
 	{
@@ -238,10 +231,61 @@ public class DatabaseManager
 	public void loadFacStaff()
 	{
 		//Load Faculty and Staff
+		try
+		{
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement statement = readConn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Person where ASU_Email not like '%grizzlies.adams.edu';");
+			
+			while(rs.next())
+			{
+				String building = null;
+				PreparedStatement s = readConn.prepareStatement("select Name from Stop where stop_id=?;");
+				s.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = s.executeQuery();
+				while(rs2.next())
+				{
+					building = rs.getString("Name");
+				}
+				
+				facStaff.add((new Person(rs.getString("First_Name"), rs.getString("Last_Name"), rs.getString("ASU_Email"), rs.getString("ID_Number"), rs.getString("Number"), building)));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Loading Faculty/Staff");
+		}
+		
 	}
 	public void loadStudent()
 	{
 		//Load Students
+		try
+		{
+			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			Statement statement = readConn.createStatement();
+			ResultSet rs = statement.executeQuery("select * from Person where ASU_Email like '%grizzlies.adams.edu';");
+			
+			while(rs.next())
+			{
+				String building = null;
+				PreparedStatement s = readConn.prepareStatement("select Name from Stop where stop_id=?;");
+				s.setInt(1, rs.getInt("stop_id"));
+				ResultSet rs2 = s.executeQuery();
+				while(rs2.next())
+				{
+					building = rs.getString("Name");
+				}
+				
+				students.add((new Person(rs.getString("First_Name"), rs.getString("Last_Name"), rs.getString("ASU_Email"), rs.getString("ID_Number"), rs.getString("Number"), building)));
+			}
+			
+		}
+		catch(Exception e)
+		{
+			JOptionPane.showMessageDialog(null, "Error Loading Faculty/Staff");
+		}
 	}
 	public void loadPackages(boolean allStops, String stop)
 	{
@@ -349,6 +393,8 @@ public class DatabaseManager
 		if(!isSetup)
 		{
 			JOptionPane.showMessageDialog(null, "Successfully Loaded:\nFaculty/Staff:" + facStaff.size() + "\nStudents:" + students.size() + "\nStops:" + stops.size() + "\nRoutes:" + routes.size() + "\nCouriers:" + couriers.size() + "\nPackages:" + packages.size());
+			facStaff = null;
+			students = null;
 			isSetup = true;
 		}
 		
@@ -379,6 +425,70 @@ public class DatabaseManager
 		else
 		{
 			return true;
+		}
+	}
+	///---ETL---///
+	public void ETL(Person p)
+	{
+		try
+		{
+			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			PreparedStatement statement = writeConn.prepareStatement("update Person set ASU_Email=?, ID_Number=? where First_Name like ? and Last_Name like ? and Number=?;");
+			statement.setString(1, p.getEmail());
+			statement.setString(2, p.getID());
+			statement.setString(3, "%" + p.getFirstName() + "%");
+			statement.setString(4, "%" + p.getLastName() + "%");
+			statement.setString(5, p.getBox());
+			
+			int count = statement.executeUpdate();
+			
+			if(count == 0)
+			{
+				statement = writeConn.prepareStatement("insert into Person(ID_Number, ASU_Email, First_Name, Last_Name, Number, stop_id) values(?,?,?,?,?,?);");
+				statement.setString(1, p.getID());
+				String email = p.getEmail();
+				String emailEnd = "";
+				int index = 0; 
+				while(email.charAt(index) != '@')
+				{
+					index++;
+				}
+				//index++;
+				for(int x = index; x < email.length(); x++)
+				{
+					emailEnd += email.charAt(x);
+				}
+				
+				if(emailEnd.equals("grizzlies.adams.edu"))
+				{
+					for(int i = 0; i < stops.size(); i++)
+					{
+						if(stops.get(i).getType())
+						{
+							statement.setInt(6, stops.get(i).getID());
+							break;
+						}
+					}
+				}
+				else
+				{
+					statement.setInt(2, 1);
+				}
+				statement.setString(2, email);
+				statement.setString(3, p.getFirstName());
+				statement.setString(4, p.getLastName());
+				statement.setString(5, p.getBox());
+				
+				statement.execute();
+			}
+			
+			statement.close();
+			writeConn.close();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			JOptionPane.showMessageDialog(null, "ETL Error");
 		}
 	}
 	
@@ -524,6 +634,8 @@ public class DatabaseManager
 		try
 		{
 			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+			//Statement s = writeConn.createStatement();
+			//s.execute("update Stop set Student=0 where Student=1;");
 			PreparedStatement statement = null;
 			statement = writeConn.prepareStatement("insert into Stop(Name, route_id, Is_Used, route_order, Student) values (?,?,?,?,?);");
 			statement.setString(1, name);
