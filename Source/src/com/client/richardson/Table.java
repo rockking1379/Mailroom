@@ -382,7 +382,7 @@ public class Table extends JPanel {
    }
 
    public boolean isCellEditable(int row, int col){
-  	 if (col>=4) {
+  	 if (col!=0 && col!=3) {
            return false;
        } else {
            return true;
