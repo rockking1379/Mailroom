@@ -592,7 +592,7 @@ public class DatabaseManager
 			PreparedStatement statement = null;
 			if(pickedUp)
 			{
-				statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number=?;");
+				statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date=?, stop_id=? where Tracking_Number like ?;");
 				Date d = new Date();
 				java.sql.Date sDate = new java.sql.Date(d.getTime());
 				statement.setBoolean(1, atStop);
@@ -606,7 +606,7 @@ public class DatabaseManager
 						break;
 					}
 				}
-				statement.setString(5, tNumber);
+				statement.setString(5, "%" + tNumber + "%");
 			}
 			else
 			{
@@ -638,9 +638,9 @@ public class DatabaseManager
 		{
 			writeConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			PreparedStatement statement = null;
-			statement = writeConn.prepareStatement("update Package set Returned=? where Tracking_Number=?;");
+			statement = writeConn.prepareStatement("update Package set Returned=? where Tracking_Number like ?;");
 			statement.setBoolean(1, true);
-			statement.setString(2, tNumber);
+			statement.setString(2, "%" + tNumber + "%");
 			statement.execute();
 			statement.close();
 			writeConn.close();
