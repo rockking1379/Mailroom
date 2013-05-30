@@ -9,6 +9,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
+import sun.security.util.Length;
+
 
 
 import com.client.common.DatabaseManager;
@@ -61,6 +63,8 @@ public class SubRoom extends JPanel {
     CheckBoxHeader cbh;  
     CheckBoxHeader rendererComponent; 
     ArrayList<Package> inTabel = new ArrayList<Package>();
+  
+    
       
     class MyItemListener implements ItemListener{     
         public void itemStateChanged(ItemEvent e){    
@@ -179,6 +183,32 @@ public class SubRoom extends JPanel {
 
         atable = (MyTableModel) table.getModel();
       
+        
+        
+        table.getColumnModel().getColumn(0).setPreferredWidth(80);
+        table.getColumnModel().getColumn(1).setPreferredWidth(90);
+        table.getColumnModel().getColumn(2).setPreferredWidth(90);
+        table.getColumnModel().getColumn(3).setPreferredWidth(60);
+        table.getColumnModel().getColumn(4).setPreferredWidth(90);
+        table.getColumnModel().getColumn(5).setPreferredWidth(84);
+        table.getColumnModel().getColumn(6).setPreferredWidth(82);
+        table.getColumnModel().getColumn(7).setPreferredWidth(60);
+       
+        
+        table.getColumnModel().getColumn(0).setResizable(false);
+        table.getColumnModel().getColumn(1).setResizable(false);
+        table.getColumnModel().getColumn(2).setResizable(false);
+        table.getColumnModel().getColumn(3).setResizable(false);
+        table.getColumnModel().getColumn(4).setResizable(false);
+        table.getColumnModel().getColumn(5).setResizable(false);
+        table.getColumnModel().getColumn(6).setResizable(false);
+        table.getColumnModel().getColumn(7).setResizable(false);
+        
+        
+        
+        
+        
+        
 
 
        
@@ -369,7 +399,7 @@ public class SubRoom extends JPanel {
   }
 
   public boolean isCellEditable(int row, int col){
- 	 if (col < 5&& col>=3) {
+ 	 if (col!=0 && col!=7) {
           return false;
       } else {
           return true;
@@ -565,9 +595,10 @@ public class SubRoom extends JPanel {
 				e.printStackTrace();
 			}
       		String date=ft.format(sdDate);
+      	  String trackNum = p.getTrackNum();
+      	  String last4 = trackNum.substring(trackNum.length()-4,trackNum.length());
     		
-    		
-    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getBoxNum(),p.getTrackNum(),p.getCourier(),date,p.getPickedUp(),p.getPickedUpDate()+""});
+    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getBoxNum(),"..."+last4,p.getCourier(),date,p.getPickedUp(),p.getPickedUpDate()+""});
     		
     		
     	}
