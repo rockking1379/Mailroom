@@ -1,4 +1,3 @@
-first name, last name, email, id number, box number, building,
 Thomas,Nehring,nehringt@live.com,900555555,93,
 Thomas,Nehring,nehringt@live.com,900555555,94,
 James,Sitz,sitzbj@grizzlies.adams.edu,234322343,3A,
