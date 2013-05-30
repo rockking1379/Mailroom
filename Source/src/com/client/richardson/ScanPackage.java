@@ -18,6 +18,8 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -59,6 +61,7 @@ public class ScanPackage extends JFrame {
 	DatabaseManager manager;
 	String loggedIn;
 	JComboBox comboBox_1;
+	JButton btnSave = null;
 	
 	 String packDate= DateFormat.getDateInstance(DateFormat.SHORT).format(date);
 
@@ -130,11 +133,12 @@ public class ScanPackage extends JFrame {
 
 		contentPane.add(lblDate);
 		
-		JButton btnSave = new JButton("Save");
+		btnSave = new JButton("Save");
 		btnSave.setBounds(227, 188, 89, 23);
 		contentPane.add(btnSave);
 
 		btnSave.addActionListener(new SaveListener());
+		btnSave.addKeyListener(new keyListener());
 
 		
 		JButton btnClear = new JButton("Clear");
@@ -482,6 +486,31 @@ public class ScanPackage extends JFrame {
 		public void actionPerformed(ActionEvent e) {
 			new CreateCarrier(manager,loggedIn);
 			dispose();
+		}
+		
+	}
+	
+	private class keyListener implements KeyListener
+	{
+
+		@Override
+		public void keyPressed(KeyEvent e) 
+		{
+			int key = e.getKeyCode();
+			if(key == KeyEvent.VK_ENTER)
+			{
+				btnSave.doClick();
+			}
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) 
+		{
+		}
+
+		@Override
+		public void keyTyped(KeyEvent e) 
+		{
 		}
 		
 	}

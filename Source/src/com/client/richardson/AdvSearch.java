@@ -66,6 +66,7 @@ public class AdvSearch extends JFrame {
     JComboBox StopBox;
     JCheckBox chckbxPickedUp;
     JCheckBox chckbxDelivered;
+    JCheckBox chckbxSearchByDelivered;
 	
 	
 
@@ -181,7 +182,7 @@ public class AdvSearch extends JFrame {
 		BoxNum.setColumns(10);
 		
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(345, 105, 89, 23);
+		btnSearch.setBounds(145, 110, 89, 23);
 		btnSearch.addActionListener(new SearchListener());
 		contentPane.add(btnSearch);
 		
@@ -238,15 +239,17 @@ public class AdvSearch extends JFrame {
 		trackingField.setColumns(10);
 		
 		chckbxDelivered = new JCheckBox("Delivered");
+		chckbxDelivered.setEnabled(false);
 		chckbxDelivered.setForeground(new Color(255, 255, 255));
 		chckbxDelivered.setBackground(new Color(0, 102, 0));
-		chckbxDelivered.setBounds(376, 81, 85, 23);
+		chckbxDelivered.setBounds(374, 104, 85, 23);
 		contentPane.add(chckbxDelivered);
 		
 		chckbxPickedUp = new JCheckBox("Picked Up");
+		chckbxPickedUp.setEnabled(false);
 		chckbxPickedUp.setForeground(new Color(255, 255, 255));
 		chckbxPickedUp.setBackground(new Color(0, 102, 0));
-		chckbxPickedUp.setBounds(376, 60, 83, 23);
+		chckbxPickedUp.setBounds(374, 81, 83, 23);
 		contentPane.add(chckbxPickedUp);
 		
 		chckbxPickedUp.addItemListener(new ItemListener(){
@@ -312,9 +315,39 @@ public class AdvSearch extends JFrame {
 		JButton btnEDate = new JButton("");
 		btnEDate.setBounds(293, 81, 32, 23);
 		contentPane.add(btnEDate);
+		
+		
+			chckbxSearchByDelivered = new JCheckBox("Search By Delivered");
+			chckbxSearchByDelivered.setForeground(new Color(255, 255, 255));
+			chckbxSearchByDelivered.setBackground(new Color(0, 102, 0));
+			chckbxSearchByDelivered.setBounds(331, 57, 159, 23);
+			contentPane.add(chckbxSearchByDelivered);
+			chckbxSearchByDelivered.addItemListener(new CheckBoxListener());
+	
+			
+			if(chckbxSearchByDelivered.isSelected()){
+				chckbxDelivered.setEnabled(true);
+				chckbxPickedUp.setEnabled(true);
+			}
+			if(!chckbxSearchByDelivered.isSelected()){
+				chckbxDelivered.setEnabled(false);
+				chckbxPickedUp.setEnabled(false);
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
 		try {
 			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
 			btnEDate.setIcon(new ImageIcon(icon1));
+			
+			
 		} catch (IOException e1) {
 			
 		}
@@ -330,6 +363,8 @@ public class AdvSearch extends JFrame {
 	
 	}
 	
+	
+
 	public void dateCheck(){
 		sDate=new StringBuilder().append(sYear.substring(4 )).append(sYear.substring(0, 2)).append(sYear.substring(2, 4)).toString();
 		eDate=new StringBuilder().append(eYear.substring(4)).append(eYear.substring(0, 2)).append(eYear.substring(2, 4)).toString();
@@ -594,4 +629,20 @@ public class AdvSearch extends JFrame {
 		
 			
 	}
+	
+	private class CheckBoxListener implements ItemListener{
+        public void itemStateChanged(ItemEvent e) {
+
+			if(chckbxSearchByDelivered.isSelected()){
+				chckbxDelivered.setEnabled(true);
+				chckbxPickedUp.setEnabled(true);
+			}
+			if(!chckbxSearchByDelivered.isSelected()){
+				chckbxDelivered.setEnabled(false);
+				chckbxPickedUp.setEnabled(false);
+			}
+			
+        }
+        }
+	
 }

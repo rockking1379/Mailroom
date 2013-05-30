@@ -448,7 +448,7 @@ public class Table extends JPanel {
       		String date=ft.format(sdDate);
     		
     		
-    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),p.getPickedUpDate()});
+    		atable.insertData(new Object[]{p.getDelivered(),p.getFName(),p.getLName(),p.getStop(),p.getTrackNum(),p.getCourier(),date,p.getUser(),p.getPickedUpDate()+""});
     		
     		
     	}
