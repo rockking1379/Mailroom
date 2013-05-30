@@ -388,6 +388,18 @@ public class ScanPackage extends JFrame {
 			}
 			
 			
+			ArrayList<Package> allScanned = (ArrayList<Package>)manager.findPackage(null,null);
+			
+			for(Package pac: allScanned){
+				
+				if(pac.getTrackNum().equals(TrackText.getText())){
+					JOptionPane.showMessageDialog(null,"The package number you have scanned in is already associated with a package.");
+					return;
+				}
+				
+			}
+			
+			
 			try
 			{
 				tDate = newDate;
