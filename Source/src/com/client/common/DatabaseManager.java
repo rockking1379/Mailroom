@@ -189,7 +189,7 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			Statement statement = readConn.createStatement();
-			ResultSet rs = statement.executeQuery("select * from Stop where Is_Used=1;");
+			ResultSet rs = statement.executeQuery("select * from Stop where Is_Used='1';");
 			while(rs.next())
 			{
 				String name = rs.getString("Name");
