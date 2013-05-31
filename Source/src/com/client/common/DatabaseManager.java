@@ -848,7 +848,7 @@ public class DatabaseManager
 			}
 			else
 			{
-				statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date='', stop_id=? where Tracking_Number=?;");
+				statement = writeConn.prepareStatement("update Package set At_Stop=?, Picked_Up=?, Pick_Up_Date='', stop_id=? where Tracking_Number like ?;");
 				statement.setBoolean(1, atStop);
 				statement.setBoolean(2, pickedUp);
 				for(int i = 0; i < stops.size(); i++)
