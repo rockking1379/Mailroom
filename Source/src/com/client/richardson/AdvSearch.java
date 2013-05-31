@@ -624,6 +624,13 @@ public class AdvSearch extends JFrame {
 	}
 		
 		
+		if(chckbxSearchByDelivered.isSelected()){
+		
+		if(p.getPickedUp()!=chckbxPickedUp.isSelected() && p.getDelivered()!=chckbxDelivered.isSelected()){
+			matches=false;
+		}
+		
+		}
 		
 		return matches;
 		

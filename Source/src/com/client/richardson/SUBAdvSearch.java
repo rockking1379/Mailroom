@@ -67,7 +67,7 @@ public class SUBAdvSearch extends JFrame {
     JComboBox StopBox;
     JCheckBox chckbxPickedUp;
     JCheckBox chckbxDelivered;
-	
+    JCheckBox checkBox;
 	
 
 	class JTextFieldLimit extends PlainDocument {
@@ -182,7 +182,7 @@ public class SUBAdvSearch extends JFrame {
 		BoxNum.setColumns(10);
 		
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(345, 105, 89, 23);
+		btnSearch.setBounds(187, 104, 89, 23);
 		btnSearch.addActionListener(new SearchListener());
 		contentPane.add(btnSearch);
 		
@@ -241,15 +241,15 @@ public class SUBAdvSearch extends JFrame {
 		chckbxDelivered = new JCheckBox("Delivered");
 		chckbxDelivered.setForeground(new Color(255, 255, 255));
 		chckbxDelivered.setBackground(new Color(0, 102, 0));
-		chckbxDelivered.setBounds(376, 81, 85, 23);
+		chckbxDelivered.setBounds(374, 104, 85, 23);
 		contentPane.add(chckbxDelivered);
-		
+		chckbxDelivered.setEnabled(false);
 		chckbxPickedUp = new JCheckBox("Picked Up");
 		chckbxPickedUp.setForeground(new Color(255, 255, 255));
 		chckbxPickedUp.setBackground(new Color(0, 102, 0));
-		chckbxPickedUp.setBounds(376, 60, 83, 23);
+		chckbxPickedUp.setBounds(374, 81, 83, 23);
 		contentPane.add(chckbxPickedUp);
-		
+		chckbxPickedUp.setEnabled(false);
 		chckbxPickedUp.addItemListener(new ItemListener(){
 
 			@Override
@@ -316,6 +316,13 @@ public class SUBAdvSearch extends JFrame {
 		try {
 			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
 			btnEDate.setIcon(new ImageIcon(icon1));
+			
+			checkBox = new JCheckBox("Search By Delivered");
+			checkBox.setForeground(Color.WHITE);
+			checkBox.addItemListener(new CheckBoxListener());
+			checkBox.setBackground(new Color(0, 102, 0));
+			checkBox.setBounds(331, 57, 159, 23);
+			contentPane.add(checkBox);
 		} catch (IOException e1) {
 			
 		}
@@ -354,7 +361,7 @@ public class SUBAdvSearch extends JFrame {
 			ArrayList<Package> results = new ArrayList<Package>();
 			String selectedStop =(String)StopBox.getSelectedItem();
 			
-			
+			if(!StartField.getText().equals("") || !EndField.getText().equals("")){
 			try {
 				sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(StartField.getText());
 				edDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(EndField.getText());
@@ -367,7 +374,7 @@ public class SUBAdvSearch extends JFrame {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+			}
 			
 			if(!trackingField.getText().equals("")){
 				
@@ -601,4 +608,19 @@ public class SUBAdvSearch extends JFrame {
 		
 			
 	}
+	
+	private class CheckBoxListener implements ItemListener{
+        public void itemStateChanged(ItemEvent e) {
+
+			if(checkBox.isSelected()){
+				chckbxDelivered.setEnabled(true);
+				chckbxPickedUp.setEnabled(true);
+			}
+			if(!checkBox.isSelected()){
+				chckbxDelivered.setEnabled(false);
+				chckbxPickedUp.setEnabled(false);
+			}
+			
+        }
+        }
 }
