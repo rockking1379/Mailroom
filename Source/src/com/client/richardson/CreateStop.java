@@ -94,12 +94,6 @@ public class CreateStop extends JFrame {
 		btnCreate.setBounds(104, 144, 89, 23);
 		contentPane.add(btnCreate);
 		
-		final JCheckBox chcforStudent = new JCheckBox("Student Route");
-		chcforStudent.setForeground(new Color(255, 255, 255));
-		chcforStudent.setBackground(new Color(0, 102, 0));
-		chcforStudent.setBounds(207, 163, 97, 23);
-		contentPane.add(chcforStudent);
-		
 		btnCreate.addActionListener(new ActionListener(){
 
 			@Override
@@ -116,7 +110,7 @@ public class CreateStop extends JFrame {
 					}
 					
 					
-					manager.addStop(textField.getText(), false, "unassigned",largestSequence+1,chcforStudent.isSelected());
+					manager.addStop(textField.getText(), false, "unassigned",largestSequence+1,false );
 					
 				}
 				else{
@@ -131,13 +125,17 @@ public class CreateStop extends JFrame {
 					}
 					
 					
-					manager.addStop(textField.getText(), true, route,largestSequence+1,chcforStudent.isSelected());
+					manager.addStop(textField.getText(), true, route,largestSequence+1,false);
 				}
 				
 				if(frame.getTitle().equals("Scan My Package")){
 					new ScanPackage(manager,loggedIn);
 				}
-				else{
+				else if(frame.getTitle().equals("Manage Routes")){
+					new RouteManager(manager, null).setVisible(true);
+				}
+				
+				else {
 					JFrame f = new JFrame("Create A Route");
 	                
 	                

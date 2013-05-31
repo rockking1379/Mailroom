@@ -281,6 +281,7 @@ public class RouteManager extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				    new CreateStop(manager,loggedIn,frame);
+				    dispose();
 				 
 			}
 		});
