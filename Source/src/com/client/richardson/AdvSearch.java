@@ -385,6 +385,21 @@ public class AdvSearch extends JFrame {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			
+			if(!StartField.getText().equals("") || !EndField.getText().equals("")){
+				try {
+					sdDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(StartField.getText());
+					edDate = new SimpleDateFormat("yyyy-MM-dd",Locale.ENGLISH).parse(EndField.getText());
+					
+					System.out.println(sDate+" "+eDate);
+					
+					 sDate = StartField.getText();
+					 eDate=EndField.getText();
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				}
+			
 			ArrayList<Package> results = new ArrayList<Package>();
 			String selectedStop =(String)StopBox.getSelectedItem();
 			
