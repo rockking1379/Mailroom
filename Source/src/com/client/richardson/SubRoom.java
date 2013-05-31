@@ -443,6 +443,8 @@ public class SubRoom extends JPanel {
         frame.setContentPane(newContentPane);
         //frame.setResizable(false);
         frame.setVisible(true);
+        frame.setResizable(false);
+        
     }
  
     public static void main(String[] args) {
@@ -629,10 +631,17 @@ public void updateTabel(){
     		
     		for(Package p: inTabel){
     			
-    			if(p.getTrackNum().equals(atable.getValueAt(i, 4))){
+    			String a = ((String)atable.getValueAt(i,4));
+    			a = a.substring(a.length()-4,a.length());
+    			
+    			String b = p.getTrackNum();
+    			b=b.substring(b.length()-4,b.length());
+    			
+    			
+    			if(a.equals(b)){
     				
-    				if(!p.getStop().equals(atable.getValueAt(i,3)) || p.getDelivered()!=(boolean)atable.getValueAt(i,0)){
-    					manager.updatePackage((String)atable.getValueAt(i, 4), (boolean)atable.getValueAt(i,0),(boolean)atable.getValueAt(i,7), p.getStop());
+    				if(p.getDelivered()!=(boolean)atable.getValueAt(i,0) || p.getPickedUp()!=(boolean)atable.getValueAt(i,7)){
+    					manager.updatePackage(p.getTrackNum(), (boolean)atable.getValueAt(i,0),(boolean)atable.getValueAt(i,7), p.getStop());
     					
     				}
     			}
