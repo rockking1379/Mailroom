@@ -1332,7 +1332,7 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn.prepareStatement("select * from Package where Tracking_Number like ?;");
-			statement.setString(1, tNumber);
+			statement.setString(1, "%" + tNumber + "%");
 			rs = statement.executeQuery();
 			results = processResults(rs, readConn, statement);
 		}
