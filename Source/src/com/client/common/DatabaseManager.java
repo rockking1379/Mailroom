@@ -96,65 +96,6 @@ public class DatabaseManager
 		
 		return checkUser();
 	}
-	public void createPerson(String person)
-	{
-		//Delimitated by ',' or ';' not sure which yet
-		String firstName = "";
-		String lastName = "";
-		String email = "";
-		String idNumber = "";
-		String boxNumber = "";
-		String building = "";
-		
-		int index = 0;
-		//Main Loop
-		while(index < person.length())
-		{
-			//First Name
-			while(person.charAt(index) != ',')
-			{
-				firstName += person.charAt(index);
-				index++;
-			}
-			index++;
-			//Last Name
-			while(person.charAt(index) != ',')
-			{
-				lastName += person.charAt(index);
-				index++;
-			}
-			index++;
-			//Email
-			while(person.charAt(index) != ',')
-			{
-				email += person.charAt(index);
-				index++;
-			}
-			index++;
-			//idNumber
-			while(person.charAt(index) != ',')
-			{
-				idNumber += person.charAt(index);
-				index++;
-			}
-			index++;
-			//boxNumber
-			while(person.charAt(index) != ',')
-			{
-				boxNumber += person.charAt(index);
-				index++;
-			}
-			index++;
-			//Building
-			while(index < person.length())
-			{
-				building += person.charAt(index);
-				index++;
-			}
-		}
-		
-		ETL(new Person(firstName, lastName, email, idNumber, boxNumber, building));
-	}
 	public void loadRoutes()
 	{
 		//create route in here
@@ -688,6 +629,65 @@ public class DatabaseManager
 				//Ignore we are closing up
 			}
 		}
+	}
+	public void createPerson(String person)
+	{
+		//Delimitated by ',' or ';' not sure which yet
+		String firstName = "";
+		String lastName = "";
+		String email = "";
+		String idNumber = "";
+		String boxNumber = "";
+		String building = "";
+		
+		int index = 0;
+		//Main Loop
+		while(index < person.length())
+		{
+			//First Name
+			while(person.charAt(index) != ',')
+			{
+				firstName += person.charAt(index);
+				index++;
+			}
+			index++;
+			//Last Name
+			while(person.charAt(index) != ',')
+			{
+				lastName += person.charAt(index);
+				index++;
+			}
+			index++;
+			//Email
+			while(person.charAt(index) != ',')
+			{
+				email += person.charAt(index);
+				index++;
+			}
+			index++;
+			//idNumber
+			while(person.charAt(index) != ',')
+			{
+				idNumber += person.charAt(index);
+				index++;
+			}
+			index++;
+			//boxNumber
+			while(person.charAt(index) != ',')
+			{
+				boxNumber += person.charAt(index);
+				index++;
+			}
+			index++;
+			//Building
+			while(index < person.length())
+			{
+				building += person.charAt(index);
+				index++;
+			}
+		}
+		
+		ETL(new Person(firstName, lastName, email, idNumber, boxNumber, building));
 	}
 	
 	///---Packages---///
