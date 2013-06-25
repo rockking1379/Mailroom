@@ -54,7 +54,6 @@ public class DatabaseManager
 			Date start = new Date();
 			System.out.println(start.getHours() + ":" + start.getMinutes() + ":" + start.getSeconds());
 			File people = new File(fileLocation);
-			FileInputStream fStream;
 			try 
 			{
 				Class.forName("org.sqlite.JDBC");
@@ -68,21 +67,14 @@ public class DatabaseManager
 				}
 				else
 				{
-					fStream = new FileInputStream(people);
-					DataInputStream dis = new DataInputStream(fStream);
-					BufferedReader br = new BufferedReader(new InputStreamReader(dis));
-					String person;
-					while((person = br.readLine()) != null)
-					{
-						//createPerson(person);
-					}
-					br.close();
-				
 					loadRoutes();
 					loadStops();
 					loadCouriers();
 					loadFacStaff();
 					loadStudent();
+					checkUpdate();
+					ETL e = new ETL(people, (ArrayList<Stop>)stops, dbLocation, writeConn);
+					e.start();
 				}
 				
 				Date finish = new Date();
@@ -1873,7 +1865,14 @@ public class DatabaseManager
 		catch(Exception e)
 		{
 			//Assume invalid login
-			return null;
+			if(e.getMessage().equals("database is locked"))
+			{
+				return login(username, password);
+			}
+			else
+			{
+				return null;
+			}
 		}
 		finally
 		{
@@ -2035,6 +2034,19 @@ public class DatabaseManager
 			{
 				return;
 			}
+		}
+	}
+
+	///---Update Logic---///
+	public void checkUpdate()
+	{
+		File update = new File("./update.up");
+		if(update.exists())
+		{
+			///Display the results and then delete the file
+			
+			updateViewer uView = new updateViewer(update);
+			uView.setVisible(true);
 		}
 	}
 }
