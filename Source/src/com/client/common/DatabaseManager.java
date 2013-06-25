@@ -74,7 +74,7 @@ public class DatabaseManager
 					String person;
 					while((person = br.readLine()) != null)
 					{
-						createPerson(person);
+						//createPerson(person);
 					}
 					br.close();
 				
