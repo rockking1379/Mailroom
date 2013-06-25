@@ -50,7 +50,9 @@ public class DatabaseManager
 			//Prepare setup
 			//Load people
 			//Create connection string
-			//Prepare for data flow				
+			//Prepare for data flow			
+			Date start = new Date();
+			System.out.println(start.getHours() + ":" + start.getMinutes() + ":" + start.getSeconds());
 			File people = new File(fileLocation);
 			FileInputStream fStream;
 			try 
@@ -81,7 +83,10 @@ public class DatabaseManager
 					loadCouriers();
 					loadFacStaff();
 					loadStudent();
-				}	
+				}
+				
+				Date finish = new Date();
+				System.out.println(finish.getHours() + ":" + finish.getMinutes() + ":" + finish.getSeconds());
 			} 
 			catch (Exception e) 
 			{
@@ -450,7 +455,7 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Error Connecting to Database\n" + e.getMessage());
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database(All Stops)\n" + e.getMessage());
 			}
 			finally
 			{
@@ -657,7 +662,7 @@ public class DatabaseManager
 				}
 				else
 				{
-					statement.setInt(2, 1);
+					statement.setInt(6, 1);
 				}
 				statement.setString(2, email);
 				statement.setString(3, p.getFirstName());
