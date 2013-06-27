@@ -43,6 +43,7 @@ public class DatabaseManager
 	}
 	
 	///---Setup---///
+	@SuppressWarnings({ "unused", "deprecation" })
 	public boolean setup()
 	{
 		if((dbLocation != null) && (fileLocation != null))
@@ -58,23 +59,16 @@ public class DatabaseManager
 			{
 				Class.forName("org.sqlite.JDBC");
 				//readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-				if(!people.exists())
+				checkUpdate();
+				loadRoutes();
+				loadStops();
+				loadCouriers();
+				loadFacStaff();
+				loadStudent();
+				ETL e = new ETL((ArrayList<Stop>)stops, dbLocation, writeConn);
+				if(e.check())
 				{
-					JOptionPane.showMessageDialog(null, "File Missing\n" + fileLocation);
-					File settings = new File("./properties.prop");
-					settings.delete();
-					System.exit(0);
-				}
-				else
-				{
-					loadRoutes();
-					loadStops();
-					loadCouriers();
-					loadFacStaff();
-					loadStudent();
-					checkUpdate();
-					ETL e = new ETL(people, (ArrayList<Stop>)stops, dbLocation, writeConn);
-					e.start();
+					e.process();
 				}
 				
 				Date finish = new Date();
@@ -117,7 +111,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				loadRoutes();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -210,7 +211,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				loadCouriers();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -262,7 +270,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Loading Faculty/Staff\n" + e.getMessage());
+			if(e.getMessage().equals("database is locked"))
+			{
+				loadFacStaff();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -315,7 +330,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Loading Students\n" + e.getMessage());
+			if(e.getMessage().equals("database is locked"))
+			{
+				loadStudent();
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -388,7 +410,14 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Error Connecting to Database(All Stops)\n" + e.getMessage());
+				if(e.getMessage().equals("database is locked"))
+				{
+					loadPackages(allStops, stop);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+				}
 			}
 			finally
 			{
@@ -464,7 +493,14 @@ public class DatabaseManager
 			}
 			catch(Exception e)
 			{
-				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+				if(e.getMessage().equals("database is locked"))
+				{
+					loadPackages(allStops, stop);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+				}
 			}
 			finally
 			{
@@ -516,7 +552,6 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			
 		}
 		finally
 		{
@@ -741,7 +776,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				addPackage(p);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -799,7 +841,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				updatePackage(tNumber, value);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -863,7 +912,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				updatePackage(tNumber, atStop, pickedUp, stop);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -897,7 +953,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Returning Package");
+			if(e.getMessage().equals("database is locked"))
+			{
+				returnPackage(tNumber);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -948,7 +1011,14 @@ public class DatabaseManager
 		catch(Exception e)
 		{
 			//Error with database Connection
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				addStop(name, isUsed, route, route_order, student);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1003,7 +1073,14 @@ public class DatabaseManager
 		catch(Exception e)
 		{
 			//Error with database Connection
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				updateStop(name, isUsed, route, route_order);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1042,7 +1119,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				addRoute(route);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1085,7 +1169,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				updateRoute(previousName, currentName);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1133,7 +1224,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Adding Person");
+			if(e.getMessage().equals("database is locked"))
+			{
+				addPerson(p);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1179,7 +1277,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Updating Person");
+			if(e.getMessage().equals("database is locked"))
+			{
+				updatePerson(p);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1217,7 +1322,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				addCourier(courier, isUsed);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1252,7 +1364,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecing to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				removeCourier(courier);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1293,7 +1412,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				results = findPackage(beginDate, endDate);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1336,7 +1462,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				results = findPackage(tNumber);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1460,7 +1593,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				results = searchPackages(search, location);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1544,7 +1684,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			if(e.getMessage().equals("database is locked"))
+			{
+				results = searchPackages(search, location, beginDate, endDate);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1611,7 +1758,7 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null,"Error Processing Search Results");
+			results = processResults(rs, readConn, statement);
 		}
 		finally
 		{
@@ -1658,7 +1805,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			if(e.getMessage().equals("database is locked"))
+			{
+				results = findPerson(firstName, lastName);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1723,7 +1877,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			if(e.getMessage().equals("database is locked"))
+			{
+				results = findPerson(firstName, lastName, boxNumber);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1916,7 +2077,14 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			
+			if(e.getMessage().equals("database is locked"))
+			{
+				return verifyUser(username);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Error Connecting to Database");
+			}
 		}
 		finally
 		{
@@ -1966,7 +2134,15 @@ public class DatabaseManager
 		}
 		catch(Exception e)
 		{
-			JOptionPane.showMessageDialog(null, "Erro Creating User " + u.getUser());
+			if(e.getMessage().equals("database is locked"))
+			{
+				createUser(u, password);
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(null, "Erro Creating User " + u.getUser());
+			}
+			
 		}
 		finally
 		{
@@ -2005,7 +2181,15 @@ public class DatabaseManager
 				}
 				catch(Exception e)
 				{
-					JOptionPane.showMessageDialog(null, "Error Deleting User " + username);
+					if(e.getMessage().equals("database is locked"))
+					{
+						deleteUser(username);
+					}
+					else
+					{
+						JOptionPane.showMessageDialog(null, "Error Deleting User " + username);
+					}
+					
 				}
 				finally
 				{

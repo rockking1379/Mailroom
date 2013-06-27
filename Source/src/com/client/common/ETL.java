@@ -7,31 +7,61 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-public class ETL implements Runnable
+public class ETL
 {
-	private Thread etlThread;
 	private File people;
 	private Connection writeConn = null;
 	private String dbLocation = null;
 	private List<Stop> stops = null;
+	private updateViewer viewer = null;
 	
 	///---Constructor---///
-	public ETL(File file, ArrayList<Stop> stops, String dbLocation, Connection writeConn)
-	{
-		//Create Thread
-		etlThread = new Thread(this);
-		
+	public ETL(ArrayList<Stop> stops, String dbLocation, Connection writeConn)
+	{		
 		//Process Params
 		this.writeConn = writeConn;
-		this.people = file;
 		this.dbLocation = dbLocation;
 		this.stops = new ArrayList<Stop>();
 		this.stops = stops;
 	}
 	
 	///---Running---///
-	public void run()
+	public boolean check()
 	{
+		File dir = new File("./");
+		File[] files = dir.listFiles();
+		boolean status = false;
+		
+		for(int i = 0; i < files.length; i++)
+		{
+			try
+			{
+				String fileName = files[i].getCanonicalPath();
+				if(fileName.endsWith(".peep"))
+				{
+					viewer = new updateViewer();
+					viewer.start();
+					Thread.currentThread().sleep(500);
+					people = files[i];
+					status = true;
+					break;
+				}
+			}
+			catch(IOException | InterruptedException e)
+			{
+				//Ignore Error
+			}
+		}
+		
+		return status;
+	}
+	
+	///---Process File---///
+	@SuppressWarnings("unused")
+	public void process()
+	{
+		JOptionPane.showMessageDialog(null, "An ETL routine must be completed\nThis will take approximately 3-5 minutes");
+		
 		FileInputStream fStream = null;
 		DataInputStream dis = null;
 		BufferedReader br = null;
@@ -80,13 +110,9 @@ public class ETL implements Runnable
 		long delta = finish.getTime() - start.getTime();
 		Date dDate = new Date(delta);
 		
-		JOptionPane.showMessageDialog(null, "ETL Complete\n" + dDate.getMinutes() + ":" + dDate.getSeconds());
-	}
-	
-	///---Starting---///
-	public void start()
-	{
-		etlThread.start();
+		people.renameTo(new File("./people.oldpeep"));
+		viewer.etlComplete();
+		//JOptionPane.showMessageDialog(null, "ETL Complete\n" + dDate.getMinutes() + ":" + dDate.getSeconds());
 	}
 	
 	///---ETL---///
@@ -107,6 +133,8 @@ public class ETL implements Runnable
 				
 				if(count == 0)
 				{
+					viewer.etlUpdate("Added");
+					
 					statement = writeConn.prepareStatement("insert into Person(ID_Number, ASU_Email, First_Name, Last_Name, Number, stop_id) values(?,?,?,?,?,?);");
 					statement.setString(1, p.getID());
 					String email = p.getEmail();
@@ -144,6 +172,10 @@ public class ETL implements Runnable
 					
 					statement.execute();
 				}
+				else
+				{
+					viewer.etlUpdate("Updated");
+				}
 			}
 			catch(Exception e)
 			{
@@ -168,7 +200,8 @@ public class ETL implements Runnable
 				}
 				else
 				{
-					JOptionPane.showMessageDialog(null, "ETL Error");
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null, "ETL Error\n" + e.getMessage());
 				}
 			}
 			finally
