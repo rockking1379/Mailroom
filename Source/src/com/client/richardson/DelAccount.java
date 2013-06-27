@@ -17,22 +17,28 @@ import javax.swing.JTextField;
 
 import com.client.common.DatabaseManager;
 
-public class DelAccount extends JFrame {
+public class DelAccount extends JFrame
+{
 
 	private JPanel contentPane;
 	private JTextField textField;
-			DatabaseManager manager;
+	DatabaseManager manager;
 
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
+	public static void main(String[] args)
+	{
+		EventQueue.invokeLater(new Runnable()
+		{
+			public void run()
+			{
+				try
+				{
 					DelAccount frame = new DelAccount(new DatabaseManager());
 					frame.setVisible(true);
-				} catch (Exception e) {
+				} catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -42,8 +48,9 @@ public class DelAccount extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DelAccount(DatabaseManager manager) {
-		this.manager=manager;
+	public DelAccount(DatabaseManager manager)
+	{
+		this.manager = manager;
 		setTitle("Delete an Account");
 		setBackground(new Color(0, 128, 0));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,32 +60,35 @@ public class DelAccount extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblPleaseSelectAn = new JLabel("Please Input the username of the account you would like to delete.");
+
+		JLabel lblPleaseSelectAn = new JLabel(
+				"Please Input the username of the account you would like to delete.");
 		lblPleaseSelectAn.setForeground(new Color(255, 255, 255));
 		lblPleaseSelectAn.setBounds(5, 11, 379, 14);
 		contentPane.add(lblPleaseSelectAn);
-		
+
 		JButton btnDelete = new JButton("Delete");
 		btnDelete.setBounds(142, 64, 89, 23);
 		btnDelete.addActionListener(new DeletAccountListener());
 		contentPane.add(btnDelete);
-		
+
 		textField = new JTextField();
 		textField.setBounds(74, 36, 229, 20);
 		contentPane.add(textField);
 		textField.setColumns(10);
 	}
-	public class DeletAccountListener implements ActionListener{
+
+	public class DeletAccountListener implements ActionListener
+	{
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e)
+		{
 			manager.deleteUser(textField.getText());
 			new AddAccount(manager);
 			dispose();
-			
-			
+
 		}
-		
+
 	}
 }

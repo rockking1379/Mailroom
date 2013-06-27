@@ -13,28 +13,28 @@ public class updateViewer extends JFrame implements Runnable
 	private File update = null;
 	JTextArea updateText = null;
 	Thread uThread;
-	
-	///---ETL Constructor---///
+
+	// /---ETL Constructor---///
 	public updateViewer()
 	{
-		//Threading
+		// Threading
 		uThread = new Thread(this);
 		uThread.setName("Update Viewer");
 	}
-	
-	///---Running---///
+
+	// /---Running---///
 	public void run()
 	{
-		//Frame
+		// Frame
 		this.setVisible(false);
 		this.setLocation(100, 100);
-		this.setSize(480,640);
+		this.setSize(480, 640);
 		this.setBackground(Color.CYAN);
 		this.setLayout(null);
 		this.addKeyListener(new keyListener());
 		this.setTitle("About This Update");
-		
-		//Text Area
+
+		// Text Area
 		updateText = new JTextArea();
 		updateText.setEditable(false);
 		updateText.setSize(440, 540);
@@ -42,8 +42,8 @@ public class updateViewer extends JFrame implements Runnable
 		updateText.addKeyListener(new keyListener());
 		updateText.setAutoscrolls(true);
 		this.add(updateText);
-		
-		//Okay Button
+
+		// Okay Button
 		okButton = new JButton();
 		okButton.setText("OK");
 		okButton.addActionListener(new actionListener());
@@ -51,93 +51,90 @@ public class updateViewer extends JFrame implements Runnable
 		okButton.setSize(440, 40);
 		this.add(okButton);
 		okButton.setEnabled(false);
-		
+
 		this.setVisible(true);
-		
+
 		try
 		{
 			uThread.sleep(500);
-		}
-		catch(Exception e)
+		} catch (Exception e)
 		{
-			//Ignore
+			// Ignore
 		}
 	}
+
 	public void start()
 	{
 		uThread.start();
 	}
-	
-	///---DBM Constructor---///
+
+	// /---DBM Constructor---///
 	public updateViewer(File file)
 	{
 		this.setVisible(false);
-		//Frame
+		// Frame
 		this.setLocation(100, 100);
-		this.setSize(480,640);
+		this.setSize(480, 640);
 		this.setBackground(Color.CYAN);
 		this.setLayout(null);
 		this.addKeyListener(new keyListener());
 		this.setTitle("About This Update");
-		
-		//File setting
+
+		// File setting
 		update = file;
-		
-		//Text Area
+
+		// Text Area
 		updateText = new JTextArea();
 		updateText.setEditable(false);
 		updateText.setSize(440, 540);
 		updateText.setLocation(10, 10);
 		updateText.addKeyListener(new keyListener());
-		
+
 		FileInputStream fStream = null;
 		DataInputStream dis = null;
 		BufferedReader br = null;
-		
+
 		try
 		{
 			fStream = new FileInputStream(update);
 			dis = new DataInputStream(fStream);
 			br = new BufferedReader(new InputStreamReader(dis));
-			
+
 			String uTxt = "";
 			String line;
-			while((line = br.readLine()) != null)
+			while ((line = br.readLine()) != null)
 			{
 				uTxt += line + "\n";
 			}
 			updateText.setText(uTxt);
-		}
-		catch(Exception e)
+		} catch (Exception e)
 		{
-			//Don't worry
-			//This is an add-on
-		}
-		finally
+			// Don't worry
+			// This is an add-on
+		} finally
 		{
 			try
 			{
-				if(fStream != null)
+				if (fStream != null)
 				{
 					fStream.close();
 				}
-				if(dis != null)
+				if (dis != null)
 				{
 					dis.close();
 				}
-				if(br != null)
-				{	
+				if (br != null)
+				{
 					br.close();
 				}
-			}
-			catch(Exception e)
+			} catch (Exception e)
 			{
-				//Ignore Exceptions
+				// Ignore Exceptions
 			}
 		}
 		this.add(updateText);
-		
-		//Okay Button
+
+		// Okay Button
 		okButton = new JButton();
 		okButton.setText("OK");
 		okButton.addActionListener(new actionListener());
@@ -145,26 +142,27 @@ public class updateViewer extends JFrame implements Runnable
 		okButton.setSize(440, 40);
 		this.add(okButton);
 	}
-	
-	///---ETL Methods---///
+
+	// /---ETL Methods---///
 	public void etlComplete()
 	{
 		updateText.setText("Routine Update Complete\nThank You!");
 		okButton.setEnabled(true);
 	}
+
 	public void etlUpdate(String info)
 	{
 		updateText.setText(updateText.getText() + "\n" + info);
 	}
-	
-	///---Action Listener---///
+
+	// /---Action Listener---///
 	private class actionListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent ae)
 		{
-			if(ae.getSource() == okButton)
+			if (ae.getSource() == okButton)
 			{
-				if(update != null)
+				if (update != null)
 				{
 					update.delete();
 				}
@@ -172,33 +170,33 @@ public class updateViewer extends JFrame implements Runnable
 			}
 		}
 	}
-	
-	///---Key Listener---///
+
+	// /---Key Listener---///
 	private class keyListener implements KeyListener
 	{
-		public void keyPressed(KeyEvent ke) 
+		public void keyPressed(KeyEvent ke)
 		{
-			if(ke.getKeyCode() == KeyEvent.VK_ENTER)
+			if (ke.getKeyCode() == KeyEvent.VK_ENTER)
 			{
 				okButton.doClick();
 			}
 		}
 
-		public void keyReleased(KeyEvent ke) 
+		public void keyReleased(KeyEvent ke)
 		{
-			if(ke.getKeyCode() == KeyEvent.VK_ENTER)
+			if (ke.getKeyCode() == KeyEvent.VK_ENTER)
 			{
 				okButton.doClick();
 			}
 		}
 
-		public void keyTyped(KeyEvent ke) 
+		public void keyTyped(KeyEvent ke)
 		{
-			if(ke.getKeyCode() == KeyEvent.VK_ENTER)
+			if (ke.getKeyCode() == KeyEvent.VK_ENTER)
 			{
 				okButton.doClick();
 			}
 		}
-		
+
 	}
 }
