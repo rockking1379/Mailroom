@@ -110,7 +110,8 @@ public class AdvSearch extends JFrame
 				{
 					AdvSearch frame = new AdvSearch(new Table(null));
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -224,7 +225,8 @@ public class AdvSearch extends JFrame
 											"Year error",
 											JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (Exception ex)
+					}
+					catch (Exception ex)
 					{
 						Component frame = null;
 						JOptionPane.showMessageDialog(frame,
@@ -309,7 +311,8 @@ public class AdvSearch extends JFrame
 		{
 			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
 			btnDate.setIcon(new ImageIcon(icon1));
-		} catch (IOException e1)
+		}
+		catch (IOException e1)
 		{
 
 		}
@@ -356,7 +359,8 @@ public class AdvSearch extends JFrame
 			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
 			btnEDate.setIcon(new ImageIcon(icon1));
 
-		} catch (IOException e1)
+		}
+		catch (IOException e1)
 		{
 
 		}
@@ -415,7 +419,8 @@ public class AdvSearch extends JFrame
 
 					sDate = StartField.getText();
 					eDate = EndField.getText();
-				} catch (ParseException e)
+				}
+				catch (ParseException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -558,7 +563,8 @@ public class AdvSearch extends JFrame
 
 					sDate = StartField.getText();
 					eDate = EndField.getText();
-				} catch (ParseException e)
+				}
+				catch (ParseException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -706,7 +712,8 @@ public class AdvSearch extends JFrame
 
 					matches = false;
 				}
-			} catch (ParseException e)
+			}
+			catch (ParseException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
