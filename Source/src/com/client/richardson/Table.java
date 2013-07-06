@@ -282,7 +282,8 @@ public class Table extends JPanel
 			{
 				sdDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 						.parse(p.getDate());
-			} catch (ParseException e)
+			}
+			catch (ParseException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -372,7 +373,8 @@ public class Table extends JPanel
 			}
 			Arrays.sort(sa);
 			stopNames = new DefaultComboBoxModel(sa);
-		} catch (NegativeArraySizeException ex)
+		}
+		catch (NegativeArraySizeException ex)
 		{
 			JOptionPane.showMessageDialog(this,
 					"Please create Stops before scanning in packages");
@@ -453,7 +455,8 @@ public class Table extends JPanel
 			if (col != 0 && col != 3)
 			{
 				return false;
-			} else
+			}
+			else
 			{
 				return true;
 			}
@@ -519,7 +522,8 @@ public class Table extends JPanel
 			{
 				sdDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 						.parse(p.getDate());
-			} catch (ParseException e)
+			}
+			catch (ParseException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -42,7 +42,8 @@ public class CreateStop extends JFrame
 					CreateStop frame = new CreateStop(new DatabaseManager(),
 							"Someone", new JFrame());
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -128,7 +129,8 @@ public class CreateStop extends JFrame
 					manager.addStop(textField.getText(), false, "unassigned",
 							largestSequence + 1, false);
 
-				} else
+				}
+				else
 				{
 
 					String route = (String) comboBox.getSelectedItem();
@@ -149,7 +151,8 @@ public class CreateStop extends JFrame
 				if (frame.getTitle().equals("Scan My Package"))
 				{
 					new ScanPackage(manager, loggedIn);
-				} else if (frame.getTitle().equals("Manage Routes"))
+				}
+				else if (frame.getTitle().equals("Manage Routes"))
 				{
 					new RouteManager(manager, null).setVisible(true);
 				}
@@ -169,7 +172,8 @@ public class CreateStop extends JFrame
 					try
 					{
 						dual.addSourceElements(stopNames);
-					} catch (NullPointerException ex)
+					}
+					catch (NullPointerException ex)
 					{
 
 					}

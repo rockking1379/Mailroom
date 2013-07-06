@@ -233,7 +233,8 @@ public class RouteManager extends JFrame
 					frame.setVisible(true);
 					frame.setResizable(false);
 
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}

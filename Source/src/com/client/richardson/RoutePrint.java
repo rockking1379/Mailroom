@@ -73,7 +73,8 @@ public class RoutePrint extends JFrame
 					RoutePrint frame = new RoutePrint(new DatabaseManager());
 
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -180,14 +181,16 @@ public class RoutePrint extends JFrame
 						writer.close();
 
 						dispose();
-					} catch (PrinterException e1)
+					}
+					catch (PrinterException e1)
 					{
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null,
 								"An error occured while trying to print\n"
 										+ e1.getMessage());
 
-					} catch (IOException e1)
+					}
+					catch (IOException e1)
 					{
 						// TODO Auto-generated catch block
 						JOptionPane.showMessageDialog(null,
@@ -340,7 +343,8 @@ public class RoutePrint extends JFrame
 								{
 									pDate = new SimpleDateFormat("yyyy-MM-dd",
 											Locale.ENGLISH).parse(p.getDate());
-								} catch (ParseException e1)
+								}
+								catch (ParseException e1)
 								{
 									// TODO Auto-generated catch block
 									e1.printStackTrace();

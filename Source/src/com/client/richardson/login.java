@@ -74,7 +74,8 @@ public class login extends JFrame
 					// =======
 					frame.setVisible(true);
 					// >>>>>>> origin/Nick
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -258,7 +259,8 @@ public class login extends JFrame
 							temp += settingLine.charAt(i);
 						}
 						manager.setDatabase(temp);
-					} else
+					}
+					else
 					{
 						if (setting.toUpperCase().equals("PERSONS"))
 						{
@@ -273,7 +275,8 @@ public class login extends JFrame
 					}
 				}
 				br.close();
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Do nothing
 			}
@@ -286,7 +289,8 @@ public class login extends JFrame
 				new AddAccount(this, manager);
 				dispose();
 			}
-		} else
+		}
+		else
 		{
 			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
 
@@ -311,7 +315,8 @@ public class login extends JFrame
 					bw.close();
 					fOutput.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Ignore the exceptions
 			}

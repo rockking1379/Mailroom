@@ -111,7 +111,8 @@ public class SUBAdvSearch extends JFrame
 				{
 					AdvSearch frame = new AdvSearch(new Table(null));
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -225,7 +226,8 @@ public class SUBAdvSearch extends JFrame
 											"Year error",
 											JOptionPane.ERROR_MESSAGE);
 						}
-					} catch (Exception ex)
+					}
+					catch (Exception ex)
 					{
 						Component frame = null;
 						JOptionPane.showMessageDialog(frame,
@@ -308,7 +310,8 @@ public class SUBAdvSearch extends JFrame
 		{
 			icon1 = ImageIO.read(getClass().getResource("/image/cal.jpg"));
 			btnDate.setIcon(new ImageIcon(icon1));
-		} catch (IOException e1)
+		}
+		catch (IOException e1)
 		{
 
 		}
@@ -342,7 +345,8 @@ public class SUBAdvSearch extends JFrame
 			checkBox.setBackground(new Color(0, 102, 0));
 			checkBox.setBounds(331, 57, 159, 23);
 			contentPane.add(checkBox);
-		} catch (IOException e1)
+		}
+		catch (IOException e1)
 		{
 
 		}
@@ -404,7 +408,8 @@ public class SUBAdvSearch extends JFrame
 
 					sDate = StartField.getText();
 					eDate = EndField.getText();
-				} catch (ParseException e)
+				}
+				catch (ParseException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -674,7 +679,8 @@ public class SUBAdvSearch extends JFrame
 
 					matches = false;
 				}
-			} catch (ParseException e)
+			}
+			catch (ParseException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();

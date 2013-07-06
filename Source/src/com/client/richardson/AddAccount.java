@@ -59,7 +59,8 @@ public class AddAccount extends JFrame
 				{
 					AddAccount frame = new AddAccount(new DatabaseManager());
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}

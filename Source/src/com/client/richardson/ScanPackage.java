@@ -90,7 +90,8 @@ public class ScanPackage extends JFrame
 
 					frame.setVisible(true);
 
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -228,7 +229,8 @@ public class ScanPackage extends JFrame
 			}
 			Arrays.sort(sa);
 			stopNames = new DefaultComboBoxModel(sa);
-		} catch (NegativeArraySizeException ex)
+		}
+		catch (NegativeArraySizeException ex)
 		{
 			JOptionPane.showMessageDialog(this,
 					"Please create Stops before scanning in packages");
@@ -446,7 +448,8 @@ public class ScanPackage extends JFrame
 			try
 			{
 				tDate = newDate;
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Unknown
 				System.out.println(e.getMessage());
@@ -474,7 +477,8 @@ public class ScanPackage extends JFrame
 						selectedPerson.getEmail(), tDate, BoxText.getText(),
 						stop, TrackText.getText(), loggedIn,
 						(String) comboBox_1.getSelectedItem());
-			} else
+			}
+			else
 			{
 				selectedPerson.setStop(stopName);
 				manager.updatePerson(selectedPerson);
@@ -520,7 +524,8 @@ public class ScanPackage extends JFrame
 			if (p.size() > 1)
 			{
 				new MultipleResultDisplay(frame, p);
-			} else
+			}
+			else
 			{
 				selectedPerson = p.get(0);
 				BoxText.setText(selectedPerson.getBox());

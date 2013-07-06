@@ -46,7 +46,8 @@ public class ETL
 					status = true;
 					break;
 				}
-			} catch (IOException | InterruptedException e)
+			}
+			catch (IOException | InterruptedException e)
 			{
 				// Ignore Error
 			}
@@ -80,10 +81,12 @@ public class ETL
 				createPerson(person);
 			}
 			br.close();
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			// Not sure what i want to do yet
-		} finally
+		}
+		finally
 		{
 			try
 			{
@@ -99,7 +102,8 @@ public class ETL
 				{
 					br.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Do Nothing
 			}
@@ -162,7 +166,8 @@ public class ETL
 							break;
 						}
 					}
-				} else
+				}
+				else
 				{
 					statement.setInt(6, 1);
 				}
@@ -172,11 +177,13 @@ public class ETL
 				statement.setString(5, p.getBox());
 
 				statement.execute();
-			} else
+			}
+			else
 			{
 				viewer.etlUpdate("Updated");
 			}
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			if (e.getMessage().equals("database is locked"))
 			{
@@ -191,17 +198,20 @@ public class ETL
 						writeConn.close();
 					}
 					routine(p);
-				} catch (Exception e2)
+				}
+				catch (Exception e2)
 				{
 					// Ignore we are closing up
 				}
-			} else
+			}
+			else
 			{
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, "ETL Error\n"
 						+ e.getMessage());
 			}
-		} finally
+		}
+		finally
 		{
 			try
 			{
@@ -213,7 +223,8 @@ public class ETL
 				{
 					writeConn.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Ignore we are closing up
 			}

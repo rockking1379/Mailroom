@@ -37,7 +37,8 @@ public class DelAccount extends JFrame
 				{
 					DelAccount frame = new DelAccount(new DatabaseManager());
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}

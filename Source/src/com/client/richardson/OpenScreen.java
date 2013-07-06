@@ -75,7 +75,8 @@ public class OpenScreen extends JFrame
 					OpenScreen frame = new OpenScreen(true,
 							new DatabaseManager(), "Someone");
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}
@@ -242,7 +243,8 @@ public class OpenScreen extends JFrame
 							temp += settingLine.charAt(i);
 						}
 						manager.setDatabase(temp);
-					} else
+					}
+					else
 					{
 						if (setting.toUpperCase().equals("PERSONS"))
 						{
@@ -257,14 +259,16 @@ public class OpenScreen extends JFrame
 					}
 				}
 				br.close();
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Do nothing
 			}
 			manager.setup();
 			manager.loadPackages(true, null);
 
-		} else
+		}
+		else
 		{
 			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
 
@@ -287,7 +291,8 @@ public class OpenScreen extends JFrame
 					bw.close();
 					fOutput.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Ignore the exceptions
 			}
@@ -316,7 +321,8 @@ public class OpenScreen extends JFrame
 			try
 			{
 				dual.addSourceElements(stopNames);
-			} catch (NullPointerException ex)
+			}
+			catch (NullPointerException ex)
 			{
 
 			}

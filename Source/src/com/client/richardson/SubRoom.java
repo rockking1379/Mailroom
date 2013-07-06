@@ -270,7 +270,8 @@ public class SubRoom extends JPanel
 						{
 							// Selection got filtered away.
 
-						} else
+						}
+						else
 						{
 							int modelRow = table
 									.convertRowIndexToModel(viewRow);
@@ -385,7 +386,8 @@ public class SubRoom extends JPanel
 		{
 			rf = RowFilter.regexFilter(filterText.getText(), table
 					.getSelectedColumns());
-		} catch (java.util.regex.PatternSyntaxException e)
+		}
+		catch (java.util.regex.PatternSyntaxException e)
 		{
 			return;
 		}
@@ -449,7 +451,8 @@ public class SubRoom extends JPanel
 			if (col != 0 && col != 7)
 			{
 				return false;
-			} else
+			}
+			else
 			{
 				return true;
 			}
@@ -544,7 +547,8 @@ public class SubRoom extends JPanel
 							temp += settingLine.charAt(i);
 						}
 						manager.setDatabase(temp);
-					} else
+					}
+					else
 					{
 						if (setting.toUpperCase().equals("PERSONS"))
 						{
@@ -559,12 +563,14 @@ public class SubRoom extends JPanel
 					}
 				}
 				br.close();
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Do nothing
 			}
 			manager.setup();
-		} else
+		}
+		else
 		{
 			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
 
@@ -589,7 +595,8 @@ public class SubRoom extends JPanel
 					bw.close();
 					fOutput.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Ignore the exceptions
 			}
@@ -656,7 +663,8 @@ public class SubRoom extends JPanel
 			{
 				sdDate = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH)
 						.parse(p.getDate());
-			} catch (ParseException e)
+			}
+			catch (ParseException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();

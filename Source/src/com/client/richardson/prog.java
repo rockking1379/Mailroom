@@ -48,7 +48,8 @@ public class prog
 							temp += settingLine.charAt(i);
 						}
 						dbManager.setDatabase(temp);
-					} else
+					}
+					else
 					{
 						if (setting.toUpperCase().equals("PERSONS"))
 						{
@@ -63,12 +64,14 @@ public class prog
 					}
 				}
 				br.close();
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Do nothing
 			}
 			dbManager.setup();
-		} else
+		}
+		else
 		{
 			JOptionPane.showMessageDialog(null, "Settings File Not Found.");
 
@@ -93,7 +96,8 @@ public class prog
 					bw.close();
 					fOutput.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Ignore the exceptions
 			}

@@ -52,7 +52,8 @@ public class Print implements Printable
 		{
 			String cn = UIManager.getSystemLookAndFeelClassName();
 			UIManager.setLookAndFeel(cn); // Use the native L&F
-		} catch (Exception cnf)
+		}
+		catch (Exception cnf)
 		{
 		}
 		PrinterJob job = PrinterJob.getPrinterJob();
@@ -65,7 +66,8 @@ public class Print implements Printable
 			try
 			{
 				job.print(aset);
-			} catch (PrinterException ex)
+			}
+			catch (PrinterException ex)
 			{
 				/* The job did not successfully complete */
 			}

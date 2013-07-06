@@ -38,7 +38,8 @@ public class CreateCarrier extends JFrame
 					CreateCarrier frame = new CreateCarrier(
 							new DatabaseManager(), "Someone");
 					frame.setVisible(true);
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
 				}

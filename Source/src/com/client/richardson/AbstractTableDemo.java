@@ -121,7 +121,8 @@ public class AbstractTableDemo extends JPanel
 			if (col < 5 && col >= 3)
 			{
 				return false;
-			} else
+			}
+			else
 			{
 				return true;
 			}

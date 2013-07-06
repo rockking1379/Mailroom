@@ -57,7 +57,8 @@ public class updateViewer extends JFrame implements Runnable
 		try
 		{
 			uThread.sleep(500);
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			// Ignore
 		}
@@ -107,11 +108,13 @@ public class updateViewer extends JFrame implements Runnable
 				uTxt += line + "\n";
 			}
 			updateText.setText(uTxt);
-		} catch (Exception e)
+		}
+		catch (Exception e)
 		{
 			// Don't worry
 			// This is an add-on
-		} finally
+		}
+		finally
 		{
 			try
 			{
@@ -127,7 +130,8 @@ public class updateViewer extends JFrame implements Runnable
 				{
 					br.close();
 				}
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				// Ignore Exceptions
 			}
