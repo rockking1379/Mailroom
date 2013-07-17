@@ -404,10 +404,9 @@ public class DatabaseManager
 				readConn = DriverManager.getConnection("jdbc:sqlite:"
 						+ dbLocation);
 				statement = readConn
-						.prepareStatement("select Package.Tracking_Number, Package.First_Name, Package.Last_Name, Package.ASU_Email, Package.Date, Package.Box_Number, Package.At_Stop, Package.Picked_Up, Package.Pick_Up_Date, Package.Returned, " +
-				"Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " +
-				"from Package, Courier, Stop, User " +
-				"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND At_Stop='0' and Picked_Up='0';");
+						.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+								"from Package, Courier, Stop, User " + 
+								"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.At_Stop='0' and Package.Picked_Up='0';");
 				rs = statement.executeQuery();
 
 				while (rs.next())
@@ -468,7 +467,9 @@ public class DatabaseManager
 						+ dbLocation);
 
 				statement = readConn
-						.prepareStatement("select * from Package where stop_id=? and Picked_Up='0';");
+						.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+"from Package, Courier, Stop, User " + 
+"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.stop_id=? and Package.Picked_Up='0';");
 
 				for (int i = 0; i < stops.size(); i++)
 				{
@@ -483,28 +484,13 @@ public class DatabaseManager
 
 				while (rs.next())
 				{
-					statement = readConn
-							.prepareStatement("select Name from Stop where stop_id=?;");
-					statement.setInt(1, rs.getInt("stop_id"));
-					ResultSet rs2 = statement.executeQuery();
-
-					statement = readConn
-							.prepareStatement("select User_Name from User where user_id=?;");
-					statement.setInt(1, rs.getInt("processor"));
-					ResultSet rs3 = statement.executeQuery();
-
-					statement = readConn
-							.prepareStatement("select Name from Courier where courier_id=?;");
-					statement.setInt(1, rs.getInt("courier_id"));
-					ResultSet rs4 = statement.executeQuery();
-
 					packages.add(new Package(rs.getString("First_Name"), rs
 							.getString("Last_Name"), rs.getString("ASU_Email"),
 							rs.getString("Date"), rs.getString("Box_Number"),
-							rs2.getString("Name"), rs
-									.getString("Tracking_Number"), rs3
-									.getString("User_Name"), rs4
-									.getString("Name"), rs
+							rs.getString("Stop"), rs
+									.getString("Tracking_Number"), rs
+									.getString("Username"), rs
+									.getString("Courier"), rs
 									.getBoolean("At_Stop"), rs
 									.getBoolean("Picked_Up"), rs
 									.getString("Pick_Up_Date"), rs
@@ -1491,7 +1477,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select *, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' from Package, Courier, Stop, User where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor where Date between ? and ?;");
+					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+							"from Package, Courier, Stop, User " + 
+							"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Date between ? and ?;");
 			statement.setString(1, beginDate);
 			statement.setString(2, endDate);
 			rs = statement.executeQuery();
@@ -1546,7 +1534,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select *, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' from Package, Courier, Stop, User where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor where Tracking_Number like ?;");
+					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+							"from Package, Courier, Stop, User " + 
+							"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Tracking_Number like ?;");
 			statement.setString(1, "%" + tNumber + "%");
 			rs = statement.executeQuery();
 			results = processResults(rs);
@@ -1599,7 +1589,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' from Package, Courier, Stop, User where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND At_Stop=? and Picked_Up=?;");
+					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+							"from Package, Courier, Stop, User " + 
+							"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND  Package.At_Stop=? and Package.Picked_Up=?;");
 			statement.setBoolean(1, delivered);
 			statement.setBoolean(2, pickedUp);
 
@@ -1648,7 +1640,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select *, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' from Package, Courier, Stop, User where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor where Tracking_Number like ? and At_Stop=? and Picked_Up=?;");
+					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+									"from Package, Courier, Stop, User " + 
+									"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Tracking_Number like ? and Package.At_Stop=? and Package.Picked_Up=?;");
 			statement.setString(1, tNumber);
 			statement.setBoolean(2, delivered);
 			statement.setBoolean(3, pickedUp);
@@ -1705,7 +1699,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select *, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' from Package, Courier, Stop, User where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor where Tracking_Number like ? or Date like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ?");
+					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+							"from Package, Courier, Stop, User " + 
+							"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Tracking_Number like ? or Package.Date like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ?");
 			switch (location)
 			{
 				case SEARCH_CONTAINS:// Contains
@@ -1794,7 +1790,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select *, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' from Package, Courier, Stop, User where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor where Tracking_Number like ? or ASU_Email like ? or First_Name like ? or Last_Name like ? or Box_Number like ? where Date between ? and ?");
+					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+							"from Package, Courier, Stop, User " + 
+							"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Tracking_Number like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ? where Package.Date between ? and ?");
 			switch (location)
 			{
 				case SEARCH_CONTAINS:
