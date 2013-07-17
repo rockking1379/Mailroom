@@ -147,7 +147,7 @@ public class ScanPackage extends JFrame
 
 		btnSave = new JButton("Save");
 		btnSave.setBounds(35, 188, 89, 23);
-		
+
 		contentPane.add(btnSave);
 
 		btnSave.addActionListener(new SaveListener());
@@ -421,23 +421,19 @@ public class ScanPackage extends JFrame
 
 			if (TrackText.getText().length() < 4)
 			{
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"Tracking Number To Short");
+				JOptionPane.showMessageDialog(null, "Tracking Number To Short");
 				return;
 			}
-			if(NameText.getText().equals("") && LastNameText.getText().equals(""))
+			if (NameText.getText().equals("")
+					&& LastNameText.getText().equals(""))
 			{
 				NameText.setText("DEPARTMENT");
 				LastNameText.setText("DEPARTMENT");
 			}
 			else
 			{
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"PLease Enter either a First Name or Last Name");
+				JOptionPane.showMessageDialog(null,
+						"PLease Enter either a First Name or Last Name");
 			}
 
 			ArrayList<Package> allScanned = (ArrayList<Package>) manager
