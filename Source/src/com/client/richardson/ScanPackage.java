@@ -146,14 +146,15 @@ public class ScanPackage extends JFrame
 		contentPane.add(lblDate);
 
 		btnSave = new JButton("Save");
-		btnSave.setBounds(227, 188, 89, 23);
+		btnSave.setBounds(35, 188, 89, 23);
+		
 		contentPane.add(btnSave);
 
 		btnSave.addActionListener(new SaveListener());
 		btnSave.addKeyListener(new keyListener());
 
 		JButton btnClear = new JButton("Clear");
-		btnClear.setBounds(35, 188, 89, 23);
+		btnClear.setBounds(227, 188, 89, 23);
 		contentPane.add(btnClear);
 
 		btnClear.addActionListener(new ActionListener()
@@ -418,15 +419,25 @@ public class ScanPackage extends JFrame
 			String tDate = newDate;
 			Package p = null;
 
-			if (TrackText.getText().length() < 4
-					|| NameText.getText().equals("")
-					|| LastNameText.getText().equals(""))
+			if (TrackText.getText().length() < 4)
 			{
 				JOptionPane
 						.showMessageDialog(
 								null,
-								"You have empty fields. Please be fure you have entered information for all the above fields.");
+								"Tracking Number To Short");
 				return;
+			}
+			if(NameText.getText().equals("") && LastNameText.getText().equals(""))
+			{
+				NameText.setText("DEPARTMENT");
+				LastNameText.setText("DEPARTMENT");
+			}
+			else
+			{
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"PLease Enter either a First Name or Last Name");
 			}
 
 			ArrayList<Package> allScanned = (ArrayList<Package>) manager

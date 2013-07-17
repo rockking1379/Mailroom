@@ -1,65 +1,65 @@
 CREATE TABLE Route
 (
-route_id INTEGER PRIMARY KEY AUTOINCREMENT,
-Name varchar(50) NOT NULL
+	route_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	Name varchar(50) NOT NULL
 );
 CREATE TABLE Stop
 (
-stop_id INTEGER PRIMARY KEY AUTOINCREMENT,
-Name varchar(50) NOT NULL,
-route_id int,
-Is_Used BOOLEAN NOT NULL,
-route_order int,
-Student BOOLEAN,
-FOREIGN KEY(route_id) REFERENCES Route(route_id)
+	stop_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	Name varchar(50) NOT NULL,
+	route_id int,
+	Is_Used BOOLEAN NOT NULL,
+	route_order int,
+	Student BOOLEAN,
+	FOREIGN KEY(route_id) REFERENCES Route(route_id)
 );
 CREATE TABLE Courier
 (
-courier_id INTEGER PRIMARY KEY AUTOINCREMENT,
-Name varchar(50) NOT NULL,
-Is_used BOOLEAN NOT NULL
+	courier_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	Name varchar(50) NOT NULL,
+	Is_used BOOLEAN NOT NULL
 );
 CREATE TABLE Package
 (
-package_id INTEGER PRIMARY KEY AUTOINCREMENT,
-Tracking_Number varchar(50) NOT NULL,
-Date DATE NOT NULL,
-ASU_Email varchar(50) NOT NULL,
-First_Name varchar(50) NOT NULL,
-Last_Name varchar(50) NOT NULL,
-Box_Number varchar(50) NOT NULL,
-At_Stop BOOLEAN NOT NULL,
-Picked_Up BOOLEAN NOT NULL,
-Pick_Up_Date DATE,
-stop_id int,
-courier_id int,
-processor int,
-Returned BOOLEAN,
-FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
-FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
-FOREIGN KEY(processor) REFERENCES User(user_id)
+	package_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	Tracking_Number varchar(50) NOT NULL,
+	Date DATE NOT NULL,
+	ASU_Email varchar(50) NOT NULL,
+	First_Name varchar(50) NOT NULL,
+	Last_Name varchar(50) NOT NULL,
+	Box_Number varchar(50) NOT NULL,
+	At_Stop BOOLEAN NOT NULL,
+	Picked_Up BOOLEAN NOT NULL,
+	Pick_Up_Date DATE,
+	stop_id int,
+	courier_id int,
+	processor int,
+	Returned BOOLEAN,
+	FOREIGN KEY(stop_id) REFERENCES Stop(stop_id),
+	FOREIGN KEY(courier_id) REFERENCES Courier(courier_id)
+	FOREIGN KEY(processor) REFERENCES User(user_id)
 );
 CREATE TABLE Person
 (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-ID_Number varchar(50),
-ASU_Email varchar(50),
-First_Name varchar(50) NOT NULL,
-Last_Name varchar(50) NOT NULL,
-Number varchar(50),
-stop_id int,
-Forward_Address varchar(150),
-FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	ID_Number varchar(50),
+	ASU_Email varchar(50),
+	First_Name varchar(50) NOT NULL,
+	Last_Name varchar(50) NOT NULL,
+	Number varchar(50),
+	stop_id int,
+	Forward_Address varchar(150),
+	FOREIGN KEY(stop_id) REFERENCES Stop(stop_id)
 );
 CREATE TABLE User
 (
-user_id INTEGER PRIMARY KEY AUTOINCREMENT,
-User_Name varchar(50) NOT NULL,
-First_Name varchar(50) NOT NULL,
-Last_Name varchar(50) NOT NULL,
-Password INTEGER NOT NULL,
-Admin BOOLEAN NOT NULL,
-Active BOOLEAN,
+	user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+	User_Name varchar(50) NOT NULL,
+	First_Name varchar(50) NOT NULL,
+	Last_Name varchar(50) NOT NULL,
+	Password INTEGER NOT NULL,
+	Admin BOOLEAN NOT NULL,
+	Active BOOLEAN,
 );
 
 insert into Route(Name) values('unassigned');
