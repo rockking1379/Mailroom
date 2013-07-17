@@ -1,3 +1,4 @@
+###Bad Joins###
 select Package.*, Stop.*, Courier.*, User.*
 from
 (
@@ -33,6 +34,8 @@ left join
 	from User
 ) User ON Package.processor = User.user_id
 
+
+###Throws 'Ubiguous Column' Error###
 SELECT *
 FROM
 (
@@ -44,6 +47,13 @@ FROM
 ) cpsu
 ///Add WHERE CLAUSE///
 
-select Package.package_id, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username'
-from Package, Courier, Stop, User
-where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND ///Add Specific Case///
+###Returns proper information###
+select Package.Tracking_Number, Package.First_Name, Package.Last_Name, Package.ASU_Email, Package.Date, Package.Box_Number, Package.At_Stop, Package.Picked_Up, Package.Pick_Up_Date, Package.Returned,
+				Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username'
+				from Package, Courier, Stop, User
+				where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND ///Finish clause///
+
+###Shorter Version###
+"select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' " + 
+"from Package, Courier, Stop, User " + 
+"where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND ///Add Specific Case///
