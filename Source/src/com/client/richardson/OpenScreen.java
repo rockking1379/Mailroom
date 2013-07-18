@@ -152,6 +152,10 @@ public class OpenScreen extends JFrame
 
 		});
 		mnFile.add(mntmClose);
+		
+		JMenuItem mntmLogout = new JMenuItem("Logout");
+		mntmLogout.addActionListener(new logoutListener());
+		mnFile.add(mntmLogout);
 
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(0, 102, 0));
@@ -411,5 +415,16 @@ public class OpenScreen extends JFrame
 
 		}
 
+	}
+	
+	private class logoutListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent ae)
+		{
+			manager.closeUp();
+			login l = new login();
+			l.setVisible(true);
+			dispose();
+		}
 	}
 }
