@@ -1,34 +1,32 @@
-Version: 1.1
+################
+##Version: 1.2##
+################
 
-####################
 ##Database Manager##
-####################
--Methods Recursively call themselves upon database locking error(very rare)
--This functionality is introduced
--Settings file has less importance
-
-#######
+-Connections required to database has been minimized
 ##ETL##
-#######
--Routine has been moved away from database manager
--Checks for specific file types to run
-
-#################
+-Nothing in this update.
+-Next update will be minor and will change the order
+of the routine to better match how Comp Serv delivers it
 ##Update Viewer##
-#################
--Used for showing updates(when they occur)
--Doubles over to show information on the ETL update(bug)
-
-########
+-Nothing new here
+-Update files will still be deleted after
+being viewed one time by either client
 ##Bugs##
-########
--During an ETL update, no information is shown in the viewer until completion
--Tracking Number only search issues have not been fixed, issue not recreated
--Random person searching issue not recreated, therefore not resolved
-
-###############
+-Known bug with the Tracking Number issue
+-Believed to be caused by calling to many
+searches when conducting Adv Search
+##Package Scanning##
+-If a first name is given, a last name must as well
+-If a last name is given, a first name must as well
+-If neither names are given they are filled in with 'DEPARTMENT'
+##Main Screen##
+-New Menu Item under File
+-Can now simply Logout
+##Printing##
+-Stops with no Packages are not printed
+-Removed the '=====' from printing
+-Moved Date from with the Stop to by the Route
+-
 ##Other Notes##
-###############
--The next update will include a few more bug fixes and service updates
--Write down issues and how the issue arose so that it can be recreated and then investigated
--The next update will also include some slight performance enhancements
+-As usual write down issues and how to recreate

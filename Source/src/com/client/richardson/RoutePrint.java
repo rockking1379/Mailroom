@@ -3,6 +3,7 @@ package com.client.richardson;
 import java.awt.BorderLayout;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import java.awt.GridLayout;
 import javax.lang.model.element.Element;
 
 import java.awt.EventQueue;
+import java.awt.font.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -226,170 +228,122 @@ public class RoutePrint extends JFrame
 						message.setBounds(50, 250, 800, 20);
 						contentPane_1.add(message);
 
-						String equ = "======================================"
-								+ "===========================\n";
+						String equ = "";
 						String newHead;
 						String tab = "       ";
-						String sign = "________________________\n\n";
+						String sign = "________________________\n";
 
 						String fieldHeader = "Last" + tab + "First" + tab
-								+ "Box#." + tab + "Track#" + tab
-								+ "Print Name Here.";
+								+ "Box#." + tab + "Track#" + tab + "Sign Here";
 
 						addSpacing(33 - c.getText().length());
 						toPrint.setText(toPrint.getText() + "Route: "
-								+ c.getText() + "\n");
+								+ c.getText() + " Date: " + newDate + "\n");
 
 						for (Stop s : stops)
 						{
-							String stn = s.getName();
-							if (stn.length() > 16)
+							if (manager.getPackagesFromStop(s.getName()).size() > 0)
 							{
-								stn = stn.substring(0, 16);
-							}
-							newHead = "Package Delivery for mail stop " + stn
-									+ " on " + newDate;
-							toPrint.setText(toPrint.getText() + equ);
-							int j = 32 - newHead.length();
-
-							addSpacing(j);
-
-							toPrint.setText(toPrint.getText() + newHead + "\n"
-									+ equ + "\n" + fieldHeader + "\n");
-
-							packages = (ArrayList<Package>) manager
-									.getPackagesFromStop(s.getName());
-
-							/*
-							 * packages.add(new Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","9333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "sadfasdfasdfasdfasdf")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","93333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "asdfasdfasdfasdfsdf")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","93333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "sadfasdfasdfasdfsdaf")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","933333333333333333333"
-							 * ,"234234235346541111532",
-							 * "asdfasdfsadfasdfasdfasdf")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","93333333333333333333333333"
-							 * ,"234234235346541111532", "asdfasdfasdfsadf"));
-							 * packages.add(new Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","93333333333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "sdfsadfasdfasdfasdf")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","9333333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "fsadfsdafsadfasdfsadfsd")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","93333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "asdfasdfsadfasdfsadfsadfsadfsd"));
-							 * packages.add(new Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","9333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "asdfsdfasdfsdfsdfsdfsdfsadf")); packages.add(new
-							 * Package("Thomas","Aehirng",
-							 * "asdfadsfgdfgsdb@grizzlies.adams.ede",
-							 * "Date","93333333333333333333333333333"
-							 * ,"234234235346541111532",
-							 * "sadfasdfsdfsdfasdfsadfasdfasdf"));
-							 */
-
-							String[] packageArray = new String[packages.size()];
-							for (Package p : packages)
-							{
-								packageArray[packages.indexOf(p)] = p
-										.getLName();
-							}
-
-							Arrays.sort(packageArray);
-							int i = 0;
-							for (String str : packageArray)
-							{
-								for (int k = 0; k < packages.size() - 1; k++)
+								String stn = s.getName();
+								if (stn.length() > 16)
 								{
-									Package pac = packages.get(k);
-									if (str.equals(pac.getLName()))
+									stn = stn.substring(0, 16);
+								}
+								newHead = "Package Delivery for mail stop "
+										+ stn;
+								toPrint.setText(toPrint.getText() + equ);
+								int j = 32 - newHead.length();
+
+								addSpacing(j);
+
+								toPrint.setText(toPrint.getText() + newHead
+										+ "\n" + equ + "\n" + fieldHeader
+										+ "\n");
+
+								packages = (ArrayList<Package>) manager
+										.getPackagesFromStop(s.getName());
+
+								String[] packageArray = new String[packages
+										.size()];
+								for (Package p : packages)
+								{
+									packageArray[packages.indexOf(p)] = p
+											.getLName();
+								}
+
+								Arrays.sort(packageArray);
+								int i = 0;
+								for (String str : packageArray)
+								{
+									for (int k = 0; k < packages.size() - 1; k++)
 									{
-										packages.remove(pac);
-										packages.add(i, pac);
+										Package pac = packages.get(k);
+										if (str.equals(pac.getLName()))
+										{
+											packages.remove(pac);
+											packages.add(i, pac);
+										}
 									}
-								}
-								i++;
-							}
-
-							for (Package p : packages)
-							{
-								Date pDate = null;
-
-								try
-								{
-									pDate = new SimpleDateFormat("yyyy-MM-dd",
-											Locale.ENGLISH).parse(p.getDate());
-								}
-								catch (ParseException e1)
-								{
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
+									i++;
 								}
 
-								Date tDate = new Date();
-
-								if (((tDate.getMonth() + tDate.getDate() + tDate
-										.getYear()) == (pDate.getMonth()
-										+ pDate.getDate() + pDate.getYear())))
+								for (Package p : packages)
 								{
+									Date pDate = null;
 
-									String var = p.getLName();
-									if (var.length() >= 11)
+									try
 									{
-										var = var.substring(0, 8);
+										pDate = new SimpleDateFormat(
+												"yyyy-MM-dd", Locale.ENGLISH)
+												.parse(p.getDate());
 									}
-									toPrint.setText(toPrint.getText() + var);
-									addSpacing(11 - var.length());
-
-									var = p.getFName();
-									if (var.length() >= 12)
+									catch (ParseException e1)
 									{
-										var = var.substring(1, 10);
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
 									}
-									toPrint.setText(toPrint.getText() + var);
-									addSpacing(12 - var.length());
 
-									var = p.getBoxNum();
-									toPrint.setText(toPrint.getText() + var);
-									addSpacing(12 - var.length());
+									Date tDate = new Date();
 
-									String tn = p.getTrackNum().substring(
-											p.getTrackNum().length() - 4);
-									toPrint.setText(toPrint.getText() + tn);
-									addSpacing(7 - tn.length());
+									if (((tDate.getMonth() + tDate.getDate() + tDate
+											.getYear()) == (pDate.getMonth()
+											+ pDate.getDate() + pDate.getYear())))
+									{
 
-									toPrint.setText(toPrint.getText() + sign);
+										String var = p.getLName();
+										if (var.length() >= 11)
+										{
+											var = var.substring(0, 8);
+										}
+										toPrint.setText(toPrint.getText() + var);
+										addSpacing(11 - var.length());
+
+										var = p.getFName();
+										if (var.length() >= 12)
+										{
+											var = var.substring(1, 10);
+										}
+										toPrint.setText(toPrint.getText() + var);
+										addSpacing(12 - var.length());
+
+										var = p.getBoxNum();
+										toPrint.setText(toPrint.getText() + var);
+										addSpacing(12 - var.length());
+
+										String tn = p.getTrackNum().substring(
+												p.getTrackNum().length() - 4);
+										toPrint.setText(toPrint.getText() + tn);
+										addSpacing(7 - tn.length());
+
+										toPrint.setText(toPrint.getText()
+												+ sign);
+
+									}
 
 								}
-
+								toPrint.setText(toPrint.getText() + "\n");
 							}
-
 						}
-						toPrint.setText(toPrint.getText() + "\n\n\n\n");
 
 					}
 
