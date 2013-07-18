@@ -2,6 +2,8 @@ package com.client.common;
 
 import javax.swing.*;
 
+import sun.util.calendar.BaseCalendar.Date;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
@@ -19,7 +21,7 @@ public class updateViewer extends JFrame implements Runnable
 	{
 		// Threading
 		uThread = new Thread(this);
-		uThread.setName("Update Viewer");
+		uThread.setName("ETL Viewer");
 	}
 
 	// /---Running---///
@@ -148,9 +150,9 @@ public class updateViewer extends JFrame implements Runnable
 	}
 
 	// /---ETL Methods---///
-	public void etlComplete()
+	public void etlComplete(java.util.Date dDate)
 	{
-		updateText.setText("Routine Update Complete\nThank You!");
+		updateText.setText("Routine Update Complete\nThank You!\nTime To Complete: " + dDate.getMinutes() + ":" + dDate.getSeconds());
 		okButton.setEnabled(true);
 	}
 

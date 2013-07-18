@@ -113,7 +113,7 @@ public class ETL
 		Date dDate = new Date(delta);
 
 		people.renameTo(new File("./people.oldpeep"));
-		viewer.etlComplete();
+		viewer.etlComplete(dDate);
 		// JOptionPane.showMessageDialog(null, "ETL Complete\n" +
 		// dDate.getMinutes() + ":" + dDate.getSeconds());
 	}

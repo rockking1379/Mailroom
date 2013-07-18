@@ -432,8 +432,16 @@ public class ScanPackage extends JFrame
 			}
 			else
 			{
-				JOptionPane.showMessageDialog(null,
-						"PLease Enter either a First Name or Last Name");
+				if(NameText.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please Enter First Name");
+					return;
+				}
+				if(LastNameText.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(null, "Please Enter Last Name");
+					return;
+				}
 			}
 
 			ArrayList<Package> allScanned = (ArrayList<Package>) manager
