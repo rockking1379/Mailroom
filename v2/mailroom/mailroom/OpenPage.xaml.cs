@@ -12,18 +12,28 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Common;
 
 namespace mailroom
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for OpenPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class OpenPage : Page
     {
-        public MainWindow()
+        MainWindow mWindow;
+        DatabaseManager dbm;
+
+        public OpenPage(MainWindow mWindow, DatabaseManager dbm)
         {
             InitializeComponent();
-            this.ViewFrame.Navigate(new Login(this));
+            this.mWindow = mWindow;
+            this.dbm = dbm;
+        }
+
+        private void BtnLogout_Click(object sender, RoutedEventArgs e)
+        {
+            mWindow.ViewFrame.Navigate(new Login(mWindow));
         }
     }
 }

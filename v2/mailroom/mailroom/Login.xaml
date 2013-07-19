@@ -57,7 +57,7 @@
             Width="50" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            Name="BtnLogin" 
+            Name="BtnLogin" Click="BtnLogin_Click" 
             >Login
             <Button.RenderTransform>
                 <TransformGroup>
@@ -70,7 +70,7 @@
             Width="50" 
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" 
-            Name="BtnQuit">Quit
+            Name="BtnQuit" Click="BtnQuit_Click">Quit
             <Button.RenderTransform>
                 <TransformGroup>
                     <TranslateTransform Y="80" X="26"></TranslateTransform>

@@ -7,6 +7,6 @@
         WindowStyle="None"
         ResizeMode="NoResize" 
         WindowStartupLocation="CenterOwner">
-    <Frame Height="768" Width="1024" Background="White" Visibility="Visible" Name="ViewFrame">
+    <Frame Height="768" Width="1024" Background="White" Visibility="Visible" Name="ViewFrame" NavigationUIVisibility="Hidden">
     </Frame>
 </Window>

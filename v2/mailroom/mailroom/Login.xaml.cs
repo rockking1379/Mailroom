@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Common;
 
 namespace mailroom
 {
@@ -21,11 +22,14 @@ namespace mailroom
     public partial class Login : Page
     {
         MainWindow mWindow;
+        DatabaseManager dbm;
+
         public Login(MainWindow mWindow)
         {
             InitializeComponent();
 
             this.mWindow = mWindow;
+            dbm = new DatabaseManager();
         }
 
         private void LoginPage_KeyDown(object sender, KeyEventArgs e)
@@ -34,7 +38,7 @@ namespace mailroom
             {
                 case Key.Escape:
                     {
-                        mWindow.close();
+                        BtnQuit_Click(null, null);
                         break;
                     }
                 case Key.Tab:
@@ -54,6 +58,11 @@ namespace mailroom
                         }
                         break;
                     }
+                case Key.Enter:
+                    {
+                        BtnLogin_Click(null, null);
+                        break;
+                    }
             }
         }
 
@@ -69,6 +78,25 @@ namespace mailroom
             {
                 username.Text = "";
             }
+        }
+
+        private void BtnLogin_Click(object sender, RoutedEventArgs e)
+        {
+            bool success = dbm.login(username.Text, 4096);
+
+            if (!success)
+            {
+                ErrorLbl.Visibility = System.Windows.Visibility.Visible;
+            }
+            else
+            {
+                mWindow.ViewFrame.Navigate(new OpenPage(mWindow, dbm));
+            }
+        }
+
+        private void BtnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            mWindow.Close();
         }
     }
 }
