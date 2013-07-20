@@ -82,9 +82,9 @@ namespace mailroom
 
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
-            bool success = dbm.login(username.Text, 4096);
+            User u = dbm.login(username.Text, password.Password.GetHashCode());
 
-            if (!success)
+            if (u == null)
             {
                 ErrorLbl.Visibility = System.Windows.Visibility.Visible;
             }

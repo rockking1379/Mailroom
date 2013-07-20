@@ -54,6 +54,7 @@
         <DataGrid
             Height="680"
             Width="750"
+            AutoGenerateColumns="True"
             Name="PackageGrid"
             >
             <DataGrid.RenderTransform>

@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
+using System.Windows;
+using System.Data.SqlClient;
+using System.Data;
+using System.Data.Sql;
 
 namespace Common
 {
@@ -15,17 +19,44 @@ namespace Common
         }
 
         #region User Interaction
-        public bool login(string uName, int pWord)
+        public User login(string uName, int pWord)
         {
-            if(uName == "sitzja" && pWord == 4096)
+            SQLiteConnection con = null;
+            SQLiteCommand cmd = null;
+            User u = null;
+
+            try
             {
-                return true;
+                con = new SQLiteConnection("Data Source=F:\\Documents\\GitHub\\Mailroom\\mailroom.db");
+                cmd = new SQLiteCommand("select * from User where User_Name = @UN and Password = @PW and Active = 1", con);
+                cmd.Parameters.Add("@UN", DbType.String);
+                cmd.Parameters.Add("@PW", DbType.Int32);
+
+                cmd.Parameters["@UN"].Value = uName;
+                cmd.Parameters["@PW"].Value = pWord;
+
+                con.Open();
+                SQLiteDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    u = new User(Convert.ToString(dr["User_Name"]), Convert.ToString(dr["First_Name"]), Convert.ToString(dr["Last_Name"]), Convert.ToBoolean(dr["Admin"]));
+                }
+
+                return u;
             }
-            else
+            catch (Exception e)
             {
-                return false;
+                Console.WriteLine("Error: {0}", e.Message);
+                return null;
+            }
+            finally
+            {
             }
         }
+        #endregion
+
+        #region Courier Methods
         #endregion
     }
 }
