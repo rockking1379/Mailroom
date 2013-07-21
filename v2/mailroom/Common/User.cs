@@ -9,10 +9,10 @@ namespace Common
     public class User : Object
     {
         #region Variables
-        private string username { get;set; }
-        private string firstName { get; set; }
-        private string lastName { get; set; }
-        private bool admin { get; set; }
+        public string username { get;set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public bool admin { get; set; }
         #endregion
 
         #region Constructors

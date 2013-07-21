@@ -90,7 +90,7 @@ namespace mailroom
             }
             else
             {
-                mWindow.ViewFrame.Navigate(new OpenPage(mWindow, dbm));
+                mWindow.ViewFrame.Navigate(new OpenPage(mWindow, dbm, u));
             }
         }
 

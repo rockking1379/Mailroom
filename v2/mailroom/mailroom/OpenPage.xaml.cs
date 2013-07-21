@@ -23,17 +23,25 @@ namespace mailroom
     {
         MainWindow mWindow;
         DatabaseManager dbm;
+        User cUser;
 
-        public OpenPage(MainWindow mWindow, DatabaseManager dbm)
+        public OpenPage(MainWindow mWindow, DatabaseManager dbm, User u)
         {
             InitializeComponent();
             this.mWindow = mWindow;
             this.dbm = dbm;
+            this.cUser = u;
+            UserLabel.Content = "Welcome: " + cUser.firstName + " " + cUser.lastName;
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
             mWindow.ViewFrame.Navigate(new Login(mWindow));
+        }
+
+        private void BtnQuit_Click(object sender, RoutedEventArgs e)
+        {
+            mWindow.Close();
         }
     }
 }

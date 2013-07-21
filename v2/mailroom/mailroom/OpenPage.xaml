@@ -105,11 +105,26 @@
                     Height="25"
                     Width="50"
                     Name="BtnLogout"
-                    FontWeight="Bold" Click="BtnLogout_Click"
+                    FontWeight="Bold" 
+                    Click="BtnLogout_Click"
                     >Logout
                     <Button.RenderTransform>
                         <TransformGroup>
                             <TranslateTransform X="550"></TranslateTransform>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button
+                    Width="50"
+                    Height="25"
+                    Name="BtnQuit"
+                    FontWeight="Bold"
+                    Click="BtnQuit_Click">Quit
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform X="440"></TranslateTransform>
                         </TransformGroup>
                     </Button.RenderTransform>
                 </Button>
