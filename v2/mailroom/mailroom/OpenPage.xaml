@@ -7,7 +7,6 @@
       d:DesignHeight="768" d:DesignWidth="1024"
 	Title="OpenPage"
       Background="DarkGreen">
-
     <Grid>
         <Button 
             VerticalAlignment="Top" 
@@ -89,16 +88,36 @@
                 HorizontalContentAlignment="Center"
                 VerticalContentAlignment="Bottom"
                 Width="150"
-                Height="50">
+                Height="50"
+                Visibility="Visible">
                 <Label
                     Height="25"
-                    Width="100"
+                    Width="125"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Bottom"
-                    Content="Version: 2.0.0.0"
+                    Content="Version: 2.0.0 InDev"
                     Name="LblVersion"></Label>
+            </StatusBarItem>
+            <StatusBarItem
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Height="50"
+                Width="550">
+                <Button
+                    Width="50"
+                    Height="25"
+                    Name="BtnQuit"
+                    FontWeight="Bold"
+                    Click="BtnQuit_Click">Quit
+                    <Button.RenderTransform>
+                        <TransformGroup>
+                            <TranslateTransform X="250"></TranslateTransform>
+                        </TransformGroup>
+                    </Button.RenderTransform>
+                </Button>
             </StatusBarItem>
             <StatusBarItem>
                 <Button
@@ -110,21 +129,7 @@
                     >Logout
                     <Button.RenderTransform>
                         <TransformGroup>
-                            <TranslateTransform X="550"></TranslateTransform>
-                        </TransformGroup>
-                    </Button.RenderTransform>
-                </Button>
-            </StatusBarItem>
-            <StatusBarItem>
-                <Button
-                    Width="50"
-                    Height="25"
-                    Name="BtnQuit"
-                    FontWeight="Bold"
-                    Click="BtnQuit_Click">Quit
-                    <Button.RenderTransform>
-                        <TransformGroup>
-                            <TranslateTransform X="440"></TranslateTransform>
+                            <TranslateTransform X="10"></TranslateTransform>
                         </TransformGroup>
                     </Button.RenderTransform>
                 </Button>

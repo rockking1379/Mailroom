@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Common;
+#endregion
 
 namespace mailroom
 {
@@ -21,9 +23,12 @@ namespace mailroom
     /// </summary>
     public partial class Login : Page
     {
+        #region Variables
         MainWindow mWindow;
         DatabaseManager dbm;
+        #endregion
 
+        #region Constructor
         public Login(MainWindow mWindow)
         {
             InitializeComponent();
@@ -31,7 +36,9 @@ namespace mailroom
             this.mWindow = mWindow;
             dbm = new DatabaseManager();
         }
+        #endregion
 
+        #region Keyboard Processing
         private void LoginPage_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -65,7 +72,9 @@ namespace mailroom
                     }
             }
         }
+        #endregion
 
+        #region Mouse Logic
         private void LoginPage_MouseEnter(object sender, MouseEventArgs e)
         {
             username_MouseEnter(null, null);
@@ -79,7 +88,9 @@ namespace mailroom
                 username.Text = "";
             }
         }
+        #endregion
 
+        #region Login
         private void BtnLogin_Click(object sender, RoutedEventArgs e)
         {
             User u = dbm.login(username.Text, password.Password.GetHashCode());
@@ -93,10 +104,13 @@ namespace mailroom
                 mWindow.ViewFrame.Navigate(new OpenPage(mWindow, dbm, u));
             }
         }
+        #endregion
 
+        #region Quit
         private void BtnQuit_Click(object sender, RoutedEventArgs e)
         {
             mWindow.Close();
         }
+        #endregion
     }
 }

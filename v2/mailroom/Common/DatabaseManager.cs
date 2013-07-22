@@ -1,4 +1,5 @@
-﻿using System;
+﻿#region Statements
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +9,18 @@ using System.Windows;
 using System.Data.SqlClient;
 using System.Data;
 using System.Data.Sql;
+#endregion
 
 namespace Common
 {
     public class DatabaseManager : Object
     {
+        #region Constructor
         public DatabaseManager()
         {
             //Eh
         }
+        #endregion
 
         #region User Interaction
         public User login(string uName, int pWord)

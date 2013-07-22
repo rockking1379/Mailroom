@@ -10,6 +10,18 @@
       KeyDown="LoginPage_KeyDown"
       MouseEnter="LoginPage_MouseEnter">
     <Grid>
+        <Label
+            Height="50"
+            Width="150"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Left"
+            Content="Version: 2.0.0 InDev"
+            FontSize="14"
+            FontWeight="Bold"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center">
+            
+        </Label>
         <TextBox 
             Name="username" 
             AcceptsReturn="False" 
