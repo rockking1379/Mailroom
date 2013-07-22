@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Data;
 using Common;
 #endregion
 
@@ -41,6 +42,7 @@ namespace mailroom
 #if DEBUG
             LblVersion.Visibility = System.Windows.Visibility.Visible;
 #endif
+            getPackages();
         }
         #endregion
 
@@ -53,6 +55,13 @@ namespace mailroom
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
             mWindow.ViewFrame.Navigate(new Login(mWindow));
+        }
+        #endregion
+
+        #region Database
+        void getPackages()
+        {
+            DataSet dSet = dbm.getPackages(true);
         }
         #endregion
 

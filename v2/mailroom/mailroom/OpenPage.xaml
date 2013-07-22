@@ -50,6 +50,19 @@
                 </TransformGroup>
             </Button.RenderTransform>
         </Button>
+        <Button
+            Width="250"
+            Height="25"
+            Content="Settings"
+            HorizontalAlignment="Left"
+            FontWeight="Bold"
+            >
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <TranslateTransform X="5" Y="290"></TranslateTransform>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
         <DataGrid
             Height="680"
             Width="750"

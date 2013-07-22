@@ -22,6 +22,55 @@ namespace Common
         }
         #endregion
 
+        public DataSet getPackages(bool allStops)
+        {
+            DataSet dSet = null;
+            SQLiteConnection con = null;
+            SQLiteCommand cmd = null;
+            SQLiteDataAdapter dAdapt = null;
+
+            DateTime cDate = new DateTime();
+            DateTime date = new DateTime(cDate.Year, cDate.Month, cDate.Day);
+
+            try
+            {
+                if (allStops)
+                {
+                    string statement = "select * from Package";
+                    con = new SQLiteConnection("Data Source=F:\\Documents\\GitHub\\Mailroom\\mailroom.db");
+                    con.Open();
+                    cmd = new SQLiteCommand(statement, con);
+                    dSet = new DataSet();
+                    dAdapt = new SQLiteDataAdapter(cmd);
+                    dAdapt.Fill(dSet);
+                }
+                else
+                {
+                }
+            }
+            catch (SQLiteException e)
+            {
+                Console.WriteLine("Error: {0}", e.Message);
+            }
+            finally
+            {
+                if (dAdapt != null)
+                {
+                    dAdapt.Dispose();
+                }
+                if (cmd != null)
+                {
+                    cmd.Dispose();
+                }
+                if (con != null)
+                {
+                    con.Close();
+                }
+            }
+
+            return dSet;
+        }
+
         #region User Interaction
         public User login(string uName, int pWord)
         {
