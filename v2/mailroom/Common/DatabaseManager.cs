@@ -17,7 +17,9 @@ namespace Common
     {
         #region Variables
         string location;
+        SQLiteConnection con;
         #endregion
+
         #region Constructor
         public DatabaseManager()
         {
@@ -29,65 +31,41 @@ namespace Common
         }
         #endregion
 
-        public DataSet getPackages(bool allStops)
+        #region Database Connection
+        private void connect()
         {
-            DataSet dSet = null;
-            SQLiteConnection con = null;
-            SQLiteCommand cmd = null;
-            SQLiteDataAdapter dAdapt = null;
-
-            DateTime cDate = new DateTime();
-            DateTime date = new DateTime(cDate.Year, cDate.Month, cDate.Day);
-
+            con = new SQLiteConnection("Data Source=" + location);
+            con.Open();
+        }
+        private void disconnect()
+        {
             try
             {
-                if (allStops)
-                {
-                    string statement = "select * from Package";
-                    con = new SQLiteConnection("Data Source=" + location);
-                    con.Open();
-                    cmd = new SQLiteCommand(statement, con);
-                    dSet = new DataSet();
-                    dAdapt = new SQLiteDataAdapter(cmd);
-                    dAdapt.Fill(dSet);
-                }
-                else
-                {
-                }
+                con.Close();
             }
             catch (SQLiteException e)
             {
-                Console.WriteLine("Error: {0}", e.Message);
+                Console.Write("Error {0}", e.Message);
             }
             finally
             {
-                if (dAdapt != null)
-                {
-                    dAdapt.Dispose();
-                }
-                if (cmd != null)
-                {
-                    cmd.Dispose();
-                }
-                if (con != null)
-                {
-                    con.Close();
-                }
             }
+        }
+        #endregion
 
-            return dSet;
+        public DataSet getPackages(bool allStops)
+        {
+            return null;
         }
 
         #region User Interaction
         public User login(string uName, int pWord)
         {
-            SQLiteConnection con = null;
             SQLiteCommand cmd = null;
             User u = null;
-
+            connect();
             try
             {
-                con = new SQLiteConnection("Data Source=" + location);
                 cmd = new SQLiteCommand("select * from User where User_Name = @UN and Password = @PW and Active = 1", con);
                 cmd.Parameters.Add("@UN", DbType.String);
                 cmd.Parameters.Add("@PW", DbType.Int32);
@@ -95,24 +73,23 @@ namespace Common
                 cmd.Parameters["@UN"].Value = uName;
                 cmd.Parameters["@PW"].Value = pWord;
 
-                con.Open();
                 SQLiteDataReader dr = cmd.ExecuteReader();
 
                 while (dr.Read())
                 {
                     u = new User(Convert.ToString(dr["User_Name"]), Convert.ToString(dr["First_Name"]), Convert.ToString(dr["Last_Name"]), Convert.ToBoolean(dr["Admin"]));
                 }
-
-                return u;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Error: {0}", e.Message);
-                return null;
+                u = null;
             }
             finally
             {
+                disconnect();
             }
+            return u;
         }
 
         public bool verifyUser(string uName)
