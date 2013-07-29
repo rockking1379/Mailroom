@@ -34,7 +34,7 @@ namespace mailroom
             InitializeComponent();
 
             this.mWindow = mWindow;
-            dbm = new DatabaseManager();
+            dbm = new DatabaseManager(Properties.Settings.Default.dbLocation);
         }
         #endregion
 

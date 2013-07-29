@@ -15,10 +15,17 @@ namespace Common
 {
     public class DatabaseManager : Object
     {
+        #region Variables
+        string location;
+        #endregion
         #region Constructor
         public DatabaseManager()
         {
             //Eh
+        }
+        public DatabaseManager(string location)
+        {
+            this.location = location;
         }
         #endregion
 
@@ -37,7 +44,7 @@ namespace Common
                 if (allStops)
                 {
                     string statement = "select * from Package";
-                    con = new SQLiteConnection("Data Source=F:\\Documents\\GitHub\\Mailroom\\mailroom.db");
+                    con = new SQLiteConnection("Data Source=" + location);
                     con.Open();
                     cmd = new SQLiteCommand(statement, con);
                     dSet = new DataSet();
@@ -80,7 +87,7 @@ namespace Common
 
             try
             {
-                con = new SQLiteConnection("Data Source=F:\\Documents\\GitHub\\Mailroom\\mailroom.db");
+                con = new SQLiteConnection("Data Source=" + location);
                 cmd = new SQLiteCommand("select * from User where User_Name = @UN and Password = @PW and Active = 1", con);
                 cmd.Parameters.Add("@UN", DbType.String);
                 cmd.Parameters.Add("@PW", DbType.Int32);
@@ -106,6 +113,19 @@ namespace Common
             finally
             {
             }
+        }
+
+        public bool verifyUser(string uName)
+        {
+            return false;
+        }
+
+        public void createUser(User u, int pWord)
+        {
+        }
+
+        public void deleteUser(string uName)
+        {
         }
         #endregion
 
