@@ -404,7 +404,7 @@ public class AdvSearch extends JFrame
 		@Override
 		public void actionPerformed(ActionEvent arg0)
 		{
-
+			/*
 			if (!StartField.getText().equals("")
 					|| !EndField.getText().equals(""))
 			{
@@ -426,7 +426,7 @@ public class AdvSearch extends JFrame
 					e.printStackTrace();
 				}
 			}
-
+			*/
 			ArrayList<Package> results = new ArrayList<Package>();
 			String selectedStop = (String) StopBox.getSelectedItem();
 

@@ -1743,6 +1743,7 @@ public class DatabaseManager
 		}
 		catch (Exception e)
 		{
+			System.out.println("Error Encountered");
 			if (e.getMessage().equals("database is locked"))
 			{
 				results = searchPackages(search, location);
