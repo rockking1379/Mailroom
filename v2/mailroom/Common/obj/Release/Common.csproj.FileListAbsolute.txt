@@ -1,0 +1,7 @@
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Release\Common.dll
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Release\Common.pdb
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Release\System.Data.SQLite.dll
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Release\System.Data.SQLite.pdb
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Release\System.Data.SQLite.xml
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\obj\Release\Common.dll
+F:\Documents\GitHub\Mailroom\v2\mailroom\Common\obj\Release\Common.pdb
