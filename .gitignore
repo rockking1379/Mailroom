@@ -44,6 +44,17 @@ local.properties
 *.user
 *.sln.docstates
 
+<<<<<<< HEAD
+=======
+# Build results
+
+[Rr]elease/
+x64/
+build/
+[Bb]in/
+[Oo]bj/
+
+>>>>>>> 9734700e031453d8cc43fc749f6836e259775a01
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
