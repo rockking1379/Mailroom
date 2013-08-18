@@ -1701,7 +1701,7 @@ public class DatabaseManager
 			statement = readConn
 					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' "
 							+ "from Package, Courier, Stop, User "
-							+ "where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Tracking_Number like ? or Package.Date like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ?");
+							+ "where Package.Tracking_Number like ? or Package.Date like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ? AND Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and Package.processor = User.user_id;");
 			switch (location)
 			{
 				case SEARCH_CONTAINS:// Contains
