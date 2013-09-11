@@ -1,8 +1,0 @@
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Debug\Common.dll
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Debug\Common.pdb
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Debug\System.Data.SQLite.dll
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Debug\System.Data.SQLite.pdb
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\bin\Debug\System.Data.SQLite.xml
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\obj\Debug\Common.dll
-F:\Documents\GitHub\Mailroom\v2\mailroom\Common\obj\Debug\Common.pdb
