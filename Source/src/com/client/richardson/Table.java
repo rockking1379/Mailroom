@@ -565,9 +565,7 @@ public class Table extends JPanel
 
 					}
 				}
-
 			}
-
 		}
 		manager.loadPackages(true, null);
 		setSearchResults((ArrayList<Package>) manager.findPackage(false, false));

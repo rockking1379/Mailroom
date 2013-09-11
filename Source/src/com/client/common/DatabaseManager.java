@@ -1692,88 +1692,140 @@ public class DatabaseManager
 	public List<Package> searchPackages(String search, int location)
 	{
 		List<Package> results = new ArrayList<Package>();
-		location = SEARCH_CONTAINS;// Remove later if API is enhanced
-		PreparedStatement statement = null;
-		ResultSet rs = null;
-		try
+		if(search.equals(""))
 		{
-			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
-			statement = readConn
-					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' "
-							+ "from Package, Courier, Stop, User "
-							+ "where Package.Tracking_Number like ? or Package.Date like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ? AND Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and Package.processor = User.user_id;");
-			switch (location)
-			{
-				case SEARCH_CONTAINS:// Contains
-				{
-					search = "%" + search + "%";
-					statement.setString(1, search);
-					statement.setString(2, search);
-					statement.setString(3, search);
-					statement.setString(4, search);
-					statement.setString(5, search);
-					statement.setString(6, search);
-					break;
-				}
-				case SEARCH_BEGINS_WITH:// Begins With
-				{
-					search = "%" + search;
-					statement.setString(1, search);
-					statement.setString(2, search);
-					statement.setString(3, search);
-					statement.setString(4, search);
-					statement.setString(5, search);
-					statement.setString(6, search);
-					break;
-				}
-				case SEARCH_ENDS_WITH:// Ends With
-				{
-					search = search + "%";
-					statement.setString(1, search);
-					statement.setString(2, search);
-					statement.setString(3, search);
-					statement.setString(4, search);
-					statement.setString(5, search);
-					statement.setString(6, search);
-					break;
-				}
-			}
-			rs = statement.executeQuery();
-			results = processResults(rs);
 		}
-		catch (Exception e)
+		else
 		{
-			System.out.println("Error Encountered");
-			if (e.getMessage().equals("database is locked"))
-			{
-				results = searchPackages(search, location);
-			}
-			else
-			{
-				JOptionPane.showMessageDialog(null,
-						"Error Connecting to Database");
-			}
-		}
-		finally
-		{
+			location = SEARCH_CONTAINS;// Remove later if API is enhanced
+			PreparedStatement statement = null;
+			ResultSet rs = null;
 			try
 			{
-				if (rs != null)
+				readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
+				statement = readConn
+						.prepareStatement("select Package.* "
+								+ "from Package "
+								+ "where Package.Tracking_Number like ? or Package.Date like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ?;");
+				switch (location)
 				{
-					rs.close();
+					case SEARCH_CONTAINS:// Contains
+					{
+						search = "%" + search + "%";
+						statement.setString(1, search);
+						statement.setString(2, search);
+						statement.setString(3, search);
+						statement.setString(4, search);
+						statement.setString(5, search);
+						statement.setString(6, search);
+						break;
+					}
+					case SEARCH_BEGINS_WITH:// Begins With
+					{
+						search = "%" + search;
+						statement.setString(1, search);
+						statement.setString(2, search);
+						statement.setString(3, search);
+						statement.setString(4, search);
+						statement.setString(5, search);
+						statement.setString(6, search);
+						break;
+					}
+					case SEARCH_ENDS_WITH:// Ends With
+					{
+						search = search + "%";
+						statement.setString(1, search);
+						statement.setString(2, search);
+						statement.setString(3, search);
+						statement.setString(4, search);
+						statement.setString(5, search);
+						statement.setString(6, search);
+						break;
+					}
 				}
-				if (statement != null)
+				rs = statement.executeQuery();
+				
+				//Process the Results(OLD STYLE)
+				while(rs.next())
 				{
-					statement.close();
+					statement = readConn.prepareStatement("select Stop.Name from Stop where stop.stop_id = ?;");
+					statement.setInt(1, rs.getInt("stop_id"));
+					ResultSet stop = statement.executeQuery();
+					
+					statement = readConn.prepareStatement("select Courier.Name from Courier where courier_id = ?;");
+					statement.setInt(1, rs.getInt("courier_id"));
+					ResultSet courier = statement.executeQuery();
+					
+					statement = readConn.prepareStatement("select User.User_Name from User where User.user_id = ?;");
+					statement.setInt(1, rs.getInt("processor"));
+					ResultSet user = statement.executeQuery();
+					
+					results.add(new Package(rs.getString("First_Name"), rs
+							.getString("Last_Name"), rs.getString("ASU_Email"), rs
+							.getString("Date"), rs.getString("Box_Number"), stop
+							.getString("Name"), rs.getString("Tracking_Number"), user
+							.getString("User_Name"), courier.getString("Name"), rs
+							.getBoolean("At_Stop"), rs.getBoolean("Picked_Up"), rs
+							.getString("Pick_Up_Date"), rs.getBoolean("Returned")));
+					
+					try
+					{
+						if (stop != null)
+						{
+							stop.close();
+						}
+						if (courier != null)
+						{
+							courier.close();
+						}
+						if (user != null)
+						{
+							user.close();
+						}
+					}
+					catch(Exception SQLException)
+					{
+						stop = null;
+						courier = null;
+						user = null;
+					}
 				}
-				if (readConn != null)
-				{
-					readConn.close();
-				}
+				
 			}
 			catch (Exception e)
 			{
-				// Ignore we are closing up
+				System.out.println("Error Encountered");
+				if (e.getMessage().equals("database is locked"))
+				{
+					results = searchPackages(search, location);
+				}
+				else
+				{
+					JOptionPane.showMessageDialog(null,
+							"Error Connecting to Database");
+				}
+			}
+			finally
+			{
+				try
+				{
+					if (rs != null)
+					{
+						rs.close();
+					}
+					if (statement != null)
+					{
+						statement.close();
+					}
+					if (readConn != null)
+					{
+						readConn.close();
+					}
+				}
+				catch (Exception e)
+				{
+					// Ignore we are closing up
+				}
 			}
 		}
 
@@ -1791,9 +1843,9 @@ public class DatabaseManager
 		{
 			readConn = DriverManager.getConnection("jdbc:sqlite:" + dbLocation);
 			statement = readConn
-					.prepareStatement("select Package.*, Courier.Name AS 'Courier', Stop.Name AS 'Stop', User.User_Name AS 'Username' "
-							+ "from Package, Courier, Stop, User "
-							+ "where Package.courier_id = Courier.courier_id and Package.stop_id = Stop.stop_id and User.user_id = Package.processor AND Package.Tracking_Number like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ? where Package.Date between ? and ?");
+					.prepareStatement("select Package.* "
+							+ "from Package "
+							+ "where Package.Tracking_Number like ? or Package.ASU_Email like ? or Package.First_Name like ? or Package.Last_Name like ? or Package.Box_Number like ? where Package.Date between ? and ?");
 			switch (location)
 			{
 				case SEARCH_CONTAINS:
@@ -1835,7 +1887,51 @@ public class DatabaseManager
 
 			rs = statement.executeQuery();
 
-			results = processResults(rs);
+			//Process the Results(OLD STYLE)
+			while(rs.next())
+			{
+				statement = readConn.prepareStatement("select Stop.Name from Stop where stop.stop_id = ?;");
+				statement.setInt(1, rs.getInt("stop_id"));
+				ResultSet stop = statement.executeQuery();
+				
+				statement = readConn.prepareStatement("select Courier.Name from Courier where courier_id = ?;");
+				statement.setInt(1, rs.getInt("courier_id"));
+				ResultSet courier = statement.executeQuery();
+				
+				statement = readConn.prepareStatement("select User.User_Name from User where User.user_id = ?;");
+				statement.setInt(1, rs.getInt("processor"));
+				ResultSet user = statement.executeQuery();
+				
+				results.add(new Package(rs.getString("First_Name"), rs
+						.getString("Last_Name"), rs.getString("ASU_Email"), rs
+						.getString("Date"), rs.getString("Box_Number"), stop
+						.getString("Name"), rs.getString("Tracking_Number"), user
+						.getString("User_Name"), courier.getString("Name"), rs
+						.getBoolean("At_Stop"), rs.getBoolean("Picked_Up"), rs
+						.getString("Pick_Up_Date"), rs.getBoolean("Returned")));
+				
+				try
+				{
+					if (stop != null)
+					{
+						stop.close();
+					}
+					if (courier != null)
+					{
+						courier.close();
+					}
+					if (user != null)
+					{
+						user.close();
+					}
+				}
+				catch(Exception SQLException)
+				{
+					stop = null;
+					courier = null;
+					user = null;
+				}
+			}
 
 		}
 		catch (Exception e)

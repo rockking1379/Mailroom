@@ -1,6 +1,5 @@
 package com.client.richardson;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Image;
@@ -19,16 +18,11 @@ import javax.swing.text.PlainDocument;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.sql.Array;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,7 +34,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 
 import com.client.common.DatabaseManager;
@@ -438,22 +431,23 @@ public class AdvSearch extends JFrame
 
 				for (com.client.common.Package p : sresults)
 				{
-
-					boolean add = true;
-					if (!matchesParams(p))
+					if (matchesParams(p))
 					{
-						add = false;
-					}
-					for (Package pa : results)
-					{
-						if (p.getTrackNum().equals(pa.getTrackNum()))
+						boolean add = true;
+						if(results.size() > 0)
 						{
-							add = false;
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
 						}
-					}
-					if (add)
-					{
-						results.add(p);
+						if(add)
+						{
+							results.add(p);
+						}
 					}
 				}
 
@@ -467,22 +461,23 @@ public class AdvSearch extends JFrame
 
 				for (com.client.common.Package p : sresults)
 				{
-
-					boolean add = true;
-					if (!matchesParams(p))
+					if (matchesParams(p))
 					{
-						add = false;
-					}
-					for (Package pa : results)
-					{
-						if (p.getTrackNum().equals(pa.getTrackNum()))
+						boolean add = true;
+						if(results.size() > 0)
 						{
-							add = false;
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
 						}
-					}
-					if (add)
-					{
-						results.add(p);
+						if(add)
+						{
+							results.add(p);
+						}
 					}
 				}
 
@@ -496,22 +491,23 @@ public class AdvSearch extends JFrame
 
 				for (com.client.common.Package p : sresults)
 				{
-
-					boolean add = true;
-					if (!matchesParams(p))
+					if (matchesParams(p))
 					{
-						add = false;
-					}
-					for (Package pa : results)
-					{
-						if (p.getTrackNum().equals(pa.getTrackNum()))
+						boolean add = true;
+						if(results.size() > 0)
 						{
-							add = false;
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
 						}
-					}
-					if (add)
-					{
-						results.add(p);
+						if(add)
+						{
+							results.add(p);
+						}
 					}
 				}
 
@@ -525,22 +521,23 @@ public class AdvSearch extends JFrame
 
 				for (com.client.common.Package p : sresults)
 				{
-
-					boolean add = true;
-					if (!matchesParams(p))
+					if (matchesParams(p))
 					{
-						add = false;
-					}
-					for (Package pa : results)
-					{
-						if (p.getTrackNum().equals(pa.getTrackNum()))
+						boolean add = true;
+						if(results.size() > 0)
 						{
-							add = false;
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
 						}
-					}
-					if (add)
-					{
-						results.add(p);
+						if(add)
+						{
+							results.add(p);
+						}
 					}
 				}
 
@@ -576,22 +573,23 @@ public class AdvSearch extends JFrame
 
 				for (com.client.common.Package p : sresults)
 				{
-
-					boolean add = true;
-					if (!matchesParams(p))
+					if (matchesParams(p))
 					{
-						add = false;
-					}
-					for (Package pa : results)
-					{
-						if (p.getTrackNum().equals(pa.getTrackNum()))
+						boolean add = true;
+						if(results.size() > 0)
 						{
-							add = false;
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
 						}
-					}
-					if (add)
-					{
-						results.add(p);
+						if(add)
+						{
+							results.add(p);
+						}
 					}
 				}
 
@@ -605,49 +603,54 @@ public class AdvSearch extends JFrame
 
 				for (com.client.common.Package p : sresults)
 				{
-
-					boolean add = true;
-					if (!matchesParams(p))
+					if (matchesParams(p))
 					{
-						add = false;
-					}
-					for (Package pa : results)
-					{
-						if (p.getTrackNum().equals(pa.getTrackNum()))
+						boolean add = true;
+						if(results.size() > 0)
 						{
-							add = false;
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
 						}
-					}
-					if (add)
-					{
-						results.add(p);
+						if(add)
+						{
+							results.add(p);
+						}
 					}
 				}
 
 			}
 
-			ArrayList<Package> sresults = (ArrayList<Package>) manager
-					.findPackage(chckbxDelivered.isSelected(), chckbxPickedUp
-							.isSelected());
-
-			for (com.client.common.Package p : sresults)
+			if(chckbxSearchByDelivered.isSelected())
 			{
-
-				boolean add = true;
-				if (!matchesParams(p))
+				ArrayList<Package> sresults = (ArrayList<Package>) manager
+						.findPackage(chckbxDelivered.isSelected(), chckbxPickedUp
+								.isSelected());
+	
+				for (com.client.common.Package p : sresults)
 				{
-					add = false;
-				}
-				for (Package pa : results)
-				{
-					if (p.getTrackNum().equals(pa.getTrackNum()))
+					if (matchesParams(p))
 					{
-						add = false;
+						boolean add = true;
+						if(results.size() > 0)
+						{
+							for(int i = 0; i < results.size(); i++)
+							{
+								if(results.get(i).getTrackNum().equals(p.getTrackNum()))
+								{
+									add = false;
+								}
+							}
+						}
+						if(add)
+						{
+							results.add(p);
+						}
 					}
-				}
-				if (add)
-				{
-					results.add(p);
 				}
 			}
 
@@ -664,8 +667,6 @@ public class AdvSearch extends JFrame
 	{
 
 		boolean matches = true;
-
-		String s = FirstNameField.getText().toLowerCase();
 
 		String person = p.getFName().toUpperCase();
 		String entered = FirstNameField.getText().toUpperCase();
