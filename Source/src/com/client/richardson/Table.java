@@ -290,8 +290,11 @@ public class Table extends JPanel
 			}
 			String date = ft.format(sdDate);
 			inTabel.add(p);
+			
+			String last = "..." + p.getTrackNum().substring(p.getTrackNum().length() - 4, p.getTrackNum().length());
+			
 			atable.insertData(new Object[] { false, p.getFName(), p.getLName(),
-					p.getStop(), p.getTrackNum(), p.getCourier(), date,
+					p.getStop(), last, p.getCourier(), date,
 					p.getUser(), "", });
 		}
 
@@ -529,9 +532,11 @@ public class Table extends JPanel
 				e.printStackTrace();
 			}
 			String date = ft.format(sdDate);
+			
+			String last = "..." + p.getTrackNum().substring(p.getTrackNum().length() - 4, p.getTrackNum().length());
 
 			atable.insertData(new Object[] { p.getDelivered(), p.getFName(),
-					p.getLName(), p.getStop(), p.getTrackNum(), p.getCourier(),
+					p.getLName(), p.getStop(), last, p.getCourier(),
 					date, p.getUser(), p.getPickedUpDate() + "" });
 
 		}
