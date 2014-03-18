@@ -564,7 +564,7 @@ public class Table extends JPanel
 							|| p.getDelivered() != (boolean) atable.getValueAt(
 									i, 0))
 					{
-						manager.updatePackage((String) atable.getValueAt(i, 4),
+						manager.updatePackage(p.getTrackNum(),
 								(boolean) atable.getValueAt(i, 0),
 								(boolean) atable.getValueAt(i, 0),
 								(String) atable.getValueAt(i, 3));
