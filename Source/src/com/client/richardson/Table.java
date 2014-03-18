@@ -555,7 +555,7 @@ public class Table extends JPanel
 			System.out.println(atable.getValueAt(0, 0));
 			for (Package p : inTabel)
 			{
-				String last = p.getTrackNum().substring(p.getTrackNum().length() - 4, p.getTrackNum().length());
+				String last = "..." + p.getTrackNum().substring(p.getTrackNum().length() - 4, p.getTrackNum().length());
 
 				if (last.equals(atable.getValueAt(i, 4)))
 				{
